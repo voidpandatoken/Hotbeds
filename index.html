@@ -3,201 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds | Coming Soon</title>
-    <!-- Integrates MINI LOGO.png as the browser tab icon -->
-    <link rel="icon" type="image/png" href="MINI%20LOGO.png">
+    <title>Hotbeds - Win a Free Hotel Stay!</title>
     <style>
-        * {
-            box-sizing: border-box;
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
         }
 
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            /* Integrates COVER.png as a premium full-screen background */
-            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('COVER.png') no-repeat center center/cover;
-            color: #333;
+        /* Background setup using your COVER.png */
+        .bg-image {
+            background-image: url('COVER.png');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            text-align: center;
+            align-items: center;
+            position: relative;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 50px 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 600px;
+        /* Dark overlay to make the white box pop */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7); 
+        }
+
+        /* The Main White Box */
+        .modal {
+            position: relative;
+            background-color: #ffffff; /* Changed to pure white to seamlessly blend with your logo */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 450px;
             width: 90%;
-            backdrop-filter: blur(5px);
+            z-index: 10;
         }
 
         .logo {
-            max-width: 220px;
-            height: auto;
-            margin-bottom: 25px;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .tagline {
-            color: #e52d27;
-            font-weight: 700;
-            font-size: 1.2rem;
+            max-width: 180px;
             margin-bottom: 20px;
         }
 
-        p {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 35px;
-        }
-
-        .timer-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .time-box {
-            background: #333;
-            color: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            min-width: 80px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .time-label {
-            font-size: 0.8rem;
+        h1 {
+            font-size: 26px;
+            color: #222;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            color: #ccc;
-            margin-top: 5px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #e63946; /* Hotbeds Red */
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
         }
 
-        .subscribe-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding: 0 10px;
         }
 
-        input[type="email"] {
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        input[type="email"]:focus {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #e63946;
             outline: none;
-            border-color: #e52d27;
         }
 
         button {
-            background-color: #e52d27;
-            color: #fff;
-            border: none;
+            width: 100%;
             padding: 15px;
-            border-radius: 6px;
-            font-size: 1.1rem;
+            background-color: #e63946; /* Hotbeds Red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
         }
 
         button:hover {
-            background-color: #c9221d;
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
-            .timer-container { gap: 10px; }
-            .time-box { min-width: 65px; padding: 10px; }
-            .time-box span { font-size: 1.5rem; }
+            background-color: #d62828;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Integrates LOGO.png -->
-        <img src="LOGO.png" alt="Hotbeds Logo" class="logo">
+    <div class="bg-image">
+        <div class="overlay"></div>
         
-        <h1>Coming Soon</h1>
-        <div class="tagline">HOT DEALS. COOL STAYS.</div>
-        
-        <p>We are building the ultimate platform for securing last-minute rooms. Get ready to beat the timer and lock in unbeatable value on Canadian stays.</p>
-
-        <div class="timer-container">
-            <div class="time-box">
-                <span id="days">00</span>
-                <div class="time-label">Days</div>
-            </div>
-            <div class="time-box">
-                <span id="hours">00</span>
-                <div class="time-label">Hours</div>
-            </div>
-            <div class="time-box">
-                <span id="minutes">00</span>
-                <div class="time-label">Minutes</div>
-            </div>
-            <div class="time-box">
-                <span id="seconds">00</span>
-                <div class="time-label">Seconds</div>
-            </div>
+        <div class="modal">
+            <!-- Referencing your existing logo file -->
+            <img src="LOGO.png" alt="Hotbeds.ca" class="logo">
+            
+            <h1>Win a Free Stay!</h1>
+            <div class="subtitle">HOT DEALS. COOL STAYS.</div>
+            
+            <p>Enter to win a free hotel room in any Canadian city! We guarantee the lowest prices on the busiest nights of the year.</p>
+            
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" placeholder="City & Province" required>
+                </div>
+                <button type="submit">Enter Contest</button>
+            </form>
         </div>
-
-        <form class="subscribe-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Thanks for subscribing! We will notify you when we drop.');">
-            <input type="email" placeholder="Enter your email for early access..." required>
-            <button type="submit">Notify Me</button>
-        </form>
+        
     </div>
 
-    <script>
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 30);
-
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-
-            if (distance < 0) {
-                clearInterval(interval);
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-        }
-
-        const interval = setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
 </body>
 </html>
