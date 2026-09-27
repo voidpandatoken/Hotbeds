@@ -1,1 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds - Sandman Hotel Hamilton</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e63946',
+                            light: '#f8fafc',
+                            white: '#ffffff',
+                            text: '#0f172a',
+                            muted: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)',
+                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
 
+    <!-- Standard Header -->
+    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                
+                <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
+                    <a href="index.html">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex flex-1 justify-center space-x-10">
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
+                </nav>
+                
+                <div class="flex items-center justify-end w-1/4 gap-3">
+                    <div class="flex flex-col items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
+                            J.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Pill Navigation -->
+        <div class="bg-gray-50/80 border-t border-gray-100 py-2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mr-2 hidden md:block whitespace-nowrap">Nearby Deals:</span>
+                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Hamilton</a>
+                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Mississauga</a>
+                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Oakville</a>
+                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Burlington</a>
+                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Toronto</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Breadcrumb & Back -->
+        <div class="mb-4">
+            <a href="results.html" class="text-brand-red hover:text-red-700 text-sm font-bold flex items-center gap-1 transition-colors">
+                &larr; Back to Search Results
+            </a>
+        </div>
+
+        <!-- Property Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="text-yellow-400 text-sm tracking-widest">⭐⭐⭐⭐</div>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded">Hotel</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-2">Sandman Hotel Hamilton</h1>
+                <p class="text-sm font-medium text-gray-500 flex items-center gap-1">
+                    <svg class="w-4 h-4 text-brand-red" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                    560 Centennial Pkwy N, Hamilton, ON L8E 0G2
+                </p>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center gap-2 mb-1">
+                    <div class="text-right">
+                        <div class="text-sm font-bold text-brand-text uppercase tracking-wide">Fabulous</div>
+                        <div class="text-xs text-gray-400">1,245 reviews</div>
+                    </div>
+                    <div class="bg-brand-text text-white text-xl font-black px-3 py-2 rounded-lg shadow-sm">8.8</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cinematic Image Gallery Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-10 shadow-soft">
+            <div class="md:col-span-3 relative h-full">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop" alt="Hotel Exterior" class="w-full h-full object-cover">
+            </div>
+            <div class="hidden md:flex flex-col gap-2 h-full">
+                <div class="h-1/2 relative">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c894e4dc24a2?q=80&w=600&auto=format&fit=crop" alt="Room Interior" class="w-full h-full object-cover">
+                </div>
+                <div class="h-1/2 relative">
+                    <img src="https://images.unsplash.com/photo-1551882547-ff40eb0d1b73?q=80&w=600&auto=format&fit=crop" alt="Hotel Pool" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer hover:bg-black/50 transition-colors">
+                        <span class="text-white font-bold text-sm uppercase tracking-widest">+12 Photos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-10">
+            <!-- Left Column: Details -->
+            <div class="w-full lg:w-2/3">
+                <section class="mb-10 bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
+                    <h2 class="text-xl font-extrabold text-brand-text mb-4 uppercase tracking-wide">Property Overview</h2>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                        Experience exceptional comfort and modern design at the Sandman Hotel Hamilton. Located perfectly between Niagara Falls and Toronto, this premium property offers spacious, beautifully appointed guest rooms featuring free high-speed Wi-Fi, flat-screen TVs, and luxurious bedding.
+                    </p>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Guests can enjoy two on-site restaurants—Chop Steakhouse & Bar and Denny's—along with a state-of-the-art fitness center and a heated indoor pool. Whether traveling for business or leisure, Sandman Hotel Hamilton provides an unparalleled stay in the heart of the Golden Horseshoe.
+                    </p>
+                </section>
+
+                <section class="mb-10 bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
+                    <h2 class="text-xl font-extrabold text-brand-text mb-6 uppercase tracking-wide">Top Amenities</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2">
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Free High-Speed WiFi
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Heated Indoor Pool
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Fitness Center
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Chop Steakhouse
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Pet Friendly
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
+                            <span class="text-brand-red">✓</span> Free Parking
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Sticky Summary/Search Info -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-brand-text p-6 rounded-2xl shadow-soft sticky top-[180px]">
+                    <h3 class="text-white text-lg font-bold mb-4 uppercase tracking-widest">Your Search</h3>
+                    
+                    <div class="flex flex-col gap-4 border-b border-gray-600 pb-4 mb-4">
+                        <div class="bg-gray-800 rounded-lg p-3">
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-in</span>
+                            <span class="text-sm font-bold text-white" id="summary-checkin">Oct 14, 2026</span>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-3">
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-out</span>
+                            <span class="text-sm font-bold text-white" id="summary-checkout">Oct 16, 2026</span>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-3">
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Guests</span>
+                            <span class="text-sm font-bold text-white" id="summary-guests">2 Adults</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="document.getElementById('room-selection').scrollIntoView({behavior: 'smooth'})" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-3 rounded-lg uppercase tracking-widest transition-colors shadow-sm">
+                        View Available Rooms
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Selection Grid (Crucial API Data Injection Point) -->
+        <section id="room-selection" class="mt-8 pt-8 border-t border-gray-200">
+            <h2 class="text-2xl font-extrabold text-brand-text mb-6 uppercase tracking-tight">Select Your Room</h2>
+            
+            <div class="flex flex-col gap-6">
+                
+                <!-- Room Card 1: Standard Room (Non-Refundable) -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft flex flex-col md:flex-row">
+                    <div class="md:w-1/4 h-48 md:h-auto bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c894e4dc24a2?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover" alt="Standard King">
+                    </div>
+                    <div class="md:w-3/4 p-6 flex flex-col justify-between">
+                        <div class="flex flex-col md:flex-row justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-text mb-2">Standard King Room</h3>
+                                <p class="text-xs font-medium text-gray-500 mb-3 flex items-center gap-2">
+                                    <span>🛏️ 1 King Bed</span>
+                                    <span>👥 Sleeps 2</span>
+                                    <span>📏 300 sq ft</span>
+                                </p>
+                                <!-- TICO Compliance Disclosures -->
+                                <ul class="text-sm font-medium space-y-1">
+                                    <li class="flex items-center gap-1.5 text-gray-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Free Wi-Fi
+                                    </li>
+                                    <!-- Strict Non-Refundable Warning -->
+                                    <li class="flex items-center gap-1.5 text-brand-red font-bold">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        Non-Refundable
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col items-end justify-start border-l border-gray-100 pl-6 md:w-1/3">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total (2 Nights)</span>
+                                <div class="text-3xl font-black text-brand-text tracking-tighter mb-1">$316.00</div>
+                                <span class="text-[10px] text-gray-400 mb-4">Includes taxes & fees</span>
+                                
+                                <form action="checkout.html" method="GET" class="w-full">
+                                    <!-- Hidden fields to pass data to checkout -->
+                                    <input type="hidden" name="hotel" value="Sandman Hotel Hamilton">
+                                    <input type="hidden" name="room" value="Standard King Room">
+                                    <input type="hidden" name="price" value="316.00">
+                                    <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-2.5 rounded-lg shadow-sm hover:shadow transition-colors uppercase tracking-widest text-xs">
+                                        Reserve
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Card 2: Premium Room (Free Cancellation) -->
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft flex flex-col md:flex-row">
+                    <div class="md:w-1/4 h-48 md:h-auto bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover" alt="Premium Queen">
+                    </div>
+                    <div class="md:w-3/4 p-6 flex flex-col justify-between">
+                        <div class="flex flex-col md:flex-row justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-text mb-2">Premium Double Queen</h3>
+                                <p class="text-xs font-medium text-gray-500 mb-3 flex items-center gap-2">
+                                    <span>🛏️ 2 Queen Beds</span>
+                                    <span>👥 Sleeps 4</span>
+                                    <span>📏 350 sq ft</span>
+                                </p>
+                                <!-- TICO Compliance Disclosures -->
+                                <ul class="text-sm font-medium space-y-1">
+                                    <li class="flex items-center gap-1.5 text-gray-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Free Wi-Fi & Breakfast
+                                    </li>
+                                    <!-- Free Cancellation Display -->
+                                    <li class="flex items-center gap-1.5 text-green-600 font-bold">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Free Cancellation before Oct 12
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col items-end justify-start border-l border-gray-100 pl-6 md:w-1/3">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total (2 Nights)</span>
+                                <div class="text-3xl font-black text-brand-text tracking-tighter mb-1">$358.00</div>
+                                <span class="text-[10px] text-gray-400 mb-4">Includes taxes & fees</span>
+                                
+                                <form action="checkout.html" method="GET" class="w-full">
+                                    <!-- Hidden fields to pass data to checkout -->
+                                    <input type="hidden" name="hotel" value="Sandman Hotel Hamilton">
+                                    <input type="hidden" name="room" value="Premium Double Queen">
+                                    <input type="hidden" name="price" value="358.00">
+                                    <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-2.5 rounded-lg shadow-sm hover:shadow transition-colors uppercase tracking-widest text-xs">
+                                        Reserve
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TICO Compliant Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+                </div>
+                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
+                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
+                <p class="text-[11px] text-gray-400 font-medium">
+                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: Grab parameters from URL if arriving from results.html
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkin = urlParams.get('checkin');
+            const checkout = urlParams.get('checkout');
+            const guests = urlParams.get('guests');
+
+            if(checkin && checkout) {
+                const options = { month: 'short', day: 'numeric', year: 'numeric' };
+                document.getElementById('summary-checkin').textContent = new Date(checkin).toLocaleDateString('en-US', options);
+                document.getElementById('summary-checkout').textContent = new Date(checkout).toLocaleDateString('en-US', options);
+            }
+            if(guests) {
+                document.getElementById('summary-guests').textContent = `${guests} Guests`;
+            }
+        });
+    </script>
+</body>
+</html>
