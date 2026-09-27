@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds - Secure Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e63946',
+                            light: '#f8fafc',
+                            white: '#ffffff',
+                            text: '#0f172a',
+                            muted: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)',
+                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
+
+    <!-- Standard Header with Hot Beds Club Button -->
+    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                
+                <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
+                    <a href="index.html">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex flex-1 justify-center space-x-10">
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
+                </nav>
+                
+                <div class="flex items-center justify-end w-auto lg:w-1/3 gap-3 md:gap-4">
+                    <div class="hidden sm:flex flex-col items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
+                            J.
+                        </div>
+                    </div>
+                    <!-- Hot Beds Club Button -->
+                    <a href="#" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
+                        <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
+                            <span class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for a limited time</span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mb-12">
+        
+        <div class="mb-6">
+            <a href="javascript:history.back()" class="text-brand-red hover:text-red-700 text-sm font-bold flex items-center gap-1 transition-colors">
+                &larr; Back to Room Selection
+            </a>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-8">Secure Checkout</h1>
+
+        <div class="flex flex-col-reverse lg:flex-row gap-10">
+            
+            <!-- Left Column: Forms -->
+            <div class="w-full lg:w-2/3">
+                <form action="confirmation.html" method="POST" id="checkout-form" class="flex flex-col gap-8">
+                    
+                    <!-- Guest Details Section -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
+                        <h2 class="text-xl font-extrabold text-brand-text mb-6 uppercase tracking-wide flex items-center gap-2">
+                            <span class="bg-brand-red text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                            Guest Details
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">First Name</label>
+                                <input type="text" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Last Name</label>
+                                <input type="text" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Email Address</label>
+                                <input type="email" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                                <p class="text-xs text-gray-400 mt-1">Your booking confirmation will be sent here.</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Phone Number</label>
+                                <input type="tel" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Section -->
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
+                        <h2 class="text-xl font-extrabold text-brand-text mb-6 uppercase tracking-wide flex items-center gap-2">
+                            <span class="bg-brand-red text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                            Payment Information
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Name on Card</label>
+                                <input type="text" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Card Number</label>
+                                <div class="relative">
+                                    <input type="text" placeholder="0000 0000 0000 0000" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                                    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
+                                        <!-- Mock Card Icons -->
+                                        <div class="w-8 h-5 bg-gray-200 rounded"></div>
+                                        <div class="w-8 h-5 bg-gray-200 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Expiration Date</label>
+                                <input type="text" placeholder="MM/YY" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">CVC / CVV</label>
+                                <input type="text" placeholder="123" required class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TICO Compliance / Policies Section -->
+                    <div class="bg-red-50 p-8 rounded-2xl border border-red-100 shadow-inner">
+                        <h2 class="text-xl font-extrabold text-brand-text mb-4 uppercase tracking-wide flex items-center gap-2">
+                            <span class="bg-brand-red text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                            Policies & Legal
+                        </h2>
+                        
+                        <div class="flex flex-col gap-4">
+                            <!-- Cancellation Policy Acknowledgment -->
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <div class="mt-0.5">
+                                    <input type="checkbox" id="tico-cancel" required class="w-5 h-5 text-brand-red rounded border-gray-300 focus:ring-brand-red accent-brand-red">
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-brand-text block">I acknowledge the cancellation policy.</span>
+                                    <span class="text-xs text-gray-600 block mt-1">If this reservation is marked Non-Refundable, I understand no refunds will be issued for cancellations.</span>
+                                </div>
+                            </label>
+                            
+                            <!-- Travel Insurance Acknowledgment -->
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <div class="mt-0.5">
+                                    <input type="checkbox" id="tico-insurance" required class="w-5 h-5 text-brand-red rounded border-gray-300 focus:ring-brand-red accent-brand-red">
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-brand-text block">I have been advised of Travel Insurance.</span>
+                                    <span class="text-xs text-gray-600 block mt-1">Hotbeds has advised me of the availability of trip cancellation and out-of-province health insurance. By checking this box, I am either accepting external coverage or declining it at my own risk.</span>
+                                </div>
+                            </label>
+                            
+                            <!-- General Terms -->
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <div class="mt-0.5">
+                                    <input type="checkbox" id="tico-terms" required class="w-5 h-5 text-brand-red rounded border-gray-300 focus:ring-brand-red accent-brand-red">
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-brand-text block">I agree to the Terms & Conditions.</span>
+                                    <span class="text-xs text-gray-600 block mt-1">I have read and agree to the Hotbeds Terms of Service and Privacy Policy.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white text-lg font-black py-4 rounded-xl shadow-[0_4px_14px_0_rgba(230,57,70,0.39)] hover:shadow-[0_6px_20px_rgba(230,57,70,0.23)] uppercase tracking-widest transition-all duration-300 transform hover:-translate-y-0.5">
+                        Complete Booking
+                    </button>
+                    
+                </form>
+            </div>
+
+            <!-- Right Column: Booking Summary -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-brand-text p-6 rounded-2xl shadow-soft sticky top-[130px]">
+                    <h3 class="text-white text-lg font-bold mb-4 uppercase tracking-widest border-b border-gray-600 pb-4">Booking Summary</h3>
+                    
+                    <div class="mb-6">
+                        <div class="w-full h-32 rounded-lg bg-gray-800 mb-4 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover opacity-80" alt="Hotel">
+                        </div>
+                        <h4 class="text-white font-bold text-lg" id="summary-hotel">Sandman Hotel Hamilton</h4>
+                        <p class="text-brand-red text-xs font-bold uppercase tracking-widest mb-1" id="summary-room">Standard King Room</p>
+                        <p class="text-gray-400 text-xs mt-2">1 Room, 2 Guests</p>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-gray-800 rounded-lg p-3 mb-6">
+                        <div class="text-center w-1/2 border-r border-gray-600">
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-in</span>
+                            <span class="text-xs font-bold text-white" id="summary-checkin">Oct 14, 2026</span>
+                        </div>
+                        <div class="text-center w-1/2">
+                            <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-out</span>
+                            <span class="text-xs font-bold text-white" id="summary-checkout">Oct 16, 2026</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-600 pt-4 mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">Room Rate</span>
+                            <span class="text-white text-sm font-medium" id="summary-base">$280.00</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-400 text-sm">Taxes & Fees</span>
+                            <span class="text-white text-sm font-medium" id="summary-tax">$36.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-600 pt-4 flex justify-between items-end">
+                        <div>
+                            <span class="block text-white text-sm font-bold uppercase tracking-widest">Total</span>
+                            <span class="text-[10px] text-gray-400">All taxes included</span>
+                        </div>
+                        <div class="text-3xl font-black text-brand-red tracking-tighter" id="summary-total">$316.00</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- TICO Compliant Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+                </div>
+                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
+                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
+                <p class="text-[11px] text-gray-400 font-medium">
+                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Form Validation ensuring checkboxes are clicked before pushing to confirmation
+            const checkoutForm = document.getElementById('checkout-form');
+            
+            checkoutForm.addEventListener('submit', function(e) {
+                const terms = document.getElementById('tico-terms').checked;
+                const cancel = document.getElementById('tico-cancel').checked;
+                const insurance = document.getElementById('tico-insurance').checked;
+                
+                if (!terms || !cancel || !insurance) {
+                    e.preventDefault();
+                    alert("Please review and accept the mandatory Booking Policies to complete your reservation.");
+                }
+            });
+
+            // Capture URL Parameters from the "Reserve" button on hotel.html
+            const urlParams = new URLSearchParams(window.location.search);
+            const hotel = urlParams.get('hotel');
+            const room = urlParams.get('room');
+            const price = parseFloat(urlParams.get('price'));
+            const checkin = urlParams.get('checkin');
+            const checkout = urlParams.get('checkout');
+
+            // Populate Summary if data exists
+            if(hotel) document.getElementById('summary-hotel').textContent = hotel;
+            if(room) document.getElementById('summary-room').textContent = room;
+            
+            if(price && !isNaN(price)) {
+                // Rough math simulation for base vs tax (assuming ~13% tax)
+                const basePrice = price / 1.13;
+                const tax = price - basePrice;
+                
+                document.getElementById('summary-base').textContent = `$${basePrice.toFixed(2)}`;
+                document.getElementById('summary-tax').textContent = `$${tax.toFixed(2)}`;
+                document.getElementById('summary-total').textContent = `$${price.toFixed(2)}`;
+            }
+
+            if(checkin && checkout) {
+                const options = { month: 'short', day: 'numeric', year: 'numeric' };
+                document.getElementById('summary-checkin').textContent = new Date(checkin).toLocaleDateString('en-US', options);
+                document.getElementById('summary-checkout').textContent = new Date(checkout).toLocaleDateString('en-US', options);
+            }
+        });
+    </script>
+</body>
+</html>
