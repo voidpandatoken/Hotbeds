@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds - Premium Hotel Deals</title>
+    <title>Hotbeds - Exclusive Hotel Reserves</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,32 +11,31 @@
                 extend: {
                     colors: {
                         brand: {
-                            red: '#e63946',
-                            light: '#f8fafc',
-                            white: '#ffffff',
-                            text: '#0f172a',
-                            muted: '#64748b'
+                            red: '#9b2226',    /* Deep, luxurious ruby/crimson */
+                            bg: '#faf9f6',     /* Alabaster off-white */
+                            text: '#111111',   /* Rich off-black */
+                            muted: '#86868b'   /* Sleek editorial gray */
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                     boxShadow: {
-                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
                     }
                 }
             }
         }
     </script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Dual Font Pairing -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #ffffff;
+            background-color: #faf9f6;
+            color: #111111;
         }
         
         .hide-scrollbar::-webkit-scrollbar {
@@ -47,59 +46,57 @@
             scrollbar-width: none;
         }
 
-        @keyframes flash-switch {
-            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-            20% { transform: scale(1.02); box-shadow: 0 0 30px rgba(230, 57, 70, 0.5); }
-            50% { transform: scale(1.03); box-shadow: 0 0 45px rgba(230, 57, 70, 0.7); }
-            80% { transform: scale(1.02); box-shadow: 0 0 30px rgba(230, 57, 70, 0.5); }
-            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        /* Minimalist Input Fields */
+        .input-luxury {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #d1d1d6;
+            border-radius: 0;
+            padding: 8px 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #111111;
+            transition: border-color 0.3s ease;
         }
-
-        .deal-switch-anim {
-            animation: flash-switch 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        .input-luxury:focus {
+            outline: none;
+            border-bottom-color: #111111;
+            box-shadow: none;
         }
-
-        .hero-bg-layer {
-            background-image: url('COVER.png');
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px);
-            transform: scale(1.05);
+        
+        /* Subtle transition for sticky nav */
+        #main-nav {
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
+<body class="flex flex-col min-h-screen">
 
-    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
-        <!-- Main Top Bar -->
+    <!-- Transparent to Frosted Glass Sticky Nav -->
+    <header id="main-nav" class="fixed top-0 w-full z-50 flex flex-col bg-transparent">
         <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 md:h-24">
+            <div class="flex justify-between items-center h-24 md:h-28">
                 
-                <!-- Left: Logo -->
+                <!-- Left: Logo (Increased by ~30%) -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
-                    <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    <img src="LOGO.png" alt="Hotbeds" class="h-[42px] md:h-[52px] w-auto drop-shadow-sm" onerror="this.onerror=null; this.outerHTML='<span class=\'font-serif font-bold text-3xl md:text-4xl tracking-tight text-brand-text\'>Hotbeds.</span>'">
                 </div>
                 
-                <!-- Center: Navigation Links -->
-                <nav class="hidden md:flex flex-1 justify-center space-x-10">
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
+                <!-- Center: Navigation Links (Editorial Spacing) -->
+                <nav class="hidden md:flex flex-1 justify-center space-x-12">
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-300 uppercase text-[10px] tracking-[0.2em]">Destinations</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-300 uppercase text-[10px] tracking-[0.2em]">Corporate</a>
+                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-300 uppercase text-[10px] tracking-[0.2em]">Sign In</a>
                 </nav>
                 
-                <!-- Right: Call to Action (Avatar & Timer) -->
-                <div class="flex items-center justify-end w-1/4 gap-3">
-                    <div class="flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
-                            J.
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center md:items-end">
-                        <button class="bg-brand-red hover:bg-red-700 text-white font-bold text-xs md:text-sm px-4 py-1.5 rounded-full shadow-sm hover:shadow transition-all whitespace-nowrap">
-                            Join the HotBeds Club
+                <!-- Right: Call to Action -->
+                <div class="flex items-center justify-end w-1/4 gap-4">
+                    <div class="flex flex-col items-end">
+                        <button class="bg-brand-text hover:bg-brand-red text-white font-medium text-[10px] uppercase tracking-widest px-6 py-2.5 rounded-none transition-all duration-300">
+                            The Reserve Club
                         </button>
-                        <div class="text-[10px] font-semibold text-gray-500 mt-1 whitespace-nowrap">
-                            Join for Free: <span id="club-timer" class="text-brand-red font-mono font-bold">7d 00h 00m 00s</span>
+                        <div class="text-[9px] font-medium text-brand-text mt-1.5 uppercase tracking-widest opacity-70">
+                            Closes in: <span id="club-timer" class="font-serif italic font-bold text-brand-red ml-1">7d 00h</span>
                         </div>
                     </div>
                 </div>
@@ -107,104 +104,90 @@
             </div>
         </div>
 
-        <!-- Sub Header: Thinner Pill Navigation -->
-        <div class="bg-gray-50/80 border-t border-gray-100 py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mr-2 hidden md:block whitespace-nowrap">Nearby Deals:</span>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Hamilton</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Mississauga</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Oakville</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Burlington</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Milton</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Toronto</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Niagara Falls</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">St. Catharines</a>
-                    <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Guelph</a>
+        <!-- Sub Header: Minimalist City Text (No Pills) -->
+        <div class="border-t border-brand-text/5 bg-white/20 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+                <div class="flex gap-6 overflow-x-auto hide-scrollbar items-center justify-start text-[9px] font-semibold uppercase tracking-widest text-brand-text/70">
+                    <span class="text-brand-red hidden md:block">Curated Markets:</span>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Hamilton</a>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Mississauga</a>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Oakville</a>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Burlington</a>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Toronto</a>
+                    <a href="#" class="hover:text-brand-text transition-colors whitespace-nowrap">Niagara Falls</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative w-full h-[350px] flex items-center justify-center overflow-hidden shrink-0 mt-4">
-        <!-- Background Image with Blur & Dark Overlay -->
-        <div class="absolute inset-0 z-0 overflow-hidden">
-            <div class="absolute inset-0 hero-bg-layer"></div>
-            <div class="absolute inset-0 bg-black/60"></div>
+    <!-- Cinematic Hero Section -->
+    <section class="relative w-full h-[65vh] min-h-[550px] flex items-center justify-center overflow-hidden shrink-0">
+        <!-- Razor Sharp Full-Bleed Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="COVER.png" alt="Luxury Hotel Interior" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?q=80&w=2000&auto=format&fit=crop'">
+            <!-- Gradient Overlay fading into the Alabaster background -->
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/20 to-black/30"></div>
         </div>
 
-        <!-- Foreground Content: Dynamic Flash Deal -->
-        <div class="relative z-10 w-full max-w-4xl px-4 flex flex-col items-center">
-            
-            <!-- Flash Deal Card -->
-            <div id="flash-deal-card" class="bg-white rounded-2xl shadow-soft-xl border border-gray-100 w-full flex flex-col md:flex-row overflow-hidden transition-all duration-300">
+        <!-- Foreground Content: Redesigned Flash Deal -->
+        <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-end pt-20">
+            <!-- Glassmorphism Deal Panel -->
+            <div id="flash-deal-card" class="bg-white/70 backdrop-blur-xl border border-white/40 shadow-glass rounded-sm w-full md:w-[400px] p-6 transition-opacity duration-500">
+                <div class="flex items-center gap-2 mb-4 border-b border-brand-text/10 pb-3">
+                    <span class="w-1.5 h-1.5 bg-brand-red rounded-full animate-pulse"></span>
+                    <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-brand-text">Exclusive Reserve</span>
+                </div>
                 
-                <!-- Deal Image -->
-                <div class="md:w-5/12 relative h-32 md:h-auto">
-                    <img id="deal-image" src="sandman.png.jpg" alt="Hotel View" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/800x600/e2e8f0/64748b?text=Featured+Deal'">
-                    <div class="absolute top-3 left-3 bg-white/95 backdrop-blur px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1.5 shadow-sm text-gray-800 uppercase tracking-wide">
-                        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> Flash Deal
+                <h2 id="deal-name" class="font-serif text-2xl font-bold text-brand-text leading-snug mb-1">The Pearle Hotel & Spa</h2>
+                <div class="text-[10px] font-medium uppercase tracking-widest text-brand-muted mb-6">Burlington, ON</div>
+                
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <span class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Expires In</span>
+                        <div id="countdown-timer" class="text-xl font-serif italic font-bold text-brand-red">00:15</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Nightly Rate</span>
+                        <div class="text-3xl font-serif text-brand-text" id="deal-price">$285</div>
                     </div>
                 </div>
 
-                <!-- Deal Details -->
-                <div class="md:w-7/12 p-5 flex flex-col justify-center relative bg-white">
-                    <h2 id="deal-name" class="text-2xl md:text-3xl font-extrabold text-brand-text leading-tight mb-1">Sandman Hotel Hamilton</h2>
-                    <div class="text-brand-red text-xs font-bold uppercase tracking-wider mb-3">Hamilton, ON</div>
-                    
-                    <div class="bg-gray-50/80 rounded-xl p-3 border border-gray-100 shadow-inner flex justify-between items-center mb-4">
-                        <div>
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-0.5">Price Expires In</span>
-                            <div id="countdown-timer" class="text-2xl font-mono font-black text-brand-red">
-                                00:15
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-0.5">Total (1 Night)</span>
-                            <div class="text-3xl font-black text-brand-text tracking-tighter" id="deal-price">
-                                $158.79
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="w-full bg-brand-red hover:bg-red-700 text-white text-base font-bold py-3 rounded-xl shadow-[0_4px_14px_0_rgba(230,57,70,0.39)] hover:shadow-[0_6px_20px_rgba(230,57,70,0.23)] uppercase transition-all duration-300 transform hover:-translate-y-0.5">
-                        Book This Deal Now
-                    </button>
-                </div>
+                <button class="w-full bg-transparent border border-brand-text text-brand-text hover:bg-brand-text hover:text-white text-[10px] uppercase tracking-[0.2em] font-bold py-3 transition-colors duration-300">
+                    Reserve Now
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Booking Search Engine -->
-    <div class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-        <div class="bg-white rounded-xl shadow-soft-xl border border-gray-100 p-4">
-            <form id="booking-search" class="flex flex-col md:flex-row gap-4 items-end">
+    <!-- Glassmorphism Booking Search Engine (Overlapping Hero) -->
+    <div class="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-16 md:-mt-24 relative z-20">
+        <div class="bg-white/80 backdrop-blur-2xl border border-white/60 shadow-glass rounded-none p-6 md:p-8">
+            <form id="booking-search" class="flex flex-col md:flex-row gap-6 items-end">
                 <div class="w-full md:w-1/3">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Destination</label>
-                    <input type="text" id="search-city" placeholder="e.g. Hamilton, ON" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                    <label class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Destination</label>
+                    <input type="text" id="search-city" placeholder="City or Hotel Name" class="w-full input-luxury">
                 </div>
-                <div class="w-full md:w-1/3 flex gap-2">
+                <div class="w-full md:w-1/3 flex gap-4">
                     <div class="w-1/2">
-                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-in</label>
-                        <input type="date" id="check-in" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                        <label class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Check-in</label>
+                        <input type="date" id="check-in" class="w-full input-luxury">
                     </div>
                     <div class="w-1/2">
-                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-out</label>
-                        <input type="date" id="check-out" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                        <label class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Check-out</label>
+                        <input type="date" id="check-out" class="w-full input-luxury">
                     </div>
                 </div>
                 <div class="w-full md:w-1/6">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Guests</label>
-                    <select id="guests" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                        <option value="4">4+</option>
+                    <label class="text-[9px] font-bold text-brand-muted uppercase tracking-[0.2em] block mb-1">Guests</label>
+                    <select id="guests" class="w-full input-luxury">
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4+ Guests</option>
                     </select>
                 </div>
                 <div class="w-full md:w-1/6">
-                    <button type="submit" class="w-full bg-brand-text hover:bg-black text-white p-3 rounded-lg font-bold text-sm transition-colors h-[46px]">
+                    <button type="submit" class="w-full bg-brand-red hover:bg-[#7a181e] text-white py-3 px-4 font-bold text-[10px] uppercase tracking-widest transition-colors h-[42px] flex items-center justify-center">
                         Search
                     </button>
                 </div>
@@ -212,57 +195,73 @@
         </div>
     </div>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-3">
+    <!-- Main Content Area -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div class="flex justify-between items-end mb-10 border-b border-brand-text/10 pb-4">
             <div>
-                <h2 class="text-2xl font-extrabold text-brand-text uppercase tracking-tight">More Great Stays</h2>
-                <p class="text-gray-500 text-sm font-medium">Top-rated hotels available right now.</p>
+                <h2 class="font-serif text-3xl md:text-4xl text-brand-text mb-2">The Collection</h2>
+                <p class="text-brand-muted text-xs uppercase tracking-widest font-medium">Curated properties available for immediate reserve.</p>
             </div>
         </div>
 
-        <!-- Dynamic Injection Container -->
-        <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Dynamic Injection Container (Strict 4 Columns) -->
+        <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             <!-- API results will be injected here via JavaScript -->
         </div>
 
-        <!-- Hidden Template for JavaScript Cloning -->
+        <!-- Hidden Template for JavaScript Cloning (Editorial Card Style) -->
         <template id="hotel-card-template">
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1 cursor-pointer">
-                <div class="relative h-44 overflow-hidden">
-                    <img class="hotel-img w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="" alt="">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="hotel-name text-base font-bold text-brand-text mb-1 truncate"></h3>
-                    <div class="hotel-stars text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="hotel-price text-lg font-black text-brand-text"></span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
+            <div class="group cursor-pointer flex flex-col relative">
+                <!-- Image Container with Editorial 4:5 aspect ratio -->
+                <div class="relative w-full aspect-[4/5] overflow-hidden mb-4">
+                    <img class="hotel-img w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-in-out" src="" alt="">
+                    
+                    <!-- Subtle Dark Overlay on Hover -->
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <!-- Floating Reserve Button (Fades and rises on hover) -->
+                    <div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-10">
+                        <button class="w-full bg-white/90 backdrop-blur-md text-brand-text hover:bg-brand-red hover:text-white px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] transition-colors border border-transparent hover:border-brand-red">
+                            Select Room
                         </button>
+                    </div>
+                </div>
+                
+                <!-- Minimalist Content Details -->
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="hotel-name text-lg font-serif font-semibold text-brand-text truncate pr-2"></h3>
+                        <div class="hotel-stars text-brand-text text-[9px] tracking-[0.2em] mt-1.5 opacity-80">★★★★</div>
+                    </div>
+                    <div class="flex justify-between items-end mt-1">
+                        <span class="text-[9px] font-medium text-brand-muted uppercase tracking-[0.2em]">Per Night</span>
+                        <span class="hotel-price text-xl font-serif text-brand-text"></span>
                     </div>
                 </div>
             </div>
         </template>
     </main>
 
-    <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
+    <!-- TICO Compliant Footer -->
+    <footer class="bg-white border-t border-brand-text/10 pt-16 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
                 <div>
-                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+                    <span class="font-serif font-bold text-2xl tracking-tight text-brand-text">Hotbeds.</span>
                 </div>
-                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
-                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
-                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
+                <div class="flex flex-wrap gap-8 text-[10px] font-medium uppercase tracking-widest text-brand-muted">
+                    <a href="#" class="hover:text-brand-red transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
                 </div>
             </div>
-            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
-                <p class="text-[11px] text-gray-400 font-medium">
-                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
+            
+            <div class="border-t border-brand-text/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                <p class="text-[10px] text-brand-muted uppercase tracking-widest">
+                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1
+                </p>
+                <p class="text-[10px] text-brand-text font-bold uppercase tracking-widest bg-brand-bg px-4 py-2 border border-brand-text/10">
+                    TICO Registration: #XXXXXXX
                 </p>
             </div>
         </div>
@@ -271,19 +270,29 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- 1. Flash Deal Logic ---
+            // --- Navbar Scroll Effect ---
+            const nav = document.getElementById('main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm');
+                    nav.classList.remove('bg-transparent');
+                } else {
+                    nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm');
+                    nav.classList.add('bg-transparent');
+                }
+            });
+
+            // --- Flash Deal Logic ---
             const DEALS = [
                 {
-                    name: "Sandman Hotel Hamilton",
-                    price: "$158.79",
-                    image: "sandman.png.jpg",
-                    duration: 15 // 15 seconds for the first deal
+                    name: "The Pearle Hotel & Spa",
+                    price: "$285",
+                    duration: 15
                 },
                 {
-                    name: "Sheraton Hamilton",
-                    price: "$159.89",
-                    image: "sheraton.png.jpg",
-                    duration: 300 // Reset to 5 minutes after switch
+                    name: "The Hazelton Hotel",
+                    price: "$495",
+                    duration: 300 
                 }
             ];
 
@@ -295,7 +304,6 @@
             const cardElement = document.getElementById('flash-deal-card');
             const nameElement = document.getElementById('deal-name');
             const priceElement = document.getElementById('deal-price');
-            const imageElement = document.getElementById('deal-image');
 
             function formatTime(seconds) {
                 const m = Math.floor(seconds / 60);
@@ -309,22 +317,17 @@
                 currentDealIndex++;
                 const nextDeal = DEALS[currentDealIndex];
 
-                cardElement.classList.add('deal-switch-anim');
+                cardElement.style.opacity = '0';
                 
                 setTimeout(() => {
                     nameElement.innerText = nextDeal.name;
                     priceElement.innerText = nextDeal.price;
-                    imageElement.src = nextDeal.image;
                     
                     timeLeft = nextDeal.duration; 
                     timerElement.innerText = formatTime(timeLeft);
-                    timerElement.classList.remove('text-red-600'); 
-                    timerElement.classList.add('text-brand-red');
-                }, 400);
-
-                setTimeout(() => {
-                    cardElement.classList.remove('deal-switch-anim');
-                }, 800);
+                    
+                    cardElement.style.opacity = '1';
+                }, 500);
             }
 
             function startTimer() {
@@ -334,11 +337,6 @@
                     timeLeft--;
                     timerElement.innerText = formatTime(timeLeft);
                     
-                    if (currentDealIndex === 0 && timeLeft <= 5 && timeLeft > 0) {
-                        timerElement.classList.remove('text-brand-red');
-                        timerElement.classList.add('text-red-600');
-                    }
-
                     if (timeLeft <= 0) {
                         if (currentDealIndex === 0) {
                             switchDeal();
@@ -351,26 +349,41 @@
 
             startTimer();
 
-            // --- 2. Hotbeds Club 7-Day Timer Logic ---
+            // --- Reserve Club Timer Logic ---
             const clubTimerElement = document.getElementById('club-timer');
-            let clubTimeLeft = 7 * 24 * 60 * 60; // 7 days in seconds
+            let clubTimeLeft = 7 * 24 * 60 * 60; 
 
             function updateClubTimer() {
                 const days = Math.floor(clubTimeLeft / (24 * 3600));
                 const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
                 const minutes = Math.floor((clubTimeLeft % 3600) / 60);
-                const seconds = clubTimeLeft % 60;
 
-                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m`;
                 
-                if (clubTimeLeft > 0) {
-                    clubTimeLeft--;
-                }
+                if (clubTimeLeft > 0) clubTimeLeft--;
             }
             
-            // Initialize and set interval
             updateClubTimer();
             setInterval(updateClubTimer, 1000);
+
+            // --- Temporary Code to Populate the Grid for Visualization ---
+            const container = document.getElementById('api-results-container');
+            const template = document.getElementById('hotel-card-template');
+            
+            const dummyData = [
+                { name: "Sandman Signature", price: "$158", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop" },
+                { name: "Sheraton Reserve", price: "$195", img: "https://images.unsplash.com/photo-1582719478250-c894e4dc24a2?q=80&w=600&auto=format&fit=crop" },
+                { name: "The Omni King", price: "$320", img: "https://images.unsplash.com/photo-1551882547-ff40eb0d1b73?q=80&w=600&auto=format&fit=crop" },
+                { name: "Courtyard Suites", price: "$175", img: "https://images.unsplash.com/photo-1590490359683-658d3d23f972?q=80&w=600&auto=format&fit=crop" }
+            ];
+
+            dummyData.forEach(data => {
+                const clone = template.content.cloneNode(true);
+                clone.querySelector('.hotel-name').textContent = data.name;
+                clone.querySelector('.hotel-price').textContent = data.price;
+                clone.querySelector('.hotel-img').src = data.img;
+                container.appendChild(clone);
+            });
         });
     </script>
 </body>
