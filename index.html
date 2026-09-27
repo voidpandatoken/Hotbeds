@@ -179,24 +179,29 @@
     <!-- Booking Search Engine -->
     <div class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
         <div class="bg-white rounded-xl shadow-soft-xl border border-gray-100 p-4">
-            <form id="booking-search" class="flex flex-col md:flex-row gap-4 items-end">
+            <!-- UPDATED: Action and Method added here -->
+            <form id="booking-search" action="results.html" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
                 <div class="w-full md:w-1/3">
                     <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Destination</label>
-                    <input type="text" id="search-city" placeholder="e.g. Hamilton, ON" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                    <!-- UPDATED: Name and Required added here -->
+                    <input type="text" id="search-city" name="destination" placeholder="e.g. Hamilton, ON" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium" required>
                 </div>
                 <div class="w-full md:w-1/3 flex gap-2">
                     <div class="w-1/2">
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-in</label>
-                        <input type="date" id="check-in" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                        <!-- UPDATED: Name and Required added here -->
+                        <input type="date" id="check-in" name="checkin" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium" required>
                     </div>
                     <div class="w-1/2">
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-out</label>
-                        <input type="date" id="check-out" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                        <!-- UPDATED: Name and Required added here -->
+                        <input type="date" id="check-out" name="checkout" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium" required>
                     </div>
                 </div>
                 <div class="w-full md:w-1/6">
                     <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Guests</label>
-                    <select id="guests" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                    <!-- UPDATED: Name added here -->
+                    <select id="guests" name="guests" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
                         <option value="1">1</option>
                         <option value="2" selected>2</option>
                         <option value="3">3</option>
