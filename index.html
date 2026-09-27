@@ -36,10 +36,9 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #ffffff; /* Pristine pure white background */
+            background-color: #ffffff;
         }
         
-        /* Hide scrollbar for the horizontal scrolling city pills */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -48,7 +47,6 @@
             scrollbar-width: none;
         }
 
-        /* Animation for when the dynamic deal changes */
         @keyframes flash-switch {
             0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
             20% { transform: scale(1.02); box-shadow: 0 0 30px rgba(230, 57, 70, 0.5); }
@@ -61,13 +59,12 @@
             animation: flash-switch 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Hero background layer to allow blur without blurring text */
         .hero-bg-layer {
             background-image: url('COVER.png');
             background-size: cover;
             background-position: center;
             filter: blur(8px);
-            transform: scale(1.05); /* Prevents blurred edges from showing gaps */
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -115,7 +112,6 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start">
                     <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mr-2 hidden md:block whitespace-nowrap">Nearby Deals:</span>
-                    <!-- City Pills -->
                     <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Hamilton</a>
                     <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Mississauga</a>
                     <a href="#" class="px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Oakville</a>
@@ -130,12 +126,11 @@
         </div>
     </header>
 
-    <!-- Hero Section (Compressed Height for visibility of grid) -->
+    <!-- Hero Section -->
     <section class="relative w-full h-[350px] flex items-center justify-center overflow-hidden shrink-0 mt-4">
         <!-- Background Image with Blur & Dark Overlay -->
         <div class="absolute inset-0 z-0 overflow-hidden">
             <div class="absolute inset-0 hero-bg-layer"></div>
-            <!-- Dark Overlay to make the white card pop heavily -->
             <div class="absolute inset-0 bg-black/60"></div>
         </div>
 
@@ -147,7 +142,6 @@
                 
                 <!-- Deal Image -->
                 <div class="md:w-5/12 relative h-32 md:h-auto">
-                    <!-- Starting Image: Sandman -->
                     <img id="deal-image" src="sandman.png.jpg" alt="Hotel View" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/800x600/e2e8f0/64748b?text=Featured+Deal'">
                     <div class="absolute top-3 left-3 bg-white/95 backdrop-blur px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1.5 shadow-sm text-gray-800 uppercase tracking-wide">
                         <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> Flash Deal
@@ -182,6 +176,42 @@
         </div>
     </section>
 
+    <!-- Booking Search Engine -->
+    <div class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <div class="bg-white rounded-xl shadow-soft-xl border border-gray-100 p-4">
+            <form id="booking-search" class="flex flex-col md:flex-row gap-4 items-end">
+                <div class="w-full md:w-1/3">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Destination</label>
+                    <input type="text" id="search-city" placeholder="e.g. Hamilton, ON" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-sm font-medium">
+                </div>
+                <div class="w-full md:w-1/3 flex gap-2">
+                    <div class="w-1/2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-in</label>
+                        <input type="date" id="check-in" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                    </div>
+                    <div class="w-1/2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Check-out</label>
+                        <input type="date" id="check-out" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/6">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1">Guests</label>
+                    <select id="guests" class="w-full p-3 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/6">
+                    <button type="submit" class="w-full bg-brand-text hover:bg-black text-white p-3 rounded-lg font-bold text-sm transition-colors h-[46px]">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-3">
             <div>
@@ -190,181 +220,50 @@
             </div>
         </div>
 
-        <!-- STRICT 4 Columns on Desktop -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <!-- Card 1 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="sandman.png.jpg" alt="Sandman Hotel" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Sandman'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Sandman Hotel</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$149</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="hampton.png.jpg" alt="Hilton Hamilton" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Hilton'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Hilton Hamilton</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$195</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="sheraton.png.jpg" alt="Sheraton Hamilton" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Sheraton'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Sheraton Hamilton</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$165</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="homewood.png.jpg" alt="Homewood Suites" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Homewood'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Homewood Suites</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$182</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="sandman.png.jpg" alt="Courtyard by Marriott" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Courtyard'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Courtyard by Marriott</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$175</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="hampton.png.jpg" alt="C-Hotel by Carmen's" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=C-Hotel'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">C-Hotel by Carmen's</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$189</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="sheraton.png.jpg" alt="Visitors Inn" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Visitors+Inn'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Visitors Inn</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$155</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
-                <div class="relative h-44 overflow-hidden">
-                    <img src="homewood.png.jpg" alt="Super 8 by Wyndham" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/600x400/e2e8f0/64748b?text=Super+8'">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="text-base font-bold text-brand-text mb-1 truncate">Super 8 by Wyndham</h3>
-                    <div class="text-yellow-400 text-xs mb-3">⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="text-lg font-black text-brand-text">$129</span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Dynamic Injection Container -->
+        <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- API results will be injected here via JavaScript -->
         </div>
+
+        <!-- Hidden Template for JavaScript Cloning -->
+        <template id="hotel-card-template">
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1 cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img class="hotel-img w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="" alt="">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="hotel-name text-base font-bold text-brand-text mb-1 truncate"></h3>
+                    <div class="hotel-stars text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
+                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
+                        <div>
+                            <span class="hotel-price text-lg font-black text-brand-text"></span>
+                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
+                        </div>
+                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
     </main>
 
     <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-                <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+                </div>
+                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
+                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
+                </div>
             </div>
-            <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
-                <a href="#" class="hover:text-brand-red transition-colors">Terms</a>
-                <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
-                <a href="#" class="hover:text-brand-red transition-colors">Support</a>
+            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
+                <p class="text-[11px] text-gray-400 font-medium">
+                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
+                </p>
             </div>
         </div>
     </footer>
