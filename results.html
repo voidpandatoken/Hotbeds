@@ -268,23 +268,21 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+   <script>
+        document.addEventListener('DOMContentLoaded', async () => {
             
-            // --- URL Parameter Parsing ---
-            // This grabs the data from the index page search form
+            // --- 1. Read the Search Parameters ---
             const urlParams = new URLSearchParams(window.location.search);
             const dest = urlParams.get('destination') || 'Hamilton, ON';
-            const checkin = urlParams.get('checkin') || 'Not Selected';
-            const checkout = urlParams.get('checkout') || 'Not Selected';
+            const checkin = urlParams.get('checkin') || '';
+            const checkout = urlParams.get('checkout') || '';
             const guests = urlParams.get('guests') || '2';
 
-            // Populate the active search bar
+            // Populate the active search bar visually
             document.getElementById('display-dest').textContent = dest;
             document.getElementById('display-guests').textContent = `${guests} Guests`;
             
-            if (checkin !== 'Not Selected' && checkout !== 'Not Selected') {
-                // Simple date formatting for display
+            if (checkin && checkout) {
                 const options = { month: 'short', day: 'numeric' };
                 const ciDate = new Date(checkin).toLocaleDateString('en-US', options);
                 const coDate = new Date(checkout).toLocaleDateString('en-US', options);
@@ -293,73 +291,65 @@
                 document.getElementById('display-dates').textContent = 'Any Dates';
             }
 
-
-            // --- Dummy API Result Injection ---
+            // --- 2. Fetch Live Data from our New API ---
             const container = document.getElementById('results-list');
             const template = document.getElementById('result-card-template');
             
-            const hotels = [
-                { 
-                    name: "Sandman Hotel Hamilton", 
-                    location: "Hamilton, ON",
-                    stars: "⭐⭐⭐⭐",
-                    score: "8.8",
-                    price: "$158", 
-                    room: "Standard King",
-                    badge: true,
-                    amenities: ["Free Parking", "Pool", "Restaurant"],
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop" 
-                },
-                { 
-                    name: "The Pearle Hotel & Spa", 
-                    location: "Burlington, ON",
-                    stars: "⭐⭐⭐⭐⭐",
-                    score: "9.6",
-                    price: "$285", 
-                    room: "Lakeview Double",
-                    badge: false,
-                    amenities: ["Spa", "Lakefront", "Valet"],
-                    img: "https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?q=80&w=800&auto=format&fit=crop" 
-                },
-                { 
-                    name: "Sheraton Hamilton", 
-                    location: "Hamilton, ON",
-                    stars: "⭐⭐⭐⭐",
-                    score: "8.9",
-                    price: "$195", 
-                    room: "Premium Queen",
-                    badge: false,
-                    amenities: ["Fitness Center", "Pet Friendly", "Bar"],
-                    img: "https://images.unsplash.com/photo-1582719478250-c894e4dc24a2?q=80&w=800&auto=format&fit=crop" 
-                }
-            ];
+            // Show a loading message while waiting for the API
+            container.innerHTML = '<div class="text-center py-12"><p class="text-brand-text font-bold text-lg animate-pulse">Searching global inventory for the best rates...</p></div>';
 
-            hotels.forEach(hotel => {
-                const clone = template.content.cloneNode(true);
+            try {
+                // Build the URL to our backend script
+                const apiUrl = `/api/search?destination=${encodeURIComponent(dest)}&checkin=${encodeURIComponent(checkin)}&checkout=${encodeURIComponent(checkout)}&guests=${encodeURIComponent(guests)}`;
                 
-                clone.querySelector('.hotel-name').textContent = hotel.name;
-                clone.querySelector('.hotel-location').textContent = hotel.location;
-                clone.querySelector('.hotel-stars').textContent = hotel.stars;
-                clone.querySelector('.hotel-score').textContent = hotel.score;
-                clone.querySelector('.hotel-price').textContent = hotel.price;
-                clone.querySelector('.hotel-room-type').textContent = hotel.room;
-                clone.querySelector('.hotel-img').src = hotel.img;
+                // Ping the API
+                const response = await fetch(apiUrl);
                 
-                if (hotel.badge) {
-                    clone.querySelector('.badge-container').classList.remove('hidden');
+                if (!response.ok) {
+                    throw new Error('API failed to respond');
+                }
+                
+                const apiData = await response.json();
+                
+                // Clear the loading message
+                container.innerHTML = '';
+
+                // Loop through the data sent from the backend
+                if (apiData.data && apiData.data.length > 0) {
+                    apiData.data.forEach(hotel => {
+                        const clone = template.content.cloneNode(true);
+                        
+                        clone.querySelector('.hotel-name').textContent = hotel.name;
+                        clone.querySelector('.hotel-location').textContent = hotel.location;
+                        clone.querySelector('.hotel-stars').textContent = hotel.stars;
+                        clone.querySelector('.hotel-score').textContent = hotel.score;
+                        clone.querySelector('.hotel-price').textContent = `$${hotel.price.toFixed(2)}`;
+                        clone.querySelector('.hotel-room-type').textContent = hotel.room;
+                        clone.querySelector('.hotel-img').src = hotel.img;
+                        
+                        if (hotel.badge) {
+                            clone.querySelector('.badge-container').classList.remove('hidden');
+                        }
+
+                        // Inject amenities dynamically
+                        const amenitiesContainer = clone.querySelector('.hotel-amenities');
+                        hotel.amenities.forEach(amenity => {
+                            const span = document.createElement('span');
+                            span.className = 'text-[9px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded';
+                            span.textContent = amenity;
+                            amenitiesContainer.appendChild(span);
+                        });
+
+                        container.appendChild(clone);
+                    });
+                } else {
+                    container.innerHTML = '<div class="text-center py-12"><p class="text-gray-500 font-medium">No hotels found for these dates. Try modifying your search.</p></div>';
                 }
 
-                // Inject amenities as pills matching the index aesthetic
-                const amenitiesContainer = clone.querySelector('.hotel-amenities');
-                hotel.amenities.forEach(amenity => {
-                    const span = document.createElement('span');
-                    span.className = 'text-[9px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-1 rounded';
-                    span.textContent = amenity;
-                    amenitiesContainer.appendChild(span);
-                });
-
-                container.appendChild(clone);
-            });
+            } catch (error) {
+                console.error("Failed to load hotels:", error);
+                container.innerHTML = '<div class="text-center py-12 text-brand-red font-bold"><p>System error: Could not connect to the bed bank.</p></div>';
+            }
         });
     </script>
 </body>
