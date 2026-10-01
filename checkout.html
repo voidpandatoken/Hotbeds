@@ -288,34 +288,20 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Form Validation ensuring checkboxes are clicked before pushing to confirmation
-            const checkoutForm = document.getElementById('checkout-form');
-            
-            checkoutForm.addEventListener('submit', function(e) {
-                const terms = document.getElementById('tico-terms').checked;
-                const cancel = document.getElementById('tico-cancel').checked;
-                const insurance = document.getElementById('tico-insurance').checked;
-                
-                if (!terms || !cancel || !insurance) {
-                    e.preventDefault();
-                    alert("Please review and accept the mandatory Booking Policies to complete your reservation.");
-                }
-            });
-
-            // Capture URL Parameters from the "Reserve" button on hotel.html
+    document.addEventListener('DOMContentLoaded', () => {
+            // 1. Capture URL Parameters from the "Reserve" button on hotel.html
             const urlParams = new URLSearchParams(window.location.search);
-            const hotel = urlParams.get('hotel');
-            const room = urlParams.get('room');
-            const price = parseFloat(urlParams.get('price'));
-            const checkin = urlParams.get('checkin');
-            const checkout = urlParams.get('checkout');
+            const hotel = urlParams.get('hotel') || 'Unknown Hotel';
+            const room = urlParams.get('room') || 'Unknown Room';
+            const price = parseFloat(urlParams.get('price')) || 0;
+            const checkin = urlParams.get('checkin') || '';
+            const checkout = urlParams.get('checkout') || '';
 
-            // Populate Summary if data exists
-            if(hotel) document.getElementById('summary-hotel').textContent = hotel;
-            if(room) document.getElementById('summary-room').textContent = room;
+            // 2. Populate Summary Board
+            document.getElementById('summary-hotel').textContent = hotel;
+            document.getElementById('summary-room').textContent = room;
             
-            if(price && !isNaN(price)) {
+            if (price > 0) {
                 // Rough math simulation for base vs tax (assuming ~13% tax)
                 const basePrice = price / 1.13;
                 const tax = price - basePrice;
@@ -325,11 +311,78 @@
                 document.getElementById('summary-total').textContent = `$${price.toFixed(2)}`;
             }
 
-            if(checkin && checkout) {
+            if (checkin && checkout && checkin !== 'Not Selected') {
                 const options = { month: 'short', day: 'numeric', year: 'numeric' };
                 document.getElementById('summary-checkin').textContent = new Date(checkin).toLocaleDateString('en-US', options);
                 document.getElementById('summary-checkout').textContent = new Date(checkout).toLocaleDateString('en-US', options);
             }
+
+            // 3. Handle Form Submission & API Call
+            const checkoutForm = document.getElementById('checkout-form');
+            const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+            
+            checkoutForm.addEventListener('submit', async function(e) {
+                e.preventDefault(); // Stop the default page redirect
+
+                // TICO Policy Validation
+                const terms = document.getElementById('tico-terms').checked;
+                const cancel = document.getElementById('tico-cancel').checked;
+                const insurance = document.getElementById('tico-insurance').checked;
+                
+                if (!terms || !cancel || !insurance) {
+                    alert("Please review and accept the mandatory Booking Policies to complete your reservation.");
+                    return;
+                }
+
+                // Change button state to show processing
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="animate-pulse">Processing Payment...</span>';
+                submitBtn.disabled = true;
+                submitBtn.classList.replace('bg-brand-red', 'bg-gray-500');
+
+                // Gather form data
+                const inputs = checkoutForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
+                const bookingData = {
+                    firstName: inputs[0].value,
+                    lastName: inputs[1].value,
+                    email: inputs[2].value,
+                    phone: inputs[3].value,
+                    hotel: hotel,
+                    room: room,
+                    checkin: checkin,
+                    checkout: checkout,
+                    price: price
+                };
+
+                try {
+                    // Send secure POST request to our new backend
+                    const response = await fetch('/api/book', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(bookingData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Payment processing failed');
+                    }
+
+                    const result = await response.json();
+                    
+                    // SUCCESS! Redirect to confirmation page with the official booking reference
+                    window.location.href = `confirmation.html?ref=${result.booking_reference}&hotel=${encodeURIComponent(hotel)}&checkin=${encodeURIComponent(checkin)}&checkout=${encodeURIComponent(checkout)}&name=${encodeURIComponent(bookingData.firstName)}&email=${encodeURIComponent(bookingData.email)}&price=${price}`;
+
+                } catch (error) {
+                    console.error("Checkout Error:", error);
+                    alert("There was an error processing your payment. Please try again.");
+                    
+                    // Reset button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.replace('bg-gray-500', 'bg-brand-red');
+                }
+            });
         });
     </script>
 </body>
