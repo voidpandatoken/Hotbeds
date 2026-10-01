@@ -36,7 +36,7 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; /* Slightly off-white background to make white cards pop */
+            background-color: #f8fafc;
         }
         
         .hide-scrollbar::-webkit-scrollbar {
@@ -202,7 +202,7 @@
 
             <!-- Horizontal Card Template -->
             <template id="result-card-template">
-                <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col sm:flex-row group transform hover:-translate-y-1 cursor-pointer">
+                <a href="#" class="hotel-link block bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col sm:flex-row group transform hover:-translate-y-1 cursor-pointer">
                     
                     <!-- Hotel Image -->
                     <div class="sm:w-2/5 relative h-56 sm:h-auto overflow-hidden">
@@ -241,7 +241,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </a>
             </template>
 
         </div>
@@ -319,6 +319,9 @@
                     apiData.data.forEach(hotel => {
                         const clone = template.content.cloneNode(true);
                         
+                        // Construct dynamic link to hotel.html with parameters
+                        clone.querySelector('.hotel-link').href = `hotel.html?id=${hotel.id}&checkin=${encodeURIComponent(checkin)}&checkout=${encodeURIComponent(checkout)}&guests=${encodeURIComponent(guests)}`;
+
                         clone.querySelector('.hotel-name').textContent = hotel.name;
                         clone.querySelector('.hotel-location').textContent = hotel.location;
                         clone.querySelector('.hotel-stars').textContent = hotel.stars;
