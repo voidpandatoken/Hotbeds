@@ -245,8 +245,68 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Optional: You could read the URL parameters here to dynamically fill the receipt if arriving directly from checkout,
-            // but for a confirmation page, it's typically populated directly by the server backend.
+            // 1. Grab all the confirmed data passed from the checkout process
+            const urlParams = new URLSearchParams(window.location.search);
+            const ref = urlParams.get('ref') || 'PENDING';
+            const hotel = urlParams.get('hotel') || 'Hotel Not Found';
+            const checkin = urlParams.get('checkin');
+            const checkout = urlParams.get('checkout');
+            const guestName = urlParams.get('name') || 'Valued Guest';
+            const guestEmail = urlParams.get('email') || '';
+            const price = parseFloat(urlParams.get('price')) || 0;
+
+            // 2. Inject the data into the HTML
+            
+            // Booking Reference
+            const refElements = document.querySelectorAll('h2');
+            refElements.forEach(el => {
+                if (el.textContent.includes('#HB-')) {
+                    el.textContent = `#${ref}`;
+                }
+            });
+
+            // Guest Details
+            const pTags = document.querySelectorAll('p');
+            pTags.forEach(el => {
+                if (el.textContent === 'Gordon Culp') el.textContent = guestName;
+                if (el.textContent === 'gordon@example.com') el.textContent = guestEmail;
+                if (el.textContent === 'Sandman Hotel Hamilton' || el.textContent === 'Hotel Not Found') el.textContent = hotel;
+            });
+
+            // Dates
+            if (checkin && checkin !== 'Not Selected') {
+                const options = { month: 'short', day: 'numeric', year: 'numeric' };
+                const formattedCheckin = new Date(checkin).toLocaleDateString('en-US', options);
+                const formattedCheckout = new Date(checkout).toLocaleDateString('en-US', options);
+                
+                const checkinEl = document.getElementById('summary-checkin');
+                const checkoutEl = document.getElementById('summary-checkout');
+                
+                if (checkinEl) checkinEl.textContent = formattedCheckin;
+                if (checkoutEl) checkoutEl.textContent = formattedCheckout;
+            }
+
+            // Price and Today's Date
+            const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            pTags.forEach(el => {
+                if (el.textContent === 'Oct 1, 2026') el.textContent = today;
+            });
+
+            const totalEl = document.getElementById('summary-total');
+            if (totalEl && price > 0) {
+                totalEl.textContent = `$${price.toFixed(2)}`;
+                
+                // Roughly update taxes line item (assuming original price was base + tax)
+                const taxEl = Array.from(document.querySelectorAll('span')).find(el => el.textContent === '$36.00');
+                const baseEl = Array.from(document.querySelectorAll('span')).find(el => el.textContent === '$280.00');
+                
+                if (taxEl && baseEl) {
+                    const basePrice = price / 1.13;
+                    const tax = price - basePrice;
+                    baseEl.textContent = `$${basePrice.toFixed(2)}`;
+                    taxEl.textContent = `$${tax.toFixed(2)}`;
+                }
+            }
         });
     </script>
 </body>
