@@ -143,7 +143,8 @@
         <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-12">
             
             <!-- Left Side: Headline & Search Engine -->
-            <div class="w-full lg:w-7/12 flex flex-col">
+            <!-- ADDED 'order-2 lg:order-1' to push it below the widget on mobile, but keep it on the left on desktop -->
+            <div class="w-full lg:w-7/12 flex flex-col order-2 lg:order-1">
                 <h1 class="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4 leading-tight">
                     Premium stays. <br><span class="text-brand-red">Wholesale rates.</span>
                 </h1>
@@ -186,10 +187,11 @@
             </div>
 
             <!-- Right Side: Compressed FOMO Widget -->
-            <div class="w-full lg:w-5/12 max-w-sm mx-auto lg:mx-0">
+            <!-- ADDED 'order-1 lg:order-2' to force this widget to the top of the screen on mobile, but keep it on the right on desktop -->
+            <div class="w-full lg:w-5/12 max-w-sm mx-auto lg:mx-0 order-1 lg:order-2">
                 <div id="hotbeds-widget" class="relative w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden border border-gray-200">
                     
-                    <!-- Clean Text Header (Fixes the white box issue) -->
+                    <!-- Clean Text Header -->
                     <div class="bg-gray-900 text-white px-4 py-3 flex justify-between items-center">
                         <div class="font-black text-lg tracking-tight">Hotbeds<span class="text-brand-red">.ca</span></div>
                         <div class="flex items-center space-x-1.5 text-[10px] font-medium text-gray-300">
