@@ -47,18 +47,6 @@
             scrollbar-width: none;
         }
 
-        @keyframes flash-switch {
-            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-            20% { transform: scale(1.02); box-shadow: 0 0 30px rgba(230, 57, 70, 0.5); }
-            50% { transform: scale(1.03); box-shadow: 0 0 45px rgba(230, 57, 70, 0.7); }
-            80% { transform: scale(1.02); box-shadow: 0 0 30px rgba(230, 57, 70, 0.5); }
-            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        }
-
-        .deal-switch-anim {
-            animation: flash-switch 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         .hero-bg-layer {
             background-image: url('COVER.png');
             background-size: cover;
@@ -66,48 +54,70 @@
             filter: blur(8px);
             transform: scale(1.05);
         }
+
+        /* --- FOMO WIDGET ANIMATIONS --- */
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .fomo-dot {
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes flash-price {
+            0% { color: #ef4444; transform: scale(1.1); }
+            100% { color: #111827; transform: scale(1); }
+        }
+        .price-flash {
+            animation: flash-price 0.5s ease-out;
+        }
+
+        .progress-bar-inner {
+            transition: width 1s linear;
+        }
     </style>
 </head>
 <body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
 
+    <!-- Main Header -->
     <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
-        <!-- Main Top Bar -->
         <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 md:h-24">
                 
-                <!-- Left: Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
-                    <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    <a href="index.html">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    </a>
                 </div>
                 
-                <!-- Center: Navigation Links -->
                 <nav class="hidden md:flex flex-1 justify-center space-x-10">
                     <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
                     <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
                     <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
                 </nav>
                 
-                <!-- Right: Call to Action (Avatar & Timer) -->
-                <div class="flex items-center justify-end w-1/4 gap-3">
-                    <div class="flex flex-col items-center">
+                <div class="flex items-center justify-end w-auto lg:w-1/3 gap-3 md:gap-4">
+                    <div class="hidden sm:flex flex-col items-center">
                         <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
                             J.
                         </div>
                     </div>
-                    <div class="flex flex-col items-center md:items-end">
-                        <button class="bg-brand-red hover:bg-red-700 text-white font-bold text-xs md:text-sm px-4 py-1.5 rounded-full shadow-sm hover:shadow transition-all whitespace-nowrap">
-                            Join the HotBeds Club
-                        </button>
-                        <div class="text-[10px] font-semibold text-gray-500 mt-1 whitespace-nowrap">
-                            Join for Free: <span id="club-timer" class="text-brand-red font-mono font-bold">7d 00h 00m 00s</span>
+                    <a href="club.html" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
+                        <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
-                    </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
+                            <span class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for <span id="club-timer">7d 00h</span></span>
+                        </div>
+                    </a>
                 </div>
 
             </div>
         </div>
 
-        <!-- Sub Header: Thinner Pill Navigation -->
+        <!-- Pill Navigation -->
         <div class="bg-gray-50/80 border-t border-gray-100 py-2">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start" id="city-pills-container">
@@ -116,63 +126,116 @@
                     <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Mississauga</a>
                     <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Oakville</a>
                     <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Burlington</a>
-                    <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Milton</a>
                     <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Toronto</a>
-                    <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Niagara Falls</a>
-                    <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">St. Catharines</a>
-                    <a href="#" class="city-pill px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm">Guelph</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative w-full h-[350px] flex items-center justify-center overflow-hidden shrink-0 mt-4">
-        <!-- Background Image with Blur & Dark Overlay -->
+    <!-- Hero Section with Integrated FOMO Widget -->
+    <section class="relative w-full py-10 md:py-16 flex items-center justify-center overflow-hidden shrink-0 mt-4 min-h-[500px]">
         <div class="absolute inset-0 z-0 overflow-hidden">
             <div class="absolute inset-0 hero-bg-layer"></div>
-            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         </div>
 
-        <!-- Foreground Content: Dynamic Flash Deal -->
-        <div class="relative z-10 w-full max-w-4xl px-4 flex flex-col items-center">
+        <!-- Foreground Content: The Dynamic FOMO Widget -->
+        <div class="relative z-10 w-full max-w-md px-4 flex flex-col items-center">
             
-            <!-- Flash Deal Card -->
-            <div id="flash-deal-card" class="bg-white rounded-2xl shadow-soft-xl border border-gray-100 w-full flex flex-col md:flex-row overflow-hidden transition-all duration-300">
+            <div id="hotbeds-widget" class="relative w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
                 
-                <!-- Deal Image -->
-                <div class="md:w-5/12 relative h-32 md:h-auto">
-                    <img id="deal-image" src="sandman.png.jpg" alt="Hotel View" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/800x600/e2e8f0/64748b?text=Featured+Deal'">
-                    <div class="absolute top-3 left-3 bg-white/95 backdrop-blur px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1.5 shadow-sm text-gray-800 uppercase tracking-wide">
-                        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> Flash Deal
+                <!-- Widget Header (Using your actual brand logo inverted for dark bg) -->
+                <div class="bg-gray-900 text-white px-5 py-4 flex justify-between items-center">
+                    <img src="LOGO.png" alt="Hotbeds" class="h-5 object-contain brightness-0 invert" onerror="this.onerror=null; this.outerHTML='<div class=\'font-bold text-xl tracking-tight\'>Hotbeds<span class=\'text-brand-red\'>.ca</span></div>'">
+                    <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
+                        <span class="h-2 w-2 bg-red-500 rounded-full fomo-dot inline-block"></span>
+                        <span>3 others looking here</span>
                     </div>
                 </div>
 
-                <!-- Deal Details -->
-                <div class="md:w-7/12 p-5 flex flex-col justify-center relative bg-white">
-                    <h2 id="deal-name" class="text-2xl md:text-3xl font-extrabold text-brand-text leading-tight mb-1">Sandman Hotel Hamilton</h2>
-                    <div class="text-brand-red text-xs font-bold uppercase tracking-wider mb-3">Hamilton, ON</div>
+                <!-- Hotel Info Area -->
+                <div class="relative h-48 bg-gray-200">
+                    <img id="hotel-image" src="" alt="Hotel Room" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                     
-                    <div class="bg-gray-50/80 rounded-xl p-3 border border-gray-100 shadow-inner flex justify-between items-center mb-4">
+                    <div class="absolute bottom-4 left-4 right-4 text-white">
+                        <div class="flex items-center space-x-1 mb-1">
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <h2 id="hotel-name" class="text-2xl font-bold leading-tight">Loading...</h2>
+                        <p id="hotel-location" class="text-sm text-gray-300">Searching inventory...</p>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-brand-red/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
+                        NON-REFUNDABLE RATE
+                    </div>
+                </div>
+
+                <!-- Pricing & Timer Area -->
+                <div class="p-6">
+                    <div class="flex justify-between items-end mb-2">
                         <div>
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-0.5">Price Expires In</span>
-                            <div id="countdown-timer" class="text-2xl font-mono font-black text-brand-red">
-                                00:15
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Current Live Rate</p>
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-gray-900 mt-1">$</span>
+                                <span id="current-price" class="text-5xl font-black text-gray-900 transition-colors">--</span>
+                                <span class="text-sm font-medium text-gray-500 mt-6 ml-1">CAD</span>
                             </div>
                         </div>
                         <div class="text-right">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-0.5">Total (1 Night)</span>
-                            <div class="text-3xl font-black text-brand-text tracking-tighter" id="deal-price">
-                                $158.79
-                            </div>
+                            <p class="text-[10px] font-bold text-brand-red uppercase tracking-wider mb-1">Price resets in</p>
+                            <div class="text-3xl font-bold text-brand-red font-mono" id="time-left">00:15</div>
                         </div>
                     </div>
 
-                    <button class="w-full bg-brand-red hover:bg-red-700 text-white text-base font-bold py-3 rounded-xl shadow-[0_4px_14px_0_rgba(230,57,70,0.39)] hover:shadow-[0_6px_20px_rgba(230,57,70,0.23)] uppercase transition-all duration-300 transform hover:-translate-y-0.5">
-                        Book This Deal Now
+                    <!-- TICO Compliance Messaging -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6">
+                        <p class="text-[10px] leading-tight text-gray-600 font-bold text-center uppercase tracking-widest">
+                            <svg class="w-3 h-3 inline mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            All-In Final Price (TICO Approved)
+                        </p>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-100 rounded-full h-2 mb-6 overflow-hidden shadow-inner">
+                        <div id="progress-bar" class="progress-bar-inner bg-brand-red h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button onclick="lockPrice()" class="w-full bg-brand-text hover:bg-black text-white font-bold py-4 px-6 rounded-xl shadow-[0_4px_14px_0_rgba(15,23,42,0.39)] transform transition active:scale-95 flex justify-center items-center group uppercase tracking-widest text-sm">
+                        <span>Lock Price & Checkout</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
+                    <p class="text-center text-[10px] text-gray-400 mt-3 font-bold uppercase tracking-wider">Price guaranteed for 10 minutes after locking.</p>
+                </div>
+
+                <!-- Success Overlay (Hidden by default) -->
+                <div id="success-overlay" class="absolute inset-0 bg-white/95 backdrop-blur z-50 hidden flex-col justify-center items-center p-6 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-brand-text mb-2 tracking-tight">Price Locked!</h3>
+                    <p class="text-gray-500 mb-6 font-medium text-sm">You secured <span id="locked-hotel" class="font-bold text-brand-text"></span> at the lowest margin rate.</p>
+                    
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 w-full mb-6">
+                        <div class="flex justify-between text-sm mb-2 border-b border-gray-200 pb-2">
+                            <span class="text-gray-500 font-bold uppercase tracking-wider text-[10px]">Final Price (All-In)</span>
+                            <span class="font-black text-brand-text">CAD $<span id="locked-price"></span></span>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                            <span>Taxes & Fees</span>
+                            <span class="text-green-600">Included</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html" class="block w-full bg-brand-red hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl transition uppercase tracking-widest text-sm shadow-sm">
+                        Continue to Checkout
+                    </a>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -204,7 +267,7 @@
                     </select>
                 </div>
                 <div class="w-full md:w-1/6">
-                    <button type="submit" class="w-full bg-brand-text hover:bg-black text-white p-3 rounded-lg font-bold text-sm transition-colors h-[46px]">
+                    <button type="submit" class="w-full bg-brand-text hover:bg-black text-white p-3 rounded-lg font-bold text-sm transition-colors h-[46px] uppercase tracking-widest shadow-sm">
                         Search
                     </button>
                 </div>
@@ -212,43 +275,8 @@
         </div>
     </div>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-3">
-            <div>
-                <h2 class="text-2xl font-extrabold text-brand-text uppercase tracking-tight">More Great Stays</h2>
-                <p class="text-gray-500 text-sm font-medium">Top-rated hotels available right now.</p>
-            </div>
-        </div>
-
-        <!-- Dynamic Injection Container -->
-        <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- API results will be injected here via JavaScript -->
-        </div>
-
-        <!-- Hidden Template for JavaScript Cloning -->
-        <template id="hotel-card-template">
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col group transform hover:-translate-y-1 cursor-pointer">
-                <div class="relative h-44 overflow-hidden">
-                    <img class="hotel-img w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="" alt="">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h3 class="hotel-name text-base font-bold text-brand-text mb-1 truncate"></h3>
-                    <div class="hotel-stars text-yellow-400 text-xs mb-3">⭐⭐⭐⭐</div>
-                    <div class="mt-auto flex justify-between items-end pt-3 border-t border-gray-50">
-                        <div>
-                            <span class="hotel-price text-lg font-black text-brand-text"></span>
-                            <span class="text-[10px] font-medium text-gray-400 uppercase">/night</span>
-                        </div>
-                        <button class="bg-brand-red text-white hover:bg-red-700 px-4 py-2 rounded-lg text-[13px] font-bold transition-colors shadow-sm">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-    </main>
-
-    <footer class="bg-white border-t border-gray-100 py-8 mt-auto">
+    <!-- TICO Compliant Footer -->
+    <footer class="bg-white border-t border-gray-100 py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
                 <div>
@@ -271,150 +299,167 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- NEW: Optimizing Search Widgets & Validation ---
+            // --- SEARCH FORM LOGIC ---
             const searchForm = document.getElementById('booking-search');
             const destInput = document.getElementById('search-city');
             const checkinInput = document.getElementById('check-in');
             const checkoutInput = document.getElementById('check-out');
             const cityPills = document.querySelectorAll('.city-pill');
 
-            // 1. Popup Validation to ensure form is filled before navigating
             searchForm.addEventListener('submit', function(e) {
                 if (!destInput.value || !checkinInput.value || !checkoutInput.value) {
-                    e.preventDefault(); // Stops navigation
+                    e.preventDefault();
                     alert("Please fill in your Destination, Check-in date, and Check-out date before searching for deals.");
                 }
-                // If everything is filled, let the form submit normally to results.html
             });
 
-            // 2. City Pill Functionality (Auto-fills the Destination)
             cityPills.forEach(pill => {
                 pill.addEventListener('click', (e) => {
                     e.preventDefault();
                     destInput.value = e.target.innerText + ', ON';
-                    // Optional: highlight the input briefly to show it worked
                     destInput.classList.add('ring-2', 'ring-brand-red');
                     setTimeout(() => destInput.classList.remove('ring-2', 'ring-brand-red'), 300);
                 });
             });
 
-            // 3. Date Widget Logic (Prevents impossible dates)
             const today = new Date().toISOString().split('T')[0];
-            checkinInput.setAttribute('min', today); // Cannot check-in in the past
+            checkinInput.setAttribute('min', today);
             checkoutInput.setAttribute('min', today);
 
             checkinInput.addEventListener('change', function() {
-                // Check-out cannot be before check-in
                 checkoutInput.setAttribute('min', this.value);
                 if (checkoutInput.value && checkoutInput.value <= this.value) {
-                    // Auto-adjust checkout to be 1 day after checkin if it's invalid
                     let nextDay = new Date(this.value);
                     nextDay.setDate(nextDay.getDate() + 1);
                     checkoutInput.value = nextDay.toISOString().split('T')[0];
                 }
             });
 
-
-            // --- 1. Flash Deal Logic ---
-            const DEALS = [
+            // --- FOMO WIDGET LOGIC ---
+            const cycleData = [
                 {
                     name: "Sandman Hotel Hamilton",
-                    price: "$158.79",
+                    location: "Hamilton, ON",
                     image: "sandman.png.jpg",
-                    duration: 15 // 15 seconds for the first deal
+                    basePrice: 158,
+                    tickAmount: 2
+                },
+                {
+                    name: "The Pearle Hotel & Spa",
+                    location: "Burlington, ON",
+                    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+                    basePrice: 285,
+                    tickAmount: 4
                 },
                 {
                     name: "Sheraton Hamilton",
-                    price: "$159.89",
+                    location: "Hamilton, ON",
                     image: "sheraton.png.jpg",
-                    duration: 300 // Reset to 5 minutes after switch
+                    basePrice: 195,
+                    tickAmount: 3
                 }
             ];
 
-            let currentDealIndex = 0;
-            let timeLeft = DEALS[currentDealIndex].duration;
-            let countdownInterval;
+            const CYCLE_DURATION = 15; 
+            const TICK_INTERVAL = 3;   
 
-            const timerElement = document.getElementById('countdown-timer');
-            const cardElement = document.getElementById('flash-deal-card');
-            const nameElement = document.getElementById('deal-name');
-            const priceElement = document.getElementById('deal-price');
-            const imageElement = document.getElementById('deal-image');
+            let currentCycleIndex = 0;
+            let currentPrice = 0;
+            let timeLeft = 0;
+            let mainInterval = null;
 
-            function formatTime(seconds) {
-                const m = Math.floor(seconds / 60);
-                const s = seconds % 60;
-                return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            }
+            const elHotelName = document.getElementById('hotel-name');
+            const elHotelLocation = document.getElementById('hotel-location');
+            const elHotelImage = document.getElementById('hotel-image');
+            const elCurrentPrice = document.getElementById('current-price');
+            const elTimeLeft = document.getElementById('time-left');
+            const elProgressBar = document.getElementById('progress-bar');
+            const elSuccessOverlay = document.getElementById('success-overlay');
 
-            function switchDeal() {
-                if (currentDealIndex >= DEALS.length - 1) return;
+            window.startCycle = function(index) {
+                const hotel = cycleData[index];
                 
-                currentDealIndex++;
-                const nextDeal = DEALS[currentDealIndex];
+                currentPrice = hotel.basePrice;
+                timeLeft = CYCLE_DURATION;
 
-                cardElement.classList.add('deal-switch-anim');
+                elHotelName.textContent = hotel.name;
+                elHotelLocation.textContent = hotel.location;
+                // Add fallback to image to prevent breaking if local file missing
+                elHotelImage.src = hotel.image;
+                elHotelImage.onerror = () => { elHotelImage.src = "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"; };
                 
-                setTimeout(() => {
-                    nameElement.innerText = nextDeal.name;
-                    priceElement.innerText = nextDeal.price;
-                    imageElement.src = nextDeal.image;
-                    
-                    timeLeft = nextDeal.duration; 
-                    timerElement.innerText = formatTime(timeLeft);
-                    timerElement.classList.remove('text-red-600'); 
-                    timerElement.classList.add('text-brand-red');
-                }, 400);
+                updatePriceDisplay();
+                updateTimerDisplay();
 
-                setTimeout(() => {
-                    cardElement.classList.remove('deal-switch-anim');
-                }, 800);
-            }
+                if (mainInterval) clearInterval(mainInterval);
 
-            function startTimer() {
-                timerElement.innerText = formatTime(timeLeft);
-
-                countdownInterval = setInterval(() => {
+                mainInterval = setInterval(() => {
                     timeLeft--;
-                    timerElement.innerText = formatTime(timeLeft);
-                    
-                    if (currentDealIndex === 0 && timeLeft <= 5 && timeLeft > 0) {
-                        timerElement.classList.remove('text-brand-red');
-                        timerElement.classList.add('text-red-600');
+                    updateTimerDisplay();
+
+                    if (timeLeft > 0 && timeLeft % TICK_INTERVAL === 0) {
+                        currentPrice += hotel.tickAmount;
+                        updatePriceDisplay(true); 
                     }
 
                     if (timeLeft <= 0) {
-                        if (currentDealIndex === 0) {
-                            switchDeal();
-                        } else {
-                            timeLeft = DEALS[1].duration; 
-                        }
+                        clearInterval(mainInterval);
+                        currentCycleIndex = (currentCycleIndex + 1) % cycleData.length;
+                        startCycle(currentCycleIndex);
                     }
                 }, 1000);
             }
 
-            startTimer();
+            function updateTimerDisplay() {
+                const secondsStr = timeLeft < 10 ? `0${timeLeft}` : timeLeft;
+                elTimeLeft.textContent = `00:${secondsStr}`;
+                
+                const percentage = (timeLeft / CYCLE_DURATION) * 100;
+                elProgressBar.style.width = `${percentage}%`;
 
-            // --- 2. Hotbeds Club 7-Day Timer Logic ---
+                if (timeLeft <= 5) {
+                    elProgressBar.classList.replace('bg-brand-red', 'bg-red-600');
+                    elTimeLeft.classList.replace('text-brand-red', 'text-red-600');
+                } else {
+                    elProgressBar.classList.replace('bg-red-600', 'bg-brand-red');
+                    elTimeLeft.classList.replace('text-red-600', 'text-brand-red');
+                }
+            }
+
+            function updatePriceDisplay(flash = false) {
+                elCurrentPrice.textContent = currentPrice;
+                
+                if (flash) {
+                    elCurrentPrice.classList.remove('price-flash');
+                    void elCurrentPrice.offsetWidth; 
+                    elCurrentPrice.classList.add('price-flash');
+                }
+            }
+
+            window.lockPrice = function() {
+                if (mainInterval) clearInterval(mainInterval);
+                
+                document.getElementById('locked-hotel').textContent = cycleData[currentCycleIndex].name;
+                document.getElementById('locked-price').textContent = currentPrice;
+                
+                elSuccessOverlay.classList.remove('hidden');
+                elSuccessOverlay.classList.add('flex');
+            }
+
+            // Start the engine
+            startCycle(currentCycleIndex);
+
+            // --- HEADER CLUB TIMER LOGIC ---
             const clubTimerElement = document.getElementById('club-timer');
             let clubTimeLeft = 7 * 24 * 60 * 60; // 7 days in seconds
 
-            function updateClubTimer() {
+            setInterval(() => {
+                if (clubTimeLeft <= 0) return;
+                clubTimeLeft--;
                 const days = Math.floor(clubTimeLeft / (24 * 3600));
                 const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
-                const minutes = Math.floor((clubTimeLeft % 3600) / 60);
-                const seconds = clubTimeLeft % 60;
-
-                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-                
-                if (clubTimeLeft > 0) {
-                    clubTimeLeft--;
-                }
-            }
-            
-            // Initialize and set interval
-            updateClubTimer();
-            setInterval(updateClubTimer, 1000);
+                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h`;
+            }, 1000);
         });
     </script>
 </body>
