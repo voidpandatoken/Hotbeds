@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds.ca - Dynamic Pricing Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background to make the widget pop */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        /* Pulse animation for the FOMO indicator */
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .fomo-dot {
+            animation: pulse-dot 2s infinite;
+        }
+
+        /* Flash animation for when the price increases */
+        @keyframes flash-price {
+            0% { color: #ef4444; transform: scale(1.1); }
+            100% { color: #111827; transform: scale(1); }
+        }
+        .price-flash {
+            animation: flash-price 0.5s ease-out;
+        }
+
+        /* Smooth transition for the progress bar */
+        .progress-bar-inner {
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hotbeds-widget" class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+        
+        <!-- Header -->
+        <div class="bg-gray-900 text-white px-5 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl tracking-tight">Hotbeds<span class="text-blue-400">.ca</span></div>
+            <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
+                <span class="h-2 w-2 bg-red-500 rounded-full fomo-dot inline-block"></span>
+                <span>3 others looking here</span>
+            </div>
+        </div>
+
+        <!-- Hotel Info Area -->
+        <div class="relative h-48 bg-gray-200">
+            <img id="hotel-image" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Hotel Room" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+                <div class="flex items-center space-x-1 mb-1">
+                    <!-- Star SVGs -->
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <h2 id="hotel-name" class="text-2xl font-bold leading-tight">The Hamilton Grand</h2>
+                <p id="hotel-location" class="text-sm text-gray-300">Hamilton, ON</p>
+            </div>
+            <!-- Non-Refundable Tag -->
+            <div class="absolute top-4 right-4 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
+                NON-REFUNDABLE RATE
+            </div>
+        </div>
+
+        <!-- Pricing & Timer Area -->
+        <div class="p-6">
+            <div class="flex justify-between items-end mb-2">
+                <div>
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Current Live Rate</p>
+                    <div class="flex items-start">
+                        <span class="text-2xl font-bold text-gray-900 mt-1">$</span>
+                        <span id="current-price" class="text-5xl font-black text-gray-900 transition-colors">115</span>
+                        <span class="text-sm font-medium text-gray-500 mt-6 ml-1">CAD</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-semibold text-red-500 uppercase tracking-wider mb-1">Price resets in</p>
+                    <div class="text-3xl font-bold text-red-500 font-mono" id="time-left">00:15</div>
+                </div>
+            </div>
+
+            <!-- Mandatory TICO Compliance Messaging -->
+            <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 mb-6">
+                <p class="text-[11px] leading-tight text-blue-800 font-medium text-center">
+                    <svg class="w-3 h-3 inline mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    All-In Final Price (TICO Approved: All Taxes & Fees Included)
+                </p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6 overflow-hidden">
+                <div id="progress-bar" class="progress-bar-inner bg-red-500 h-2.5 rounded-full" style="width: 100%"></div>
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="lockPrice()" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex justify-center items-center group">
+                <span>Lock Price & Checkout</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-3">Price guaranteed for 10 minutes after locking.</p>
+        </div>
+
+        <!-- Success Overlay (Hidden by default) -->
+        <div id="success-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-sm z-50 hidden flex-col justify-center items-center p-6 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Price Locked!</h3>
+            <p class="text-gray-600 mb-6">You secured <span id="locked-hotel" class="font-bold text-gray-900"></span> at the lowest margin rate.</p>
+            
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 w-full mb-6">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Final Price (All-In)</span>
+                    <span class="font-bold text-gray-900">CAD $<span id="locked-price"></span></span>
+                </div>
+                <div class="flex justify-between text-xs text-gray-400">
+                    <span>Taxes & Fees</span>
+                    <span>Included</span>
+                </div>
+            </div>
+
+            <button onclick="resetSimulation()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition">
+                Continue to Checkout
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Mock Hotel Data (3 Cycles)
+        const cycleData = [
+            {
+                name: "The Hamilton Grand",
+                location: "Hamilton, ON",
+                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+                basePrice: 115,
+                tickAmount: 2
+            },
+            {
+                name: "Toronto Skyline Suites",
+                location: "Downtown Toronto, ON",
+                image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+                basePrice: 145,
+                tickAmount: 3
+            },
+            {
+                name: "Harbourfront Boutique",
+                location: "Toronto Harbour, ON",
+                image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80",
+                basePrice: 130,
+                tickAmount: 2
+            }
+        ];
+
+        // Configuration
+        const CYCLE_DURATION = 15; // 15 seconds per cycle
+        const TICK_INTERVAL = 3;   // Price goes up every 3 seconds
+
+        // State Variables
+        let currentCycleIndex = 0;
+        let currentPrice = 0;
+        let timeLeft = 0;
+        let mainInterval = null;
+
+        // DOM Elements
+        const elHotelName = document.getElementById('hotel-name');
+        const elHotelLocation = document.getElementById('hotel-location');
+        const elHotelImage = document.getElementById('hotel-image');
+        const elCurrentPrice = document.getElementById('current-price');
+        const elTimeLeft = document.getElementById('time-left');
+        const elProgressBar = document.getElementById('progress-bar');
+        const elSuccessOverlay = document.getElementById('success-overlay');
+
+        // Initialize the engine
+        function startCycle(index) {
+            const hotel = cycleData[index];
+            
+            // Set initial state for this cycle
+            currentPrice = hotel.basePrice;
+            timeLeft = CYCLE_DURATION;
+
+            // Update DOM with new hotel data
+            elHotelName.textContent = hotel.name;
+            elHotelLocation.textContent = hotel.location;
+            elHotelImage.src = hotel.image;
+            updatePriceDisplay();
+            updateTimerDisplay();
+
+            // Clear any existing intervals
+            if (mainInterval) clearInterval(mainInterval);
+
+            // Start the countdown engine
+            mainInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                // Logic for price tick
+                // Every 3 seconds, tick the price up (but don't tick at 0 seconds)
+                if (timeLeft > 0 && timeLeft % TICK_INTERVAL === 0) {
+                    currentPrice += hotel.tickAmount;
+                    updatePriceDisplay(true); // true = trigger flash animation
+                }
+
+                // Logic for cycle end
+                if (timeLeft <= 0) {
+                    clearInterval(mainInterval);
+                    // Move to next cycle, wrap around to 0 if at the end
+                    currentCycleIndex = (currentCycleIndex + 1) % cycleData.length;
+                    startCycle(currentCycleIndex);
+                }
+            }, 1000);
+        }
+
+        // Format and update the timer display
+        function updateTimerDisplay() {
+            const secondsStr = timeLeft < 10 ? `0${timeLeft}` : timeLeft;
+            elTimeLeft.textContent = `00:${secondsStr}`;
+            
+            // Calculate width for progress bar (percentage of total duration)
+            const percentage = (timeLeft / CYCLE_DURATION) * 100;
+            elProgressBar.style.width = `${percentage}%`;
+
+            // Turn progress bar yellow then red as time runs out
+            if (timeLeft <= 5) {
+                elProgressBar.classList.replace('bg-red-500', 'bg-red-600');
+            } else {
+                elProgressBar.classList.replace('bg-red-600', 'bg-red-500');
+            }
+        }
+
+        // Update price display and handle the visual flash
+        function updatePriceDisplay(flash = false) {
+            elCurrentPrice.textContent = currentPrice;
+            
+            if (flash) {
+                // Remove animation class to reset it, then add it back on next frame
+                elCurrentPrice.classList.remove('price-flash');
+                void elCurrentPrice.offsetWidth; // Trigger reflow
+                elCurrentPrice.classList.add('price-flash');
+            }
+        }
+
+        // User clicks the Lock Price button
+        function lockPrice() {
+            // Stop the simulation
+            if (mainInterval) clearInterval(mainInterval);
+            
+            // Populate success screen data
+            document.getElementById('locked-hotel').textContent = cycleData[currentCycleIndex].name;
+            document.getElementById('locked-price').textContent = currentPrice;
+            
+            // Show overlay
+            elSuccessOverlay.classList.remove('hidden');
+            elSuccessOverlay.classList.add('flex');
+        }
+
+        // For the sake of the demo, allow user to reset from the success screen
+        function resetSimulation() {
+            elSuccessOverlay.classList.add('hidden');
+            elSuccessOverlay.classList.remove('flex');
+            // Restart current cycle or move to next. Let's just restart current for demo.
+            startCycle(currentCycleIndex);
+        }
+
+        // Start the engine on window load
+        window.onload = () => {
+            startCycle(currentCycleIndex);
+        };
+    </script>
+</body>
+</html>
