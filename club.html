@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds - Join The Guild</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e63946',
+                            light: '#f8fafc',
+                            white: '#ffffff',
+                            text: '#0f172a',
+                            muted: '#64748b',
+                            dark: '#0a0f1c' /* Deep premium blue/black */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0f1c; color: #ffffff; }
+        
+        /* Premium Dark Background */
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=2500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism for the Signup Card */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animated Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Transparent Premium Header -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                
+                <!-- Logo (Inverted for Dark Theme) -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer w-[30%] md:w-1/4">
+                    <a href="index.html">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-10 md:h-14 w-auto object-contain brightness-0 invert" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-white uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex flex-1 justify-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Search Deals</a>
+                    <a href="#" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Corporate</a>
+                    <a href="#" class="text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest flex items-center gap-1">
+                        Referral Program <span class="flex h-2 w-2 rounded-full bg-brand-red animate-pulse"></span>
+                    </a>
+                </nav>
+                
+                <!-- Right CTA -->
+                <div class="flex items-center justify-end w-[70%] md:w-1/4 gap-4">
+                    <a href="#" class="hidden md:block text-xs font-bold text-gray-300 hover:text-white uppercase tracking-widest transition-colors">
+                        Member Sign In
+                    </a>
+
+                    <!-- Mobile Hamburger Icon -->
+                    <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-red focus:outline-none ml-1">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-white/10 shadow-2xl z-50 flex flex-col">
+                <a href="index.html" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Search Deals</a>
+                <a href="#" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Corporate</a>
+                <a href="#" class="px-6 py-4 text-brand-red font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Referral Program</a>
+                <a href="#" class="px-6 py-4 text-gray-400 font-bold hover:bg-white/5 uppercase tracking-widest text-xs">Member Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Section (Lead Generation) -->
+    <main class="flex-grow w-full relative pt-24 md:pt-0 flex items-center min-h-screen">
+        
+        <!-- Background Image & Overlays -->
+        <div class="absolute inset-0 z-0 overflow-hidden hero-bg">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/95 to-brand-dark/40"></div>
+            <!-- Grid Pattern Overlay for technical feel -->
+            <div class="absolute inset-0" style="background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.2;"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            
+            <!-- Left Side: The Corporate Pitch -->
+            <div class="w-full lg:w-1/2 flex flex-col pt-10 md:pt-0">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold uppercase tracking-widest text-white mb-6 self-start backdrop-blur-sm">
+                    <svg class="w-3 h-3 text-brand-red" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                    Closed User Group Network
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] mb-6">
+                    Stop paying <br>retail margins. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-400">Join The Guild.</span>
+                </h1>
+                
+                <p class="text-gray-400 font-medium text-lg max-w-xl mb-8 leading-relaxed">
+                    Global hotel brands prohibit the public display of wholesale rates to protect their retail pricing. By joining our private network, you bypass the public market and unlock zero-markup inventory and direct corporate contracts.
+                </p>
+
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
+                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm tracking-wide">Direct Contract Margins</h4>
+                            <p class="text-xs text-gray-500 mt-1">Access heavily negotiated rates at 3.5 to 5-star properties.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
+                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm tracking-wide">Legally Protected Privacy</h4>
+                            <p class="text-xs text-gray-500 mt-1">Prices are legally hidden behind our secure membership paywall.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
+                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm tracking-wide">Transparent "Perk" Fees</h4>
+                            <p class="text-xs text-gray-500 mt-1">You pay the net rate plus a flat platform maintenance fee. No hidden % markups.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: The Lead Capture Machine -->
+            <div class="w-full lg:w-1/2 max-w-md mx-auto">
+                <div class="glass-card rounded-3xl p-8 relative overflow-hidden shadow-2xl">
+                    
+                    <!-- Decorative corner glow -->
+                    <div class="absolute -top-20 -right-20 w-40 h-40 bg-brand-red rounded-full mix-blend-screen filter blur-[60px] opacity-30"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-white font-black text-2xl uppercase tracking-tight">Guild Application</h3>
+                            <span class="bg-green-500/20 text-green-400 text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded">Promotional Offer</span>
+                        </div>
+
+                        <!-- The Price Anchor -->
+                        <div class="bg-black/40 border border-white/5 rounded-xl p-5 mb-8">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Standard Annual Dues</span>
+                                <span class="text-lg font-black text-gray-500 line-through decoration-brand-red decoration-2">$300.00</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                <span class="text-xs text-white font-bold uppercase tracking-widest">Sponsored by Hotbeds</span>
+                                <span class="text-2xl font-black text-green-400">$0.00 <span class="text-[10px] font-medium text-gray-400">/ 1st Year</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Supabase Ready Form -->
+                        <form id="lead-gen-form" class="space-y-5">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Full Name</label>
+                                <input type="text" id="user-name" required placeholder="Enter your legal name" class="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm rounded-xl p-4 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Professional Email</label>
+                                <input type="email" id="user-email" required placeholder="you@company.com" class="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm rounded-xl p-4 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(230,57,70,0.4)] uppercase tracking-widest transition-all duration-300 transform hover:-translate-y-0.5 mt-2 flex justify-center items-center gap-2">
+                                <span>Unlock Free Access</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                            
+                            <p class="text-[9px] text-gray-500 text-center uppercase tracking-widest mt-4">
+                                By joining, you agree to our Terms of Service & Privacy Policy. No credit card required for year one.
+                            </p>
+                        </form>
+
+                        <!-- Success State (Hidden initially) -->
+                        <div id="success-state" class="hidden flex-col items-center justify-center py-6 text-center">
+                            <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/30">
+                                <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Welcome to The Guild</h3>
+                            <p class="text-sm text-gray-400 mb-6">Your account has been provisioned. Please check your email to verify your address and set your password.</p>
+                            <a href="index.html" class="w-full bg-white text-brand-dark font-bold py-3 rounded-xl uppercase tracking-widest text-xs transition-colors hover:bg-gray-200">
+                                Return to Search Engine
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Simplified Dark Footer -->
+    <footer class="bg-black border-t border-white/10 py-10 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 brightness-0 invert opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-500 uppercase\'>Hotbeds</span>'">
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-[11px] font-bold text-gray-500 uppercase tracking-widest">
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Contact Us</a>
+                    <a href="#" class="hover:text-white transition-colors">TICO Info</a>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[10px] text-gray-600 font-medium uppercase tracking-widest">
+                    &copy; 2026 Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1
+                </p>
+                <p class="text-[10px] text-gray-600 font-bold uppercase tracking-widest bg-white/5 px-3 py-1 rounded">
+                    TICO Registration: #XXXXXXX
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Mobile Menu Toggle ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Lead Gen Form / Supabase Prep ---
+            const form = document.getElementById('lead-gen-form');
+            const successState = document.getElementById('success-state');
+            const submitBtn = document.getElementById('submit-btn');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Prevent page reload
+
+                const name = document.getElementById('user-name').value;
+                const email = document.getElementById('user-email').value;
+
+                // Visual loading state
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="animate-pulse">Provisioning Account...</span>';
+                submitBtn.disabled = true;
+
+                // TODO: SUPABASE INTEGRATION GOES HERE
+                /*
+                  When we connect Supabase, we will replace this setTimeout with:
+                  
+                  const { data, error } = await supabase
+                    .from('leads')
+                    .insert([{ full_name: name, email: email, source: 'Guild Promo' }]);
+                    
+                  if(error) throw error;
+                */
+
+                // Simulated network request (Wait 1.5 seconds)
+                setTimeout(() => {
+                    // Hide form, show success state
+                    form.classList.add('hidden');
+                    successState.classList.remove('hidden');
+                    successState.classList.add('flex');
+                }, 1500);
+
+            });
+        });
+    </script>
+</body>
+</html>
