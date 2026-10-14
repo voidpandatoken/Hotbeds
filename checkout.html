@@ -16,484 +16,257 @@
                             white: '#ffffff',
                             text: '#0f172a',
                             muted: '#64748b'
-                        },
-                        guild: {
-                            navy: '#020914',
-                            deep: '#06152d',
-                            royal: '#0b2247',
-                            gold: '#d4af37',
-                            goldLight: '#f9e8a2',
-                            bronze: '#c87d4b',
-                            emerald: '#10b981'
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
-                        serif: ['Cinzel', 'Georgia', 'serif']
                     },
                     boxShadow: {
                         'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)'
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)'
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
         }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fff5c0 0%, #d4af37 45%, #9a7418 75%, #f7df86 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-btn {
-            background: linear-gradient(135deg, #f6de82 0%, #d4af37 50%, #9e7818 100%);
-            color: #020914;
-            transition: all 0.25s ease;
-            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.35);
-        }
-        .gold-btn:hover {
-            filter: brightness(1.07);
-            transform: translateY(-1px);
-        }
-        .modal-rim-glow {
-            box-shadow: 
-                0 0 0 1px rgba(212, 175, 55, 0.5),
-                0 30px 90px rgba(0, 0, 0, 0.92),
-                -15px -15px 45px rgba(200, 125, 75, 0.18),
-                15px 15px 45px rgba(16, 185, 129, 0.18);
-        }
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal-animate {
-            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
         .pay-tab-active {
-            border-color: #e63946 !important;
-            background-color: #fff1f2 !important;
-            color: #0f172a !important;
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.12);
+            border-color: #0f172a !important;
+            background-color: #f8fafc !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+        }
+        @keyframes priceHighlight {
+            0% { background-color: #dcfce7; transform: scale(1.02); }
+            100% { background-color: transparent; transform: scale(1); }
+        }
+        .price-changed {
+            animation: priceHighlight 0.6s ease-out;
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[112px] pb-24 lg:pb-0">
+<body class="text-brand-text flex flex-col min-h-screen pt-[88px]">
 
-    <!-- ================================================================= -->
-    <!-- COMPONENT 01 & 02: FIXED RATE-HOLD BAR & 4-STEP CHECKOUT HEADER   -->
-    <!-- ================================================================= -->
-    <header class="fixed top-0 w-full z-40 bg-white border-b border-gray-200 shadow-sm">
-        
-        <!-- COMPONENT 01: Live Rate-Hold Urgency Bar -->
-        <div class="bg-slate-900 text-white py-1.5 px-4">
-            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-xs">
-                <div class="flex items-center gap-2 font-semibold">
-                    <span class="w-2 h-2 rounded-full bg-brand-red animate-ping shrink-0"></span>
-                    <span>Live Rate Held for Your Session • Price Lock Expires in <strong id="hold-timer" class="text-red-400 font-mono">14:59</strong></span>
-                </div>
-                <div class="hidden sm:flex items-center gap-3 text-gray-300 font-bold text-[10px] uppercase tracking-wider">
-                    <span>🔒 256-Bit TLS Encryption</span>
-                    <span>•</span>
-                    <span>CAD $</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- COMPONENT 02: Main Header & 4-Step Progress Stepper -->
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-            <a href="index.html" class="flex items-center shrink-0">
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full z-40 bg-white border-b border-gray-200 shadow-sm h-20 flex items-center">
+        <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
                 <img src="LOGO.png" alt="Hotbeds.ca" class="h-10 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
             </a>
-
-            <!-- 4-Step OTA Progress Stepper -->
-            <div class="hidden md:flex items-center gap-3 text-xs font-extrabold uppercase tracking-wider">
-                <a href="index.html" class="flex items-center gap-1.5 text-green-600 hover:underline">
-                    <span class="w-5 h-5 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
-                    <span>1. Search</span>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider hidden sm:inline">🔒 256-Bit Encrypted Checkout</span>
+                <a href="javascript:history.back()" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-wider">
+                    &larr; Back
                 </a>
-                <span class="text-gray-300">&rarr;</span>
-                <a href="javascript:history.back()" class="flex items-center gap-1.5 text-green-600 hover:underline">
-                    <span class="w-5 h-5 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
-                    <span>2. Room Selected</span>
-                </a>
-                <span class="text-gray-300">&rarr;</span>
-                <div class="flex items-center gap-1.5 text-brand-red">
-                    <span class="w-5 h-5 rounded-full bg-brand-red text-white flex items-center justify-center text-[10px]">3</span>
-                    <span>3. Secure Checkout</span>
-                </div>
-                <span class="text-gray-300">&rarr;</span>
-                <div class="flex items-center gap-1.5 text-gray-400">
-                    <span class="w-5 h-5 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-[10px]">4</span>
-                    <span>4. Confirmation</span>
-                </div>
             </div>
-
-            <a href="javascript:history.back()" class="text-xs font-extrabold text-gray-500 hover:text-brand-red uppercase tracking-wider">
-                &larr; Modify Stay
-            </a>
         </div>
     </header>
 
-    <!-- ================================================================= -->
-    <!-- MAIN CHECKOUT WORKSPACE                                           -->
-    <!-- ================================================================= -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <!-- MAIN CHECKOUT CONTAINER -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <form id="unified-checkout-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="mb-6">
+            <h1 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Complete Your Booking</h1>
+            <p class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Review your itemized price breakdown below and select your preferred payment method.</p>
+        </div>
+
+        <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             <!-- ========================================================= -->
-            <!-- LEFT COLUMN (8 Cols): EXPRESS PAY, GUILD, GUEST & PAYMENT -->
+            <!-- LEFT COLUMN (7 Cols): GUEST INFO, PAYMENT & BREAKDOWN     -->
             <!-- ========================================================= -->
-            <div class="lg:col-span-8 space-y-6">
+            <div class="lg:col-span-7 space-y-6">
 
-                <!-- COMPONENT 04: "TWO BIRDS, ONE STONE" 1-CLICK GUILD SAVINGS BANNER -->
-                <div class="bg-guild-navy text-white rounded-2xl p-5 sm:p-6 border-2 border-guild-gold/60 shadow-soft-lg relative overflow-hidden">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div class="flex items-start sm:items-center gap-3.5">
-                            <img src="guild.png" alt="The Guild" class="w-12 h-12 rounded-full object-cover border border-guild-gold shrink-0" onerror="this.onerror=null; this.outerHTML='<div class=\'w-12 h-12 rounded-full bg-guild-royal border border-guild-gold flex items-center justify-center font-serif font-bold text-lg text-guild-gold shrink-0\'>G</div>'">
-                            <div>
-                                <div class="flex flex-wrap items-center gap-2 mb-1">
-                                    <span class="font-serif font-bold text-xs tracking-[0.16em] gold-gradient-text uppercase">The Guild — Social &amp; Perks Club</span>
-                                    <span class="bg-guild-emerald/20 border border-guild-emerald/40 text-guild-emerald text-[9px] font-black px-2 py-0.5 rounded-full uppercase">
-                                        $300/Yr Fee Waived
-                                    </span>
-                                </div>
-                                <p class="text-xs sm:text-sm text-gray-200 font-medium leading-relaxed">
-                                    Save <strong class="text-guild-emerald">$<span id="banner-savings-val">50.00</span> CAD</strong> instantly on this room by activating your complimentary 1-Year Guild Pass. Automatically registered using your guest details below—no second form required.
-                                </p>
-                            </div>
-                        </div>
-
-                        <label class="flex items-center gap-2.5 bg-guild-deep hover:bg-guild-royal border border-guild-gold/50 px-4 py-3 rounded-xl cursor-pointer shrink-0 select-none transition shadow-md">
-                            <input type="checkbox" id="guild-opt-in-checkbox" class="w-5 h-5 accent-emerald-500 rounded cursor-pointer">
-                            <span class="text-xs font-extrabold uppercase tracking-wider text-guild-goldLight">
-                                Save $<span id="checkbox-savings-val">50.00</span> Now
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- COMPONENT 03: EXPRESS 1-CLICK DIGITAL WALLETS BAR -->
-                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Express 1-Click Checkout</span>
-                        <span class="text-[10px] font-bold text-green-600">⚡ Instant Confirmation</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <!-- Apple Pay Express -->
-                        <button type="button" onclick="selectExpressWallet('applepay')" class="w-full bg-black hover:bg-neutral-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-sm text-sm">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 170 170"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.13-1.9-14.34-6.08-3.69-3.03-7.61-7.82-11.77-14.37-5.93-9.29-10.76-19.99-14.48-32.12-3.72-12.12-5.58-23.38-5.58-33.76 0-12.74 3.19-23.22 9.56-31.42 6.38-8.21 14.37-12.48 23.98-12.82 4.81 0 10.12 1.45 15.93 4.36 5.81 2.91 9.56 4.42 11.24 4.53 1.34 0 5.42-1.79 12.24-5.37 6.82-3.58 12.69-5.14 17.61-4.7 13.08 1.01 22.92 6.15 29.52 15.43-11.74 7.15-17.44 17.11-17.11 29.86.34 9.95 4.25 18.23 11.74 24.83 5.25 4.7 11.41 7.49 18.45 8.39-1.48 4.55-3.29 9.05-5.45 13.5zM119.22 31.01c0 7.84-2.86 15.16-8.57 21.96-6.89 8.06-15.22 12.72-24.22 12.01-.19-.94-.29-1.95-.29-3.05 0-7.53 3.15-15.58 9.45-22.58 3.02-3.44 6.86-6.29 11.53-8.56 4.66-2.26 9.09-3.52 13.28-3.78.22 1.35.33 2.68.33 4z"/></svg>
-                            <span>Pay</span>
-                        </button>
-                        <!-- PayPal Express -->
-                        <button type="button" onclick="selectExpressWallet('paypal')" class="w-full bg-[#ffc439] hover:bg-[#f4bb30] text-[#003087] font-black italic py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition shadow-sm text-sm">
-                            <span>Pay<span class="text-[#0079c1]">Pal</span></span>
-                            <span class="not-italic text-[10px] font-bold bg-white/60 px-2 py-0.5 rounded text-slate-900">Express</span>
-                        </button>
-                        <!-- Google Pay Express -->
-                        <button type="button" onclick="selectExpressWallet('googlepay')" class="w-full bg-white hover:bg-gray-50 text-brand-text border border-gray-300 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition shadow-sm text-sm">
-                            <span class="font-black text-blue-600">G</span><span class="font-extrabold">Pay</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- COMPONENT 05 & 06: PRIMARY GUEST DETAILS & CORPORATE INVOICE TOGGLE -->
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-soft">
-                    <div class="flex flex-wrap justify-between items-center gap-2 mb-5 pb-3 border-b border-gray-100">
-                        <div>
-                            <h2 class="text-lg font-extrabold text-brand-text uppercase tracking-tight">1. Primary Guest Information</h2>
-                            <p class="text-xs text-gray-500">Used for your hotel front-desk check-in and instant confirmation receipt.</p>
-                        </div>
-                        <span id="guest-sync-badge" class="hidden text-[10px] font-extrabold uppercase tracking-widest bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-200">
-                            ✓ Linked to Free Guild Pass
-                        </span>
-                    </div>
+                <!-- 1. GUEST DETAILS -->
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
+                    <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight mb-4 pb-3 border-b border-gray-100">
+                        1. Guest Information
+                    </h2>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="guest-first-name" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">First Name *</label>
-                            <input type="text" id="guest-first-name" required placeholder="Gordon" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none transition">
+                            <label for="guest-first-name" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">First Name *</label>
+                            <input type="text" id="guest-first-name" required placeholder="Gordon" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
-                            <label for="guest-last-name" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Last Name *</label>
-                            <input type="text" id="guest-last-name" required placeholder="Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none transition">
+                            <label for="guest-last-name" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Last Name *</label>
+                            <input type="text" id="guest-last-name" required placeholder="Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
-                            <label for="guest-email" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Email Address (For Voucher &amp; Receipt) *</label>
-                            <input type="email" id="guest-email" required placeholder="you@email.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none transition">
+                            <label for="guest-email" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Email Address *</label>
+                            <input type="email" id="guest-email" required placeholder="you@email.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
-                            <label for="guest-phone" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Mobile Phone Number *</label>
-                            <input type="tel" id="guest-phone" required placeholder="(555) 000-0000" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none transition">
-                        </div>
-                    </div>
-
-                    <!-- COMPONENT 06: Corporate / Business Expense Toggle -->
-                    <div class="mt-5 pt-4 border-t border-gray-100">
-                        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-gray-700 hover:text-brand-red">
-                            <input type="checkbox" id="corporate-toggle-cb" class="w-4 h-4 accent-brand-red rounded">
-                            <span>💼 I am booking for business / Include a corporate GST/HST expense invoice</span>
-                        </label>
-                        <div id="corporate-fields-box" class="hidden grid-cols-1 sm:grid-cols-2 gap-4 mt-3 pt-2">
-                            <div>
-                                <label class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Company / Organization Name</label>
-                                <input type="text" id="corp-company" placeholder="e.g. Hotbeds Inc." class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold outline-none focus:border-brand-red">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Department / Cost Center Code (Optional)</label>
-                                <input type="text" id="corp-code" placeholder="e.g. CONF-2026" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold outline-none focus:border-brand-red">
-                            </div>
+                            <label for="guest-phone" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Phone Number *</label>
+                            <input type="tel" id="guest-phone" required placeholder="(555) 000-0000" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                     </div>
                 </div>
 
-                <!-- COMPONENT 07 & 14: SPECIAL REQUESTS & STAY PROTECTION -->
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-soft space-y-6">
-                    <div>
-                        <h2 class="text-lg font-extrabold text-brand-text uppercase tracking-tight mb-1">2. Room Preferences &amp; Arrival Window</h2>
-                        <p class="text-xs text-gray-500 mb-4">Forwarded directly to the property front desk ahead of your arrival.</p>
-                        
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-4 text-xs font-bold text-gray-700">
-                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:border-brand-red">
-                                <input type="checkbox" class="accent-brand-red rounded"> <span>Quiet Room</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:border-brand-red">
-                                <input type="checkbox" class="accent-brand-red rounded"> <span>High Floor</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:border-brand-red">
-                                <input type="checkbox" class="accent-brand-red rounded"> <span>Early Check-In</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:border-brand-red">
-                                <input type="checkbox" class="accent-brand-red rounded"> <span>Late Arrival</span>
-                            </label>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label for="arrival-time" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Estimated Check-In Time</label>
-                                <select id="arrival-time" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-brand-text outline-none focus:border-brand-red">
-                                    <option value="3pm-5pm" selected>3:00 PM – 5:00 PM (Standard)</option>
-                                    <option value="1pm-3pm">1:00 PM – 3:00 PM (Early Request)</option>
-                                    <option value="5pm-8pm">5:00 PM – 8:00 PM</option>
-                                    <option value="after8pm">After 8:00 PM (24h Front Desk Held)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="special-notes" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Additional Front Desk Note (Optional)</label>
-                                <input type="text" id="special-notes" placeholder="e.g. Extra pillows, crib, accessibility..." class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold outline-none focus:border-brand-red">
-                            </div>
+                <!-- 2. PAYMENT METHODS (Card, PayPal, Apple/Google Pay, Interac) -->
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
+                    <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                        <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight">
+                            2. Payment Method
+                        </h2>
+                        <div class="flex gap-1.5">
+                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold text-gray-600">VISA</span>
+                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold text-gray-600">MC</span>
+                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold text-gray-600">AMEX</span>
+                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-bold text-blue-800">PayPal</span>
                         </div>
                     </div>
 
-                    <!-- COMPONENT 14: Optional Flex Protection -->
-                    <div class="pt-5 border-t border-gray-100">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Cancellation &amp; Stay Flexibility</span>
-                            <span class="text-[10px] font-extrabold uppercase bg-green-50 text-green-700 px-2.5 py-0.5 rounded-full border border-green-200">✓ Standard Free Cancel Included</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-start gap-2.5 p-3.5 rounded-xl border-2 border-brand-text bg-gray-50 cursor-pointer">
-                                <input type="radio" name="stay_protection" value="0" checked class="mt-0.5 accent-brand-red">
-                                <div class="text-xs">
-                                    <span class="font-extrabold text-brand-text block">Standard Property Policy ($0.00)</span>
-                                    <span class="text-[11px] text-gray-500">Free cancellation up to 24h before check-in.</span>
-                                </div>
-                            </label>
-                            <label class="flex items-start gap-2.5 p-3.5 rounded-xl border border-gray-200 hover:border-brand-red cursor-pointer">
-                                <input type="radio" name="stay_protection" value="14" class="mt-0.5 accent-brand-red">
-                                <div class="text-xs">
-                                    <span class="font-extrabold text-brand-text block">Instant Any-Reason Refund Shield (+$14.00)</span>
-                                    <span class="text-[11px] text-gray-500">Cancel up to 2 hours before check-in for a 100% instant refund.</span>
-                                </div>
-                            </label>
-                        </div>
+                    <!-- Payment Method Selector Tabs -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
+                        <button type="button" data-method="card" class="pay-tab pay-tab-active border-2 border-gray-200 rounded-xl p-3 text-center transition">
+                            <span class="block text-sm mb-0.5">💳</span>
+                            <span class="text-xs font-extrabold text-brand-text block">Card</span>
+                        </button>
+                        <button type="button" data-method="paypal" class="pay-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition">
+                            <span class="block text-sm font-black italic text-[#003087] mb-0.5">Pay<span class="text-[#0079c1]">Pal</span></span>
+                            <span class="text-[11px] font-bold text-gray-500 block">Express</span>
+                        </button>
+                        <button type="button" data-method="wallet" class="pay-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition">
+                            <span class="block text-sm mb-0.5">📱</span>
+                            <span class="text-xs font-extrabold text-brand-text block">Apple / GPay</span>
+                        </button>
+                        <button type="button" data-method="interac" class="pay-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition">
+                            <span class="block text-sm mb-0.5">🏦</span>
+                            <span class="text-xs font-extrabold text-brand-text block">Interac®</span>
+                        </button>
                     </div>
-                </div>
 
-                <!-- ========================================================= -->
-                <!-- COMPONENT 08-13: MULTI-PAYMENT METHOD MATRIX              -->
-                <!-- ========================================================= -->
-                <div id="payment-section-box" class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-soft">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-gray-100">
+                    <!-- Credit / Debit Card Panel -->
+                    <div id="panel-card" class="pay-panel space-y-4">
                         <div>
-                            <h2 class="text-lg font-extrabold text-brand-text uppercase tracking-tight">3. Select Payment Method</h2>
-                            <p class="text-xs text-gray-500">Choose from Credit/Debit Card, PayPal, Apple/Google Pay, Interac®, or 4-Pay.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-black text-gray-700">VISA</span>
-                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-black text-gray-700">MC</span>
-                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-black text-gray-700">AMEX</span>
-                            <span class="px-2 py-0.5 bg-[#ffc439]/30 rounded text-[10px] font-black text-[#003087]">PAYPAL</span>
-                            <span class="px-2 py-0.5 bg-gray-100 rounded text-[10px] font-black text-gray-800">INTERAC®</span>
-                            <span class="px-2 py-0.5 bg-pink-100 rounded text-[10px] font-black text-pink-800">KLARNA</span>
-                        </div>
-                    </div>
-
-                    <!-- COMPONENT 08: 5-Tab Payment Method Selector -->
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-6">
-                        <button type="button" data-pay-method="card" class="pay-method-tab pay-tab-active border-2 border-gray-200 rounded-xl p-3 text-center transition flex flex-col items-center justify-center gap-1">
-                            <span class="text-base">💳</span>
-                            <span class="text-[11px] font-extrabold leading-tight">Credit / Debit</span>
-                        </button>
-                        <button type="button" data-pay-method="paypal" class="pay-method-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition flex flex-col items-center justify-center gap-1">
-                            <span class="text-sm font-black italic text-[#003087]">Pay<span class="text-[#0079c1]">Pal</span></span>
-                            <span class="text-[10px] font-bold text-gray-500 leading-tight">or Pay in 4</span>
-                        </button>
-                        <button type="button" data-pay-method="wallets" class="pay-method-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition flex flex-col items-center justify-center gap-1">
-                            <span class="text-base">📱</span>
-                            <span class="text-[11px] font-extrabold leading-tight">Apple / GPay</span>
-                        </button>
-                        <button type="button" data-pay-method="interac" class="pay-method-tab border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition flex flex-col items-center justify-center gap-1">
-                            <span class="text-base">🏦</span>
-                            <span class="text-[11px] font-extrabold leading-tight">Interac® Bank</span>
-                        </button>
-                        <button type="button" data-pay-method="bnpl" class="pay-method-tab col-span-2 sm:col-span-1 border-2 border-gray-200 hover:border-gray-300 rounded-xl p-3 text-center transition flex flex-col items-center justify-center gap-1">
-                            <span class="text-xs font-black text-pink-600 uppercase">Klarna / Affirm</span>
-                            <span class="text-[10px] font-bold text-gray-500 leading-tight">4 × $<span class="bnpl-quarter-val">50.00</span></span>
-                        </button>
-                    </div>
-
-                    <!-- PANEL A (COMPONENT 09): Credit / Debit Card Inputs -->
-                    <div id="panel-card" class="payment-panel space-y-4">
-                        <div>
-                            <label for="card-holder" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Cardholder Name *</label>
-                            <input type="text" id="card-holder" required placeholder="Exact name as shown on card" class="card-req-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            <label for="card-name" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Name on Card *</label>
+                            <input type="text" id="card-name" required placeholder="Exact name on card" class="card-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none">
                         </div>
                         <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label for="card-number" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Card Number *</label>
-                                <span id="detected-card-brand" class="text-[10px] font-black uppercase text-brand-red">Visa / Mastercard / Amex</span>
-                            </div>
-                            <input type="text" id="card-number" required maxlength="19" placeholder="0000 0000 0000 0000" class="card-req-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-mono font-semibold outline-none">
+                            <label for="card-number" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Card Number *</label>
+                            <input type="text" id="card-number" required maxlength="19" placeholder="0000 0000 0000 0000" class="card-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-mono font-semibold outline-none">
                         </div>
                         <div class="grid grid-cols-3 gap-3 sm:gap-4">
                             <div>
-                                <label for="card-expiry" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Expiry *</label>
-                                <input type="text" id="card-expiry" required maxlength="5" placeholder="MM/YY" class="card-req-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-mono font-semibold outline-none">
+                                <label for="card-expiry" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Expiry *</label>
+                                <input type="text" id="card-expiry" required maxlength="5" placeholder="MM/YY" class="card-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-mono font-semibold outline-none">
                             </div>
                             <div>
-                                <label for="card-cvc" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">CVC / CVV *</label>
-                                <input type="text" id="card-cvc" required maxlength="4" placeholder="123" class="card-req-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-mono font-semibold outline-none">
+                                <label for="card-cvc" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">CVC *</label>
+                                <input type="text" id="card-cvc" required maxlength="4" placeholder="123" class="card-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-mono font-semibold outline-none">
                             </div>
                             <div>
-                                <label for="card-postal" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Postal / ZIP *</label>
-                                <input type="text" id="card-postal" required placeholder="L8P 1A1" class="card-req-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold uppercase outline-none">
+                                <label for="card-postal" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Postal Code *</label>
+                                <input type="text" id="card-postal" required placeholder="L8P 1A1" class="card-input w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold uppercase outline-none">
                             </div>
                         </div>
                     </div>
 
-                    <!-- PANEL B (COMPONENT 10): PayPal & PayPal Pay in 4 -->
-                    <div id="panel-paypal" class="payment-panel hidden bg-blue-50/60 border border-blue-200 rounded-2xl p-5 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xl font-black italic text-[#003087]">Pay<span class="text-[#0079c1]">Pal</span></span>
-                                <span class="text-[10px] font-extrabold uppercase bg-blue-100 text-[#003087] px-2.5 py-0.5 rounded-full">Verified Partner</span>
+                    <!-- PayPal Panel -->
+                    <div id="panel-paypal" class="pay-panel hidden bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-600 space-y-2">
+                        <div class="font-extrabold text-brand-text text-sm">PayPal Express Checkout</div>
+                        <p>After clicking the payment button below, you will authorize the exact total shown in your price breakdown via PayPal.</p>
+                    </div>
+
+                    <!-- Apple Pay / Google Pay Panel -->
+                    <div id="panel-wallet" class="pay-panel hidden bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-600 space-y-2">
+                        <div class="font-extrabold text-brand-text text-sm">Apple Pay / Google Pay</div>
+                        <p>Your device wallet will prompt you to authorize the final total shown below in one tap.</p>
+                    </div>
+
+                    <!-- Interac Panel -->
+                    <div id="panel-interac" class="pay-panel hidden bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-600 space-y-2">
+                        <div class="font-extrabold text-brand-text text-sm">Interac® Canadian Bank Transfer</div>
+                        <p>Complete your booking directly through your Canadian online banking portal with instant auto-deposit confirmation.</p>
+                    </div>
+                </div>
+
+                <!-- ===================================================== -->
+                <!-- 3. ITEMIZED PRICE BREAKDOWN + SUBTLE 20% GUILD OPTION -->
+                <!-- (Placed directly above the Pay Button so it's always  -->
+                <!-- visible before paying on both mobile and desktop)     -->
+                <!-- ===================================================== -->
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft space-y-5">
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                        <div>
+                            <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight">3. Price &amp; Tax Breakdown</h2>
+                            <p id="main-breakdown-subtitle" class="text-xs text-gray-500 font-medium mt-0.5">Sandman Hotel Hamilton • 1 Night</p>
+                        </div>
+                        <span class="text-[11px] font-bold text-gray-400 uppercase">CAD $</span>
+                    </div>
+
+                    <!-- Subtle, Inconspicuous "The Guild Social Club" 20% Off Opt-In Row -->
+                    <label for="guild-opt-in" class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 hover:bg-gray-100/80 border border-gray-200 cursor-pointer transition select-none">
+                        <input type="checkbox" id="guild-opt-in" class="mt-0.5 w-4 h-4 accent-brand-text rounded cursor-pointer">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap justify-between items-center gap-2">
+                                <span class="text-xs sm:text-sm font-bold text-brand-text">
+                                    Sign up for The Guild Social Club and get 20% off my booking
+                                </span>
+                                <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                                    Save $<span class="guild-discount-amount">50.00</span>
+                                </span>
                             </div>
-                            <span class="text-xs font-bold text-gray-600">Total: <strong class="pay-panel-total text-brand-text">$200.00 CAD</strong></span>
+                            <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">
+                                Complimentary membership ($0.00 fee) linked automatically using your guest details above.
+                            </p>
                         </div>
-                        <p class="text-xs text-gray-600 leading-relaxed">
-                            Click the button below to complete your reservation securely via your PayPal account—or choose <strong>PayPal Pay in 4</strong> for 4 interest-free payments of <strong class="bnpl-quarter-val text-[#003087]">$50.00</strong> CAD.
-                        </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
-                            <label class="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-200 cursor-pointer">
-                                <input type="radio" name="paypal_option" checked class="accent-[#003087]">
-                                <span>Pay Full Amount (<span class="pay-panel-total">$200.00</span>)</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-200 cursor-pointer">
-                                <input type="radio" name="paypal_option" class="accent-[#003087]">
-                                <span>Pay in 4 (4 × $<span class="bnpl-quarter-val">50.00</span> • 0% APR)</span>
-                            </label>
-                        </div>
-                    </div>
+                    </label>
 
-                    <!-- PANEL C (COMPONENT 11): Apple Pay & Google Pay Digital Wallets -->
-                    <div id="panel-wallets" class="payment-panel hidden bg-gray-50 border border-gray-200 rounded-2xl p-5 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Biometric / Digital Wallet Authorization</span>
-                            <span class="text-[10px] font-bold text-green-600">✓ Tokenized Security</span>
+                    <!-- Itemized Math Lines (Room Rate, 20% Discount, Taxes, Total) -->
+                    <div class="space-y-3 text-sm pt-1">
+                        
+                        <div class="flex justify-between items-center text-gray-600">
+                            <span>Room Rate (<span class="stay-nights-label">1 Night</span> × $<span class="nightly-rate-val">250.00</span>):</span>
+                            <span id="main-room-subtotal" class="font-bold text-brand-text">$250.00 CAD</span>
                         </div>
-                        <p class="text-xs text-gray-600 leading-relaxed">
-                            Confirm your reservation of <strong class="pay-panel-total text-brand-text">$200.00 CAD</strong> in one tap using Apple Pay (Touch ID / Face ID) or Google Pay linked to your device.
-                        </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
-                            <label class="flex items-center gap-2 p-3.5 rounded-xl bg-black text-white cursor-pointer">
-                                <input type="radio" name="wallet_choice" value="Apple Pay" checked class="accent-brand-red">
-                                <span>Apple Pay (iOS / Safari / Mac)</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-3.5 rounded-xl bg-white border border-gray-300 text-brand-text cursor-pointer">
-                                <input type="radio" name="wallet_choice" value="Google Pay" class="accent-brand-red">
-                                <span>Google Pay (Android / Chrome)</span>
-                            </label>
-                        </div>
-                    </div>
 
-                    <!-- PANEL D (COMPONENT 12): Canadian Interac® e-Transfer / Online Banking -->
-                    <div id="panel-interac" class="payment-panel hidden bg-amber-50/60 border border-amber-200 rounded-2xl p-5 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-black uppercase tracking-wider text-amber-900">🏦 Interac® Instant Canadian Bank Payment</span>
-                            <span class="text-[10px] font-extrabold bg-amber-200/70 text-amber-900 px-2.5 py-0.5 rounded-full">Zero Credit Card Needed</span>
+                        <!-- 20% Guild Discount Row (Appears when checkbox is ticked) -->
+                        <div id="main-discount-row" class="hidden justify-between items-center text-emerald-700 font-bold bg-emerald-50/70 px-3 py-2 rounded-lg border border-emerald-100">
+                            <span>The Guild Social Club Discount (20% Off):</span>
+                            <span>-$<span class="guild-discount-amount">50.00</span> CAD</span>
                         </div>
-                        <p class="text-xs text-gray-700 leading-relaxed">
-                            Pay <strong class="pay-panel-total text-brand-text">$200.00 CAD</strong> directly from any major Canadian bank (RBC, TD, BMO, Scotiabank, CIBC, Simplii, Tangerine) via Interac® request-money or instant auto-deposit.
-                        </p>
-                        <div class="bg-white border border-amber-200 rounded-xl p-3.5 text-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+
+                        <!-- Subtotal After Discount (Appears when checkbox is ticked) -->
+                        <div id="main-discounted-subtotal-row" class="hidden justify-between items-center text-gray-600 text-xs">
+                            <span>Discounted Room Subtotal:</span>
+                            <span id="main-discounted-subtotal" class="font-bold text-brand-text">$200.00 CAD</span>
+                        </div>
+
+                        <!-- Taxes & Municipal Recovery Fees -->
+                        <div class="flex justify-between items-center text-gray-600">
+                            <span>Taxes &amp; Municipal Hotel Fees (13%):</span>
+                            <span id="main-taxes-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                        </div>
+
+                        <!-- Final Total Due Today -->
+                        <div id="main-total-box" class="flex justify-between items-baseline border-t-2 border-gray-200 pt-4 mt-2 rounded-lg px-1 transition-all">
                             <div>
-                                <span class="text-[10px] font-extrabold text-gray-400 uppercase block">Assigned Reservation Reference</span>
-                                <span id="interac-ref-code" class="font-mono font-black text-brand-text">HB-2026-8841</span>
+                                <span class="text-sm font-black uppercase tracking-wider text-brand-text block">Total Due Today</span>
+                                <span id="main-savings-note" class="text-[11px] font-semibold text-gray-400">Includes all applicable taxes &amp; fees</span>
                             </div>
-                            <span class="text-[11px] font-bold text-green-700">✓ Instant Auto-Deposit Enabled</span>
+                            <span id="main-final-total" class="text-3xl font-black text-brand-text">$282.50 CAD</span>
                         </div>
                     </div>
 
-                    <!-- PANEL E (COMPONENT 13): Klarna / Affirm Buy Now, Pay Later (4-Pay) -->
-                    <div id="panel-bnpl" class="payment-panel hidden bg-pink-50/50 border border-pink-200 rounded-2xl p-5 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-xs font-black uppercase tracking-wider text-pink-700">Klarna / Affirm — 4 Interest-Free Payments</span>
-                                <p class="text-[11px] text-gray-600 mt-0.5">Split your stay into 4 easy payments every 2 weeks. 0% interest, no impact to credit score.</p>
-                            </div>
-                            <span class="text-sm font-black text-pink-700">$<span class="bnpl-quarter-val">50.00</span> Due Today</span>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-2 text-center bg-white p-3.5 rounded-xl border border-pink-200 text-xs">
-                            <div>
-                                <span class="text-[10px] font-bold text-pink-600 uppercase block">Due Today</span>
-                                <span class="font-black text-brand-text">$<span class="bnpl-quarter-val">50.00</span></span>
-                            </div>
-                            <div class="border-l border-gray-100">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase block">In 2 Wks</span>
-                                <span class="font-bold text-gray-600">$<span class="bnpl-quarter-val">50.00</span></span>
-                            </div>
-                            <div class="border-l border-gray-100">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase block">In 4 Wks</span>
-                                <span class="font-bold text-gray-600">$<span class="bnpl-quarter-val">50.00</span></span>
-                            </div>
-                            <div class="border-l border-gray-100">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase block">In 6 Wks</span>
-                                <span class="font-bold text-gray-600">$<span class="bnpl-quarter-val">50.00</span></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- COMPONENT 15: Alberta CPA Internet Sales Contract Disclosure -->
-                    <div class="mt-6 pt-5 border-t border-gray-100">
+                    <!-- Alberta Consumer Protection Act Consent -->
+                    <div class="pt-3 border-t border-gray-100">
                         <label class="flex items-start gap-2.5 cursor-pointer">
-                            <input type="checkbox" required checked class="mt-1 w-4 h-4 accent-brand-red rounded">
+                            <input type="checkbox" required checked class="mt-0.5 w-4 h-4 accent-brand-text rounded">
                             <span class="text-[11px] text-gray-500 leading-relaxed">
-                                I agree to the <a href="#" class="text-brand-text font-bold underline">Terms &amp; Conditions</a>, <a href="#" class="text-brand-text font-bold underline">Privacy Policy</a>, and Internet Sales Contract disclosures under the <strong>Alberta Consumer Protection Act</strong>.
+                                I agree to the reservation terms, cancellation policy, and Internet Sales Contract disclosures under the <strong>Alberta Consumer Protection Act</strong>.
                             </span>
                         </label>
                     </div>
 
-                    <!-- Primary Dynamic Submit CTA -->
-                    <button type="submit" id="final-pay-btn" class="w-full mt-6 bg-brand-red hover:bg-red-700 text-white font-black py-4 px-6 rounded-xl shadow-lg uppercase tracking-widest text-xs sm:text-sm transition flex items-center justify-center gap-2">
-                        <span id="final-pay-btn-text">Complete Booking — Pay CAD $200.00</span>
+                    <!-- Submit / Pay Button -->
+                    <button type="submit" id="submit-pay-btn" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-4 px-6 rounded-xl shadow-md uppercase tracking-widest text-xs sm:text-sm transition flex items-center justify-center gap-2">
+                        <span id="submit-pay-btn-text">Confirm &amp; Pay $282.50 CAD</span>
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
                 </div>
@@ -501,28 +274,270 @@
             </div>
 
             <!-- ========================================================= -->
-            <!-- RIGHT COLUMN (4 Cols): STICKY VISUAL RECEIPT & PROMO BOX  -->
+            <!-- RIGHT COLUMN (5 Cols): STICKY STAY & PRICE SUMMARY CARD   -->
             <!-- ========================================================= -->
-            <aside class="lg:col-span-4 space-y-5 sticky top-[120px]">
-                
-                <!-- COMPONENT 16-19: Visual Property Summary & Live Itemized Receipt -->
+            <aside class="lg:col-span-5 sticky top-[105px]">
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft">
                     
-                    <!-- COMPONENT 16: Property Image & Rating Header -->
-                    <div class="relative h-36 bg-gray-900">
-                        <img id="summary-hotel-img" src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Selected Hotel" class="w-full h-full object-cover opacity-85">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent"></div>
-                        <span class="absolute top-3 left-3 bg-brand-red text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded shadow">
-                            Verified Rate Locked
-                        </span>
-                        <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">
-                            ★ 4.5
-                        </span>
-                        <div class="absolute bottom-3 left-4 right-4 text-white">
-                            <h3 id="summary-hotel-name" class="text-lg font-black leading-tight truncate">Sandman Hotel Hamilton</h3>
-                            <p id="summary-room-type" class="text-[11px] text-gray-200 font-semibold truncate">Standard Corporate King Room</p>
+                    <!-- Property Photo Header -->
+                    <div class="relative h-44 bg-gray-900">
+                        <img id="side-hotel-img" src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Hotel" class="w-full h-full object-cover opacity-90">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                        <div class="absolute bottom-3 left-5 right-5 text-white">
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red bg-white px-2 py-0.5 rounded mb-1 inline-block">Verified Booking</span>
+                            <h3 id="side-hotel-name" class="text-xl font-black leading-tight">Sandman Hotel Hamilton</h3>
+                            <p id="side-room-name" class="text-xs text-gray-200 font-medium mt-0.5">Standard Corporate King Room</p>
                         </div>
                     </div>
 
-                    <div class="p-5 sm:p-6">
-                        <!-- COMPONENT 17: Check-In / Check-Out & Occupancy
+                    <div class="p-6 space-y-5">
+                        <!-- Check-In / Check-Out Grid -->
+                        <div class="grid grid-cols-2 gap-3 bg-gray-50 p-3.5 rounded-xl border border-gray-100 text-xs">
+                            <div>
+                                <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-In</span>
+                                <span id="side-checkin" class="font-extrabold text-brand-text">Today</span>
+                                <span class="text-[10px] text-gray-400 block">From 3:00 PM</span>
+                            </div>
+                            <div class="border-l border-gray-200 pl-3">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-Out</span>
+                                <span id="side-checkout" class="font-extrabold text-brand-text">Tomorrow</span>
+                                <span id="side-nights-guests" class="text-[10px] text-brand-red font-bold block">1 Night • 2 Guests</span>
+                            </div>
+                        </div>
+
+                        <!-- Side Mirror of Itemized Price & Tax Breakdown -->
+                        <div class="space-y-2.5 text-xs border-t border-gray-100 pt-4">
+                            <div class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400 mb-1">Summary of Charges</div>
+
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Room Subtotal (<span class="stay-nights-label">1 Night</span>):</span>
+                                <span id="side-room-subtotal" class="font-bold text-brand-text">$250.00 CAD</span>
+                            </div>
+
+                            <div id="side-discount-row" class="hidden justify-between items-center text-emerald-700 font-bold">
+                                <span>Guild Social Club (20% Off):</span>
+                                <span>-$<span class="guild-discount-amount">50.00</span> CAD</span>
+                            </div>
+
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Taxes &amp; Hotel Fees (13%):</span>
+                                <span id="side-taxes-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                            </div>
+
+                            <div class="flex justify-between items-baseline border-t border-gray-200 pt-3 mt-2">
+                                <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Total Due</span>
+                                <span id="side-final-total" class="text-2xl font-black text-brand-text">$282.50 CAD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+            <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+            <p>Compliant with the <strong>Alberta Consumer Protection Act</strong></p>
+        </div>
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- LIVE PRICE & TAX BREAKDOWN ENGINE + SUPABASE PAYLOAD HANDLER      -->
+    <!-- ================================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. READ HOTEL, DATES & PRICE FROM URL OR STORAGE ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const hotelName = urlParams.get('hotel') || localStorage.getItem('locked_hotel_name') || 'Sandman Hotel Hamilton';
+            const roomName = urlParams.get('room') || 'Standard Corporate King Room';
+            const passedPrice = parseFloat(urlParams.get('original_price') || urlParams.get('price') || localStorage.getItem('locked_hotel_price') || '250.00');
+            const checkin = urlParams.get('checkin') || 'Today';
+            const checkout = urlParams.get('checkout') || 'Tomorrow';
+            const guests = urlParams.get('guests') || '2';
+
+            let nights = 1;
+            if (checkin !== 'Today' && checkout !== 'Tomorrow') {
+                const d1 = new Date(checkin);
+                const d2 = new Date(checkout);
+                const diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                if (!isNaN(diff) && diff > 0) nights = diff;
+            }
+
+            const roomSubtotal = passedPrice;
+            const nightlyRate = (roomSubtotal / nights).toFixed(2);
+            const TAX_RATE = 0.13; // 13% Taxes & Recovery Fees
+
+            // Populate Hotel & Stay Info
+            document.getElementById('side-hotel-name').textContent = hotelName;
+            document.getElementById('side-room-name').textContent = roomName;
+            document.getElementById('side-checkin').textContent = checkin;
+            document.getElementById('side-checkout').textContent = checkout;
+            document.getElementById('side-nights-guests').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'} • ${guests} Guests`;
+            document.getElementById('main-breakdown-subtitle').textContent = `${hotelName} • ${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+
+            document.querySelectorAll('.stay-nights-label').forEach(el => {
+                el.textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+            });
+            document.querySelectorAll('.nightly-rate-val').forEach(el => {
+                el.textContent = nightlyRate;
+            });
+
+            if (hotelName.toLowerCase().includes('sheraton')) {
+                document.getElementById('side-hotel-img').src = 'sheraton.png.jpg';
+            } else if (hotelName.toLowerCase().includes('pearle')) {
+                document.getElementById('side-hotel-img').src = 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80';
+            }
+
+            // --- 2. LIVE PRICE, 20% GUILD DISCOUNT & TAX CALCULATOR ---
+            const guildCheckbox = document.getElementById('guild-opt-in');
+            let activePaymentMethod = 'card';
+
+            // Pre-check if user already signed up on club.html
+            if (localStorage.getItem('guild_member_active') === 'true' || urlParams.get('promo') === 'GUILD20') {
+                guildCheckbox.checked = true;
+            }
+
+            function updatePriceBreakdown(animate = false) {
+                const isGuildChecked = guildCheckbox.checked;
+                const discountAmount = parseFloat((roomSubtotal * 0.20).toFixed(2));
+                const effectiveRoomSubtotal = isGuildChecked ? (roomSubtotal - discountAmount) : roomSubtotal;
+                const taxesAmount = parseFloat((effectiveRoomSubtotal * TAX_RATE).toFixed(2));
+                const finalTotal = (effectiveRoomSubtotal + taxesAmount).toFixed(2);
+
+                // Update static room subtotal & 20% discount badges
+                document.getElementById('main-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
+                document.getElementById('side-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
+                document.querySelectorAll('.guild-discount-amount').forEach(el => {
+                    el.textContent = discountAmount.toFixed(2);
+                });
+
+                const mainDiscountRow = document.getElementById('main-discount-row');
+                const mainDiscountedSubRow = document.getElementById('main-discounted-subtotal-row');
+                const sideDiscountRow = document.getElementById('side-discount-row');
+                const mainSavingsNote = document.getElementById('main-savings-note');
+                const mainFinalTotalEl = document.getElementById('main-final-total');
+                const sideFinalTotalEl = document.getElementById('side-final-total');
+
+                if (isGuildChecked) {
+                    mainDiscountRow.classList.replace('hidden', 'flex');
+                    mainDiscountedSubRow.classList.replace('hidden', 'flex');
+                    sideDiscountRow.classList.replace('hidden', 'flex');
+                    document.getElementById('main-discounted-subtotal').textContent = `$${effectiveRoomSubtotal.toFixed(2)} CAD`;
+                    mainSavingsNote.textContent = `Includes 20% Guild Social Club discount (-$${discountAmount.toFixed(2)}) & taxes`;
+                    mainSavingsNote.classList.replace('text-gray-400', 'text-emerald-700');
+                    mainFinalTotalEl.classList.add('text-emerald-700');
+                    sideFinalTotalEl.classList.add('text-emerald-700');
+                } else {
+                    mainDiscountRow.classList.replace('flex', 'hidden');
+                    mainDiscountedSubRow.classList.replace('flex', 'hidden');
+                    sideDiscountRow.classList.replace('flex', 'hidden');
+                    mainSavingsNote.textContent = 'Includes all applicable taxes & fees';
+                    mainSavingsNote.classList.replace('text-emerald-700', 'text-gray-400');
+                    mainFinalTotalEl.classList.remove('text-emerald-700');
+                    sideFinalTotalEl.classList.remove('text-emerald-700');
+                }
+
+                // Update Taxes & Final Totals
+                document.getElementById('main-taxes-val').textContent = `$${taxesAmount.toFixed(2)} CAD`;
+                document.getElementById('side-taxes-val').textContent = `$${taxesAmount.toFixed(2)} CAD`;
+                mainFinalTotalEl.textContent = `$${finalTotal} CAD`;
+                sideFinalTotalEl.textContent = `$${finalTotal} CAD`;
+                document.getElementById('submit-pay-btn-text').textContent = `Confirm & Pay $${finalTotal} CAD`;
+
+                if (animate) {
+                    const totalBox = document.getElementById('main-total-box');
+                    totalBox.classList.remove('price-changed');
+                    void totalBox.offsetWidth;
+                    totalBox.classList.add('price-changed');
+                }
+
+                return {
+                    roomSubtotal: roomSubtotal.toFixed(2),
+                    guildDiscount: isGuildChecked ? discountAmount.toFixed(2) : '0.00',
+                    taxesAmount: taxesAmount.toFixed(2),
+                    finalTotal: finalTotal
+                };
+            }
+
+            guildCheckbox.addEventListener('change', () => updatePriceBreakdown(true));
+            updatePriceBreakdown(false);
+
+            // --- 3. PAYMENT METHOD TABS & INPUT FORMATTING ---
+            const cardInputs = document.querySelectorAll('.card-input');
+
+            document.querySelectorAll('.pay-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    activePaymentMethod = tab.getAttribute('data-method');
+
+                    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('pay-tab-active'));
+                    tab.classList.add('pay-tab-active');
+
+                    document.querySelectorAll('.pay-panel').forEach(p => p.classList.add('hidden'));
+                    document.getElementById(`panel-${activePaymentMethod}`).classList.remove('hidden');
+
+                    cardInputs.forEach(inp => {
+                        inp.required = (activePaymentMethod === 'card');
+                    });
+                });
+            });
+
+            document.getElementById('card-number').addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+                e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+            });
+
+            document.getElementById('card-expiry').addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+                if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2, 4);
+                e.target.value = v;
+            });
+
+            // --- 4. FORM SUBMISSION & SUPABASE-READY PAYLOAD ---
+            document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const totals = updatePriceBreakdown(false);
+                const firstName = document.getElementById('guest-first-name').value.trim();
+                const lastName = document.getElementById('guest-last-name').value.trim();
+                const email = document.getElementById('guest-email').value.trim();
+                const phone = document.getElementById('guest-phone').value.trim();
+
+                // Structured payload ready for Supabase insertion
+                const supabasePayload = {
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    phone: phone,
+                    hotel_name: hotelName,
+                    room_name: roomName,
+                    checkin: checkin,
+                    checkout: checkout,
+                    nights: nights,
+                    room_subtotal_cad: totals.roomSubtotal,
+                    guild_social_club_member: guildCheckbox.checked,
+                    guild_discount_cad: totals.guildDiscount,
+                    taxes_cad: totals.taxesAmount,
+                    total_paid_cad: totals.finalTotal,
+                    payment_method: activePaymentMethod,
+                    created_at: new Date().toISOString()
+                };
+
+                localStorage.setItem('latest_booking_payload', JSON.stringify(supabasePayload));
+
+                if (guildCheckbox.checked) {
+                    localStorage.setItem('guild_member_active', 'true');
+                    localStorage.setItem('guild_member_name', `${firstName} ${lastName}`);
+                    localStorage.setItem('guild_member_email', email);
+                    localStorage.setItem('guild_member_phone', phone);
+                }
+
+                window.location.href = `confirmation.html?hotel=${encodeURIComponent(hotelName)}&paid=${encodeURIComponent(totals.finalTotal)}&guild=${guildCheckbox.checked}`;
+            });
+        });
+    </script>
+</body>
+</html>
