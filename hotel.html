@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds - Hotel Details</title>
+    <title>Hotbeds.ca — Property Details & Live Room Selection</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,16 +22,16 @@
                         sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
                     },
                     boxShadow: {
-                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
+                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)',
                     }
                 }
             }
         }
     </script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         body { 
@@ -39,332 +39,1030 @@
             background-color: #f8fafc; 
         }
         
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(230, 57, 70, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
         }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .urgency-dot {
+            animation: pulse-dot 2s infinite;
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
+<body class="text-brand-text flex flex-col min-h-screen pt-[146px] md:pt-[164px] pb-20 lg:pb-0">
 
-    <!-- Standard Header -->
+    <!-- ================================================================= -->
+    <!-- COMPONENT 01-03: FIXED HEADER, GEO BAR, NAV & CITY PILLS          -->
+    <!-- ================================================================= -->
     <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+        
+        <!-- COMPONENT 01: Top Utility Bar & Geographic Predisposition Switcher -->
+        <div class="bg-slate-900 text-white py-1.5 px-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
+                <a href="club.html" class="flex items-center gap-2 font-medium text-gray-200 hover:text-white transition truncate pr-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
+                    <span id="top-bar-club-text"><strong>HOT BEDS CLUB:</strong> Free 7-Day Trial Open ($0.00 Charged Today) • Unlock Member Rebates at Checkout &rarr;</span>
+                </a>
+                <div class="flex items-center gap-3 shrink-0">
+                    <div class="flex items-center gap-1.5 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">
+                        <span class="text-brand-red">📍</span>
+                        <span class="text-gray-300 hidden sm:inline">Region:</span>
+                        <button id="geo-toggle-btn" type="button" class="font-bold text-white hover:text-red-300 underline decoration-dotted underline-offset-2" title="Click to switch featured region">
+                            Ontario Corridor
+                        </button>
+                    </div>
+                    <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPONENT 02: Main Navigation & "Hot Beds Club" Anchor Pill -->
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
             <div class="flex justify-between items-center h-20 md:h-24">
                 
-                <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
+                <!-- Enlarged Hotbeds Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer w-[32%] md:w-1/4">
                     <a href="index.html">
-                        <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-10 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
                     </a>
                 </div>
                 
-                <nav class="hidden md:flex flex-1 justify-center space-x-10">
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex flex-1 justify-center space-x-8">
+                    <a href="index.html#cities-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Cities</a>
+                    <a href="index.html#featured-stays" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Featured Stays</a>
+                    <a href="index.html#corporate-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Corporate</a>
+                    <a href="index.html#referral-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest flex items-center gap-1">
+                        Referral Program <span class="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
+                    </a>
+                    <a href="club.html" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Members Sign In</a>
                 </nav>
                 
-                <div class="flex items-center justify-end w-auto lg:w-1/3 gap-3 md:gap-4">
+                <!-- Right CTA: Signature "Hot Beds Club" Anchor Button -->
+                <div class="flex items-center justify-end w-[68%] md:w-1/3 gap-2.5 md:gap-4">
                     <div class="hidden sm:flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
+                        <div id="user-avatar-badge" class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-sm shadow-sm">
                             J.
                         </div>
                     </div>
-                    <!-- Hot Beds Club Button -->
-                    <a href="#" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
+                    
+                    <a href="club.html" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
                         <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                            <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
                         <div class="flex flex-col justify-center">
-                            <span class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
-                            <span class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for a limited time</span>
+                            <span id="header-club-title" class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
+                            <span id="header-club-sub" class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for <span id="club-timer">6d 23h</span></span>
                         </div>
                     </a>
+
+                    <button id="mobile-menu-btn" aria-label="Toggle Menu" class="lg:hidden text-brand-text hover:text-brand-red focus:outline-none ml-1">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-2xl z-50 flex flex-col">
+                <a href="index.html#cities-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Cities</a>
+                <a href="index.html#featured-stays" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Featured Stays</a>
+                <a href="index.html#corporate-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Corporate Desk</a>
+                <a href="index.html#referral-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Referral Program ($25 Credit)</a>
+                <a href="club.html" class="px-6 py-4 bg-slate-900 text-white font-extrabold uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Hot Beds Club (Free Pass)</span>
+                    <span class="text-brand-red">&rarr;</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- COMPONENT 03: Geo-Predisposed Quick-Select City Pills -->
+        <div class="bg-gray-50/95 border-t border-gray-100 py-2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start">
+                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden md:flex items-center gap-1 whitespace-nowrap">
+                        Nearby Deals:
+                    </span>
+                    <div id="city-pills-container" class="flex gap-2 items-center"></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" id="hotel-content-wrapper">
+    <!-- ================================================================= -->
+    <!-- MAIN PROPERTY CONTENT CONTAINER                                   -->
+    <!-- ================================================================= -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        <!-- Loading State -->
-        <div id="loading-state" class="text-center py-20">
-            <p class="text-brand-text font-bold text-xl animate-pulse">Loading property details...</p>
+        <!-- COMPONENT 04: Structured Breadcrumb Trail & Share/Save Bar -->
+        <div class="flex flex-wrap justify-between items-center gap-4 mb-5 pb-3 border-b border-gray-200/70">
+            <nav class="flex items-center gap-2 text-xs font-semibold text-gray-500 overflow-x-auto hide-scrollbar whitespace-nowrap">
+                <a href="index.html" class="hover:text-brand-red transition">Home</a>
+                <span>/</span>
+                <a id="breadcrumb-region" href="results.html?destination=Hamilton%2C+ON" class="hover:text-brand-red transition">Ontario Stays</a>
+                <span>/</span>
+                <span id="breadcrumb-hotel" class="text-brand-text font-bold truncate max-w-[200px] sm:max-w-xs">Loading Property...</span>
+            </nav>
+
+            <div class="flex items-center gap-2.5">
+                <button type="button" id="share-property-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-xs font-bold text-brand-text hover:border-brand-red transition shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                    <span id="share-btn-label">Share</span>
+                </button>
+                <button type="button" id="save-property-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-xs font-bold text-brand-text hover:border-brand-red transition shadow-sm">
+                    <span id="save-heart-icon">♡</span>
+                    <span id="save-btn-label">Save</span>
+                </button>
+            </div>
         </div>
 
-        <!-- Dynamic Content (Hidden until loaded) -->
-        <div id="dynamic-content" class="hidden">
-            <!-- Breadcrumb & Back -->
-            <div class="mb-4">
-                <a href="javascript:history.back()" class="text-brand-red hover:text-red-700 text-sm font-bold flex items-center gap-1 transition-colors">
-                    &larr; Back to Search Results
+        <!-- COMPONENT 05: Property Title, Star Tier, Verified Score & Demand Pill -->
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 gap-4">
+            <div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span id="hotel-stars" class="text-yellow-400 text-sm tracking-widest">★★★★</span>
+                    <span id="hotel-badge-pill" class="text-[10px] font-extrabold text-white uppercase tracking-widest bg-slate-900 px-2.5 py-0.5 rounded">Verified Partner Property</span>
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-red bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-red urgency-dot"></span>
+                        <span id="hotel-demand-text">Booked 4 times in the last 24h</span>
+                    </span>
+                </div>
+                <h1 id="hotel-name" class="text-3xl sm:text-4xl font-black text-brand-text tracking-tight mb-1.5">Sandman Hotel Hamilton</h1>
+                <p class="text-xs sm:text-sm font-semibold text-gray-500 flex flex-wrap items-center gap-1.5">
+                    <svg class="w-4 h-4 text-brand-red shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                    <span id="hotel-address">560 Centennial Pkwy N, Hamilton, ON L8E 0G2</span>
+                    <span class="text-gray-300">•</span>
+                    <a href="#location-section" class="text-brand-red font-bold hover:underline">View Neighborhood &amp; Transit</a>
+                </p>
+            </div>
+
+            <!-- Right Rating & Quick Reserve Anchor -->
+            <div class="flex items-center gap-4 self-stretch lg:self-auto justify-between lg:justify-end bg-white lg:bg-transparent p-3.5 lg:p-0 rounded-xl border border-gray-200 lg:border-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="text-right">
+                        <div id="hotel-rating-word" class="text-xs font-extrabold text-brand-text uppercase tracking-wider">Excellent Stay</div>
+                        <div id="hotel-reviews" class="text-[11px] text-gray-500 font-medium">428 Verified Reviews</div>
+                    </div>
+                    <div id="hotel-score" class="bg-brand-text text-white text-lg font-black px-3 py-2 rounded-xl shadow-sm">4.5</div>
+                </div>
+                <a href="#room-selection" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition whitespace-nowrap">
+                    Select Room &darr;
                 </a>
             </div>
+        </div>
 
-            <!-- Property Header -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <div id="hotel-stars" class="text-yellow-400 text-sm tracking-widest"></div>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded">Hotel</span>
+        <!-- COMPONENT 06: 5-Photo Bento Gallery Grid with Lightbox Trigger -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5 h-[300px] sm:h-[420px] rounded-2xl overflow-hidden mb-6 shadow-soft relative group">
+            <!-- Primary Feature Image (2 Cols, Full Height) -->
+            <div onclick="openGalleryModal(0)" class="md:col-span-2 relative h-full bg-gray-200 cursor-pointer overflow-hidden">
+                <img id="img-main" src="" alt="Property Exterior" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                <span class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-lg">
+                    Featured Property View
+                </span>
+            </div>
+            <!-- Column 3 (2 Stacked Images) -->
+            <div class="hidden md:flex flex-col gap-2.5 h-full">
+                <div onclick="openGalleryModal(1)" class="h-1/2 relative bg-gray-200 cursor-pointer overflow-hidden">
+                    <img id="img-sub-1" src="" alt="Guest Suite" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div onclick="openGalleryModal(2)" class="h-1/2 relative bg-gray-200 cursor-pointer overflow-hidden">
+                    <img id="img-sub-2" src="" alt="Property Lounge" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+            <!-- Column 4 (2 Stacked Images + Fullscreen Lightbox Trigger) -->
+            <div class="hidden md:flex flex-col gap-2.5 h-full">
+                <div onclick="openGalleryModal(3)" class="h-1/2 relative bg-gray-200 cursor-pointer overflow-hidden">
+                    <img id="img-sub-3" src="" alt="Pool & Wellness" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <div onclick="openGalleryModal(0)" class="h-1/2 relative bg-gray-900 cursor-pointer overflow-hidden">
+                    <img id="img-sub-4" src="" alt="Dining & Lobby" class="w-full h-full object-cover opacity-60 hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/45 hover:bg-black/60 flex flex-col items-center justify-center transition-colors text-white">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span class="font-extrabold text-xs uppercase tracking-widest">View Full Gallery</span>
                     </div>
-                    <h1 id="hotel-name" class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-2"></h1>
-                    <p class="text-sm font-medium text-gray-500 flex items-center gap-1">
-                        <svg class="w-4 h-4 text-brand-red" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-                        <span id="hotel-address"></span>
+                </div>
+            </div>
+            <!-- Mobile Photo Lightbox Button -->
+            <button type="button" onclick="openGalleryModal(0)" class="md:hidden absolute bottom-3 right-3 bg-white/95 text-brand-text font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-2 rounded-xl shadow-lg">
+                📷 All Photos
+            </button>
+        </div>
+
+        <!-- COMPONENT 07: Sticky In-Page Section Jump Bar -->
+        <div class="sticky top-[146px] md:top-[164px] z-30 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-2.5 mb-8 shadow-sm flex items-center justify-between gap-4 overflow-x-auto hide-scrollbar">
+            <div class="flex items-center gap-6 text-xs font-extrabold uppercase tracking-wider whitespace-nowrap">
+                <a href="#overview-section" class="text-brand-red border-b-2 border-brand-red pb-0.5">Overview</a>
+                <a href="#room-selection" class="text-gray-600 hover:text-brand-red transition">Available Rooms</a>
+                <a href="#amenities-section" class="text-gray-600 hover:text-brand-red transition">Amenities</a>
+                <a href="#reviews-section" class="text-gray-600 hover:text-brand-red transition">Guest Reviews</a>
+                <a href="#location-section" class="text-gray-600 hover:text-brand-red transition">Location</a>
+                <a href="#policies-section" class="text-gray-600 hover:text-brand-red transition">House Rules</a>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 shrink-0">
+                <span class="text-[10px] font-bold text-gray-400 uppercase">Starting at</span>
+                <span id="jumpbar-start-price" class="text-sm font-black text-brand-text">$158 CAD</span>
+            </div>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- TWO-COLUMN OVERVIEW & STICKY STAY RECALCULATOR                -->
+        <!-- ============================================================= -->
+        <div class="flex flex-col lg:flex-row gap-8 mb-12">
+            
+            <!-- Left Column (2/3): Highlights, Overview & Amenity Matrix -->
+            <div class="w-full lg:w-2/3 space-y-8">
+                
+                <!-- COMPONENT 08: 4-Pillar Property Highlights Strip -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Check-In / Out</span>
+                        <span class="text-xs font-black text-brand-text">3:00 PM / 11:00 AM</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Front Desk</span>
+                        <span class="text-xs font-black text-brand-text">24-Hour Reception</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Connectivity</span>
+                        <span class="text-xs font-black text-green-600">✓ Free High-Speed Wi-Fi</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Price Protection</span>
+                        <span class="text-xs font-black text-brand-red">Alberta CPA Verified</span>
+                    </div>
+                </div>
+
+                <!-- Property Narrative -->
+                <section id="overview-section" class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-soft">
+                    <h2 class="text-lg font-extrabold text-brand-text mb-3 uppercase tracking-tight">Property Overview</h2>
+                    <p id="hotel-description" class="text-sm text-gray-600 leading-relaxed mb-5"></p>
+                    
+                    <!-- COMPONENT 15: Subtle Hot Beds Club Checkout Rebate Callout (Protects Public Rate Parity) -->
+                    <div class="bg-slate-900 text-white rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-brand-red flex items-center justify-center shrink-0 font-black text-xs">★</div>
+                            <div>
+                                <div class="text-xs font-extrabold uppercase tracking-wider text-white">Hot Beds Club Member Perk Eligible</div>
+                                <p class="text-[11px] text-gray-300 mt-0.5">
+                                    Reserve any room below to unlock your instant member rebate at checkout—plus 7-day complimentary club access ($0.00 charged today).
+                                </p>
+                            </div>
+                        </div>
+                        <a href="club.html" class="text-[11px] font-extrabold uppercase tracking-widest text-brand-red bg-white px-3.5 py-2 rounded-lg shrink-0 hover:bg-gray-100 transition">
+                            Learn More
+                        </a>
+                    </div>
+                </section>
+
+                <!-- COMPONENT 09: Categorized Visual Amenity Matrix -->
+                <section id="amenities-section" class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-soft">
+                    <h2 class="text-lg font-extrabold text-brand-text mb-5 uppercase tracking-tight">Property Amenities &amp; Services</h2>
+                    <div id="amenities-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+                        <!-- Dynamically populated with visual cards -->
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- COMPONENT 10: Right Column (1/3) — Interactive Stay Recalculator Widget -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-soft-xl sticky top-[220px] border border-gray-800">
+                    <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-800">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-brand-red block">Live Rate Calculator</span>
+                            <h3 class="text-base font-extrabold uppercase tracking-wide">Your Stay Details</h3>
+                        </div>
+                        <span id="sidebar-nights-pill" class="bg-brand-red text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
+                            1 Night
+                        </span>
+                    </div>
+                    
+                    <div class="space-y-3 mb-5">
+                        <div>
+                            <label for="calc-checkin" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Check-in Date</label>
+                            <input type="date" id="calc-checkin" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs font-bold text-white focus:border-brand-red outline-none">
+                        </div>
+                        <div>
+                            <label for="calc-checkout" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Check-out Date</label>
+                            <input type="date" id="calc-checkout" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs font-bold text-white focus:border-brand-red outline-none">
+                        </div>
+                        <div>
+                            <label for="calc-guests" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Rooms &amp; Guests</label>
+                            <select id="calc-guests" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-xs font-bold text-white focus:border-brand-red outline-none">
+                                <option value="1">1 Adult (1 Room)</option>
+                                <option value="2" selected>2 Adults (1 Room)</option>
+                                <option value="3">3 Adults (1 Room)</option>
+                                <option value="4">4+ Guests / Group</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Price Summary Preview -->
+                    <div class="bg-gray-800/90 border border-gray-700 rounded-xl p-3.5 mb-5 space-y-1.5 text-xs">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Starting Nightly Rate:</span>
+                            <span id="sidebar-base-rate" class="font-bold text-white">$158.00 CAD</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Estimated Stay Total (<span id="sidebar-nights-count">1</span> nt):</span>
+                            <span id="sidebar-total-rate" class="font-black text-white text-sm">$158.00 CAD</span>
+                        </div>
+                        <div class="pt-1.5 border-t border-gray-700 flex justify-between text-[10px] text-green-400 font-bold uppercase">
+                            <span>Hot Beds Club Rebate:</span>
+                            <span>Available at Checkout</span>
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="document.getElementById('room-selection').scrollIntoView({behavior: 'smooth'})" class="w-full bg-brand-red hover:bg-red-700 text-white font-extrabold py-3.5 rounded-xl uppercase tracking-widest text-xs transition-colors shadow-md">
+                        View Available Rooms &darr;
+                    </button>
+
+                    <p class="text-[9px] text-gray-400 text-center uppercase tracking-wider mt-3">
+                        ✓ Transparent All-In CAD Pricing • Alberta CPA Compliant
                     </p>
                 </div>
-                <div class="flex flex-col items-end">
-                    <div class="flex items-center gap-2 mb-1">
-                        <div class="text-right">
-                            <div class="text-sm font-bold text-brand-text uppercase tracking-wide">Rating</div>
-                            <div id="hotel-reviews" class="text-xs text-gray-400"></div>
-                        </div>
-                        <div id="hotel-score" class="bg-brand-text text-white text-xl font-black px-3 py-2 rounded-lg shadow-sm"></div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Cinematic Image Gallery Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-10 shadow-soft">
-                <div class="md:col-span-3 relative h-full">
-                    <img id="img-main" src="" alt="Hotel Exterior" class="w-full h-full object-cover">
-                </div>
-                <div class="hidden md:flex flex-col gap-2 h-full">
-                    <div class="h-1/2 relative">
-                        <img id="img-sub-1" src="" alt="Room Interior" class="w-full h-full object-cover">
-                    </div>
-                    <div class="h-1/2 relative">
-                        <img id="img-sub-2" src="" alt="Hotel Pool" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer hover:bg-black/50 transition-colors">
-                            <span class="text-white font-bold text-sm uppercase tracking-widest">+ Photos</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
 
-            <div class="flex flex-col lg:flex-row gap-10">
-                <!-- Left Column: Details -->
-                <div class="w-full lg:w-2/3">
-                    <section class="mb-10 bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
-                        <h2 class="text-xl font-extrabold text-brand-text mb-4 uppercase tracking-wide">Property Overview</h2>
-                        <p id="hotel-description" class="text-sm text-gray-600 leading-relaxed mb-4"></p>
-                    </section>
-
-                    <section class="mb-10 bg-white p-8 rounded-2xl border border-gray-100 shadow-soft">
-                        <h2 class="text-xl font-extrabold text-brand-text mb-6 uppercase tracking-wide">Top Amenities</h2>
-                        <div id="amenities-grid" class="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2">
-                            <!-- Amenities injected here -->
-                        </div>
-                    </section>
+        <!-- ============================================================= -->
+        <!-- COMPONENT 11-14: INTERACTIVE ROOM SELECTION MATRIX            -->
+        <!-- ============================================================= -->
+        <section id="room-selection" class="pt-8 border-t border-gray-200 mb-14">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4">
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Live Room Inventory</span>
+                    <h2 class="text-2xl font-black text-brand-text uppercase tracking-tight">Select Your Room</h2>
                 </div>
 
-                <!-- Right Column: Sticky Summary/Search Info -->
-                <div class="w-full lg:w-1/3">
-                    <div class="bg-brand-text p-6 rounded-2xl shadow-soft sticky top-[130px]">
-                        <h3 class="text-white text-lg font-bold mb-4 uppercase tracking-widest">Your Search</h3>
-                        
-                        <div class="flex flex-col gap-4 border-b border-gray-600 pb-4 mb-4">
-                            <div class="bg-gray-800 rounded-lg p-3">
-                                <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-in</span>
-                                <span class="text-sm font-bold text-white" id="summary-checkin"></span>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-3">
-                                <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-out</span>
-                                <span class="text-sm font-bold text-white" id="summary-checkout"></span>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-3">
-                                <span class="block text-[10px] text-gray-400 uppercase tracking-widest mb-1">Guests</span>
-                                <span class="text-sm font-bold text-white" id="summary-guests"></span>
-                            </div>
-                        </div>
-                        
-                        <button onclick="document.getElementById('room-selection').scrollIntoView({behavior: 'smooth'})" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-3 rounded-lg uppercase tracking-widest transition-colors shadow-sm">
-                            View Available Rooms
-                        </button>
-                    </div>
+                <!-- COMPONENT 11: Room Category Filter Pills -->
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full sm:w-auto pb-1">
+                    <button type="button" data-room-filter="all" class="room-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-text text-white transition whitespace-nowrap">All Rooms</button>
+                    <button type="button" data-room-filter="free_cancel" class="room-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-600 hover:border-brand-red transition whitespace-nowrap">✓ Free Cancellation</button>
+                    <button type="button" data-room-filter="suite" class="room-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-600 hover:border-brand-red transition whitespace-nowrap">Suites &amp; Executive</button>
                 </div>
             </div>
+            
+            <div id="rooms-container" class="flex flex-col gap-5">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </section>
 
-            <!-- Room Selection Grid -->
-            <section id="room-selection" class="mt-8 pt-8 border-t border-gray-200">
-                <h2 class="text-2xl font-extrabold text-brand-text mb-6 uppercase tracking-tight">Select Your Room</h2>
-                
-                <div id="rooms-container" class="flex flex-col gap-6">
-                    <!-- Rooms injected here -->
+        <!-- ============================================================= -->
+        <!-- COMPONENT 16-18: GUEST REVIEWS, LOCATION & HOUSE RULES        -->
+        <!-- ============================================================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 pt-8 border-t border-gray-200">
+            
+            <!-- COMPONENT 16: Verified Guest Review Breakdown (7 Cols) -->
+            <section id="reviews-section" class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-soft">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Verified Stays</span>
+                        <h2 class="text-xl font-black text-brand-text uppercase tracking-tight">Guest Rating Breakdown</h2>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-900 text-white px-3.5 py-2 rounded-xl">
+                        <span id="review-overall-score" class="text-lg font-black">4.5</span>
+                        <span class="text-[10px] uppercase tracking-wider text-gray-300">/ 5.0 Overall</span>
+                    </div>
+                </div>
+
+                <!-- Sub-Score Progress Bars -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 pb-6 border-b border-gray-100 text-xs font-bold">
+                    <div>
+                        <div class="flex justify-between mb-1"><span>Cleanliness &amp; Comfort</span><span>4.7 / 5</span></div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-brand-red h-full rounded-full" style="width: 94%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span>Location &amp; Transit Access</span><span>4.6 / 5</span></div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-brand-red h-full rounded-full" style="width: 92%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span>Front Desk &amp; Service</span><span>4.5 / 5</span></div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-brand-red h-full rounded-full" style="width: 90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span>Value for Money</span><span>4.6 / 5</span></div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-brand-red h-full rounded-full" style="width: 92%"></div></div>
+                    </div>
+                </div>
+
+                <!-- Sample Verified Guest Reviews -->
+                <div class="space-y-4">
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-extrabold text-brand-text">Michael R. • Verified Business Traveler</span>
+                            <span class="text-xs font-black text-brand-text">★ 5.0</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">"Spotless room, fast check-in at the front desk, and unbeatable rate through Hotbeds. Will definitely book here again for our next regional trip."</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-extrabold text-brand-text">Sarah T. • Weekend Getaway</span>
+                            <span class="text-xs font-black text-brand-text">★ 4.6</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">"Great amenities and super convenient highway and transit access. Activate the Hot Beds Club option at checkout—it saved us a bundle on a busy Friday night."</p>
+                    </div>
                 </div>
             </section>
+
+            <!-- COMPONENT 17 & 18: Location Landmarks & Property House Rules (5 Cols) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- COMPONENT 17: Location & Nearby Landmarks -->
+                <section id="location-section" class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-soft">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Neighborhood &amp; Transit</span>
+                    <h3 class="text-lg font-black text-brand-text uppercase tracking-tight mb-3">Location Highlights</h3>
+                    <p id="location-summary" class="text-xs text-gray-500 mb-4">Prime corridor access to business districts, dining, and highway transit.</p>
+                    <ul id="landmarks-list" class="space-y-2.5 text-xs font-semibold text-gray-700">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </section>
+
+                <!-- COMPONENT 18: Property Policies & House Rules (Alberta CPA Internet Sales Disclosure) -->
+                <section id="policies-section" class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-soft">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1"> Reservation Disclosures</span>
+                    <h3 class="text-lg font-black text-brand-text uppercase tracking-tight mb-4">House Rules &amp; Policies</h3>
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span class="font-bold text-gray-500">Check-In / Check-Out</span>
+                            <span class="font-extrabold text-brand-text">3:00 PM / 11:00 AM</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span class="font-bold text-gray-500">Identification Required</span>
+                            <span class="font-semibold text-gray-700">Gov Photo ID + Credit Card</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-gray-100">
+                            <span class="font-bold text-gray-500">Parking &amp; Wi-Fi</span>
+                            <span class="font-semibold text-green-600">On-Site Available • Free Wi-Fi</span>
+                        </div>
+                        <div class="pt-1 text-[11px] text-gray-400 leading-relaxed">
+                            All rates are displayed in Canadian Dollars (CAD). Full cancellation terms and total charges are disclosed prior to payment in accordance with the <strong>Alberta Consumer Protection Act</strong>.
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
+
+        <!-- ============================================================= -->
+        <!-- COMPONENT 19: SIMILAR VERIFIED STAYS NEARBY CROSS-SELL GRID   -->
+        <!-- ============================================================= -->
+        <section class="pt-8 border-t border-gray-200 mb-8">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Compare Nearby</span>
+                    <h2 class="text-2xl font-black text-brand-text uppercase tracking-tight">Similar Verified Properties</h2>
+                </div>
+                <a href="index.html#featured-stays" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest">View All &rarr;</a>
+            </div>
+            <div id="similar-hotels-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </section>
+
     </main>
 
-    <!-- Hidden Template for Dynamic Room Cards -->
-    <template id="room-card-template">
-        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft flex flex-col md:flex-row">
-            <div class="md:w-1/4 h-48 md:h-auto bg-gray-200 relative">
-                <img class="room-img w-full h-full object-cover" src="https://images.unsplash.com/photo-1582719478250-c894e4dc24a2?q=80&w=400&auto=format&fit=crop" alt="Room">
-            </div>
-            <div class="md:w-3/4 p-6 flex flex-col justify-between">
-                <div class="flex flex-col md:flex-row justify-between gap-4">
-                    <div>
-                        <h3 class="room-name text-xl font-bold text-brand-text mb-2"></h3>
-                        <p class="text-xs font-medium text-gray-500 mb-3 flex items-center gap-2">
-                            <span class="room-beds"></span>
-                            <span class="room-sleeps"></span>
-                            <span class="room-sqft"></span>
-                        </p>
-                        <ul class="text-sm font-medium space-y-1">
-                            <li class="flex items-center gap-1.5 text-gray-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                Free Wi-Fi
-                            </li>
-                            <li class="room-policy flex items-center gap-1.5 font-bold">
-                                <!-- Policy injected here -->
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="flex flex-col items-end justify-start border-l border-gray-100 pl-6 md:w-1/3">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Per Night</span>
-                        <div class="room-price text-3xl font-black text-brand-text tracking-tighter mb-1"></div>
-                        <span class="text-[10px] text-gray-400 mb-4">Excludes taxes & fees</span>
-                        
-                        <form action="checkout.html" method="GET" class="w-full">
-                            <input type="hidden" name="hotel" class="input-hotel" value="">
-                            <input type="hidden" name="room" class="input-room" value="">
-                            <input type="hidden" name="price" class="input-price" value="">
-                            <input type="hidden" name="checkin" class="input-checkin" value="">
-                            <input type="hidden" name="checkout" class="input-checkout" value="">
-                            <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-2.5 rounded-lg shadow-sm hover:shadow transition-colors uppercase tracking-widest text-xs">
-                                Reserve
-                            </button>
-                        </form>
-                    </div>
-                </div>
+    <!-- ================================================================= -->
+    <!-- COMPONENT 21: MOBILE STICKY BOTTOM RESERVE BAR                    -->
+    <!-- ================================================================= -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 shadow-[0_-8px_25px_rgba(0,0,0,0.08)] flex justify-between items-center">
+        <div>
+            <span class="text-[10px] font-bold text-gray-400 uppercase block">Rooms Starting At</span>
+            <div class="flex items-baseline gap-1">
+                <span id="mobile-bar-price" class="text-2xl font-black text-brand-text">$158</span>
+                <span class="text-[10px] font-bold text-gray-500">CAD / night</span>
             </div>
         </div>
-    </template>
+        <a href="#room-selection" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl shadow-md">
+            Select Room &uarr;
+        </a>
+    </div>
 
-    <!-- TICO Compliant Footer -->
-    <footer class="bg-white border-t border-gray-100 py-8 mt-auto relative z-10">
+    <!-- ================================================================= -->
+    <!-- COMPONENT 06B: FULLSCREEN PHOTO GALLERY LIGHTBOX MODAL            -->
+    <!-- ================================================================= -->
+    <div id="gallery-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md p-4">
+        <div class="relative max-w-4xl w-full">
+            <div class="flex justify-between items-center text-white mb-3">
+                <span id="lightbox-caption" class="text-xs font-bold uppercase tracking-widest">Property Gallery</span>
+                <button type="button" onclick="closeGalleryModal()" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold uppercase">&times; Close</button>
+            </div>
+            <div class="relative h-[320px] sm:h-[520px] bg-black rounded-2xl overflow-hidden border border-white/15">
+                <img id="lightbox-img" src="" alt="Gallery Preview" class="w-full h-full object-cover">
+                <button type="button" onclick="stepGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 text-white font-black hover:bg-brand-red transition">&larr;</button>
+                <button type="button" onclick="stepGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 text-white font-black hover:bg-brand-red transition">&rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- COMPONENT 22: 4-COLUMN ALBERTA CPA COMPLIANT OTA FOOTER           -->
+    <!-- ================================================================= -->
+    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
                 <div>
-                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
+                    <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Canadian hotel reservation platform delivering live peak-night rates and exclusive Hot Beds Club member perks.
+                    </p>
                 </div>
-                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
-                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
-                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Popular Cities</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="results.html?destination=Hamilton%2C+ON" class="hover:text-brand-red">Hamilton &amp; Burlington Hotels</a></li>
+                        <li><a href="results.html?destination=Toronto%2C+ON" class="hover:text-brand-red">Downtown Toronto Stays</a></li>
+                        <li><a href="results.html?destination=Calgary%2C+AB" class="hover:text-brand-red">Calgary Corporate Hotels</a></li>
+                        <li><a href="results.html?destination=Banff%2C+AB" class="hover:text-brand-red">Banff &amp; Canmore Resorts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; Perks</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (Free 7-Day Pass)</a></li>
+                        <li><a href="index.html#corporate-section" class="hover:text-brand-red">Corporate &amp; Group Desk</a></li>
+                        <li><a href="index.html#referral-section" class="hover:text-brand-red">Referral Program ($25 Credit)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Compliance</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="#" class="hover:text-brand-red">Terms &amp; Conditions</a></li>
+                        <li><a href="#" class="hover:text-brand-red">Privacy &amp; Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-red">Internet Sales Contract Rules</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
-                <p class="text-[11px] text-gray-400 font-medium">
-                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
+
+            <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+                <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold">
+                    Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation)
                 </p>
             </div>
         </div>
     </footer>
 
+    <!-- ================================================================= -->
+    <!-- MASTER PROPERTY ENGINE: API + FALLBACK CATALOG + LIVE CALCULATOR  -->
+    <!-- ================================================================= -->
     <script>
+        // Built-in Resilient Canadian Property Catalog (Prevents broken demos if API is offline)
+        const PROPERTY_CATALOG = {
+            'sandman-hamilton': {
+                id: 'sandman-hamilton',
+                name: 'Sandman Hotel Hamilton',
+                region: 'ON',
+                city: 'Hamilton, ON',
+                address: '560 Centennial Pkwy N, Hamilton, ON L8E 0G2',
+                stars: '★★★★',
+                score: '4.5',
+                reviews: '428 Verified Guest Reviews',
+                badge: 'Popular Business & Transit Pick',
+                demand: 'Booked 5 times in the last 24h',
+                description: 'Strategically positioned near the QEW corridor between Toronto and Niagara, Sandman Hotel Hamilton combines modern executive comfort with effortless regional access. Guests enjoy an indoor heated pool, hot tub, 24-hour fitness center, high-speed workspace Wi-Fi, and two on-site dining venues including Chop Steakhouse & Bar and Denny’s.',
+                images: [
+                    'sandman.png.jpg',
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80'
+                ],
+                amenities: ['Indoor Heated Pool', 'Hot Tub & Whirlpool', '24-Hour Front Desk', 'Free High-Speed Wi-Fi', 'Chop Steakhouse On-Site', 'Fitness Center', 'Free On-Site Parking', 'Business Workstations', 'Pet-Friendly Rooms'],
+                landmarks: [
+                    'Confederation GO Station & QEW Access — 2 min drive',
+                    'Hamilton Stadium — 10 min drive',
+                    'Downtown Hamilton & Convention Centre — 14 min drive',
+                    'Burlington Waterfront — 12 min drive'
+                ],
+                rooms: [
+                    { name: 'Standard Corporate King', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 320, price: 158.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Deluxe Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 365, price: 174.00, left: 4, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Executive King Suite with Kitchenette', category: 'suite', beds: '1 King Bed + Sofa Bed', sleeps: 3, sqft: 480, price: 215.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
+                ]
+            },
+            'pearle-burlington': {
+                id: 'pearle-burlington',
+                name: 'The Pearle Hotel & Spa',
+                region: 'ON',
+                city: 'Burlington, ON',
+                address: '3 Elizabeth St, Burlington, ON L7R 0M7',
+                stars: '★★★★★',
+                score: '4.8',
+                reviews: '312 Verified Guest Reviews',
+                badge: 'Waterfront Luxury & Spa',
+                demand: 'Booked 6 times in the last 24h',
+                description: 'Overlooking the shores of Lake Ontario in downtown Burlington, The Pearle Hotel & Spa offers floor-to-ceiling waterfront views, a full-service luxury spa with hammam and indoor pool, and acclaimed lakeside dining at Isabelle Restaurant + Lounge.',
+                images: [
+                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80'
+                ],
+                amenities: ['Full-Service Luxury Spa', 'Lakefront Dining', 'Indoor Pool & Steam Room', 'Valet Parking', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Event Ballrooms', 'Room Service'],
+                landmarks: [
+                    'Spencer Smith Park & Pier — 1 min walk',
+                    'Burlington Performing Arts Centre — 4 min walk',
+                    'Royal Botanical Gardens — 10 min drive',
+                    'Oakville Harbour — 15 min drive'
+                ],
+                rooms: [
+                    { name: 'Studio King Guestroom', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 390, price: 285.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Lakeview Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 430, price: 315.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Waterfront Corner One-Bedroom Suite', category: 'suite', beds: '1 King Bed', sleeps: 2, sqft: 640, price: 395.00, left: 1, non_refundable: false, img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=700&q=80' }
+                ]
+            },
+            'sheraton-hamilton': {
+                id: 'sheraton-hamilton',
+                name: 'Sheraton Hamilton Hotel',
+                region: 'ON',
+                city: 'Hamilton, ON',
+                address: '116 King St W, Hamilton, ON L8P 4V3',
+                stars: '★★★★',
+                score: '4.4',
+                reviews: '519 Verified Guest Reviews',
+                badge: 'Downtown Core & Convention Hub',
+                demand: 'Booked 4 times in the last 24h',
+                description: 'Located in the heart of downtown Hamilton with direct indoor skywalk access to the Hamilton Convention Centre, FirstOntario Concert Hall, and Jackson Square, Sheraton Hamilton is built for seamless business and event stays.',
+                images: [
+                    'sheraton.png.jpg',
+                    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=900&q=80'
+                ],
+                amenities: ['Sheraton Club Lounge', 'Indoor Heated Pool', '24-Hour Fitness Center', 'Chagall’s Restaurant', 'Direct Arena & Convention Access', 'High-Speed Wi-Fi', 'Valet & Self Parking', 'Conference Rooms', 'Pet Friendly'],
+                landmarks: [
+                    'Hamilton Convention Centre — 2 min indoor walk',
+                    'Art Gallery of Hamilton — 2 min walk',
+                    'Hamilton GO Centre — 8 min walk',
+                    'McMaster University — 8 min drive'
+                ],
+                rooms: [
+                    { name: 'Traditional King Room', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 330, price: 195.00, left: 4, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Traditional Two Double Beds', category: 'free_cancel', beds: '2 Double Beds', sleeps: 4, sqft: 350, price: 209.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Sheraton Club Level King Suite', category: 'suite', beds: '1 King Bed + Lounge Access', sleeps: 2, sqft: 510, price: 259.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
+                ]
+            },
+            'hotel-arts-calgary': {
+                id: 'hotel-arts-calgary',
+                name: 'Hotel Arts Calgary',
+                region: 'AB',
+                city: 'Calgary, AB',
+                address: '119 12 Ave SW, Calgary, AB T2R 0G8',
+                stars: '★★★★',
+                score: '4.6',
+                reviews: '610 Verified Guest Reviews',
+                badge: 'Downtown Calgary Boutique',
+                demand: 'Booked 7 times in the last 24h',
+                description: 'Calgary’s premier designer boutique hotel in the vibrant Beltline and Downtown district, featuring a heated outdoor pool patio, Yellow Door Bistro, and modern executive suites steps from the Stampede Grounds and corporate towers.',
+                images: [
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
+                    'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=900&q=80'
+                ],
+                amenities: ['Heated Pool Patio', 'Yellow Door Bistro', 'Cruiser Bike Rentals', 'Fitness Center', '24-Hour Front Desk', 'Free High-Speed Wi-Fi', 'Valet Parking', 'Executive Event Space', 'Room Service'],
+                landmarks: [
+                    'Calgary Tower & Stephen Ave — 6 min walk',
+                    'BMO Centre & Stampede Park — 10 min walk',
+                    '17th Ave Retail & Dining — 7 min walk',
+                    'YYC Calgary International Airport — 22 min drive'
+                ],
+                rooms: [
+                    { name: 'Luxury King Room', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 340, price: 215.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Poolview Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 380, price: 239.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                    { name: 'Designer One-Bedroom King Suite', category: 'suite', beds: '1 King Bed', sleeps: 3, sqft: 580, price: 295.00, left: 1, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
+                ]
+            }
+        };
+
+        let activeGalleryImages = [];
+        let activeGalleryIdx = 0;
+
+        window.openGalleryModal = function(idx = 0) {
+            activeGalleryIdx = idx;
+            document.getElementById('lightbox-img').src = activeGalleryImages[activeGalleryIdx] || activeGalleryImages[0];
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeGalleryModal = function() {
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        };
+
+        window.stepGallery = function(dir) {
+            activeGalleryIdx = (activeGalleryIdx + dir + activeGalleryImages.length) % activeGalleryImages.length;
+            document.getElementById('lightbox-img').src = activeGalleryImages[activeGalleryIdx];
+        };
+
         document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Get URL Parameters (sent from results.html)
+
+            // --- 1. MOBILE MENU & HEADER SESSION CHECK ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            if (localStorage.getItem('guild_member_active') === 'true') {
+                const memberName = localStorage.getItem('guild_member_name') || 'Member';
+                document.getElementById('user-avatar-badge').textContent = memberName.charAt(0).toUpperCase() + '.';
+                document.getElementById('header-club-sub').innerHTML = '<span class="text-green-400">✓ Member Active</span>';
+                document.getElementById('top-bar-club-text').innerHTML = `<strong>✓ HOT BEDS CLUB ACTIVE:</strong> Your member rebate will automatically apply at checkout!`;
+            }
+
+            // --- 2. GEOGRAPHIC PREDISPOSITION PILLS ---
+            const regionalPills = {
+                ON: ['Hamilton', 'Mississauga', 'Oakville', 'Burlington', 'Toronto', 'Niagara Falls'],
+                AB: ['Calgary', 'Banff', 'Edmonton', 'Canmore', 'Jasper', 'Lake Louise']
+            };
+            let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
+
+            function renderGeoPills(region) {
+                const container = document.getElementById('city-pills-container');
+                container.innerHTML = '';
+                document.getElementById('geo-toggle-btn').textContent = region === 'AB' ? 'Alberta & Rockies' : 'Ontario Corridor';
+                regionalPills[region].forEach(city => {
+                    const a = document.createElement('a');
+                    a.href = `results.html?destination=${encodeURIComponent(city + ', ' + region)}`;
+                    a.className = 'px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
+                    a.textContent = city;
+                    container.appendChild(a);
+                });
+            }
+            renderGeoPills(activeRegion);
+
+            document.getElementById('geo-toggle-btn').addEventListener('click', () => {
+                activeRegion = activeRegion === 'ON' ? 'AB' : 'ON';
+                localStorage.setItem('hotbeds_region', activeRegion);
+                renderGeoPills(activeRegion);
+            });
+
+            // --- 3. RESOLVE URL PARAMETERS & DEFAULT DATES ---
             const urlParams = new URLSearchParams(window.location.search);
-            const hotelId = urlParams.get('id');
-            const checkin = urlParams.get('checkin') || 'Not Selected';
-            const checkout = urlParams.get('checkout') || 'Not Selected';
-            const guests = urlParams.get('guests') || '2';
+            const rawHotelId = (urlParams.get('id') || 'sandman-hamilton').toLowerCase();
+            const calcCheckin = document.getElementById('calc-checkin');
+            const calcCheckout = document.getElementById('calc-checkout');
+            const calcGuests = document.getElementById('calc-guests');
 
-            // Populate side panel summary
-            if(checkin !== 'Not Selected' && checkout !== 'Not Selected') {
-                const options = { month: 'short', day: 'numeric', year: 'numeric' };
-                document.getElementById('summary-checkin').textContent = new Date(checkin).toLocaleDateString('en-US', options);
-                document.getElementById('summary-checkout').textContent = new Date(checkout).toLocaleDateString('en-US', options);
-            } else {
-                document.getElementById('summary-checkin').textContent = checkin;
-                document.getElementById('summary-checkout').textContent = checkout;
-            }
-            document.getElementById('summary-guests').textContent = `${guests} Guests`;
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+            const fmt = (d) => d.toISOString().split('T')[0];
 
-            if (!hotelId) {
-                document.getElementById('loading-state').innerHTML = '<p class="text-brand-red font-bold text-xl">Error: No hotel ID provided.</p>';
-                return;
-            }
+            calcCheckin.min = fmt(today);
+            calcCheckout.min = fmt(tomorrow);
+            calcCheckin.value = urlParams.get('checkin') && urlParams.get('checkin') !== 'Not Selected' ? urlParams.get('checkin') : fmt(today);
+            calcCheckout.value = urlParams.get('checkout') && urlParams.get('checkout') !== 'Not Selected' ? urlParams.get('checkout') : fmt(tomorrow);
+            calcGuests.value = urlParams.get('guests') || '2';
+
+            // --- 4. LOAD PROPERTY DATA (API FIRST -> RESILIENT CATALOG FALLBACK) ---
+            let propertyData = PROPERTY_CATALOG[rawHotelId] || PROPERTY_CATALOG['sandman-hamilton'];
 
             try {
-                // 2. Fetch Data from our Backend API
-                const response = await fetch(`/api/hotel?id=${hotelId}`);
-                if (!response.ok) throw new Error('Hotel not found');
-                
-                const result = await response.json();
-                const data = result.data;
-
-                // 3. Inject Data into HTML
-                document.getElementById('hotel-name').textContent = data.name;
-                document.getElementById('hotel-address').textContent = data.address;
-                document.getElementById('hotel-stars').textContent = data.stars;
-                document.getElementById('hotel-score').textContent = data.score;
-                document.getElementById('hotel-reviews').textContent = data.reviews;
-                document.getElementById('hotel-description').textContent = data.description;
-                
-                document.getElementById('img-main').src = data.images[0] || '';
-                document.getElementById('img-sub-1').src = data.images[1] || '';
-                document.getElementById('img-sub-2').src = data.images[2] || '';
-
-                // Build Amenities Grid
-                const amenitiesContainer = document.getElementById('amenities-grid');
-                data.amenities.forEach(amenity => {
-                    const div = document.createElement('div');
-                    div.className = "flex items-center gap-2 text-sm font-medium text-gray-600";
-                    div.innerHTML = `<span class="text-brand-red">✓</span> ${amenity}`;
-                    amenitiesContainer.appendChild(div);
-                });
-
-                // Build Rooms Grid
-                const roomsContainer = document.getElementById('rooms-container');
-                const roomTemplate = document.getElementById('room-card-template');
-
-                data.rooms.forEach((room, index) => {
-                    const clone = roomTemplate.content.cloneNode(true);
-                    
-                    clone.querySelector('.room-name').textContent = room.name;
-                    clone.querySelector('.room-beds').textContent = `🛏️ ${room.beds}`;
-                    clone.querySelector('.room-sleeps').textContent = `👥 Sleeps ${room.sleeps}`;
-                    clone.querySelector('.room-sqft').textContent = `📏 ${room.sqft} sq ft`;
-                    clone.querySelector('.room-price').textContent = `$${room.price.toFixed(2)}`;
-                    
-                    // Alternating placeholder images for rooms
-                    clone.querySelector('.room-img').src = index % 2 === 0 ? data.images[1] : data.images[2];
-
-                    // TICO Policy Logic
-                    const policyElement = clone.querySelector('.room-policy');
-                    if (room.non_refundable) {
-                        policyElement.classList.add('text-brand-red');
-                        policyElement.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Non-Refundable`;
-                    } else {
-                        policyElement.classList.add('text-green-600');
-                        policyElement.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Free Cancellation`;
+                const res = await fetch(`/api/hotel?id=${encodeURIComponent(rawHotelId)}`);
+                if (res.ok) {
+                    const apiJson = await res.json();
+                    if (apiJson && apiJson.data) {
+                        propertyData = { ...propertyData, ...apiJson.data };
                     }
+                }
+            } catch (e) {
+                // Uses resilient local catalog automatically
+            }
 
-                    // Populate Hidden Form Inputs for Checkout
-                    clone.querySelector('.input-hotel').value = data.name;
-                    clone.querySelector('.input-room').value = room.name;
-                    clone.querySelector('.input-price').value = room.price;
-                    clone.querySelector('.input-checkin').value = checkin;
-                    clone.querySelector('.input-checkout').value = checkout;
+            // Populate Header & Gallery
+            document.title = `${propertyData.name} — Hotbeds.ca`;
+            document.getElementById('breadcrumb-region').textContent = propertyData.region === 'AB' ? 'Alberta Stays' : 'Ontario Stays';
+            document.getElementById('breadcrumb-region').href = `results.html?destination=${encodeURIComponent(propertyData.city || 'Hamilton, ON')}`;
+            document.getElementById('breadcrumb-hotel').textContent = propertyData.name;
+            document.getElementById('hotel-name').textContent = propertyData.name;
+            document.getElementById('hotel-address').textContent = propertyData.address;
+            document.getElementById('hotel-stars').textContent = propertyData.stars;
+            document.getElementById('hotel-score').textContent = propertyData.score;
+            document.getElementById('review-overall-score').textContent = propertyData.score;
+            document.getElementById('hotel-reviews').textContent = propertyData.reviews;
+            document.getElementById('hotel-description').textContent = propertyData.description;
+            if (propertyData.badge) document.getElementById('hotel-badge-pill').textContent = propertyData.badge;
+            if (propertyData.demand) document.getElementById('hotel-demand-text').textContent = propertyData.demand;
 
-                    roomsContainer.appendChild(clone);
+            const fallbackImg = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80';
+            activeGalleryImages = propertyData.images && propertyData.images.length >= 3 ? propertyData.images : [fallbackImg, fallbackImg, fallbackImg, fallbackImg, fallbackImg];
+
+            const imgIds = ['img-main', 'img-sub-1', 'img-sub-2', 'img-sub-3', 'img-sub-4'];
+            imgIds.forEach((id, idx) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.src = activeGalleryImages[idx % activeGalleryImages.length];
+                    el.onerror = () => { el.src = fallbackImg; };
+                }
+            });
+
+            // Populate Amenities Grid
+            const amenitiesContainer = document.getElementById('amenities-grid');
+            amenitiesContainer.innerHTML = '';
+            (propertyData.amenities || []).forEach(amenity => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-2.5 p-3 rounded-xl bg-gray-50 border border-gray-100 text-xs font-bold text-brand-text';
+                div.innerHTML = `<span class="w-5 h-5 rounded-full bg-red-50 text-brand-red flex items-center justify-center text-[10px] font-black shrink-0">✓</span> <span>${amenity}</span>`;
+                amenitiesContainer.appendChild(div);
+            });
+
+            // Populate Landmarks
+            const landmarksList = document.getElementById('landmarks-list');
+            landmarksList.innerHTML = '';
+            (propertyData.landmarks || ['City Centre & Dining District — 5 min drive', 'Highway Corridor Access — 3 min drive']).forEach(lm => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-2';
+                li.innerHTML = `<span class="text-brand-red">📍</span> <span>${lm}</span>`;
+                landmarksList.appendChild(li);
+            });
+
+            // --- 5. LIVE ROOM MATRIX & MULTI-NIGHT STAY CALCULATOR ---
+            let activeRoomFilter = 'all';
+
+            function getNightCount() {
+                const d1 = new Date(calcCheckin.value);
+                const d2 = new Date(calcCheckout.value);
+                let diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                if (isNaN(diff) || diff <= 0) {
+                    const nextD = new Date(d1);
+                    nextD.setDate(nextD.getDate() + 1);
+                    calcCheckout.value = fmt(nextD);
+                    diff = 1;
+                }
+                return diff;
+            }
+
+            function renderRoomsMatrix() {
+                const nights = getNightCount();
+                const checkin = calcCheckin.value;
+                const checkout = calcCheckout.value;
+                const guests = calcGuests.value;
+
+                const minPrice = Math.min(...propertyData.rooms.map(r => r.price));
+                document.getElementById('jumpbar-start-price').textContent = `$${minPrice.toFixed(0)} CAD`;
+                document.getElementById('mobile-bar-price').textContent = `$${minPrice.toFixed(0)}`;
+                document.getElementById('sidebar-nights-pill').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+                document.getElementById('sidebar-nights-count').textContent = nights;
+                document.getElementById('sidebar-base-rate').textContent = `$${minPrice.toFixed(2)} CAD`;
+                document.getElementById('sidebar-total-rate').textContent = `$${(minPrice * nights).toFixed(2)} CAD`;
+
+                const roomsContainer = document.getElementById('rooms-container');
+                roomsContainer.innerHTML = '';
+
+                const filteredRooms = propertyData.rooms.filter(r => {
+                    if (activeRoomFilter === 'free_cancel') return !r.non_refundable;
+                    if (activeRoomFilter === 'suite') return r.category === 'suite' || r.name.toLowerCase().includes('suite');
+                    return true;
                 });
 
-                // 4. Hide Loading, Show Content
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('dynamic-content').classList.remove('hidden');
+                filteredRooms.forEach((room) => {
+                    const stayTotal = (room.price * nights).toFixed(2);
+                    const roomImg = room.img || activeGalleryImages[1] || fallbackImg;
+                    const leftCount = room.left || 3;
 
-            } catch (error) {
-                console.error(error);
-                document.getElementById('loading-state').innerHTML = '<p class="text-brand-red font-bold text-xl">Error loading property details.</p>';
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all flex flex-col md:flex-row';
+
+                    card.innerHTML = `
+                        <div class="md:w-1/4 h-48 md:h-auto bg-gray-100 relative overflow-hidden">
+                            <img src="${roomImg}" alt="${room.name}" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-brand-red text-white text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded shadow">
+                                Only ${leftCount} Left
+                            </span>
+                        </div>
+                        <div class="md:w-3/4 p-5 sm:p-6 flex flex-col justify-between">
+                            <div class="flex flex-col md:flex-row justify-between gap-6">
+                                <div class="space-y-2.5">
+                                    <h3 class="text-lg sm:text-xl font-black text-brand-text">${room.name}</h3>
+                                    <div class="flex flex-wrap items-center gap-3 text-xs font-bold text-gray-500">
+                                        <span class="bg-gray-100 px-2.5 py-1 rounded-lg">🛏️ ${room.beds}</span>
+                                        <span class="bg-gray-100 px-2.5 py-1 rounded-lg">👥 Sleeps ${room.sleeps}</span>
+                                        <span class="bg-gray-100 px-2.5 py-1 rounded-lg">📏 ${room.sqft} sq ft</span>
+                                    </div>
+                                    <ul class="text-xs font-semibold space-y-1 pt-1">
+                                        <li class="flex items-center gap-1.5 text-gray-600">
+                                            <span class="text-green-600 font-black">✓</span> High-Speed Wi-Fi &amp; Workspace Included
+                                        </li>
+                                        <li class="flex items-center gap-1.5 ${room.non_refundable ? 'text-brand-red' : 'text-green-600'} font-bold">
+                                            <span>${room.non_refundable ? '✕ Non-Refundable Rate' : '✓ Free Cancellation Available'}</span>
+                                        </li>
+                                        <li class="flex items-center gap-1.5 text-slate-700 font-bold">
+                                            <span class="text-brand-red">★</span> Hot Beds Club Member Rebate Eligible at Checkout
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="flex flex-col md:items-end justify-between border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 md:w-64 shrink-0">
+                                    <div class="md:text-right mb-3">
+                                        <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block">Nightly Rate</span>
+                                        <div class="text-3xl font-black text-brand-text tracking-tighter">$${room.price.toFixed(2)} <span class="text-xs font-bold text-gray-400">CAD</span></div>
+                                        <span class="text-[11px] font-bold text-gray-500 block mt-0.5">
+                                            Total for ${nights} ${nights === 1 ? 'night' : 'nights'}: <strong>$${stayTotal} CAD</strong>
+                                        </span>
+                                    </div>
+
+                                    <button type="button" onclick="reserveRoom('${propertyData.name.replace(/'/g, "\\'")}', '${room.name.replace(/'/g, "\\'")}', ${stayTotal})" class="w-full bg-brand-red hover:bg-red-700 text-white font-extrabold py-3.5 px-5 rounded-xl shadow-md transition uppercase tracking-widest text-xs">
+                                        Reserve Room &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    roomsContainer.appendChild(card);
+                });
             }
+
+            // Reserve Handler (Bridges exact selection into localStorage + checkout.html)
+            window.reserveRoom = function(hotelName, roomName, totalPrice) {
+                localStorage.setItem('locked_hotel_name', `${hotelName} (${roomName})`);
+                localStorage.setItem('locked_hotel_price', parseFloat(totalPrice).toFixed(2));
+                sessionStorage.setItem('selected_hotel_name', `${hotelName} (${roomName})`);
+                sessionStorage.setItem('selected_hotel_price', parseFloat(totalPrice).toFixed(2));
+
+                const url = `checkout.html?hotel=${encodeURIComponent(hotelName)}&room=${encodeURIComponent(roomName)}&price=${parseFloat(totalPrice).toFixed(2)}&checkin=${encodeURIComponent(calcCheckin.value)}&checkout=${encodeURIComponent(calcCheckout.value)}&guests=${encodeURIComponent(calcGuests.value)}`;
+                window.location.href = url;
+            };
+
+            calcCheckin.addEventListener('change', renderRoomsMatrix);
+            calcCheckout.addEventListener('change', renderRoomsMatrix);
+            calcGuests.addEventListener('change', renderRoomsMatrix);
+
+            document.querySelectorAll('.room-filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.room-filter-btn').forEach(b => {
+                        b.className = 'room-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-600 hover:border-brand-red transition whitespace-nowrap';
+                    });
+                    e.currentTarget.className = 'room-filter-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-text text-white transition whitespace-nowrap';
+                    activeRoomFilter = e.currentTarget.getAttribute('data-room-filter');
+                    renderRoomsMatrix();
+                });
+            });
+
+            renderRoomsMatrix();
+
+            // --- 6. SIMILAR PROPERTIES CROSS-SELL GRID ---
+            const similarGrid = document.getElementById('similar-hotels-grid');
+            Object.values(PROPERTY_CATALOG)
+                .filter(p => p.id !== propertyData.id)
+                .slice(0, 3)
+                .forEach(item => {
+                    const startRate = item.rooms[0].price;
+                    const card = document.createElement('a');
+                    card.href = `hotel.html?id=${item.id}&checkin=${calcCheckin.value}&checkout=${calcCheckout.value}&guests=${calcGuests.value}`;
+                    card.className = 'bg-white rounded-2xl border border-gray-200/80 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col group';
+                    card.innerHTML = `
+                        <div class="relative h-40 bg-gray-100 overflow-hidden">
+                            <img src="${item.images[1] || item.images[0]}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">★ ${item.score}</span>
+                        </div>
+                        <div class="p-4 flex-grow flex flex-col justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold text-brand-red uppercase tracking-wider">${item.city}</span>
+                                <h4 class="text-base font-extrabold text-brand-text">${item.name}</h4>
+                            </div>
+                            <div class="pt-3 mt-3 border-t border-gray-100 flex justify-between items-center">
+                                <span class="text-lg font-black text-brand-text">$${startRate} <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
+                                <span class="text-xs font-extrabold text-brand-red uppercase">View Rooms &rarr;</span>
+                            </div>
+                        </div>
+                    `;
+                    similarGrid.appendChild(card);
+                });
+
+            // --- 7. SHARE & SAVE BUTTONS ---
+            document.getElementById('share-property-btn').addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href);
+                const lbl = document.getElementById('share-btn-label');
+                lbl.textContent = '✓ Link Copied';
+                setTimeout(() => { lbl.textContent = 'Share'; }, 2000);
+            });
+
+            document.getElementById('save-property-btn').addEventListener('click', () => {
+                const icon = document.getElementById('save-heart-icon');
+                const lbl = document.getElementById('save-btn-label');
+                icon.textContent = '♥';
+                icon.classList.add('text-brand-red');
+                lbl.textContent = 'Saved';
+            });
+
+            // --- 8. HEADER 7-DAY COUNTDOWN TIMER ---
+            const clubTimerElement = document.getElementById('club-timer');
+            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600);
+            setInterval(() => {
+                if (!clubTimerElement || clubTimeLeft <= 0) return;
+                clubTimeLeft--;
+                const days = Math.floor(clubTimeLeft / (24 * 3600));
+                const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
+                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h`;
+            }, 1000);
         });
     </script>
 </body>
