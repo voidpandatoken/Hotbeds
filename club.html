@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Guild — Social & Perks Club | Private Member Network</title>
+    <title>The Guild × Hotbeds.ca | Free Membership & 20% Off Your Booking</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,7 +19,7 @@
                             goldDark: '#997a15',
                             bronze: '#c87d4b',
                             emerald: '#10b981',
-                            slate: '#94a3b8'
+                            red: '#e63946'
                         }
                     },
                     fontFamily: {
@@ -30,7 +30,7 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -38,381 +38,473 @@
             color: #f8fafc;
         }
 
-        /* Metallic Gold Text Gradient matching the emblem */
         .gold-gradient-text {
-            background: linear-gradient(135deg, #f9e8a2 0%, #d4af37 45%, #aa8220 75%, #f3d266 100%);
+            background: linear-gradient(135deg, #fff3b0 0%, #d4af37 45%, #aa8220 75%, #f3d266 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Metallic Gold Button Surface */
         .gold-btn {
-            background: linear-gradient(135deg, #e5c158 0%, #d4af37 50%, #b38728 100%);
+            background: linear-gradient(135deg, #f3d266 0%, #d4af37 50%, #997a15 100%);
             color: #030b17;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.25);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.3);
         }
 
         .gold-btn:hover {
             filter: brightness(1.08);
             transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.45);
         }
 
-        /* Subtle Constellation / Globe Network Background */
         .network-bg {
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(11, 34, 71, 0.85) 0%, rgba(3, 11, 23, 0.98) 70%),
-                radial-gradient(rgba(212, 175, 55, 0.12) 1px, transparent 1px);
-            background-size: 100% 100%, 36px 36px;
+                radial-gradient(circle at 50% 0%, rgba(11, 34, 71, 0.9) 0%, rgba(3, 11, 23, 1) 75%),
+                radial-gradient(rgba(212, 175, 55, 0.14) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px;
         }
 
-        /* Architectural Mosaic Cards */
         .mosaic-card {
             position: relative;
             overflow: hidden;
             background-color: #06152d;
-            border: 1px solid rgba(212, 175, 55, 0.18);
-            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .mosaic-card:hover {
-            border-color: rgba(212, 175, 55, 0.55);
-            transform: translateY(-4px);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.65), 0 0 25px rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.65);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12);
         }
 
         .mosaic-card .card-img {
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .mosaic-card:hover .card-img {
             transform: scale(1.06);
         }
 
-        /* Modal Backdrop & Rim Glow */
-        .modal- rim-glow {
+        .brand-logo-tile {
+            background: rgba(6, 21, 45, 0.75);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.25s ease;
+        }
+
+        .brand-logo-tile:hover {
+            border-color: rgba(212, 175, 55, 0.55);
+            background: rgba(11, 34, 71, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .modal-rim-glow {
             box-shadow: 
-                0 0 0 1px rgba(212, 175, 55, 0.35),
-                0 25px 80px rgba(0, 0, 0, 0.85),
-                -15px -15px 45px rgba(200, 125, 75, 0.12),
-                15px 15px 45px rgba(16, 185, 129, 0.12);
+                0 0 0 1px rgba(212, 175, 55, 0.45),
+                0 25px 80px rgba(0, 0, 0, 0.9),
+                -15px -15px 45px rgba(200, 125, 75, 0.15),
+                15px 15px 45px rgba(16, 185, 129, 0.15);
         }
 
         @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-animate {
-            animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen selection:bg-guild-gold selection:text-guild-navy">
 
-    <!-- Executive Top Navigation -->
-    <header class="fixed top-0 w-full z-40 bg-guild-navy/90 backdrop-blur-md border-b border-guild-gold/20">
+    <!-- COMPONENT 01: High-Contrast Live Promo Ribbon -->
+    <div onclick="openOfferModal()" class="cursor-pointer bg-gradient-to-r from-guild-deep via-guild-royal to-guild-deep border-b border-guild-gold/30 py-2 px-4 text-center relative z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em]">
+            <span class="w-2 h-2 rounded-full bg-guild-emerald animate-ping"></span>
+            <span class="text-guild-goldLight">Hotbeds.ca Partner Offer:</span>
+            <span class="text-white">$300/Yr Guild Membership Waived (FREE) + Save 20% On Your Booking</span>
+            <span class="text-guild-gold underline ml-1 hidden sm:inline">Claim Now &rarr;</span>
+        </div>
+    </div>
+
+    <!-- COMPONENT 02 & 03: Co-Branded Trust Header & Pruned Action Nav -->
+    <header class="sticky top-0 w-full z-40 bg-guild-navy/95 backdrop-blur-md border-b border-guild-gold/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 md:h-24">
+            <div class="flex justify-between items-center h-16 sm:h-20">
                 
-                <!-- Left: The Guild Brand & Crest -->
-                <a href="club.html" class="flex items-center gap-3.5 group">
-                    <img src="guild.png" alt="The Guild Crest" class="h-12 md:h-14 w-12 md:w-14 rounded-full object-cover border border-guild-gold/50 shadow-md" onerror="this.onerror=null; this.outerHTML='<div class=\'w-12 h-12 rounded-full bg-guild-royal border border-guild-gold flex items-center justify-center font-serif font-bold text-xl text-guild-gold shadow-inner\'>G</div>'">
-                    <div class="flex flex-col">
-                        <span class="font-serif font-bold text-lg md:text-xl tracking-[0.2em] gold-gradient-text leading-none">THE GUILD</span>
-                        <span class="font-serif text-[8px] md:text-[9px] tracking-[0.28em] text-gray-400 uppercase mt-1">Social &amp; Perks Club</span>
-                    </div>
-                </a>
+                <!-- Co-Branded Crest + Hotbeds Badge -->
+                <div class="flex items-center gap-2.5 sm:gap-4">
+                    <a href="club.html" class="flex items-center gap-2.5">
+                        <img src="guild.png" alt="The Guild" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border border-guild-gold shadow-md" onerror="this.onerror=null; this.outerHTML='<div class=\'w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-guild-royal border border-guild-gold flex items-center justify-center font-serif font-bold text-lg text-guild-gold\'>G</div>'">
+                        <div class="flex flex-col">
+                            <span class="font-serif font-bold text-sm sm:text-lg tracking-[0.18em] gold-gradient-text leading-none">THE GUILD</span>
+                            <span class="text-[8px] tracking-[0.22em] text-gray-400 uppercase mt-0.5">Social &amp; Perks Club</span>
+                        </div>
+                    </a>
 
-                <!-- Center: Mature Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-10">
-                    <a href="#mosaic" class="text-xs font-medium text-gray-300 hover:text-guild-gold transition-colors uppercase tracking-[0.18em]">Partner Divisions</a>
-                    <a href="#governance" class="text-xs font-medium text-gray-300 hover:text-guild-gold transition-colors uppercase tracking-[0.18em]">How It Works</a>
-                    <a href="index.html" class="text-xs font-medium text-gray-300 hover:text-guild-gold transition-colors uppercase tracking-[0.18em]">Hotbeds.ca Portal</a>
-                </nav>
+                    <span class="text-guild-gold/30 text-lg font-light">×</span>
 
-                <!-- Right: Exclusive Offer Trigger & Partner Badge -->
-                <div class="flex items-center gap-4">
-                    <button onclick="openOfferModal()" class="gold-btn font-bold text-[11px] uppercase tracking-[0.16em] px-5 py-3 rounded-lg">
-                        Membership Offer
-                    </button>
-                    <button id="mobile-menu-btn" class="lg:hidden text-guild-gold focus:outline-none p-1">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-guild-deep border-b border-guild-gold/20 px-6 py-5 space-y-4">
-            <a href="#mosaic" class="block text-xs font-semibold text-gray-200 uppercase tracking-widest py-2 border-b border-white/5">Partner Divisions</a>
-            <a href="#governance" class="block text-xs font-semibold text-gray-200 uppercase tracking-widest py-2 border-b border-white/5">How It Works</a>
-            <a href="index.html" class="block text-xs font-semibold text-guild-gold uppercase tracking-widest py-2">Return to Hotbeds.ca</a>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-grow pt-20 md:pt-24">
-
-        <!-- HERO SECTION: Focused, Authoritative, Mature -->
-        <section class="relative network-bg py-20 lg:py-28 border-b border-guild-gold/15 overflow-hidden">
-            <!-- Ambient Lighting matching the Emblem's Bronze & Emerald Rim -->
-            <div class="absolute top-1/4 -left-32 w-96 h-96 bg-guild-bronze/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-10 -right-32 w-96 h-96 bg-guild-emerald/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-            <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-                
-                <!-- Centerpiece Emblem -->
-                <div class="mb-8 relative group cursor-pointer" onclick="openOfferModal()">
-                    <div class="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-guild-bronze via-guild-gold to-guild-emerald opacity-60 blur-md group-hover:opacity-90 transition duration-500"></div>
-                    <img src="guild.png" alt="The Guild Social & Perks Club" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-2 border-guild-gold shadow-2xl" onerror="this.onerror=null; this.outerHTML='<div class=\'relative w-32 h-32 md:w-36 md:h-36 rounded-full bg-guild-deep border-2 border-guild-gold flex flex-col items-center justify-center shadow-2xl\'><span class=\'font-serif font-black text-5xl gold-gradient-text\'>G</span><span class=\'text-[8px] tracking-widest text-guild-gold uppercase mt-1\'>Est. 2026</span></div>'">
-                </div>
-
-                <!-- Pillar Badges (Dining • Hospitality • VIP Perks) -->
-                <div class="inline-flex items-center gap-4 px-5 py-2 rounded-full bg-guild-deep/90 border border-guild-gold/30 text-[10px] font-semibold uppercase tracking-[0.22em] text-guild-goldLight mb-6 shadow-lg">
-                    <span>Fine Dining</span>
-                    <span class="text-guild-gold/40">•</span>
-                    <span>Preferred Stays</span>
-                    <span class="text-guild-gold/40">•</span>
-                    <span>Private Perks</span>
-                </div>
-
-                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[0.12em] gold-gradient-text mb-3">
-                    THE GUILD
-                </h1>
-                <p class="font-serif text-sm sm:text-base md:text-lg tracking-[0.35em] text-gray-300 uppercase mb-8">
-                    Social &amp; Perks Club
-                </p>
-
-                <p class="text-gray-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed mb-10">
-                    An invitation-backed private buying collective operating across North America and international hubs. We aggregate corporate purchasing power to secure behind-the-paywall rates on hospitality, culinary venues, executive workspaces, and curated excursions.
-                </p>
-
-                <!-- Primary Call to Action (Triggers Modal) -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-                    <button onclick="openOfferModal()" class="w-full sm:w-auto gold-btn font-bold text-xs uppercase tracking-[0.2em] px-8 py-4 rounded-xl flex items-center justify-center gap-3">
-                        <span>View Exclusive Membership Offer</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </button>
-                    <a href="#mosaic" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-guild-deep hover:bg-guild-royal border border-guild-gold/25 text-gray-200 font-semibold text-xs uppercase tracking-[0.18em] transition text-center">
-                        Explore Partner Mosaic
+                    <!-- Crisp White Pill for Hotbeds Logo -->
+                    <a href="index.html" class="bg-white px-2.5 py-1 rounded-md shadow-sm flex items-center hover:opacity-90 transition">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-4 sm:h-5 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-[11px] tracking-tighter text-slate-900 uppercase\'>Hot<span class=\'text-red-600\'>beds.ca</span></span>'">
                     </a>
                 </div>
 
-                <!-- Key Metrics Bar -->
-                <div class="grid grid-cols-3 gap-6 sm:gap-12 mt-16 pt-10 border-t border-guild-gold/15 w-full max-w-2xl">
-                    <div>
-                        <div class="font-serif text-2xl sm:text-3xl font-bold text-white">6 Divisions</div>
-                        <div class="text-[10px] uppercase tracking-[0.18em] text-gray-400 mt-1">Integrated Network</div>
-                    </div>
-                    <div class="border-x border-guild-gold/15 px-4">
-                        <div class="font-serif text-2xl sm:text-3xl font-bold gold-gradient-text">Wholesale</div>
-                        <div class="text-[10px] uppercase tracking-[0.18em] text-gray-400 mt-1">Closed User Group Pricing</div>
-                    </div>
-                    <div>
-                        <div class="font-serif text-2xl sm:text-3xl font-bold text-guild-emerald">Points Linked</div>
-                        <div class="text-[10px] uppercase tracking-[0.18em] text-gray-400 mt-1">Hotbeds.ca Rewards</div>
+                <!-- Pruned Conversion Navigation -->
+                <div class="flex items-center gap-3 sm:gap-6">
+                    <a href="#brand-mosaic" class="hidden md:inline-block text-[11px] font-semibold text-gray-300 hover:text-guild-gold uppercase tracking-[0.16em] transition">Partner Mosaic</a>
+                    <a href="#math-section" class="hidden md:inline-block text-[11px] font-semibold text-gray-300 hover:text-guild-gold uppercase tracking-[0.16em] transition">20% Savings Math</a>
+                    <button onclick="openOfferModal()" class="gold-btn font-extrabold text-[10px] sm:text-xs uppercase tracking-[0.15em] px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg">
+                        Free Pass + 20% Off
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- HERO SECTION: 3-Second Hook + Instant Brand Strip -->
+        <section class="relative network-bg pt-8 pb-12 lg:py-16 border-b border-guild-gold/20 overflow-hidden">
+            <div class="absolute top-10 -left-32 w-80 h-80 bg-guild-bronze/15 rounded-full blur-[110px] pointer-events-none"></div>
+            <div class="absolute bottom-5 -right-32 w-80 h-80 bg-guild-emerald/15 rounded-full blur-[110px] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+                
+                <!-- COMPONENT 04: 3-Second Referral Detection Pill -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-guild-emerald/15 border border-guild-emerald/40 text-[10px] sm:text-xs font-bold uppercase tracking-[0.18em] text-guild-emerald mb-5 shadow-lg">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span>Hotbeds.ca Referral Verified • $300 Annual Fee Waived</span>
+                </div>
+
+                <!-- COMPONENT 05: Direct Value-First Headline -->
+                <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12] mb-4 max-w-4xl">
+                    Sign Up for The Guild for <span class="gold-gradient-text">FREE</span> &amp; Save <span class="text-guild-emerald">20%</span> on Your Booking.
+                </h1>
+
+                <!-- COMPONENT 06: Sub-Headline Legitimacy Copy -->
+                <p class="text-gray-300 text-sm sm:text-base lg:text-lg max-w-2xl font-normal leading-relaxed mb-7">
+                    The Guild is a private buying collective unlocking heavily discounted wholesale pricing across hotels, dining, VIP events, workspaces, and retail brands. Because you arrived via <strong class="text-white">Hotbeds.ca</strong>, your $300/year membership is sponsored.
+                </p>
+
+                <!-- COMPONENT 07: Primary Hero CTA & Friction Remover -->
+                <div class="flex flex-col items-center w-full sm:w-auto mb-10">
+                    <button onclick="openOfferModal()" class="w-full sm:w-auto gold-btn font-black text-xs sm:text-sm uppercase tracking-[0.18em] px-8 py-4 rounded-xl flex items-center justify-center gap-3">
+                        <span>Claim Free Guild Pass &amp; 20% Off Now</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-400 mt-2.5">
+                        Instant Promo Code Issued • No Credit Card Required • Cancel Anytime
+                    </span>
+                </div>
+
+                <!-- COMPONENT 08: Above-the-Fold Instant Brand Logo Strip (Visible on Mobile & Desktop) -->
+                <div class="w-full pt-6 border-t border-guild-gold/15">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-guild-gold mb-4">
+                        Instant Access to Heavily Discounted Partner Brands &amp; Verticals
+                    </p>
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 sm:gap-4">
+                        <div class="bg-white rounded-lg p-2.5 flex items-center justify-center h-11 shadow-sm">
+                            <img src="LOGO.png" alt="Hotbeds.ca" class="h-5 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-xs text-slate-900 uppercase\'>HOT<span class=\'text-red-600\'>BEDS</span></span>'">
+                        </div>
+                        <div class="brand-logo-tile rounded-lg p-2.5 flex items-center justify-center h-11">
+                            <span class="font-serif font-bold text-[11px] tracking-widest text-white">CHEF<span class="text-guild-gold">EXPRESS</span></span>
+                        </div>
+                        <div class="brand-logo-tile rounded-lg p-2.5 flex items-center justify-center h-11">
+                            <span class="font-serif font-bold text-[11px] tracking-widest text-white">AURA<span class="text-guild-gold">LIVE</span></span>
+                        </div>
+                        <div class="brand-logo-tile rounded-lg p-2.5 flex items-center justify-center h-11">
+                            <span class="font-serif font-bold text-[11px] tracking-widest text-white">COMMONS<span class="text-guild-gold">HQ</span></span>
+                        </div>
+                        <div class="brand-logo-tile rounded-lg p-2.5 flex items-center justify-center h-11">
+                            <span class="font-serif font-bold text-[11px] tracking-widest text-white">VELOCE<span class="text-guild-gold">FLEET</span></span>
+                        </div>
+                        <div class="brand-logo-tile rounded-lg p-2.5 flex items-center justify-center h-11">
+                            <span class="font-serif font-bold text-[11px] tracking-widest text-white">APEX<span class="text-guild-gold">RETAIL</span></span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
-        <!-- MOSAIC SECTION: The Multi-Vertical Partner Grid -->
-        <section id="mosaic" class="py-20 lg:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- COMPONENT 09-14: RESPONSIVE BENTO VISUAL MOSAIC (True 2-Col Mosaic on Mobile, 12-Col on Desktop) -->
+        <section id="brand-mosaic" class="py-12 lg:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6 border-b border-guild-gold/15 pb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
                 <div>
-                    <span class="text-guild-gold text-[11px] font-bold uppercase tracking-[0.25em] block mb-2">Private Alliance Portfolio</span>
-                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white tracking-wide">
-                        Member Privileges &amp; Partner Divisions
+                    <span class="text-guild-gold text-[10px] font-bold uppercase tracking-[0.25em] block mb-1">The Member Mosaic</span>
+                    <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white">
+                        One Free Pass. Heavily Discounted Everywhere.
                     </h2>
                 </div>
-                <button onclick="openOfferModal()" class="text-xs font-bold text-guild-gold hover:text-guild-goldLight uppercase tracking-[0.18em] flex items-center gap-2 group">
-                    <span>Unlock All Divisions with Sponsored Pass</span>
-                    <span class="transform group-hover:translate-x-1 transition">&rarr;</span>
+                <button onclick="openOfferModal()" class="text-xs font-bold text-guild-emerald hover:underline uppercase tracking-widest flex items-center gap-1">
+                    <span>Unlock All Partners Free</span>
+                    <span>&rarr;</span>
                 </button>
             </div>
 
-            <!-- 12-Column Architectural Bento Mosaic -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[310px]">
+            <!-- True Mosaic Grid: 2 Columns on Mobile, 12 Columns on Desktop -->
+            <div class="grid grid-cols-2 md:grid-cols-12 gap-3 sm:gap-5">
 
-                <!-- TILE 1: HOTBEDS.CA (Flagship Hospitality Partner - 7 Columns) -->
-                <div class="mosaic-card md:col-span-7 rounded-2xl p-7 sm:p-9 flex flex-col justify-between">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" alt="Hotbeds Preferred Hotels" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
+                <!-- COMPONENT 10: TILE 1 - HOTBEDS.CA FLAGSHIP (Spans 2 cols on mobile, 7 cols on desktop) -->
+                <div onclick="openOfferModal()" class="mosaic-card col-span-2 md:col-span-7 rounded-2xl p-5 sm:p-8 min-h-[250px] sm:min-h-[300px] flex flex-col justify-between cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" alt="Hotbeds Hotels" class="card-img absolute inset-0 w-full h-full object-cover opacity-45">
+                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/70 to-transparent"></div>
+
+                    <div class="relative z-10 flex justify-between items-start gap-2">
+                        <div class="bg-white px-3.5 py-1.5 rounded-lg shadow-md flex items-center">
+                            <img src="LOGO.png" alt="Hotbeds.ca" class="h-5 sm:h-6 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-xs text-slate-900 uppercase\'>Hot<span class=\'text-red-600\'>beds.ca</span></span>'">
+                        </div>
+                        <span class="bg-guild-emerald text-guild-navy text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                            Save 20% On Booking
+                        </span>
+                    </div>
+
+                    <div class="relative z-10 mt-auto pt-8">
+                        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-guild-gold mb-1">Flagship Hospitality Partner</div>
+                        <h3 class="font-serif text-xl sm:text-3xl font-bold text-white mb-1.5">20% Off Hotel Bookings + Points</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 max-w-xl mb-4">
+                            Unlock instant member pricing on 3.5 to 5-star properties and peak compression nights, plus earn redeemable Guild points on every stay.
+                        </p>
+                        <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-widest text-guild-goldLight bg-guild-navy/90 border border-guild-gold/40 px-3.5 py-2 rounded-lg">
+                            Click to Activate 20% Hotel Discount &rarr;
+                        </span>
+                    </div>
+                </div>
+
+                <!-- COMPONENT 11: TILE 2 - DINING & CULINARY (1 col on mobile, 5 cols on desktop) -->
+                <div onclick="openOfferModal()" class="mosaic-card col-span-1 md:col-span-5 rounded-2xl p-4 sm:p-7 min-h-[210px] sm:min-h-[300px] flex flex-col justify-between cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80" alt="Dining" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
                     <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/75 to-transparent"></div>
 
-                    <div class="relative z-10 flex justify-between items-start gap-4">
-                        <!-- Crisp White Badge for Hotbeds Logo -->
-                        <div class="bg-white px-4 py-2 rounded-lg shadow-lg flex items-center">
-                            <img src="LOGO.png" alt="Hotbeds.ca" class="h-6 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-sm tracking-tighter text-slate-900 uppercase\'>Hot<span class=\'text-red-600\'>beds.ca</span></span>'">
-                        </div>
-                        <span class="bg-guild-navy/90 border border-guild-gold/40 text-guild-goldLight text-[10px] font-semibold uppercase tracking-[0.18em] px-3.5 py-1.5 rounded-full backdrop-blur-md">
-                            Flagship Accommodations Partner
+                    <div class="relative z-10 flex flex-wrap justify-between items-start gap-1">
+                        <span class="bg-guild-navy/90 border border-guild-gold/40 px-2.5 py-1 rounded font-serif font-bold text-[10px] sm:text-xs text-guild-gold tracking-wider">
+                            CHEF EXPRESS
+                        </span>
+                        <span class="bg-guild-gold/20 border border-guild-gold/40 text-guild-goldLight text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">
+                            25% Off
                         </span>
                     </div>
 
-                    <div class="relative z-10">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.22em] text-guild-gold mb-1.5">Direct Hotel Contracting &amp; Opaque Rates</div>
-                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-2">Protected Rates on High-Demand Nights</h3>
-                        <p class="text-xs sm:text-sm text-gray-300 max-w-xl mb-5 leading-relaxed">
-                            Access private net rates at 4.3+ rated properties during peak city compression. Every booking through the Guild portal credits loyalty points directly to your Hotbeds.ca balance.
+                    <div class="relative z-10 mt-auto">
+                        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-guild-gold mb-0.5">Culinary Network</div>
+                        <h3 class="font-serif text-sm sm:text-2xl font-bold text-white leading-snug mb-1">Restaurants &amp; Ghost Kitchens</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-300 hidden sm:block">
+                            Zero-fee delivery and member tab discounts across partner restaurants.
                         </p>
-                        <div class="flex items-center gap-4">
-                            <button onclick="openOfferModal()" class="gold-btn text-[10px] font-bold uppercase tracking-[0.18em] px-4 py-2.5 rounded-lg">
-                                Activate Hotel Access
-                            </button>
-                            <a href="index.html" class="text-xs font-semibold text-gray-300 hover:text-white uppercase tracking-widest underline underline-offset-4">
-                                Visit Hotbeds.ca
-                            </a>
-                        </div>
                     </div>
                 </div>
 
-                <!-- TILE 2: CULINARY & DINING COLLECTIVE (5 Columns) -->
-                <div class="mosaic-card md:col-span-5 rounded-2xl p-7 sm:p-9 flex flex-col justify-between">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Fine Dining & Culinary" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
+                <!-- COMPONENT 12: TILE 3 - VIP EVENTS & EXCURSIONS (1 col on mobile, 4 cols on desktop) -->
+                <div onclick="openOfferModal()" class="mosaic-card col-span-1 md:col-span-4 rounded-2xl p-4 sm:p-6 min-h-[210px] sm:min-h-[260px] flex flex-col justify-between cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80" alt="VIP Events" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
                     <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/75 to-transparent"></div>
 
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div class="bg-guild-navy/90 border border-guild-gold/30 px-3.5 py-1.5 rounded-lg">
-                            <span class="font-serif font-bold text-xs tracking-[0.2em] text-guild-gold">CHEF EXPRESS</span>
-                        </div>
-                        <span class="bg-guild-emerald/15 border border-guild-emerald/40 text-guild-emerald text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                            Up to 25% Off Tab
+                    <div class="relative z-10 flex flex-wrap justify-between items-start gap-1">
+                        <span class="bg-guild-navy/90 border border-guild-gold/40 px-2.5 py-1 rounded font-serif font-bold text-[10px] sm:text-xs text-white tracking-wider">
+                            AURA <span class="text-guild-gold">LIVE</span>
+                        </span>
+                        <span class="bg-guild-gold/20 border border-guild-gold/40 text-guild-goldLight text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">
+                            Wholesale
                         </span>
                     </div>
 
-                    <div class="relative z-10">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.22em] text-guild-gold mb-1.5">Culinary &amp; Hospitality</div>
-                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-2">Private Dining, Catering &amp; Ghost Kitchens</h3>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            Priority reservations, preferred member pricing at partner restaurants, and zero-markup corporate catering and delivery.
+                    <div class="relative z-10 mt-auto">
+                        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-guild-gold mb-0.5">Entertainment</div>
+                        <h3 class="font-serif text-sm sm:text-xl font-bold text-white leading-snug mb-1">VIP Events &amp; Excursions</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-300 hidden sm:block">
+                            Group ticket blocks, concerts, and guided city excursions without broker fees.
                         </p>
                     </div>
                 </div>
 
-                <!-- TILE 3: EXECUTIVE WORKSPACES (4 Columns) -->
-                <div class="mosaic-card md:col-span-4 rounded-2xl p-7 flex flex-col justify-between">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" alt="Shared Meeting Spaces" class="card-img absolute inset-0 w-full h-full object-cover opacity-35">
-                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/80 to-transparent"></div>
+                <!-- COMPONENT 13: TILE 4 - WORKSPACES (1 col on mobile, 4 cols on desktop) -->
+                <div onclick="openOfferModal()" class="mosaic-card col-span-1 md:col-span-4 rounded-2xl p-4 sm:p-6 min-h-[200px] sm:min-h-[260px] flex flex-col justify-between cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" alt="Workspaces" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
+                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/75 to-transparent"></div>
 
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div class="bg-guild-navy/90 border border-guild-gold/30 px-3 py-1.5 rounded-lg">
-                            <span class="font-serif font-bold text-xs tracking-[0.18em] text-white">COMMONS <span class="text-guild-gold">HQ</span></span>
-                        </div>
-                        <span class="text-[10px] font-semibold uppercase tracking-widest text-guild-goldLight bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                            Lounge Access
+                    <div class="relative z-10 flex flex-wrap justify-between items-start gap-1">
+                        <span class="bg-guild-navy/90 border border-guild-gold/40 px-2.5 py-1 rounded font-serif font-bold text-[10px] sm:text-xs text-white tracking-wider">
+                            COMMONS <span class="text-guild-gold">HQ</span>
+                        </span>
+                        <span class="bg-guild-gold/20 border border-guild-gold/40 text-guild-goldLight text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">
+                            Free Passes
                         </span>
                     </div>
 
-                    <div class="relative z-10">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-guild-gold mb-1">Commercial Real Estate</div>
-                        <h3 class="font-serif text-xl font-bold text-white mb-2">Shared Meeting Spaces &amp; Boardrooms</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            On-demand executive boardrooms, private office suites, and business lounges across major transit corridors.
+                    <div class="relative z-10 mt-auto">
+                        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-guild-gold mb-0.5">Executive Hubs</div>
+                        <h3 class="font-serif text-sm sm:text-xl font-bold text-white leading-snug mb-1">Lounges &amp; Boardrooms</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-300 hidden sm:block">
+                            Shared meeting spaces and private business lounges across North America.
                         </p>
                     </div>
                 </div>
 
-                <!-- TILE 4: VIP EVENTS & EXCURSIONS (4 Columns) -->
-                <div class="mosaic-card md:col-span-4 rounded-2xl p-7 flex flex-col justify-between">
-                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80" alt="VIP Excursions & Events" class="card-img absolute inset-0 w-full h-full object-cover opacity-35">
-                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/80 to-transparent"></div>
+                <!-- COMPONENT 14: TILE 5 - RIDESHARE & FLEET (1 col on mobile, 4 cols on desktop) -->
+                <div onclick="openOfferModal()" class="mosaic-card col-span-1 md:col-span-4 rounded-2xl p-4 sm:p-6 min-h-[200px] sm:min-h-[260px] flex flex-col justify-between cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80" alt="Rideshare" class="card-img absolute inset-0 w-full h-full object-cover opacity-40">
+                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/75 to-transparent"></div>
 
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div class="bg-guild-navy/90 border border-guild-gold/30 px-3 py-1.5 rounded-lg">
-                            <span class="font-serif font-bold text-xs tracking-[0.18em] text-white">AURA <span class="text-guild-gold">LIVE</span></span>
-                        </div>
-                        <span class="text-[10px] font-semibold uppercase tracking-widest text-guild-goldLight bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                            Zero Broker Fees
+                    <div class="relative z-10 flex flex-wrap justify-between items-start gap-1">
+                        <span class="bg-guild-navy/90 border border-guild-gold/40 px-2.5 py-1 rounded font-serif font-bold text-[10px] sm:text-xs text-white tracking-wider">
+                            VELOCE <span class="text-guild-gold">FLEET</span>
+                        </span>
+                        <span class="bg-guild-gold/20 border border-guild-gold/40 text-guild-goldLight text-[9px] font-bold uppercase px-2 py-0.5 rounded-full">
+                            Corp Rates
                         </span>
                     </div>
 
-                    <div class="relative z-10">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-guild-gold mb-1">Curated Experiences</div>
-                        <h3 class="font-serif text-xl font-bold text-white mb-2">Concerts, Suites &amp; Group Excursions</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            Allocation access to corporate box suites, live concerts, and private group excursions at wholesale block pricing.
+                    <div class="relative z-10 mt-auto">
+                        <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-guild-gold mb-0.5">Transit &amp; Mobility</div>
+                        <h3 class="font-serif text-sm sm:text-xl font-bold text-white leading-snug mb-1">Rideshare &amp; Car Rentals</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-300 hidden sm:block">
+                            Pooled airport transfers, rideshare credits, and corporate fleet codes.
                         </p>
-                    </div>
-                </div>
-
-                <!-- TILE 5: RIDESHARE & TRANSIT LOGISTICS (4 Columns) -->
-                <div class="mosaic-card md:col-span-4 rounded-2xl p-7 flex flex-col justify-between">
-                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=80" alt="Executive Rideshare & Fleet" class="card-img absolute inset-0 w-full h-full object-cover opacity-35">
-                    <div class="absolute inset-0 bg-gradient-to-t from-guild-navy via-guild-navy/80 to-transparent"></div>
-
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div class="bg-guild-navy/90 border border-guild-gold/30 px-3 py-1.5 rounded-lg">
-                            <span class="font-serif font-bold text-xs tracking-[0.18em] text-white">VELOCE <span class="text-guild-gold">FLEET</span></span>
-                        </div>
-                        <span class="text-[10px] font-semibold uppercase tracking-widest text-guild-goldLight bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                            Shared Expense
-                        </span>
-                    </div>
-
-                    <div class="relative z-10">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-guild-gold mb-1">Ground Mobility</div>
-                        <h3 class="font-serif text-xl font-bold text-white mb-2">Rideshare &amp; Corporate Fleet Credits</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed">
-                            Coordinated airport transfers, shared group travel expense splitting, and preferred national vehicle rental rates.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- TILE 6: GLOBAL MERCHANT ALLIANCE BANNER (12 Columns) -->
-                <div class="mosaic-card md:col-span-12 rounded-2xl p-7 sm:p-9 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 !h-auto min-h-[180px]">
-                    <div class="max-w-2xl">
-                        <div class="text-[10px] font-bold uppercase tracking-[0.25em] text-guild-gold mb-2">
-                            Commercial Merchant Network • North America &amp; Worldwide
-                        </div>
-                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mb-2">
-                            Everyday Retail, Wellness &amp; Corporate Software Perks
-                        </h3>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            Beyond travel and dining, The Guild negotiates standing member rebates across fitness clubs, apparel, electronics, and B2B software—converting everyday expenditures into redeemable Hotbeds.ca travel credits.
-                        </p>
-                    </div>
-
-                    <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-start lg:justify-end shrink-0">
-                        <span class="px-4 py-2.5 rounded-lg bg-guild-navy border border-guild-gold/25 font-serif text-xs font-bold tracking-widest text-gray-200">FITPRO CLUBS</span>
-                        <span class="px-4 py-2.5 rounded-lg bg-guild-navy border border-guild-gold/25 font-serif text-xs font-bold tracking-widest text-gray-200">NOVATECH</span>
-                        <span class="px-4 py-2.5 rounded-lg bg-guild-navy border border-guild-gold/25 font-serif text-xs font-bold tracking-widest text-gray-200">APEX GEAR</span>
-                        <button onclick="openOfferModal()" class="gold-btn font-bold text-xs uppercase tracking-[0.16em] px-6 py-3 rounded-lg ml-auto lg:ml-2">
-                            Claim Membership &rarr;
-                        </button>
                     </div>
                 </div>
 
             </div>
+
+            <!-- COMPONENT 15: 12-BRAND PLACEHOLDER LOGO MOSAIC MATRIX (Mobile 3x4 / Desktop 6x2) -->
+            <div class="mt-8 bg-guild-deep/90 border border-guild-gold/20 rounded-2xl p-5 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+                    <div>
+                        <h3 class="font-serif text-lg sm:text-xl font-bold text-white">Featured Partner Brand Directory</h3>
+                        <p class="text-xs text-gray-400">Sample of active merchant placeholders included in your complimentary Hotbeds Guild Pass:</p>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-guild-gold bg-guild-navy px-3 py-1.5 rounded-lg border border-guild-gold/30">
+                        +140 North American Merchants
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
+                    <!-- Brand Placeholder 1 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <div class="bg-white px-2.5 py-1 rounded mb-2">
+                            <img src="LOGO.png" alt="Hotbeds" class="h-4 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-[10px] text-slate-900\'>HOTBEDS.CA</span>'">
+                        </div>
+                        <span class="text-[10px] font-bold text-guild-emerald">20% Off Stays</span>
+                    </div>
+                    <!-- Brand Placeholder 2 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">FITPRO</span>
+                        <span class="text-[10px] font-bold text-guild-gold">40% Off Dues</span>
+                    </div>
+                    <!-- Brand Placeholder 3 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">CHEF EXPRESS</span>
+                        <span class="text-[10px] font-bold text-guild-gold">25% Off Dining</span>
+                    </div>
+                    <!-- Brand Placeholder 4 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">NOVATECH</span>
+                        <span class="text-[10px] font-bold text-guild-gold">30% Off SaaS</span>
+                    </div>
+                    <!-- Brand Placeholder 5 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">APEX GEAR</span>
+                        <span class="text-[10px] font-bold text-guild-gold">35% Off Retail</span>
+                    </div>
+                    <!-- Brand Placeholder 6 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">AERO LOUNGE</span>
+                        <span class="text-[10px] font-bold text-guild-gold">VIP Access</span>
+                    </div>
+                    <!-- Brand Placeholder 7 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">VELOCE CAR</span>
+                        <span class="text-[10px] font-bold text-guild-gold">20% Off Fleet</span>
+                    </div>
+                    <!-- Brand Placeholder 8 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">AURA SUITES</span>
+                        <span class="text-[10px] font-bold text-guild-gold">Box Tickets</span>
+                    </div>
+                    <!-- Brand Placeholder 9 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">COMMONS HQ</span>
+                        <span class="text-[10px] font-bold text-guild-gold">Free Day Pass</span>
+                    </div>
+                    <!-- Brand Placeholder 10 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">SOLIS SPA</span>
+                        <span class="text-[10px] font-bold text-guild-gold">25% Off Wellness</span>
+                    </div>
+                    <!-- Brand Placeholder 11 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-white mb-1">PRIME CELLAR</span>
+                        <span class="text-[10px] font-bold text-guild-gold">Case Pricing</span>
+                    </div>
+                    <!-- Brand Placeholder 12 -->
+                    <div onclick="openOfferModal()" class="brand-logo-tile cursor-pointer rounded-xl p-3 flex flex-col items-center justify-center text-center">
+                        <span class="font-serif font-bold text-xs tracking-widest text-guild-goldLight mb-1">+ MORE</span>
+                        <span class="text-[10px] font-bold text-guild-emerald">Unlock All &rarr;</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- GOVERNANCE / HOW IT WORKS SECTION -->
-        <section id="governance" class="py-16 bg-guild-deep/60 border-t border-guild-gold/15">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="p-6 rounded-2xl bg-guild-navy/80 border border-guild-gold/15">
-                        <div class="font-serif text-guild-gold text-sm font-bold tracking-widest uppercase mb-2">01. Closed User Group</div>
-                        <h4 class="text-white font-bold text-base mb-2">Protected Behind the Paywall</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed">
-                            Suppliers prohibit public discounting to protect retail rate parity. Because The Guild operates as a private, dues-backed alliance, members legally access wholesale net inventory.
+        <!-- COMPONENT 16: THE 20% SAVINGS MATH & LEGITIMACY SECTION -->
+        <section id="math-section" class="py-14 bg-guild-deep/70 border-y border-guild-gold/20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="text-guild-gold text-[10px] font-bold uppercase tracking-[0.25em]">Why This Loophole Is Legitimate</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white">
+                            How We Cut 20% Off Your Booking Without Breaking Hotel Rate Parity
+                        </h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Hotels and bed banks strictly prohibit public websites from advertising rates below retail. However, private affinity clubs and closed user groups (like <strong class="text-white">The Guild</strong>) are legally permitted to pass private wholesale margins and corporate perks directly to registered members.
                         </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                            <div class="bg-guild-navy/90 p-4 rounded-xl border border-guild-gold/15">
+                                <div class="text-guild-gold font-bold text-xs uppercase tracking-wider mb-1">1. Free Sponsored Entry</div>
+                                <p class="text-[11px] text-gray-400">Your $300/yr Guild dues are covered by our Hotbeds marketing allocation during this promotional window.</p>
+                            </div>
+                            <div class="bg-guild-navy/90 p-4 rounded-xl border border-guild-gold/15">
+                                <div class="text-guild-emerald font-bold text-xs uppercase tracking-wider mb-1">2. Instant 20% + Points</div>
+                                <p class="text-[11px] text-gray-400">Receive your member code immediately to slash 20% off qualifying bookings and accrue Hotbeds reward points.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="p-6 rounded-2xl bg-guild-navy/80 border border-guild-gold/15">
-                        <div class="font-serif text-guild-gold text-sm font-bold tracking-widest uppercase mb-2">02. Threshold Shielding</div>
-                        <h4 class="text-white font-bold text-base mb-2">Peak Compression Activation</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed">
-                            Our hotel perks deploy strategically on high-demand nights where public retail rates surge above baseline thresholds, guaranteeing substantial member savings alongside sustainable club margins.
-                        </p>
+
+                    <!-- Side-by-Side Receipt Comparison -->
+                    <div class="lg:col-span-5 bg-guild-navy border border-guild-gold/40 rounded-2xl p-6 shadow-2xl">
+                        <div class="text-center border-b border-white/10 pb-4 mb-4">
+                            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-guild-gold">Live Checkout Comparison</span>
+                            <h4 class="font-serif text-lg font-bold text-white mt-1">Sample 1-Night Hotel Booking</h4>
+                        </div>
+                        <div class="space-y-3 text-xs">
+                            <div class="flex justify-between items-center text-gray-400">
+                                <span>Standard Public OTA Rate:</span>
+                                <span class="line-through font-semibold">$250.00 CAD</span>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-400">
+                                <span>Annual Guild Membership Fee:</span>
+                                <span class="line-through font-semibold">$300.00 CAD</span>
+                            </div>
+                            <div class="flex justify-between items-center text-guild-emerald font-bold pt-2 border-t border-white/10">
+                                <span>Hotbeds Sponsored Membership:</span>
+                                <span>FREE ($0.00)</span>
+                            </div>
+                            <div class="flex justify-between items-center text-guild-goldLight font-bold">
+                                <span>20% Guild Booking Discount:</span>
+                                <span>-$50.00 CAD</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-guild-deep p-3.5 rounded-xl border border-guild-gold/30 mt-3">
+                                <span class="font-bold text-white uppercase tracking-wider">Your Member Rate:</span>
+                                <span class="text-2xl font-black text-guild-emerald">$200.00 CAD</span>
+                            </div>
+                        </div>
+                        <button onclick="openOfferModal()" class="w-full gold-btn font-black text-xs uppercase tracking-[0.18em] py-3.5 rounded-xl mt-5">
+                            Lock In Free Pass &amp; 20% Off
+                        </button>
                     </div>
-                    <div class="p-6 rounded-2xl bg-guild-navy/80 border border-guild-gold/15">
-                        <div class="font-serif text-guild-gold text-sm font-bold tracking-widest uppercase mb-2">03. Unified Points Ledger</div>
-                        <h4 class="text-white font-bold text-base mb-2">Cross-Platform Rewards</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed">
-                            Every transaction across The Guild ecosystem—from dining to workspace bookings—accrues reward points automatically synchronized with your Hotbeds.ca account.
-                        </p>
-                    </div>
+
                 </div>
             </div>
         </section>
@@ -420,120 +512,101 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-guild-navy border-t border-guild-gold/20 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-                <div class="flex items-center gap-4">
-                    <span class="font-serif font-bold text-lg tracking-[0.2em] gold-gradient-text">THE GUILD</span>
-                    <span class="text-guild-gold/40">•</span>
-                    <span class="text-xs text-gray-400 tracking-widest">www.the-guild.io</span>
-                </div>
-                <div class="flex flex-wrap justify-center gap-6 text-[11px] font-semibold text-gray-400 uppercase tracking-widest">
-                    <a href="index.html" class="hover:text-guild-gold transition-colors">Hotbeds.ca</a>
-                    <a href="javascript:void(0)" onclick="openOfferModal()" class="hover:text-guild-gold transition-colors">Membership Offer</a>
-                    <a href="#" class="hover:text-guild-gold transition-colors">Terms &amp; Conditions</a>
-                    <a href="#" class="hover:text-guild-gold transition-colors">Privacy Policy</a>
-                </div>
+    <footer class="bg-guild-navy border-t border-guild-gold/20 py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 uppercase tracking-widest">
+            <div class="flex items-center gap-3">
+                <span class="font-serif font-bold text-guild-gold">THE GUILD</span>
+                <span>•</span>
+                <span>www.the-guild.io</span>
+                <span>•</span>
+                <a href="index.html" class="text-gray-300 hover:text-guild-gold">Hotbeds.ca</a>
             </div>
-            <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 uppercase tracking-widest">
-                <p>&copy; 2026 The Guild Social &amp; Perks Club &amp; Hotbeds Inc. | Hamilton, ON</p>
-                <p class="text-gray-400">Travel Inventory Fulfilled via Hotbeds Inc. • TICO Registration: #XXXXXXX</p>
-            </div>
+            <p>&copy; 2026 The Guild Social &amp; Perks Club &amp; Hotbeds Inc. | TICO Registration: #XXXXXXX</p>
         </div>
     </footer>
 
     <!-- ================================================================= -->
-    <!-- EXCLUSIVE MEMBERSHIP OFFER MODAL POPUP                            -->
+    <!-- COMPONENT 17-20: EXCLUSIVE MODAL POPUP (ALSO PORTS TO CHECKOUT)   -->
     <!-- ================================================================= -->
-    <div id="offer-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-xl overflow-y-auto">
+    <div id="offer-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl overflow-y-auto">
         
-        <div class="relative w-full max-w-lg bg-guild-deep rounded-3xl p-7 sm:p-10 modal-rim-glow modal-animate my-auto border border-guild-gold/40">
+        <div class="relative w-full max-w-md bg-guild-deep rounded-3xl p-6 sm:p-8 modal-rim-glow modal-animate my-auto border border-guild-gold/50">
             
-            <!-- Close Modal Button -->
-            <button onclick="closeOfferModal()" aria-label="Close Exclusive Offer" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition">
+            <!-- Close Button -->
+            <button onclick="closeOfferModal()" aria-label="Close" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- Modal Header: Emblem & Exclusive Tag -->
-            <div class="flex flex-col items-center text-center mb-6">
-                <img src="guild.png" alt="The Guild" class="w-20 h-20 rounded-full object-cover border-2 border-guild-gold shadow-xl mb-4" onerror="this.onerror=null; this.outerHTML='<div class=\'w-16 h-16 rounded-full bg-guild-royal border border-guild-gold flex items-center justify-center font-serif font-bold text-2xl gold-gradient-text mb-4\'>G</div>'">
+            <!-- COMPONENT 17: Modal Crest & Co-Branded Header -->
+            <div class="flex flex-col items-center text-center mb-5">
+                <div class="relative mb-3">
+                    <div class="absolute -inset-1 rounded-full bg-gradient-to-tr from-guild-bronze via-guild-gold to-guild-emerald opacity-75 blur-sm"></div>
+                    <img src="guild.png" alt="The Guild" class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-guild-gold shadow-xl" onerror="this.onerror=null; this.outerHTML='<div class=\'relative w-16 h-16 rounded-full bg-guild-royal border-2 border-guild-gold flex items-center justify-center font-serif font-bold text-2xl gold-gradient-text\'>G</div>'">
+                </div>
                 
-                <span class="px-3 py-1 rounded-full bg-guild-gold/15 border border-guild-gold/40 text-guild-goldLight text-[9px] font-bold uppercase tracking-[0.22em] mb-2">
-                    Exclusive Partner Invitation
+                <span class="px-3 py-1 rounded-full bg-guild-emerald/15 border border-guild-emerald/40 text-guild-emerald text-[9px] font-extrabold uppercase tracking-[0.2em] mb-2">
+                    Hotbeds.ca Exclusive Checkout &amp; Member Offer
                 </span>
-                <h3 class="font-serif text-2xl sm:text-3xl font-bold gold-gradient-text tracking-wide">
-                    THE GUILD MEMBERSHIP
+                <h3 class="font-serif text-xl sm:text-2xl font-bold text-white leading-snug">
+                    Sign Up for The Guild for <span class="gold-gradient-text">FREE</span> &amp; Save <span class="text-guild-emerald">20%</span> on Your Booking
                 </h3>
-                <p class="text-xs text-gray-400 mt-1">Social &amp; Perks Club • Private Wholesale Access</p>
             </div>
 
-            <!-- Exclusive Pricing Breakdown Box -->
-            <div class="bg-guild-navy/90 border border-guild-gold/25 rounded-2xl p-5 mb-6">
-                <div class="flex justify-between items-center pb-3 mb-3 border-b border-white/10">
-                    <div>
-                        <span class="text-[11px] font-semibold text-gray-300 uppercase tracking-wider block">Standard Annual Dues</span>
-                        <span class="text-[10px] text-gray-500">Direct public enrollment at the-guild.io</span>
-                    </div>
-                    <span class="text-lg font-bold text-gray-500 line-through decoration-red-500 decoration-2">$300.00 / yr</span>
+            <!-- COMPONENT 18: Dual-Value Stack Box -->
+            <div class="bg-guild-navy/95 border border-guild-gold/30 rounded-2xl p-4 mb-5 space-y-2.5">
+                <div class="flex justify-between items-center text-xs pb-2 border-b border-white/10">
+                    <span class="text-gray-300 font-medium">1-Year Guild Membership ($300 Value)</span>
+                    <span class="font-black text-guild-emerald uppercase">FREE ($0.00)</span>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold text-guild-goldLight uppercase tracking-wider block">Hotbeds.ca Sponsored Tier</span>
-                        <span class="text-[10px] text-guild-emerald font-medium">Promo Code Auto-Applied</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-2xl sm:text-3xl font-black text-white">$0.00</span>
-                        <span class="block text-[9px] uppercase tracking-widest text-guild-gold">Complimentary Enrollment</span>
-                    </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-gray-300 font-medium">Instant Hotbeds.ca Booking Voucher</span>
+                    <span class="font-black text-guild-goldLight uppercase bg-guild-gold/20 px-2 py-0.5 rounded border border-guild-gold/40">20% OFF</span>
                 </div>
             </div>
 
-            <!-- Lead Capture Form (Supabase Ready) -->
-            <form id="lead-gen-form" class="space-y-4">
+            <!-- COMPONENT 19: Zero-Friction Lead Capture Form (Supabase Ready) -->
+            <form id="lead-gen-form" class="space-y-3.5">
                 <div>
-                    <label class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.15em] block mb-1.5">Full Legal Name</label>
-                    <input type="text" id="user-name" required placeholder="Enter your full name" class="w-full bg-guild-navy/90 border border-guild-gold/25 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
+                    <label class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.15em] block mb-1">Full Name</label>
+                    <input type="text" id="user-name" required placeholder="Enter your full name" class="w-full bg-guild-navy border border-guild-gold/30 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.15em] block mb-1.5">Email Address</label>
-                    <input type="email" id="user-email" required placeholder="name@domain.com" class="w-full bg-guild-navy/90 border border-guild-gold/25 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.15em] block mb-1.5">Primary Member Interest</label>
-                    <select id="user-interest" class="w-full bg-guild-navy border border-guild-gold/25 text-gray-200 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold">
-                        <option value="all">Full-Access Social &amp; Perks Membership</option>
-                        <option value="hotels">Hotbeds.ca Preferred Hotel Rates</option>
-                        <option value="dining">Fine Dining &amp; Culinary Discounts</option>
-                        <option value="workspaces">Executive Workspaces &amp; Boardrooms</option>
-                        <option value="events">VIP Concerts, Sports &amp; Excursions</option>
-                    </select>
+                    <label class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.15em] block mb-1">Email Address (Where we send your 20% code)</label>
+                    <input type="email" id="user-email" required placeholder="you@email.com" class="w-full bg-guild-navy border border-guild-gold/30 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
                 </div>
 
-                <button type="submit" id="submit-btn" class="w-full gold-btn font-extrabold py-4 rounded-xl uppercase tracking-[0.2em] text-xs mt-2 flex justify-center items-center gap-2">
-                    <span>Claim Complimentary Membership</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <button type="submit" id="submit-btn" class="w-full gold-btn font-black py-4 rounded-xl uppercase tracking-[0.18em] text-xs mt-1 flex justify-center items-center gap-2">
+                    <span>Unlock Free Pass &amp; 20% Off</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
 
-                <p class="text-[9px] text-gray-500 text-center uppercase tracking-widest leading-relaxed pt-1">
-                    No credit card required during promotional window. *Hotel perk rates activate on qualifying high-demand threshold nights.
+                <p class="text-[9px] text-gray-400 text-center uppercase tracking-wider leading-relaxed pt-1">
+                    No credit card required. Unlocks all 6 Guild partner verticals &amp; applies 20% off qualifying bookings.
                 </p>
             </form>
 
-            <!-- Confirmation State inside Modal -->
-            <div id="success-state" class="hidden flex-col items-center justify-center py-6 text-center">
-                <div class="w-14 h-14 bg-guild-emerald/15 rounded-full flex items-center justify-center mb-4 border border-guild-emerald/40">
-                    <svg class="w-7 h-7 text-guild-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <!-- COMPONENT 20: Instant Promo Code Issuance & Checkout Sync State -->
+            <div id="success-state" class="hidden flex-col items-center justify-center py-4 text-center">
+                <div class="w-12 h-12 bg-guild-emerald/20 rounded-full flex items-center justify-center mb-3 border border-guild-emerald/40">
+                    <svg class="w-6 h-6 text-guild-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
                 </div>
-                <h4 class="font-serif text-xl font-bold text-white mb-2">Membership Credential Issued</h4>
-                <p class="text-xs text-gray-300 mb-6 leading-relaxed max-w-sm">
-                    Welcome to The Guild. Your complimentary first-year pass is active and linked to your Hotbeds.ca rewards profile.
+                <h4 class="font-serif text-lg font-bold text-white mb-1">Guild Pass &amp; 20% Discount Active!</h4>
+                <p class="text-xs text-gray-300 mb-4">
+                    Your complimentary membership is active and your 20% discount has been synced to your browser session:
                 </p>
-                <div class="flex flex-col sm:flex-row gap-3 w-full">
-                    <a href="index.html" class="w-full gold-btn font-bold py-3.5 rounded-xl uppercase tracking-widest text-xs text-center">
-                        Access Hotbeds Member Rates
+
+                <div class="w-full bg-guild-navy border border-dashed border-guild-gold rounded-xl p-3 mb-5 flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Member Code:</span>
+                    <span class="font-mono font-black text-base text-guild-gold tracking-widest">GUILD20</span>
+                    <span class="text-[9px] font-bold uppercase bg-guild-emerald/20 text-guild-emerald px-2 py-0.5 rounded">Auto-Applied</span>
+                </div>
+
+                <div class="flex flex-col gap-2.5 w-full">
+                    <a href="index.html" class="w-full gold-btn font-black py-3.5 rounded-xl uppercase tracking-widest text-xs text-center">
+                        Return to Booking with 20% Off &rarr;
                     </a>
-                    <button onclick="closeOfferModal()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-semibold py-3.5 rounded-xl uppercase tracking-widest text-xs border border-white/10">
-                        Explore Guild Divisions
+                    <button onclick="closeOfferModal()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-semibold py-2.5 rounded-xl uppercase tracking-widest text-[10px] border border-white/10">
+                        View Partner Mosaic
                     </button>
                 </div>
             </div>
@@ -556,12 +629,10 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Close when clicking outside the modal card
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeOfferModal();
         });
 
-        // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                 closeOfferModal();
@@ -569,34 +640,36 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Auto-launch the exclusive offer modal after 1.2s so the user sees it immediately
+            // Auto-trigger the Exclusive 20% Off Modal after 800ms for immediate 3-second capture
             setTimeout(() => {
                 openOfferModal();
-            }, 1200);
+            }, 800);
 
-            // Mobile menu toggle
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Lead Capture Submission (Ready for Supabase)
             const form = document.getElementById('lead-gen-form');
             const successState = document.getElementById('success-state');
             const submitBtn = document.getElementById('submit-btn');
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                submitBtn.innerHTML = '<span class="animate-pulse">Registering Credential...</span>';
+                const name = document.getElementById('user-name').value.trim();
+                const email = document.getElementById('user-email').value.trim();
+
+                submitBtn.innerHTML = '<span class="animate-pulse">Activating 20% Discount...</span>';
                 submitBtn.disabled = true;
 
-                // Supabase insert hook ready here
+                // Save Guild Member state & 20% discount to localStorage so checkout.html reads it automatically
+                localStorage.setItem('guild_member_active', 'true');
+                localStorage.setItem('guild_member_name', name);
+                localStorage.setItem('guild_member_email', email);
+                localStorage.setItem('guild_discount_rate', '0.20');
+                localStorage.setItem('guild_promo_code', 'GUILD20');
+
+                // Ready for Supabase lead insertion here
                 setTimeout(() => {
                     form.classList.add('hidden');
                     successState.classList.remove('hidden');
                     successState.classList.add('flex');
-                }, 1000);
+                }, 700);
             });
         });
     </script>
