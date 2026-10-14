@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds - Join The Guild</title>
+    <title>The Guild - Private Member Alliance & Wholesale Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,11 +12,13 @@
                     colors: {
                         brand: {
                             red: '#e63946',
+                            gold: '#f59e0b',
                             light: '#f8fafc',
                             white: '#ffffff',
                             text: '#0f172a',
                             muted: '#64748b',
-                            dark: '#0a0f1c' /* Deep premium blue/black */
+                            dark: '#070b14',
+                            card: '#0f172a'
                         }
                     },
                     fontFamily: {
@@ -28,29 +30,44 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0f1c; color: #ffffff; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #070b14; 
+            color: #ffffff; 
+        }
         
-        /* Premium Dark Background */
         .hero-bg {
-            background-image: url('https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=2500&q=80');
+            background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2500&q=80');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
         }
 
-        /* Glassmorphism for the Signup Card */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        /* Animated Gradient Text */
-        .text-gradient {
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .mosaic-tile {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mosaic-tile:hover {
+            border-color: rgba(230, 57, 70, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .mosaic-tile:hover .tile-bg {
+            transform: scale(1.07);
+        }
+
+        .tile-bg {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -59,247 +76,287 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <!-- Transparent Premium Header -->
-    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
+    <!-- Top Navigation Header -->
+    <header class="fixed top-0 w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
             <div class="flex justify-between items-center h-20 md:h-24">
                 
-                <!-- Logo (Inverted for Dark Theme) -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer w-[30%] md:w-1/4">
-                    <a href="index.html">
-                        <img src="LOGO.png" alt="Hotbeds" class="h-10 md:h-14 w-auto object-contain brightness-0 invert" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-white uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
+                <!-- Left: The Guild Logo + Hotbeds Partner Tag -->
+                <div class="flex items-center gap-3 md:gap-4 w-[60%] md:w-1/3">
+                    <a href="club.html" class="flex items-center gap-3">
+                        <img src="guild.png" alt="The Guild" class="h-10 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<div class=\'flex items-center gap-2\'><div class=\'w-9 h-9 rounded-lg bg-brand-red flex items-center justify-center font-black text-white text-lg tracking-tighter shadow-lg\'>G</div><span class=\'font-black text-xl md:text-2xl tracking-widest uppercase text-white\'>THE GUILD</span></div>'">
+                    </a>
+                    <span class="text-white/20 text-xl font-light hidden sm:inline">|</span>
+                    <a href="index.html" class="hidden sm:flex items-center bg-white px-2.5 py-1 rounded-md shadow-sm hover:opacity-90 transition">
+                        <img src="LOGO.png" alt="Hotbeds" class="h-5 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xs tracking-tighter text-slate-900 uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation Links -->
+                <!-- Center Links -->
                 <nav class="hidden md:flex flex-1 justify-center space-x-8">
-                    <a href="index.html" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Search Deals</a>
-                    <a href="#" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Corporate</a>
-                    <a href="#" class="text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest flex items-center gap-1">
+                    <a href="#mosaic-section" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Partner Mosaic</a>
+                    <a href="index.html" class="text-gray-300 hover:text-white font-semibold transition-colors duration-200 uppercase text-[11px] tracking-widest">Hotbeds Portal</a>
+                    <a href="#" class="text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest flex items-center gap-1.5">
                         Referral Program <span class="flex h-2 w-2 rounded-full bg-brand-red animate-pulse"></span>
                     </a>
                 </nav>
                 
                 <!-- Right CTA -->
-                <div class="flex items-center justify-end w-[70%] md:w-1/4 gap-4">
-                    <a href="#" class="hidden md:block text-xs font-bold text-gray-300 hover:text-white uppercase tracking-widest transition-colors">
+                <div class="flex items-center justify-end w-[40%] md:w-1/3 gap-4">
+                    <a href="#apply-box" class="hidden sm:inline-block bg-white/10 hover:bg-white/20 border border-white/15 text-white text-[11px] font-bold uppercase tracking-widest px-4 py-2.5 rounded-full transition-all">
                         Member Sign In
                     </a>
-
-                    <!-- Mobile Hamburger Icon -->
                     <button id="mobile-menu-btn" class="md:hidden text-white hover:text-brand-red focus:outline-none ml-1">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Menu -->
+            <!-- Mobile Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-white/10 shadow-2xl z-50 flex flex-col">
-                <a href="index.html" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Search Deals</a>
-                <a href="#" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Corporate</a>
+                <a href="#mosaic-section" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Partner Mosaic</a>
+                <a href="index.html" class="px-6 py-4 text-white font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Return to Hotbeds.ca</a>
                 <a href="#" class="px-6 py-4 text-brand-red font-bold border-b border-white/5 hover:bg-white/5 uppercase tracking-widest text-xs">Referral Program</a>
                 <a href="#" class="px-6 py-4 text-gray-400 font-bold hover:bg-white/5 uppercase tracking-widest text-xs">Member Sign In</a>
             </div>
         </div>
     </header>
 
-    <!-- Main Hero Section (Lead Generation) -->
-    <main class="flex-grow w-full relative pt-24 md:pt-0 flex items-center min-h-screen">
-        
-        <!-- Background Image & Overlays -->
-        <div class="absolute inset-0 z-0 overflow-hidden hero-bg">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/95 to-brand-dark/40"></div>
-            <!-- Grid Pattern Overlay for technical feel -->
-            <div class="absolute inset-0" style="background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.2;"></div>
-        </div>
+    <!-- Main Content -->
+    <main class="flex-grow w-full pt-20 md:pt-24">
 
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <!-- HERO SECTION: The Pitch + Lead Capture -->
+        <section class="relative py-12 lg:py-20 overflow-hidden border-b border-white/10">
+            <div class="absolute inset-0 z-0 hero-bg opacity-25"></div>
+            <div class="absolute inset-0 z-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/95 to-brand-dark"></div>
+            <div class="absolute inset-0 z-0" style="background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 28px 28px;"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                
+                <!-- Left Column: Multi-Service Value Proposition -->
+                <div class="w-full lg:w-7/12 flex flex-col">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-red/15 border border-brand-red/30 text-[10px] font-extrabold uppercase tracking-widest text-red-400 mb-6 self-start">
+                        <span class="w-2 h-2 rounded-full bg-brand-red animate-ping"></span>
+                        Private Wholesale Buying Collective
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.08] mb-6">
+                        One membership. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">Heavily discounted</span> <br>
+                        <span class="text-brand-red">products & services.</span>
+                    </h1>
+                    
+                    <p class="text-gray-300 font-medium text-base sm:text-lg max-w-2xl mb-8 leading-relaxed">
+                        The Guild aggregates collective buying power across North America and worldwide. Members unlock private, behind-the-paywall pricing on everyday retail, shared workspaces, dining, VIP excursions, rideshare logistics, and partner hotel inventory through <strong class="text-white">Hotbeds.ca</strong>.
+                    </p>
+
+                    <!-- Quick Stat / Pillar Strip -->
+                    <div class="grid grid-cols-3 gap-4 border-t border-b border-white/10 py-5 mb-6 max-w-xl">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-white">6+</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-0.5">Service Verticals</div>
+                        </div>
+                        <div class="border-l border-white/10 pl-4">
+                            <div class="text-2xl sm:text-3xl font-black text-brand-red">Up to 55%</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-0.5">Below Public Retail</div>
+                        </div>
+                        <div class="border-l border-white/10 pl-4">
+                            <div class="text-2xl sm:text-3xl font-black text-green-400">$0.00</div>
+                            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-0.5">With Hotbeds Promo</div>
+                        </div>
+                    </div>
+
+                    <a href="#mosaic-section" class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-gray-300 hover:text-white transition group self-start">
+                        <span>Explore the Partner Mosaic below</span>
+                        <svg class="w-4 h-4 text-brand-red transform group-hover:translate-y-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Right Column: Lead Capture Application Box -->
+                <div id="apply-box" class="w-full lg:w-5/12 max-w-md mx-auto">
+                    <div class="glass-card rounded-3xl p-7 sm:p-8 relative overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.65)]">
+                        <div class="absolute -top-20 -right-20 w-44 h-44 bg-brand-red rounded-full mix-blend-screen filter blur-[65px] opacity-35"></div>
+
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Partner Invitation</span>
+                                    <h3 class="text-white font-black text-2xl uppercase tracking-tight">Join The Guild</h3>
+                                </div>
+                                <span class="bg-green-500/20 border border-green-500/30 text-green-400 text-[9px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                                    100% Sponsored
+                                </span>
+                            </div>
+
+                            <!-- Price Anchor Box -->
+                            <div class="bg-black/50 border border-white/10 rounded-2xl p-4 mb-6">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Public Annual Membership</span>
+                                    <span class="text-base font-black text-gray-500 line-through decoration-brand-red decoration-2">$300.00 / yr</span>
+                                </div>
+                                <div class="flex justify-between items-center pt-2 border-t border-white/10">
+                                    <span class="text-xs text-white font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                        Via Hotbeds Campaign
+                                    </span>
+                                    <span class="text-2xl font-black text-green-400">$0.00 <span class="text-[10px] font-semibold text-gray-400 uppercase">/ Promo</span></span>
+                                </div>
+                            </div>
+
+                            <!-- Lead Gen Form (Supabase Ready) -->
+                            <form id="lead-gen-form" class="space-y-4">
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Full Name</label>
+                                    <input type="text" id="user-name" required placeholder="Enter your full name" class="w-full bg-white/5 border border-white/15 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Email Address</label>
+                                    <input type="email" id="user-email" required placeholder="you@email.com" class="w-full bg-white/5 border border-white/15 text-white placeholder-gray-500 text-sm rounded-xl p-3.5 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Primary Interest</label>
+                                    <select id="user-interest" class="w-full bg-slate-900 border border-white/15 text-white text-sm rounded-xl p-3.5 focus:outline-none focus:border-brand-red">
+                                        <option value="all">All-Access Wholesale Perks</option>
+                                        <option value="hotels">Hotbeds.ca Member Hotel Rates</option>
+                                        <option value="events">VIP Events, Concerts & Excursions</option>
+                                        <option value="workspaces">Shared Workspaces & Corporate Lounges</option>
+                                        <option value="dining">Dining, Retail & Merchant Discounts</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" id="submit-btn" class="w-full bg-brand-red hover:bg-red-700 text-white font-extrabold py-4 rounded-xl shadow-[0_0_25px_rgba(230,57,70,0.45)] uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 mt-2 flex justify-center items-center gap-2">
+                                    <span>Activate Free Guild Pass</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </button>
+                                
+                                <p class="text-[9px] text-gray-500 text-center uppercase tracking-widest leading-relaxed pt-1">
+                                    Instant points & partner portal access. *Select travel rates activate on high-demand threshold nights.
+                                </p>
+                            </form>
+
+                            <!-- Success State -->
+                            <div id="success-state" class="hidden flex-col items-center justify-center py-6 text-center">
+                                <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/30">
+                                    <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">Guild Pass Activated</h3>
+                                <p class="text-xs text-gray-400 mb-6 leading-relaxed">Your email has been registered for the promotional tier and your Hotbeds points ledger is now linked.</p>
+                                <a href="index.html" class="w-full bg-white text-brand-dark font-extrabold py-3.5 rounded-xl uppercase tracking-widest text-xs transition-colors hover:bg-gray-200">
+                                    Browse Hotbeds Member Rates
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MOSAIC SECTION: Multi-Service Visual Bento Grid & Logos -->
+        <section id="mosaic-section" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Left Side: The Corporate Pitch -->
-            <div class="w-full lg:w-1/2 flex flex-col pt-10 md:pt-0">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold uppercase tracking-widest text-white mb-6 self-start backdrop-blur-sm">
-                    <svg class="w-3 h-3 text-brand-red" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
-                    Closed User Group Network
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+                <div>
+                    <span class="text-brand-red text-xs font-extrabold uppercase tracking-widest block mb-2">The Guild Ecosystem</span>
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+                        A Mosaic of Member-Only Margins.
+                    </h2>
                 </div>
-                
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] mb-6">
-                    Stop paying <br>retail margins. <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-400">Join The Guild.</span>
-                </h1>
-                
-                <p class="text-gray-400 font-medium text-lg max-w-xl mb-8 leading-relaxed">
-                    Global hotel brands prohibit the public display of wholesale rates to protect their retail pricing. By joining our private network, you bypass the public market and unlock zero-markup inventory and direct corporate contracts.
+                <p class="text-gray-400 text-sm max-w-md font-medium">
+                    Your single Guild credential unlocks heavily discounted pricing across our partnered divisions and third-party merchant networks.
                 </p>
-
-                <div class="space-y-4 mb-8">
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
-                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm tracking-wide">Direct Contract Margins</h4>
-                            <p class="text-xs text-gray-500 mt-1">Access heavily negotiated rates at 3.5 to 5-star properties.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
-                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm tracking-wide">Legally Protected Privacy</h4>
-                            <p class="text-xs text-gray-500 mt-1">Prices are legally hidden behind our secure membership paywall.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 bg-brand-red/20 p-1 rounded">
-                            <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm tracking-wide">Transparent "Perk" Fees</h4>
-                            <p class="text-xs text-gray-500 mt-1">You pay the net rate plus a flat platform maintenance fee. No hidden % markups.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Right Side: The Lead Capture Machine -->
-            <div class="w-full lg:w-1/2 max-w-md mx-auto">
-                <div class="glass-card rounded-3xl p-8 relative overflow-hidden shadow-2xl">
-                    
-                    <!-- Decorative corner glow -->
-                    <div class="absolute -top-20 -right-20 w-40 h-40 bg-brand-red rounded-full mix-blend-screen filter blur-[60px] opacity-30"></div>
+            <!-- BENTO MOSAIC GRID (12 Columns on Desktop) -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 auto-rows-[290px]">
+
+                <!-- TILE 1: HOTBEDS.CA (Featured Flagship - Spans 7 cols) -->
+                <div class="mosaic-tile md:col-span-7 rounded-3xl bg-brand-card flex flex-col justify-between p-6 sm:p-8 group">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" alt="Hotbeds Luxury Stays" class="tile-bg absolute inset-0 w-full h-full object-cover opacity-50">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
+
+                    <!-- Top Row: Partner Logo Pill + Discount Tag -->
+                    <div class="relative z-10 flex justify-between items-start">
+                        <!-- White Pill Container prevents white-square logo issues -->
+                        <div class="bg-white px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-2">
+                            <img src="LOGO.png" alt="Hotbeds.ca" class="h-6 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-sm tracking-tighter text-slate-900 uppercase\'>Hot<span class=\'text-brand-red\'>beds.ca</span></span>'">
+                        </div>
+                        <span class="bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md">
+                            Flagship Partner • Points Enabled
+                        </span>
+                    </div>
+
+                    <!-- Bottom Row: Service Details -->
+                    <div class="relative z-10">
+                        <div class="text-xs font-bold uppercase tracking-widest text-red-400 mb-1">Accommodations & Stays</div>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">Private Hotel Inventory & Peak Night Shielding</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 max-w-xl mb-4">
+                            Bypass retail OTA markups on 3.5 to 5-star properties. Unlock protected net rates on high-compression nights plus earn Guild points on every stay.
+                        </p>
+                        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-white bg-white/15 hover:bg-brand-red px-4 py-2 rounded-lg backdrop-blur-sm transition">
+                            <span>Launch Hotbeds Engine</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TILE 2: VIP EVENTS & EXCURSIONS (Spans 5 cols) -->
+                <div class="mosaic-tile md:col-span-5 rounded-3xl bg-brand-card flex flex-col justify-between p-6 sm:p-8">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=80" alt="VIP Events & Excursions" class="tile-bg absolute inset-0 w-full h-full object-cover opacity-45">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/65 to-transparent"></div>
+
+                    <div class="relative z-10 flex justify-between items-start">
+                        <!-- Stylized Partner Logo Badge -->
+                        <div class="bg-black/70 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-xl flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                            <span class="font-black text-xs tracking-widest uppercase text-white">AURA <span class="font-light text-gray-400">LIVE</span></span>
+                        </div>
+                        <span class="bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
+                            20–40% Off Box Office
+                        </span>
+                    </div>
 
                     <div class="relative z-10">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-white font-black text-2xl uppercase tracking-tight">Guild Application</h3>
-                            <span class="bg-green-500/20 text-green-400 text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded">Promotional Offer</span>
-                        </div>
-
-                        <!-- The Price Anchor -->
-                        <div class="bg-black/40 border border-white/5 rounded-xl p-5 mb-8">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Standard Annual Dues</span>
-                                <span class="text-lg font-black text-gray-500 line-through decoration-brand-red decoration-2">$300.00</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-2 border-t border-white/10">
-                                <span class="text-xs text-white font-bold uppercase tracking-widest">Sponsored by Hotbeds</span>
-                                <span class="text-2xl font-black text-green-400">$0.00 <span class="text-[10px] font-medium text-gray-400">/ 1st Year</span></span>
-                            </div>
-                        </div>
-
-                        <!-- Supabase Ready Form -->
-                        <form id="lead-gen-form" class="space-y-5">
-                            <div>
-                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Full Name</label>
-                                <input type="text" id="user-name" required placeholder="Enter your legal name" class="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm rounded-xl p-4 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wide block mb-1.5 ml-1">Professional Email</label>
-                                <input type="email" id="user-email" required placeholder="you@company.com" class="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm rounded-xl p-4 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all">
-                            </div>
-
-                            <button type="submit" id="submit-btn" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(230,57,70,0.4)] uppercase tracking-widest transition-all duration-300 transform hover:-translate-y-0.5 mt-2 flex justify-center items-center gap-2">
-                                <span>Unlock Free Access</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </button>
-                            
-                            <p class="text-[9px] text-gray-500 text-center uppercase tracking-widest mt-4">
-                                By joining, you agree to our Terms of Service & Privacy Policy. No credit card required for year one.
-                            </p>
-                        </form>
-
-                        <!-- Success State (Hidden initially) -->
-                        <div id="success-state" class="hidden flex-col items-center justify-center py-6 text-center">
-                            <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/30">
-                                <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Welcome to The Guild</h3>
-                            <p class="text-sm text-gray-400 mb-6">Your account has been provisioned. Please check your email to verify your address and set your password.</p>
-                            <a href="index.html" class="w-full bg-white text-brand-dark font-bold py-3 rounded-xl uppercase tracking-widest text-xs transition-colors hover:bg-gray-200">
-                                Return to Search Engine
-                            </a>
-                        </div>
-
+                        <div class="text-xs font-bold uppercase tracking-widest text-amber-400 mb-1">Entertainment & Group Travel</div>
+                        <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight mb-2">VIP Excursions, Concerts & SportingSuites</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Group-negotiated ticket blocks, curated city excursions, and shared hospitality suites without secondary-market broker fees.
+                        </p>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </main>
+                <!-- TILE 3: SHARED WORKSPACES & LOUNGES (Spans 4 cols) -->
+                <div class="mosaic-tile md:col-span-4 rounded-3xl bg-brand-card flex flex-col justify-between p-6">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" alt="Executive Workspaces" class="tile-bg absolute inset-0 w-full h-full object-cover opacity-45">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-transparent"></div>
 
-    <!-- Simplified Dark Footer -->
-    <footer class="bg-black border-t border-white/10 py-10 relative z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-                <div>
-                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 brightness-0 invert opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-500 uppercase\'>Hotbeds</span>'">
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div class="bg-black/70 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            <span class="font-black text-xs tracking-wider uppercase text-white">COMMONS<span class="text-blue-400">HQ</span></span>
+                        </div>
+                        <span class="bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                            Day Passes Included
+                        </span>
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-blue-400 mb-1">Business & Co-Working</div>
+                        <h3 class="text-xl font-black text-white tracking-tight mb-1.5">Shared Meeting Spaces & Executive Hubs</h3>
+                        <p class="text-xs text-gray-300">
+                            On-demand boardrooms, hot-desks, and private business lounges across major North American transit corridors.
+                        </p>
+                    </div>
                 </div>
-                <div class="flex flex-wrap justify-center gap-6 text-[11px] font-bold text-gray-500 uppercase tracking-widest">
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Contact Us</a>
-                    <a href="#" class="hover:text-white transition-colors">TICO Info</a>
-                </div>
-            </div>
-            <div class="border-t border-white/5 pt-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-[10px] text-gray-600 font-medium uppercase tracking-widest">
-                    &copy; 2026 Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1
-                </p>
-                <p class="text-[10px] text-gray-600 font-bold uppercase tracking-widest bg-white/5 px-3 py-1 rounded">
-                    TICO Registration: #XXXXXXX
-                </p>
-            </div>
-        </div>
-    </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Mobile Menu Toggle ---
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+                <!-- TILE 4: DINING & CULINARY COLLECTIVE (Spans 4 cols) -->
+                <div class="mosaic-tile md:col-span-4 rounded-3xl bg-brand-card flex flex-col justify-between p-6">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt="Dining & Culinary" class="tile-bg absolute inset-0 w-full h-full object-cover opacity-45">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-transparent"></div>
 
-            // --- Lead Gen Form / Supabase Prep ---
-            const form = document.getElementById('lead-gen-form');
-            const successState = document.getElementById('success-state');
-            const submitBtn = document.getElementById('submit-btn');
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault(); // Prevent page reload
-
-                const name = document.getElementById('user-name').value;
-                const email = document.getElementById('user-email').value;
-
-                // Visual loading state
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<span class="animate-pulse">Provisioning Account...</span>';
-                submitBtn.disabled = true;
-
-                // TODO: SUPABASE INTEGRATION GOES HERE
-                /*
-                  When we connect Supabase, we will replace this setTimeout with:
-                  
-                  const { data, error } = await supabase
-                    .from('leads')
-                    .insert([{ full_name: name, email: email, source: 'Guild Promo' }]);
-                    
-                  if(error) throw error;
-                */
-
-                // Simulated network request (Wait 1.5 seconds)
-                setTimeout(() => {
-                    // Hide form, show success state
-                    form.classList.add('hidden');
-                    successState.classList.remove('hidden');
-                    successState.classList.add('flex');
-                }, 1500);
-
-            });
-        });
-    </script>
-</body>
-</html>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div class="bg-black/70 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                            <span class="font-black text-xs tracking-wider uppercase text-white">CHEF<span class="text-emerald-400">EXPRESS</span></span>
+                        </div>
+                        <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[9px] font-bold uppercase tracking-widest px-2.5 py
