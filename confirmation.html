@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds - Booking Confirmed</title>
+    <title>Hotbeds.ca — Reservation Confirmed & Official Voucher</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,291 +22,267 @@
                         sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
                     },
                     boxShadow: {
-                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.08)'
                     }
                 }
             }
         }
     </script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
         }
-        
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Hide elements when printing */
         @media print {
-            header, footer, .no-print {
-                display: none !important;
-            }
-            body {
-                background-color: white;
-                padding-top: 0 !important;
-            }
-            .print-container {
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-            }
+            .no-print { display: none !important; }
+            body { padding-top: 0 !important; background-color: #ffffff !important; }
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[110px] md:pt-[130px]">
+<body class="text-brand-text flex flex-col min-h-screen pt-[88px]">
 
-    <!-- Standard Header with Hot Beds Club Button -->
-    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20 md:h-24">
-                
-                <div class="flex-shrink-0 flex items-center cursor-pointer w-1/4">
-                    <a href="index.html">
-                        <img src="LOGO.png" alt="Hotbeds" class="h-8 md:h-10 w-auto" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span></span>'">
-                    </a>
-                </div>
-                
-                <nav class="hidden md:flex flex-1 justify-center space-x-10">
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Cities</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Corporate</a>
-                    <a href="#" class="text-brand-text hover:text-brand-red font-semibold transition-colors duration-200 uppercase text-sm tracking-widest">Members Sign In</a>
-                </nav>
-                
-                <div class="flex items-center justify-end w-auto lg:w-1/3 gap-3 md:gap-4">
-                    <div class="hidden sm:flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-lg shadow-sm">
-                            J.
-                        </div>
-                    </div>
-                    <!-- Hot Beds Club Button -->
-                    <a href="#" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
-                        <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                        </div>
-                        <div class="flex flex-col justify-center">
-                            <span class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
-                            <span class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for a limited time</span>
-                        </div>
-                    </a>
-                </div>
-
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full z-40 bg-white border-b border-gray-200 shadow-sm h-20 flex items-center no-print">
+        <div class="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="index.html">
+                <img src="LOGO.png" alt="Hotbeds.ca" class="h-10 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
+            </a>
+            <div class="flex items-center gap-3">
+                <button type="button" onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
+                    🖨️ Print Voucher
+                </button>
+                <a href="index.html" class="bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
+                    Return Home
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mb-12">
+    <!-- MAIN CONFIRMATION CONTAINER -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        <!-- Success Animation & Header -->
-        <div class="text-center mb-8 no-print">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
-                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                </svg>
-            </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-2">Booking Confirmed!</h1>
-            <p class="text-gray-500 font-medium">A confirmation email has been sent to your inbox.</p>
-        </div>
-
-        <!-- Digital Itinerary / Receipt (Printable Area) -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-soft-xl overflow-hidden print-container">
+        <!-- 1. OFFICIAL VOUCHER & ITEMIZED RECEIPT CARD -->
+        <div class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-soft-lg">
             
-            <!-- Receipt Header -->
-            <div class="bg-brand-text p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Booking Reference</span>
-                    <h2 class="text-2xl md:text-3xl font-black tracking-widest">#HB-847291</h2>
+            <!-- Top Confirmed Banner -->
+            <div class="bg-slate-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0 shadow">
+                        ✓
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-green-400 block">Reservation Confirmed &amp; Guaranteed</span>
+                        <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Your Stay is Locked In!</h1>
+                        <p class="text-xs text-gray-300 mt-0.5">
+                            Confirmation &amp; receipt sent to <strong id="conf-guest-email" class="text-white">you@email.com</strong>
+                        </p>
+                    </div>
                 </div>
-                <div class="md:text-right">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Booking Date</span>
-                    <p class="text-sm font-medium">Oct 1, 2026</p>
+
+                <div class="bg-white/10 border border-white/15 rounded-2xl px-4 py-3 text-left sm:text-right shrink-0">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300 block">Booking Reference</span>
+                    <span id="conf-booking-ref" class="font-mono font-black text-xl text-white tracking-wider">HB-849201</span>
                 </div>
             </div>
 
-            <div class="p-6 md:p-8">
+            <!-- Property & Stay Logistics -->
+            <div class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
-                <!-- Guest & Hotel Info -->
-                <div class="flex flex-col md:flex-row justify-between pb-8 border-b border-gray-100 gap-8">
-                    <div class="md:w-1/2">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Guest Details</span>
-                        <p class="font-bold text-brand-text text-lg">Gordon Culp</p>
-                        <p class="text-sm text-gray-500 mt-1">gordon@example.com</p>
-                        <p class="text-sm text-gray-500 mt-1">+1 (555) 123-4567</p>
+                <!-- Left (7 Cols): Hotel Details & Check-In Instructions -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Verified Property Voucher</span>
+                        <h2 id="conf-hotel-name" class="text-2xl font-black text-brand-text">Sandman Hotel Hamilton</h2>
+                        <p id="conf-room-name" class="text-sm font-bold text-gray-500 mt-0.5">Standard Corporate King Room</p>
                     </div>
-                    <div class="md:w-1/2 md:text-right">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Property</span>
-                        <p class="font-bold text-brand-text text-lg">Sandman Hotel Hamilton</p>
-                        <p class="text-sm text-gray-500 mt-1">560 Centennial Pkwy N</p>
-                        <p class="text-sm text-gray-500 mt-1">Hamilton, ON L8E 0G2</p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100 text-xs">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-In</span>
+                            <span id="conf-checkin" class="font-extrabold text-brand-text text-sm">Today</span>
+                            <span class="text-[10px] text-gray-500 block">From 3:00 PM</span>
+                        </div>
+                        <div class="border-l border-gray-200 pl-3">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-Out</span>
+                            <span id="conf-checkout" class="font-extrabold text-brand-text text-sm">Tomorrow</span>
+                            <span class="text-[10px] text-gray-500 block">Until 11:00 AM</span>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 border-t sm:border-t-0 sm:border-l border-gray-200 pt-2 sm:pt-0 sm:pl-3">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Duration &amp; Guests</span>
+                            <span id="conf-nights-guests" class="font-extrabold text-brand-red text-sm">1 Night • 2 Guests</span>
+                            <span id="conf-guest-name" class="text-[10px] text-gray-500 block truncate">Primary Guest</span>
+                        </div>
+                    </div>
+
+                    <!-- Email Drip & Private Portal Access Notice -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-start gap-3.5">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-sm shrink-0 mt-0.5">★</div>
+                        <div class="text-xs text-emerald-950 space-y-1">
+                            <div class="font-extrabold uppercase tracking-wider text-emerald-800">
+                                +<span id="conf-points-earned">2,000</span> Hot Beds Club Points Credited &amp; Member Perks Dispatched
+                            </div>
+                            <p class="leading-relaxed text-emerald-900">
+                                Because you completed a verified reservation, we have sent your confirmation receipt along with your <strong>private member login invitation</strong> and complimentary local partner vouchers to your email inbox.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Front Desk Check-In Checklist -->
+                    <div class="text-xs text-gray-500 space-y-1.5 pt-2 border-t border-gray-100">
+                        <div class="font-extrabold text-brand-text uppercase tracking-wider text-[11px]">Front Desk Check-In Instructions</div>
+                        <p>• Present a valid government-issued photo ID and your booking reference (<strong id="conf-ref-inline" class="text-brand-text">HB-849201</strong>) at the front desk.</p>
+                        <p>• Issued in compliance with the <strong>Alberta Consumer Protection Act (Internet Sales Contract Regulation)</strong>.</p>
                     </div>
                 </div>
 
-                <!-- Check-in / Check-out -->
-                <div class="flex flex-col md:flex-row justify-between py-8 border-b border-gray-100 gap-4">
-                    <div class="bg-gray-50 rounded-xl p-5 md:w-[48%] border border-gray-100">
-                        <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest block mb-1">Check-in</span>
-                        <p class="font-black text-brand-text text-xl mb-1" id="summary-checkin">Oct 14, 2026</p>
-                        <p class="text-xs text-gray-500 font-medium">After 3:00 PM</p>
+                <!-- Right (5 Cols): Itemized Official Receipt (Room, Discount, HST/GST & $2.25/nt Eco Fee) -->
+                <div class="lg:col-span-5 bg-gray-50 rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Official Payment Receipt</span>
+                        <span id="conf-pay-method" class="text-[10px] font-black uppercase bg-white border border-gray-200 px-2.5 py-1 rounded text-gray-700">Paid • Card</span>
                     </div>
-                    <div class="bg-gray-50 rounded-xl p-5 md:w-[48%] border border-gray-100">
-                        <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest block mb-1">Check-out</span>
-                        <p class="font-black text-brand-text text-xl mb-1" id="summary-checkout">Oct 16, 2026</p>
-                        <p class="text-xs text-gray-500 font-medium">Before 11:00 AM</p>
+
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Room Subtotal (<span id="conf-receipt-nights">1 Night</span>):</span>
+                            <span id="conf-room-subtotal" class="font-bold text-brand-text">$250.00 CAD</span>
+                        </div>
+
+                        <div id="conf-discount-row" class="hidden justify-between text-emerald-700 font-bold">
+                            <span>Member Signup Discount (20% Off):</span>
+                            <span id="conf-discount-val">-$50.00 CAD</span>
+                        </div>
+
+                        <div class="flex justify-between text-gray-600">
+                            <span>Combined Taxes (HST / GST 13%):</span>
+                            <span id="conf-hst-val" class="font-semibold text-brand-text">$26.00 CAD</span>
+                        </div>
+
+                        <div class="flex justify-between text-gray-600">
+                            <span>Ontario Eco Fee ($2.25 / night):</span>
+                            <span id="conf-ecofee-val" class="font-semibold text-brand-text">$2.25 CAD</span>
+                        </div>
+
+                        <div class="flex justify-between text-gray-500 pt-2 border-t border-gray-200 font-semibold">
+                            <span>Total Taxes &amp; Eco Fees:</span>
+                            <span id="conf-combined-taxes">$28.25 CAD</span>
+                        </div>
+
+                        <div class="flex justify-between items-baseline border-t-2 border-gray-300 pt-3 mt-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-brand-text">Total Paid (CAD)</span>
+                            <span id="conf-total-paid" class="text-2xl font-black text-emerald-700">$228.25 CAD</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Room Details & Price Breakdown -->
-                <div class="py-8">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-4">Reservation Summary</span>
-                    
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-brand-text">Standard King Room</span>
-                        <span class="text-sm font-bold text-brand-text">$280.00</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-gray-500">2 Nights, 2 Adults</span>
-                        <span class="text-sm text-gray-500">-</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-6 pb-6 border-b border-dashed border-gray-200">
-                        <span class="text-sm text-gray-500">Taxes & Fees</span>
-                        <span class="text-sm text-gray-500">$36.00</span>
-                    </div>
-
-                    <div class="flex justify-between items-end mb-2">
-                        <span class="text-base font-extrabold text-brand-text uppercase tracking-tight">Total Paid</span>
-                        <span class="text-3xl font-black text-brand-red tracking-tighter" id="summary-total">$316.00</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs font-medium text-gray-400">Paid via Visa ending in 4242</span>
-                    </div>
-                </div>
-                
-                <!-- TICO Print Note -->
-                <div class="mt-4 pt-4 border-t border-gray-100 text-center">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Hotbeds Inc. TICO Registration: #XXXXXXX</p>
-                </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="mt-8 flex flex-col md:flex-row gap-4 justify-center no-print">
-            <button onclick="window.print()" class="bg-white hover:bg-gray-50 border border-gray-200 text-brand-text font-bold py-3 px-8 rounded-lg shadow-sm transition-colors uppercase tracking-widest text-sm flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                Print Itinerary
-            </button>
-            <a href="index.html" class="bg-brand-red hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-[0_4px_14px_0_rgba(230,57,70,0.39)] hover:shadow-[0_6px_20px_rgba(230,57,70,0.23)] transition-all uppercase tracking-widest text-sm text-center">
-                Return Home
-            </a>
-        </div>
+        <!-- 2. COMPLIMENTARY TRIP ENHANCEMENTS & PARTNER PERKS (Affiliate / Drip Preview) -->
+        <section class="no-print space-y-4">
+            <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Included With Your Stay</span>
+                <h2 class="text-xl font-black text-brand-text tracking-tight">Enhance Your Trip &amp; Claim Partner Perks</h2>
+                <p class="text-xs text-gray-500">Check your confirmation email or select a partner perk below to add to your itinerary:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Dining Perk</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">$25 Local Dining &amp; Delivery Credit</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">Complimentary voucher for participating local restaurants and ghost kitchens near your hotel.</p>
+                    </div>
+                    <span class="text-[11px] font-extrabold text-emerald-700 uppercase">✓ Sent to Your Email Inbox</span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-blue-50 text-blue-700 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Mobility &amp; Fleet</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">Preferred Car Rental &amp; Airport Transfer</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">Unlock corporate fleet pricing on rental vehicles and airport shuttles for your stay dates.</p>
+                    </div>
+                    <span class="text-[11px] font-extrabold text-emerald-700 uppercase">✓ Sent to Your Email Inbox</span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-amber-50 text-amber-800 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Refer &amp; Earn</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">Give $25, Get $25 Stay Credit</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">Share your booking referral link with a friend—you both get $25 CAD off your next hotel stay.</p>
+                    </div>
+                    <a href="index.html#referral-section" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase">Get My Referral Link &rarr;</a>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <!-- TICO Compliant Footer -->
-    <footer class="bg-white border-t border-gray-100 py-8 mt-auto no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-                <div>
-                    <img src="LOGO.png" alt="Hotbeds" class="h-6 mx-auto md:mx-0 grayscale opacity-40" onerror="this.onerror=null; this.outerHTML='<span class=\'font-bold text-lg text-gray-300 uppercase\'>Hotbeds</span>'">
-                </div>
-                <div class="flex gap-6 text-[13px] font-semibold text-gray-400">
-                    <a href="#" class="hover:text-brand-red transition-colors">Terms & Conditions</a>
-                    <a href="#" class="hover:text-brand-red transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-brand-red transition-colors">Travel Insurance Info</a>
-                </div>
-            </div>
-            <div class="border-t border-gray-50 pt-4 text-center md:text-left">
-                <p class="text-[11px] text-gray-400 font-medium">
-                    Hotbeds Inc. | 123 Main Street, Hamilton, ON L8P 1A1 | <strong>TICO Registration: #XXXXXXX</strong>
-                </p>
-            </div>
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-auto no-print">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+            <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+            <p>Compliant with the <strong>Alberta Consumer Protection Act</strong></p>
         </div>
     </footer>
 
-    <!-- Floating Hot Beds Club Button (Hidden on Print) -->
-    <a href="#" class="no-print fixed bottom-6 right-6 z-[100] group flex items-center gap-3 bg-brand-text hover:bg-black text-white px-1.5 py-1.5 pr-6 rounded-full shadow-soft-xl border border-gray-800 transition-all transform hover:-translate-y-1">
-        <div class="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-        </div>
-        <div class="flex flex-col justify-center">
-            <span class="text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
-            <span class="text-[9px] font-medium text-gray-400 uppercase tracking-wider">Free for a limited time</span>
-        </div>
-    </a>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Grab all the confirmed data passed from the checkout process
             const urlParams = new URLSearchParams(window.location.search);
-            const ref = urlParams.get('ref') || 'PENDING';
-            const hotel = urlParams.get('hotel') || 'Hotel Not Found';
-            const checkin = urlParams.get('checkin');
-            const checkout = urlParams.get('checkout');
-            const guestName = urlParams.get('name') || 'Valued Guest';
-            const guestEmail = urlParams.get('email') || '';
-            const price = parseFloat(urlParams.get('price')) || 0;
+            const savedPayloadRaw = localStorage.getItem('latest_booking_payload');
+            let data = null;
 
-            // 2. Inject the data into the HTML
-            
-            // Booking Reference
-            const refElements = document.querySelectorAll('h2');
-            refElements.forEach(el => {
-                if (el.textContent.includes('#HB-')) {
-                    el.textContent = `#${ref}`;
-                }
-            });
-
-            // Guest Details
-            const pTags = document.querySelectorAll('p');
-            pTags.forEach(el => {
-                if (el.textContent === 'Gordon Culp') el.textContent = guestName;
-                if (el.textContent === 'gordon@example.com') el.textContent = guestEmail;
-                if (el.textContent === 'Sandman Hotel Hamilton' || el.textContent === 'Hotel Not Found') el.textContent = hotel;
-            });
-
-            // Dates
-            if (checkin && checkin !== 'Not Selected') {
-                const options = { month: 'short', day: 'numeric', year: 'numeric' };
-                const formattedCheckin = new Date(checkin).toLocaleDateString('en-US', options);
-                const formattedCheckout = new Date(checkout).toLocaleDateString('en-US', options);
-                
-                const checkinEl = document.getElementById('summary-checkin');
-                const checkoutEl = document.getElementById('summary-checkout');
-                
-                if (checkinEl) checkinEl.textContent = formattedCheckin;
-                if (checkoutEl) checkoutEl.textContent = formattedCheckout;
+            if (savedPayloadRaw) {
+                try { data = JSON.parse(savedPayloadRaw); } catch (e) { data = null; }
             }
 
-            // Price and Today's Date
-            const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            pTags.forEach(el => {
-                if (el.textContent === 'Oct 1, 2026') el.textContent = today;
-            });
+            const ref = (data && data.booking_ref) || urlParams.get('ref') || 'HB-849201';
+            const hotel = (data && data.hotel_name) || urlParams.get('hotel') || 'Sandman Hotel Hamilton';
+            const room = (data && data.room_name) || 'Standard Corporate King Room';
+            const email = (data && data.email) || localStorage.getItem('hotbeds_club_email') || 'you@email.com';
+            const fullName = (data && `${data.first_name} ${data.last_name}`) || localStorage.getItem('hotbeds_club_name') || 'Verified Guest';
+            const checkin = (data && data.checkin) || 'Today';
+            const checkout = (data && data.checkout) || 'Tomorrow';
+            const nights = (data && data.nights) || 1;
+            const guests = (data && data.guests) || 2;
+            const roomSubtotal = parseFloat((data && data.room_subtotal_cad) || '250.00');
+            const discount = parseFloat((data && data.discount_cad) || '50.00');
+            const memberEnrolled = data ? data.member_drip_enrolled : true;
+            const netRoom = memberEnrolled ? (roomSubtotal - discount) : roomSubtotal;
+            const hst = parseFloat((data && data.hst_gst_cad) || (netRoom * 0.13).toFixed(2));
+            const ecoFee = parseFloat((data && data.eco_fee_cad) || (2.25 * nights).toFixed(2));
+            const combinedTax = (hst + ecoFee).toFixed(2);
+            const totalPaid = (data && data.total_paid_cad) || (netRoom + hst + ecoFee).toFixed(2);
+            const pointsEarned = (data && data.points_earned) || Math.round(netRoom * 10);
+            const method = (data && data.payment_method) ? data.payment_method.toUpperCase() : 'CARD';
 
-            const totalEl = document.getElementById('summary-total');
-            if (totalEl && price > 0) {
-                totalEl.textContent = `$${price.toFixed(2)}`;
-                
-                // Roughly update taxes line item (assuming original price was base + tax)
-                const taxEl = Array.from(document.querySelectorAll('span')).find(el => el.textContent === '$36.00');
-                const baseEl = Array.from(document.querySelectorAll('span')).find(el => el.textContent === '$280.00');
-                
-                if (taxEl && baseEl) {
-                    const basePrice = price / 1.13;
-                    const tax = price - basePrice;
-                    baseEl.textContent = `$${basePrice.toFixed(2)}`;
-                    taxEl.textContent = `$${tax.toFixed(2)}`;
-                }
+            document.getElementById('conf-booking-ref').textContent = ref;
+            document.getElementById('conf-ref-inline').textContent = ref;
+            document.getElementById('conf-guest-email').textContent = email;
+            document.getElementById('conf-hotel-name').textContent = hotel;
+            document.getElementById('conf-room-name').textContent = room;
+            document.getElementById('conf-checkin').textContent = checkin;
+            document.getElementById('conf-checkout').textContent = checkout;
+            document.getElementById('conf-nights-guests').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'} • ${guests} Guests`;
+            document.getElementById('conf-guest-name').textContent = `Guest: ${fullName}`;
+            document.getElementById('conf-points-earned').textContent = pointsEarned.toLocaleString();
+            document.getElementById('conf-pay-method').textContent = `Paid • ${method}`;
+
+            document.getElementById('conf-receipt-nights').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+            document.getElementById('conf-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
+
+            if (memberEnrolled && discount > 0) {
+                const discRow = document.getElementById('conf-discount-row');
+                discRow.classList.replace('hidden', 'flex');
+                document.getElementById('conf-discount-val').textContent = `-$${discount.toFixed(2)} CAD`;
             }
+
+            document.getElementById('conf-hst-val').textContent = `$${hst.toFixed(2)} CAD`;
+            document.getElementById('conf-ecofee-val').textContent = `$${ecoFee.toFixed(2)} CAD`;
+            document.getElementById('conf-combined-taxes').textContent = `$${combinedTax} CAD`;
+            document.getElementById('conf-total-paid').textContent = `$${totalPaid} CAD`;
         });
     </script>
 </body>
