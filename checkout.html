@@ -41,7 +41,7 @@
             box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
         }
         @keyframes priceHighlight {
-            0% { background-color: #dcfce7; transform: scale(1.02); }
+            0% { background-color: #dcfce7; transform: scale(1.01); }
             100% { background-color: transparent; transform: scale(1); }
         }
         .price-changed {
@@ -70,8 +70,8 @@
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         <div class="mb-6">
-            <h1 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Complete Your Booking</h1>
-            <p class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Review your itemized price breakdown below and select your preferred payment method.</p>
+            <h1 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Complete Your Reservation</h1>
+            <p class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Review your itemized room rate, taxes, and eco fees below before confirming payment.</p>
         </div>
 
         <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -90,14 +90,14 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="guest-first-name" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">First Name *</label>
-                            <input type="text" id="guest-first-name" required placeholder="Gordon" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
+                            <input type="text" id="guest-first-name" required placeholder="First Name" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
                             <label for="guest-last-name" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Last Name *</label>
-                            <input type="text" id="guest-last-name" required placeholder="Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
+                            <input type="text" id="guest-last-name" required placeholder="Last Name" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
-                            <label for="guest-email" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Email Address *</label>
+                            <label for="guest-email" class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Email Address (For Confirmation &amp; Offers) *</label>
                             <input type="email" id="guest-email" required placeholder="you@email.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-text focus:bg-white text-sm font-semibold outline-none transition">
                         </div>
                         <div>
@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <!-- 2. PAYMENT METHODS (Card, PayPal, Apple/Google Pay, Interac) -->
+                <!-- 2. PAYMENT METHODS -->
                 <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
                     <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                         <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight">
@@ -121,7 +121,6 @@
                         </div>
                     </div>
 
-                    <!-- Payment Method Selector Tabs -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5">
                         <button type="button" data-method="card" class="pay-tab pay-tab-active border-2 border-gray-200 rounded-xl p-3 text-center transition">
                             <span class="block text-sm mb-0.5">💳</span>
@@ -187,70 +186,81 @@
                 </div>
 
                 <!-- ===================================================== -->
-                <!-- 3. ITEMIZED PRICE BREAKDOWN + SUBTLE 20% GUILD OPTION -->
-                <!-- (Placed directly above the Pay Button so it's always  -->
-                <!-- visible before paying on both mobile and desktop)     -->
+                <!-- 3. ITEMIZED PRICE, HST/GST & $2.25/NT ECO FEE         -->
                 <!-- ===================================================== -->
                 <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft space-y-5">
                     <div class="flex justify-between items-center border-b border-gray-100 pb-3">
                         <div>
-                            <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight">3. Price &amp; Tax Breakdown</h2>
+                            <h2 class="text-base font-extrabold text-brand-text uppercase tracking-tight">3. Price, Tax &amp; Eco Fee Breakdown</h2>
                             <p id="main-breakdown-subtitle" class="text-xs text-gray-500 font-medium mt-0.5">Sandman Hotel Hamilton • 1 Night</p>
                         </div>
                         <span class="text-[11px] font-bold text-gray-400 uppercase">CAD $</span>
                     </div>
 
-                    <!-- Subtle, Inconspicuous "The Guild Social Club" 20% Off Opt-In Row -->
-                    <label for="guild-opt-in" class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 hover:bg-gray-100/80 border border-gray-200 cursor-pointer transition select-none">
-                        <input type="checkbox" id="guild-opt-in" class="mt-0.5 w-4 h-4 accent-brand-text rounded cursor-pointer">
+                    <!-- Inconspicuous Club / Drip-Feed Signup Opt-In Checkbox -->
+                    <label for="club-drip-opt-in" class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 hover:bg-gray-100/80 border border-gray-200 cursor-pointer transition select-none">
+                        <input type="checkbox" id="club-drip-opt-in" class="mt-0.5 w-4 h-4 accent-brand-text rounded cursor-pointer">
                         <div class="flex-grow">
                             <div class="flex flex-wrap justify-between items-center gap-2">
                                 <span class="text-xs sm:text-sm font-bold text-brand-text">
-                                    Sign up for The Guild Social Club and get 20% off my booking
+                                    Sign up for free member access &amp; take 20% off my booking today
                                 </span>
                                 <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
-                                    Save $<span class="guild-discount-amount">50.00</span>
+                                    Save $<span class="discount-amount-val">50.00</span>
                                 </span>
                             </div>
                             <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                Complimentary membership ($0.00 fee) linked automatically using your guest details above.
+                                Sends your private member login credentials via confirmation email along with curated hotel flash rates and complimentary partner perks ($0.00 fee).
                             </p>
                         </div>
                     </label>
 
-                    <!-- Itemized Math Lines (Room Rate, 20% Discount, Taxes, Total) -->
+                    <!-- Itemized Math Lines -->
                     <div class="space-y-3 text-sm pt-1">
                         
+                        <!-- Base Room Rate -->
                         <div class="flex justify-between items-center text-gray-600">
                             <span>Room Rate (<span class="stay-nights-label">1 Night</span> × $<span class="nightly-rate-val">250.00</span>):</span>
                             <span id="main-room-subtotal" class="font-bold text-brand-text">$250.00 CAD</span>
                         </div>
 
-                        <!-- 20% Guild Discount Row (Appears when checkbox is ticked) -->
+                        <!-- 20% Member Opt-In Discount Row -->
                         <div id="main-discount-row" class="hidden justify-between items-center text-emerald-700 font-bold bg-emerald-50/70 px-3 py-2 rounded-lg border border-emerald-100">
-                            <span>The Guild Social Club Discount (20% Off):</span>
-                            <span>-$<span class="guild-discount-amount">50.00</span> CAD</span>
+                            <span>Member Signup Discount (20% Off Room):</span>
+                            <span>-$<span class="discount-amount-val">50.00</span> CAD</span>
                         </div>
 
-                        <!-- Subtotal After Discount (Appears when checkbox is ticked) -->
-                        <div id="main-discounted-subtotal-row" class="hidden justify-between items-center text-gray-600 text-xs">
-                            <span>Discounted Room Subtotal:</span>
-                            <span id="main-discounted-subtotal" class="font-bold text-brand-text">$200.00 CAD</span>
+                        <!-- Net Room Subtotal After Discount -->
+                        <div id="main-net-subtotal-row" class="hidden justify-between items-center text-gray-600 text-xs">
+                            <span>Net Room Subtotal:</span>
+                            <span id="main-net-subtotal" class="font-bold text-brand-text">$200.00 CAD</span>
                         </div>
 
-                        <!-- Taxes & Municipal Recovery Fees -->
+                        <!-- Combined Taxes (HST / GST 13%) -->
                         <div class="flex justify-between items-center text-gray-600">
-                            <span>Taxes &amp; Municipal Hotel Fees (13%):</span>
-                            <span id="main-taxes-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                            <span>Combined Taxes (HST / GST 13%):</span>
+                            <span id="main-hst-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                        </div>
+
+                        <!-- Ontario Eco Fee ($2.25 / night = $2.00 + tax) -->
+                        <div class="flex justify-between items-center text-gray-600">
+                            <span>Eco Fee ($2.25 / night — $2.00 + tax × <span class="stay-nights-count">1</span>):</span>
+                            <span id="main-ecofee-val" class="font-semibold text-brand-text">$2.25 CAD</span>
+                        </div>
+
+                        <!-- Total Combined Taxes & Eco Fees Summary Line -->
+                        <div class="flex justify-between items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <span>Total Combined Taxes (HST/GST + Eco Fees):</span>
+                            <span id="main-combined-tax-eco" class="font-bold text-gray-700">$34.75 CAD</span>
                         </div>
 
                         <!-- Final Total Due Today -->
                         <div id="main-total-box" class="flex justify-between items-baseline border-t-2 border-gray-200 pt-4 mt-2 rounded-lg px-1 transition-all">
                             <div>
                                 <span class="text-sm font-black uppercase tracking-wider text-brand-text block">Total Due Today</span>
-                                <span id="main-savings-note" class="text-[11px] font-semibold text-gray-400">Includes all applicable taxes &amp; fees</span>
+                                <span id="main-savings-note" class="text-[11px] font-semibold text-gray-400">Includes Room, HST/GST &amp; $2.25/nt Eco Fee</span>
                             </div>
-                            <span id="main-final-total" class="text-3xl font-black text-brand-text">$282.50 CAD</span>
+                            <span id="main-final-total" class="text-3xl font-black text-brand-text">$284.75 CAD</span>
                         </div>
                     </div>
 
@@ -266,7 +276,7 @@
 
                     <!-- Submit / Pay Button -->
                     <button type="submit" id="submit-pay-btn" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-4 px-6 rounded-xl shadow-md uppercase tracking-widest text-xs sm:text-sm transition flex items-center justify-center gap-2">
-                        <span id="submit-pay-btn-text">Confirm &amp; Pay $282.50 CAD</span>
+                        <span id="submit-pay-btn-text">Confirm &amp; Pay $284.75 CAD</span>
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
                 </div>
@@ -279,7 +289,6 @@
             <aside class="lg:col-span-5 sticky top-[105px]">
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft">
                     
-                    <!-- Property Photo Header -->
                     <div class="relative h-44 bg-gray-900">
                         <img id="side-hotel-img" src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Hotel" class="w-full h-full object-cover opacity-90">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
@@ -291,7 +300,6 @@
                     </div>
 
                     <div class="p-6 space-y-5">
-                        <!-- Check-In / Check-Out Grid -->
                         <div class="grid grid-cols-2 gap-3 bg-gray-50 p-3.5 rounded-xl border border-gray-100 text-xs">
                             <div>
                                 <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-In</span>
@@ -305,7 +313,7 @@
                             </div>
                         </div>
 
-                        <!-- Side Mirror of Itemized Price & Tax Breakdown -->
+                        <!-- Side Mirror of Itemized Charges -->
                         <div class="space-y-2.5 text-xs border-t border-gray-100 pt-4">
                             <div class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400 mb-1">Summary of Charges</div>
 
@@ -315,18 +323,23 @@
                             </div>
 
                             <div id="side-discount-row" class="hidden justify-between items-center text-emerald-700 font-bold">
-                                <span>Guild Social Club (20% Off):</span>
-                                <span>-$<span class="guild-discount-amount">50.00</span> CAD</span>
+                                <span>Member Signup Discount (20% Off):</span>
+                                <span>-$<span class="discount-amount-val">50.00</span> CAD</span>
                             </div>
 
                             <div class="flex justify-between items-center text-gray-600">
-                                <span>Taxes &amp; Hotel Fees (13%):</span>
-                                <span id="side-taxes-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                                <span>HST / GST (13%):</span>
+                                <span id="side-hst-val" class="font-semibold text-brand-text">$32.50 CAD</span>
+                            </div>
+
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Ontario Eco Fee ($2.25/nt):</span>
+                                <span id="side-ecofee-val" class="font-semibold text-brand-text">$2.25 CAD</span>
                             </div>
 
                             <div class="flex justify-between items-baseline border-t border-gray-200 pt-3 mt-2">
                                 <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Total Due</span>
-                                <span id="side-final-total" class="text-2xl font-black text-brand-text">$282.50 CAD</span>
+                                <span id="side-final-total" class="text-2xl font-black text-brand-text">$284.75 CAD</span>
                             </div>
                         </div>
                     </div>
@@ -346,12 +359,11 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- LIVE PRICE & TAX BREAKDOWN ENGINE + SUPABASE PAYLOAD HANDLER      -->
+    <!-- LIVE PRICE, HST/GST & $2.25/NT ECO FEE ENGINE + SUPABASE PAYLOAD  -->
     <!-- ================================================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- 1. READ HOTEL, DATES & PRICE FROM URL OR STORAGE ---
             const urlParams = new URLSearchParams(window.location.search);
             const hotelName = urlParams.get('hotel') || localStorage.getItem('locked_hotel_name') || 'Sandman Hotel Hamilton';
             const roomName = urlParams.get('room') || 'Standard Corporate King Room';
@@ -370,7 +382,8 @@
 
             const roomSubtotal = passedPrice;
             const nightlyRate = (roomSubtotal / nights).toFixed(2);
-            const TAX_RATE = 0.13; // 13% Taxes & Recovery Fees
+            const HST_RATE = 0.13; // 13% HST/GST
+            const ECO_FEE_PER_NIGHT = 2.25; // $2.00 + tax = $2.25 per night in Ontario
 
             // Populate Hotel & Stay Info
             document.getElementById('side-hotel-name').textContent = hotelName;
@@ -383,6 +396,9 @@
             document.querySelectorAll('.stay-nights-label').forEach(el => {
                 el.textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
             });
+            document.querySelectorAll('.stay-nights-count').forEach(el => {
+                el.textContent = `${nights} ${nights === 1 ? 'night' : 'nights'}`;
+            });
             document.querySelectorAll('.nightly-rate-val').forEach(el => {
                 el.textContent = nightlyRate;
             });
@@ -393,58 +409,58 @@
                 document.getElementById('side-hotel-img').src = 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80';
             }
 
-            // --- 2. LIVE PRICE, 20% GUILD DISCOUNT & TAX CALCULATOR ---
-            const guildCheckbox = document.getElementById('guild-opt-in');
+            const dripCheckbox = document.getElementById('club-drip-opt-in');
             let activePaymentMethod = 'card';
 
-            // Pre-check if user already signed up on club.html
-            if (localStorage.getItem('guild_member_active') === 'true' || urlParams.get('promo') === 'GUILD20') {
-                guildCheckbox.checked = true;
-            }
-
             function updatePriceBreakdown(animate = false) {
-                const isGuildChecked = guildCheckbox.checked;
+                const isMemberOptIn = dripCheckbox.checked;
                 const discountAmount = parseFloat((roomSubtotal * 0.20).toFixed(2));
-                const effectiveRoomSubtotal = isGuildChecked ? (roomSubtotal - discountAmount) : roomSubtotal;
-                const taxesAmount = parseFloat((effectiveRoomSubtotal * TAX_RATE).toFixed(2));
-                const finalTotal = (effectiveRoomSubtotal + taxesAmount).toFixed(2);
+                const netRoomSubtotal = isMemberOptIn ? (roomSubtotal - discountAmount) : roomSubtotal;
 
-                // Update static room subtotal & 20% discount badges
+                const hstAmount = parseFloat((netRoomSubtotal * HST_RATE).toFixed(2));
+                const ecoFeeTotal = parseFloat((ECO_FEE_PER_NIGHT * nights).toFixed(2));
+                const combinedTaxesAndEco = parseFloat((hstAmount + ecoFeeTotal).toFixed(2));
+                const finalTotal = (netRoomSubtotal + combinedTaxesAndEco).toFixed(2);
+
                 document.getElementById('main-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
                 document.getElementById('side-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
-                document.querySelectorAll('.guild-discount-amount').forEach(el => {
+                document.querySelectorAll('.discount-amount-val').forEach(el => {
                     el.textContent = discountAmount.toFixed(2);
                 });
 
                 const mainDiscountRow = document.getElementById('main-discount-row');
-                const mainDiscountedSubRow = document.getElementById('main-discounted-subtotal-row');
+                const mainNetSubRow = document.getElementById('main-net-subtotal-row');
                 const sideDiscountRow = document.getElementById('side-discount-row');
                 const mainSavingsNote = document.getElementById('main-savings-note');
                 const mainFinalTotalEl = document.getElementById('main-final-total');
                 const sideFinalTotalEl = document.getElementById('side-final-total');
 
-                if (isGuildChecked) {
+                if (isMemberOptIn) {
                     mainDiscountRow.classList.replace('hidden', 'flex');
-                    mainDiscountedSubRow.classList.replace('hidden', 'flex');
+                    mainNetSubRow.classList.replace('hidden', 'flex');
                     sideDiscountRow.classList.replace('hidden', 'flex');
-                    document.getElementById('main-discounted-subtotal').textContent = `$${effectiveRoomSubtotal.toFixed(2)} CAD`;
-                    mainSavingsNote.textContent = `Includes 20% Guild Social Club discount (-$${discountAmount.toFixed(2)}) & taxes`;
+                    document.getElementById('main-net-subtotal').textContent = `$${netRoomSubtotal.toFixed(2)} CAD`;
+                    mainSavingsNote.textContent = `Includes 20% discount (-$${discountAmount.toFixed(2)}), HST/GST & $2.25/nt Eco Fee`;
                     mainSavingsNote.classList.replace('text-gray-400', 'text-emerald-700');
                     mainFinalTotalEl.classList.add('text-emerald-700');
                     sideFinalTotalEl.classList.add('text-emerald-700');
                 } else {
                     mainDiscountRow.classList.replace('flex', 'hidden');
-                    mainDiscountedSubRow.classList.replace('flex', 'hidden');
+                    mainNetSubRow.classList.replace('flex', 'hidden');
                     sideDiscountRow.classList.replace('flex', 'hidden');
-                    mainSavingsNote.textContent = 'Includes all applicable taxes & fees';
+                    mainSavingsNote.textContent = 'Includes Room, HST/GST & $2.25/nt Eco Fee';
                     mainSavingsNote.classList.replace('text-emerald-700', 'text-gray-400');
                     mainFinalTotalEl.classList.remove('text-emerald-700');
                     sideFinalTotalEl.classList.remove('text-emerald-700');
                 }
 
-                // Update Taxes & Final Totals
-                document.getElementById('main-taxes-val').textContent = `$${taxesAmount.toFixed(2)} CAD`;
-                document.getElementById('side-taxes-val').textContent = `$${taxesAmount.toFixed(2)} CAD`;
+                // Update Taxes, Eco Fee & Final Totals
+                document.getElementById('main-hst-val').textContent = `$${hstAmount.toFixed(2)} CAD`;
+                document.getElementById('side-hst-val').textContent = `$${hstAmount.toFixed(2)} CAD`;
+                document.getElementById('main-ecofee-val').textContent = `$${ecoFeeTotal.toFixed(2)} CAD`;
+                document.getElementById('side-ecofee-val').textContent = `$${ecoFeeTotal.toFixed(2)} CAD`;
+                document.getElementById('main-combined-tax-eco').textContent = `$${combinedTaxesAndEco.toFixed(2)} CAD`;
+
                 mainFinalTotalEl.textContent = `$${finalTotal} CAD`;
                 sideFinalTotalEl.textContent = `$${finalTotal} CAD`;
                 document.getElementById('submit-pay-btn-text').textContent = `Confirm & Pay $${finalTotal} CAD`;
@@ -458,31 +474,28 @@
 
                 return {
                     roomSubtotal: roomSubtotal.toFixed(2),
-                    guildDiscount: isGuildChecked ? discountAmount.toFixed(2) : '0.00',
-                    taxesAmount: taxesAmount.toFixed(2),
+                    discountAmount: isMemberOptIn ? discountAmount.toFixed(2) : '0.00',
+                    netRoomSubtotal: netRoomSubtotal.toFixed(2),
+                    hstAmount: hstAmount.toFixed(2),
+                    ecoFeeTotal: ecoFeeTotal.toFixed(2),
+                    combinedTaxesAndEco: combinedTaxesAndEco.toFixed(2),
                     finalTotal: finalTotal
                 };
             }
 
-            guildCheckbox.addEventListener('change', () => updatePriceBreakdown(true));
+            dripCheckbox.addEventListener('change', () => updatePriceBreakdown(true));
             updatePriceBreakdown(false);
 
-            // --- 3. PAYMENT METHOD TABS & INPUT FORMATTING ---
+            // Payment Method Tabs
             const cardInputs = document.querySelectorAll('.card-input');
-
             document.querySelectorAll('.pay-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     activePaymentMethod = tab.getAttribute('data-method');
-
                     document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('pay-tab-active'));
                     tab.classList.add('pay-tab-active');
-
                     document.querySelectorAll('.pay-panel').forEach(p => p.classList.add('hidden'));
                     document.getElementById(`panel-${activePaymentMethod}`).classList.remove('hidden');
-
-                    cardInputs.forEach(inp => {
-                        inp.required = (activePaymentMethod === 'card');
-                    });
+                    cardInputs.forEach(inp => { inp.required = (activePaymentMethod === 'card'); });
                 });
             });
 
@@ -497,17 +510,19 @@
                 e.target.value = v;
             });
 
-            // --- 4. FORM SUBMISSION & SUPABASE-READY PAYLOAD ---
-            document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+            // Form Submission -> Saves Complete Payload for Confirmation & Supabase
+            document.getElementById('checkout-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const totals = updatePriceBreakdown(false);
                 const firstName = document.getElementById('guest-first-name').value.trim();
                 const lastName = document.getElementById('guest-last-name').value.trim();
                 const email = document.getElementById('guest-email').value.trim();
                 const phone = document.getElementById('guest-phone').value.trim();
+                const bookingRef = 'HB-' + Math.floor(100000 + Math.random() * 900000);
+                const earnedPoints = Math.round(parseFloat(totals.netRoomSubtotal) * 10);
 
-                // Structured payload ready for Supabase insertion
-                const supabasePayload = {
+                const bookingPayload = {
+                    booking_ref: bookingRef,
                     first_name: firstName,
                     last_name: lastName,
                     email: email,
@@ -517,25 +532,31 @@
                     checkin: checkin,
                     checkout: checkout,
                     nights: nights,
+                    guests: guests,
                     room_subtotal_cad: totals.roomSubtotal,
-                    guild_social_club_member: guildCheckbox.checked,
-                    guild_discount_cad: totals.guildDiscount,
-                    taxes_cad: totals.taxesAmount,
+                    member_drip_enrolled: dripCheckbox.checked,
+                    discount_cad: totals.discountAmount,
+                    net_room_cad: totals.netRoomSubtotal,
+                    hst_gst_cad: totals.hstAmount,
+                    eco_fee_cad: totals.ecoFeeTotal,
+                    combined_taxes_cad: totals.combinedTaxesAndEco,
                     total_paid_cad: totals.finalTotal,
+                    points_earned: earnedPoints,
                     payment_method: activePaymentMethod,
                     created_at: new Date().toISOString()
                 };
 
-                localStorage.setItem('latest_booking_payload', JSON.stringify(supabasePayload));
+                localStorage.setItem('latest_booking_payload', JSON.stringify(bookingPayload));
 
-                if (guildCheckbox.checked) {
-                    localStorage.setItem('guild_member_active', 'true');
-                    localStorage.setItem('guild_member_name', `${firstName} ${lastName}`);
-                    localStorage.setItem('guild_member_email', email);
-                    localStorage.setItem('guild_member_phone', phone);
+                if (dripCheckbox.checked) {
+                    localStorage.setItem('hotbeds_club_member', 'true');
+                    localStorage.setItem('hotbeds_club_name', `${firstName} ${lastName}`);
+                    localStorage.setItem('hotbeds_club_email', email);
+                    const prevPts = parseInt(localStorage.getItem('hotbeds_points_balance') || '1000', 10);
+                    localStorage.setItem('hotbeds_points_balance', (prevPts + earnedPoints).toString());
                 }
 
-                window.location.href = `confirmation.html?hotel=${encodeURIComponent(hotelName)}&paid=${encodeURIComponent(totals.finalTotal)}&guild=${guildCheckbox.checked}`;
+                window.location.href = `confirmation.html?ref=${encodeURIComponent(bookingRef)}`;
             });
         });
     </script>
