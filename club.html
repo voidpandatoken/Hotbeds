@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Beds Club — In-House Points, Flash Locks & Stay Rewards</title>
+    <title>Hot Beds Club — Points, Flash Deals & Private Member Offers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,50 +16,36 @@
                             white: '#ffffff',
                             text: '#0f172a',
                             muted: '#64748b'
-                        },
-                        guild: {
-                            navy: '#020914',
-                            deep: '#06152d',
-                            gold: '#d4af37',
-                            goldLight: '#f9e8a2',
-                            emerald: '#10b981'
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
-                        serif: ['Cinzel', 'Georgia', 'serif']
                     },
                     boxShadow: {
                         'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)'
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
         }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fff5c0 0%, #d4af37 45%, #9a7418 75%, #f7df86 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
     </style>
 </head>
 <body class="text-brand-text flex flex-col min-h-screen pt-[108px]">
 
-    <!-- FIXED HEADER (Matches index.html 100%) -->
+    <!-- HEADER -->
     <header class="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
         <div class="bg-slate-900 text-white py-1.5 px-4">
             <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
                 <div class="flex items-center gap-2 font-medium text-gray-200">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-                    <span><strong>HOT BEDS CLUB REWARDS:</strong> Join free today and receive <strong>1,000 Welcome Points ($10 CAD Stay Value)</strong></span>
+                    <span><strong>HOT BEDS CLUB:</strong> Sign up free for <strong>1,000 Welcome Points</strong> &amp; private inbox hotel offers</span>
                 </div>
                 <span class="font-bold text-gray-300 hidden sm:inline">CAD $</span>
             </div>
@@ -72,90 +58,83 @@
 
             <nav class="hidden lg:flex items-center space-x-8">
                 <a href="index.html#cities-section" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Cities</a>
-                <a href="#points-calculator" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Points &amp; Tiers</a>
-                <a href="#phase2-guild-bridge" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">VIP Partner Upgrade</a>
+                <a href="index.html#featured-stays" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Featured Stays</a>
+                <a href="#how-points-work" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">How Points Work</a>
                 <a href="index.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Search Hotels</a>
             </nav>
 
-            <div class="flex items-center gap-3">
-                <div class="bg-red-50 border border-red-200 px-3.5 py-1.5 rounded-full flex items-center gap-2">
-                    <span class="text-brand-red font-black text-xs">★</span>
-                    <span class="text-[11px] font-extrabold text-brand-text uppercase tracking-wider">Balance: <strong id="header-points-balance" class="text-brand-red">0 Pts</strong></span>
-                </div>
+            <div class="bg-red-50 border border-red-200 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                <span class="text-brand-red font-black text-xs">★</span>
+                <span class="text-[11px] font-extrabold text-brand-text uppercase tracking-wider">Balance: <strong id="header-points-balance" class="text-brand-red">0 Pts</strong></span>
             </div>
         </div>
     </header>
 
     <main class="flex-grow">
 
-        <!-- ============================================================= -->
-        <!-- PHASE 1 HERO: ZERO-FRICTION POINTS SIGNUP + LIVE LEDGER CARD  -->
-        <!-- ============================================================= -->
-        <section class="bg-slate-900 text-white py-12 lg:py-16 border-b border-gray-800 relative overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- HERO & SIGNUP CARD -->
+        <section class="bg-slate-900 text-white py-12 lg:py-16 border-b border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                     
-                    <!-- Left Copy: Pure Hot Beds Club In-House Points Value -->
                     <div class="lg:col-span-7 space-y-5">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/20 border border-brand-red/40 text-red-300 text-[10px] font-extrabold uppercase tracking-widest">
-                            <span>Official Hotbeds.ca In-House Loyalty Program</span>
+                            <span>Hot Beds Club • In-House Rewards &amp; Private Offers</span>
                         </div>
 
                         <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
-                            Earn Stay Points on Every Night. <span class="text-brand-red">Zero Fees. Ever.</span>
+                            Earn Stay Points &amp; Unlock <span class="text-brand-red">Private Inbox Deals.</span>
                         </h1>
 
                         <p class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
-                            The <strong>Hot Beds Club</strong> is our free, in-house rewards program. Collect points on every hotel reservation across Ontario and Alberta, hold live flash rates longer, and redeem your points directly for free room nights—with <strong>no credit card required</strong> to join.
+                            Join the <strong>Hot Beds Club</strong> for free. Collect redeemable points on every booking, receive an instant confirmation email with <strong>1,000 Welcome Points ($10 CAD value)</strong>, and get curated hotel flash rates and complimentary local partner perks sent straight to your inbox.
                         </p>
 
-                        <!-- 3 Core In-House Pillars -->
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
                             <div class="bg-white/5 border border-white/10 rounded-xl p-4">
                                 <div class="text-brand-red font-black text-lg mb-0.5">+1,000 Pts</div>
-                                <div class="text-xs font-bold text-white">Instant Welcome Bonus</div>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Worth $10 CAD toward your first stay just for registering.</p>
+                                <div class="text-xs font-bold text-white">Welcome Bonus</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Credited immediately when you register your email.</p>
                             </div>
                             <div class="bg-white/5 border border-white/10 rounded-xl p-4">
                                 <div class="text-brand-red font-black text-lg mb-0.5">10 Pts / $1</div>
-                                <div class="text-xs font-bold text-white">On Every Booking</div>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Earn 10% back in Hotbeds Points on every dollar booked.</p>
+                                <div class="text-xs font-bold text-white">Every Reservation</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Earn 10% back in points on every stay booked.</p>
                             </div>
                             <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <div class="text-brand-red font-black text-lg mb-0.5">+2,500 Pts</div>
-                                <div class="text-xs font-bold text-white">Per Friend Referred</div>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Get $25 CAD in stay points for every friend who books.</p>
+                                <div class="text-brand-red font-black text-lg mb-0.5">VIP Drip Feed</div>
+                                <div class="text-xs font-bold text-white">Unadvertised Offers</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Receive private hotel drops &amp; free partner vouchers by email.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Card: Frictionless Name + Email Points Account Creator -->
+                    <!-- Right Signup Form -->
                     <div class="lg:col-span-5">
                         <div class="bg-white text-brand-text rounded-2xl p-6 sm:p-8 shadow-2xl border border-gray-100">
                             
-                            <!-- Signup State -->
                             <div id="points-signup-box">
                                 <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                                     <div>
-                                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Instant Activation</span>
-                                        <h2 class="text-xl font-black text-brand-text">Create Your Points Account</h2>
+                                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Free Registration</span>
+                                        <h2 class="text-xl font-black text-brand-text">Join Hot Beds Club</h2>
                                     </div>
                                     <span class="bg-green-50 text-green-700 border border-green-200 text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
-                                        100% Free
+                                        $0.00 Fee
                                     </span>
                                 </div>
 
                                 <form id="hotbeds-club-form" class="space-y-4">
                                     <div>
                                         <label class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Full Name *</label>
-                                        <input type="text" id="club-name" required placeholder="Gordon Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                                        <input type="text" id="club-name" required placeholder="Your Full Name" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
                                     </div>
                                     <div>
                                         <label class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Email Address *</label>
                                         <input type="email" id="club-email" required placeholder="you@email.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
                                     </div>
                                     <div>
-                                        <label class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Primary Travel Corridor</label>
+                                        <label class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Preferred Region for Hotel Deals</label>
                                         <select id="club-corridor" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
                                             <option value="ON">Ontario / GTHA Corridor (Hamilton, Toronto, Niagara)</option>
                                             <option value="AB">Alberta &amp; Rockies (Calgary, Banff, Edmonton)</option>
@@ -163,50 +142,34 @@
                                     </div>
 
                                     <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-4 rounded-xl uppercase tracking-widest text-xs shadow-md transition">
-                                        Claim 1,000 Free Welcome Points &rarr;
+                                        Sign Up &amp; Send Confirmation Email &rarr;
                                     </button>
 
-                                    <p class="text-[10px] text-gray-400 text-center font-semibold uppercase tracking-wider">
-                                        ✓ No credit card required • Instant points ledger created
+                                    <p class="text-[10px] text-gray-400 text-center font-semibold leading-relaxed">
+                                        By signing up, you will receive your confirmation email, 1,000 Welcome Points, and periodic member-only hotel &amp; partner offers.
                                     </p>
                                 </form>
                             </div>
 
-                            <!-- Active Member Ledger State (Shown after signup + includes Phase 2 Bridge!) -->
-                            <div id="points-active-box" class="hidden space-y-5">
-                                <div class="flex justify-between items-center bg-slate-900 text-white p-4 rounded-xl">
+                            <!-- Confirmation State -->
+                            <div id="points-active-box" class="hidden space-y-4 text-center py-2">
+                                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto font-black text-xl">✓</div>
+                                <h3 class="text-xl font-black text-brand-text">You're In! Check Your Inbox.</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">
+                                    We’ve dispatched a confirmation email to <strong id="confirmed-email-text" class="text-brand-text"></strong> and credited <strong>1,000 Hot Beds Club Points ($10.00 CAD value)</strong> to your session. Watch your inbox for private hotel flash rates and complimentary partner perks.
+                                </p>
+                                <div class="bg-slate-900 text-white p-4 rounded-xl flex justify-between items-center text-left">
                                     <div>
-                                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Hot Beds Club Member</span>
-                                        <h3 id="ledger-member-name" class="text-lg font-black">Gordon Culp</h3>
+                                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Member Account</span>
+                                        <span id="ledger-member-name" class="text-base font-black">Member</span>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-[10px] font-bold uppercase tracking-widest text-brand-red block">Available Balance</span>
-                                        <span class="text-2xl font-black text-white">1,000 Pts</span>
-                                        <span class="text-[10px] text-green-400 block font-bold">($10.00 CAD Credit)</span>
+                                        <span class="text-[10px] font-bold uppercase tracking-widest text-brand-red block">Points Balance</span>
+                                        <span class="text-xl font-black text-white">1,000 Pts</span>
                                     </div>
                                 </div>
-
-                                <!-- Phase 2 Graduation Prompt right inside their new dashboard -->
-                                <div class="bg-guild-deep text-white p-4 rounded-xl border border-guild-gold/40 space-y-2.5">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-[9px] font-extrabold uppercase tracking-widest text-guild-gold bg-guild-gold/15 px-2 py-0.5 rounded">
-                                            Phase 2 Partner Upgrade Unlocked
-                                        </span>
-                                        <span class="text-[10px] font-bold text-guild-emerald">Save 20% Instantly</span>
-                                    </div>
-                                    <h4 class="font-serif text-sm font-bold gold-gradient-text">
-                                        Want 20% Off Bookings + 2x Points?
-                                    </h4>
-                                    <p class="text-[11px] text-gray-300 leading-relaxed">
-                                        As a registered Hot Beds Club member, you qualify for a complimentary 1-year invitation to <strong>The Guild</strong> ($300/yr waived)—unlocking 20% off hotel stays and VIP dining &amp; workspace perks.
-                                    </p>
-                                    <a href="guild.html" class="block w-full text-center bg-gradient-to-r from-amber-300 via-yellow-500 to-amber-600 text-slate-950 font-black text-[11px] uppercase tracking-widest py-2.5 rounded-lg shadow">
-                                        Explore The Guild VIP Upgrade &rarr;
-                                    </a>
-                                </div>
-
-                                <a href="index.html" class="block w-full text-center bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-xs uppercase tracking-widest py-3 rounded-xl transition">
-                                    Search Stays With My Points Account
+                                <a href="index.html" class="block w-full bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest py-3.5 rounded-xl transition">
+                                    Search Stays Now &rarr;
                                 </a>
                             </div>
 
@@ -217,109 +180,40 @@
             </div>
         </section>
 
-        <!-- ============================================================= -->
-        <!-- INTERACTIVE POINTS & REWARD TIERS CALCULATOR                  -->
-        <!-- ============================================================= -->
-        <section id="points-calculator" class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Transparent Rewards Math</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">How Your Hot Beds Club Points Add Up</h2>
-                <p class="text-xs sm:text-sm text-gray-500 mt-1">Every 100 points equals $1.00 CAD in direct hotel booking credit—redeemable on any stay with zero blackout dates.</p>
-            </div>
-
+        <!-- HOW POINTS & DRIP OFFERS WORK -->
+        <section id="how-points-work" class="py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-gray-100 text-brand-text text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">Step 1 • Instant</span>
-                        <h3 class="text-lg font-black text-brand-text mb-2">Join Free (1,000 Pts)</h3>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-4">
-                            Enter your name and email above. We immediately credit your ledger with 1,000 Welcome Points ($10.00 CAD value).
-                        </p>
-                    </div>
-                    <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs font-bold">
-                        <span class="text-gray-400">Card Required?</span>
-                        <span class="text-green-600">No — 100% Free</span>
-                    </div>
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
+                    <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">1 • Instant Points</span>
+                    <h3 class="text-lg font-black text-brand-text mb-2">1,000 Welcome Points</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Sign up in seconds with your email to claim 1,000 points ($10 CAD stay value) plus earn 10 points for every dollar spent on bookings.
+                    </p>
                 </div>
-
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">Step 2 • Book &amp; Earn</span>
-                        <h3 class="text-lg font-black text-brand-text mb-2">Earn 10 Pts Per $1 Spent</h3>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-4">
-                            Book a 2-night weekend stay at $200/night ($400 total) and earn <strong>4,000 Hotbeds Points ($40.00 CAD credit)</strong> toward your next trip.
-                        </p>
-                    </div>
-                    <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs font-bold">
-                        <span class="text-gray-400">Blackout Dates?</span>
-                        <span class="text-brand-text">None</span>
-                    </div>
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
+                    <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">2 • Email Drip Perks</span>
+                    <h3 class="text-lg font-black text-brand-text mb-2">Curated Hotel &amp; Local Offers</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Receive unadvertised weekend hotel rate drops alongside complimentary dining, workspace, and local partner perks delivered straight to your email.
+                    </p>
                 </div>
-
-                <div class="bg-slate-900 text-white rounded-2xl border border-gray-800 p-6 shadow-soft-lg flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block bg-guild-gold/20 text-guild-goldLight border border-guild-gold/40 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">Step 3 • Phase 2 Upgrade</span>
-                        <h3 class="text-lg font-black text-white mb-2">Unlock The Guild (20% Off + 2x Pts)</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed mb-4">
-                            Ready for instant cash rebates? Verify your account with <strong>The Guild</strong> to slash <strong>20% off your booking immediately</strong> and double your points earning rate.
-                        </p>
-                    </div>
-                    <a href="guild.html" class="pt-3 border-t border-gray-800 flex justify-between items-center text-xs font-extrabold text-guild-gold hover:underline uppercase tracking-wider">
-                        <span>Go to The Guild Portal</span>
-                        <span>&rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================================= -->
-        <!-- PHASE 2 ASCENSION BRIDGE: THE GUILD VIP PARTNER BANNER        -->
-        <!-- ============================================================= -->
-        <section id="phase2-guild-bridge" class="py-12 bg-guild-navy text-white border-y border-guild-gold/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-guild-deep border border-guild-gold/40 rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
-                    
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 max-w-2xl">
-                        <img src="guild.png" alt="The Guild" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-guild-gold shrink-0 shadow-xl" onerror="this.onerror=null; this.outerHTML='<div class=\'w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-900 border-2 border-guild-gold flex items-center justify-center font-serif font-bold text-2xl gold-gradient-text shrink-0\'>G</div>'">
-                        <div>
-                            <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-guild-emerald/15 border border-guild-emerald/40 text-guild-emerald text-[10px] font-extrabold uppercase tracking-widest mb-2">
-                                <span>VIP Partner Network • $300/Yr Fee Waived for Hot Beds Club Members</span>
-                            </div>
-                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">
-                                Graduate to <span class="gold-gradient-text">The Guild</span> &amp; Save 20% On Your Next Booking
-                            </h3>
-                            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                                While the Hot Beds Club earns you points on every stay, our vetted partner collective—<strong>The Guild Social &amp; Perks Club</strong>—unlocks fixed corporate hotel rebates (saving $50+ on peak nights) plus 25–40% off partner restaurants, executive lounges, and live events.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="w-full lg:w-auto flex flex-col items-center shrink-0">
-                        <a href="guild.html" class="w-full lg:w-auto text-center bg-gradient-to-r from-amber-200 via-yellow-500 to-amber-600 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-widest px-8 py-4 rounded-xl shadow-lg hover:brightness-110 transition">
-                            Unlock The Guild Free ($0.00 Today) &rarr;
-                        </a>
-                        <span class="text-[10px] text-gray-400 uppercase tracking-widest mt-2 font-semibold">
-                            Vetted Member Portal • Opens guild.html
-                        </span>
-                    </div>
-
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
+                    <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">3 • Private Portal Invites</span>
+                    <h3 class="text-lg font-black text-brand-text mb-2">Exclusive Member Access</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Verified bookers and active club members receive private login credentials via email to access our closed partner portal.
+                    </p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ALBERTA CPA COMPLIANT FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
             <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="hover:text-brand-red font-bold">Hotbeds.ca</a>
-                <span>•</span>
-                <a href="guild.html" class="hover:text-brand-red font-bold">The Guild Partner Portal</a>
-                <span>•</span>
-                <span>Compliant with the <strong>Alberta Consumer Protection Act</strong></span>
-            </div>
+            <p>Compliant with the <strong>Alberta Consumer Protection Act</strong></p>
         </div>
     </footer>
 
@@ -329,19 +223,21 @@
             const activeBox = document.getElementById('points-active-box');
             const headerBalance = document.getElementById('header-points-balance');
             const ledgerName = document.getElementById('ledger-member-name');
+            const confirmedEmailText = document.getElementById('confirmed-email-text');
 
-            function showActiveLedger(name, points) {
+            function showActiveLedger(name, email, points) {
                 signupBox.classList.add('hidden');
                 activeBox.classList.remove('hidden');
                 ledgerName.textContent = name;
+                confirmedEmailText.textContent = email;
                 headerBalance.textContent = `${points.toLocaleString()} Pts`;
             }
 
-            // Check if already a Phase 1 (Hot Beds Club) member
             if (localStorage.getItem('hotbeds_club_member') === 'true') {
                 const savedName = localStorage.getItem('hotbeds_club_name') || 'Member';
+                const savedEmail = localStorage.getItem('hotbeds_club_email') || 'your inbox';
                 const savedPts = parseInt(localStorage.getItem('hotbeds_points_balance') || '1000', 10);
-                showActiveLedger(savedName, savedPts);
+                showActiveLedger(savedName, savedEmail, savedPts);
             }
 
             document.getElementById('hotbeds-club-form').addEventListener('submit', (e) => {
@@ -350,14 +246,14 @@
                 const email = document.getElementById('club-email').value.trim();
                 const corridor = document.getElementById('club-corridor').value;
 
-                // Save Phase 1 Points Account to localStorage (and ready for Supabase `hotbeds_club_leads` table)
+                // Ready for Supabase `club_subscribers` table + automated email drip trigger
                 localStorage.setItem('hotbeds_club_member', 'true');
                 localStorage.setItem('hotbeds_club_name', name);
                 localStorage.setItem('hotbeds_club_email', email);
                 localStorage.setItem('hotbeds_points_balance', '1000');
                 localStorage.setItem('hotbeds_region', corridor);
 
-                showActiveLedger(name, 1000);
+                showActiveLedger(name, email, 1000);
             });
         });
     </script>
