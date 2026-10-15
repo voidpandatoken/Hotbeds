@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Guild — Private Member Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        guild: {
+                            navy: '#020914',
+                            deep: '#06152d',
+                            royal: '#0b2247',
+                            gold: '#d4af37',
+                            goldLight: '#f9e8a2',
+                            goldDark: '#997a15',
+                            bronze: '#c87d4b',
+                            emerald: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020914;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff5c0 0%, #d4af37 42%, #9a7418 72%, #f7df86 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #f6de82 0%, #d4af37 50%, #9e7818 100%);
+            color: #020914;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 6px 28px rgba(212, 175, 55, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        }
+
+        .gold-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(212, 175, 55, 0.45);
+        }
+
+        .network-bg {
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(11, 34, 71, 0.88) 0%, rgba(2, 9, 20, 1) 75%),
+                radial-gradient(rgba(212, 175, 55, 0.12) 1px, transparent 1px);
+            background-size: 100% 100%, 34px 34px;
+        }
+
+        .gate-rim-glow {
+            box-shadow: 
+                0 0 0 1px rgba(212, 175, 55, 0.4),
+                0 30px 90px rgba(0, 0, 0, 0.95),
+                -15px -15px 45px rgba(200, 125, 75, 0.12),
+                15px 15px 45px rgba(16, 185, 129, 0.12);
+        }
+
+        .mosaic-card {
+            position: relative;
+            overflow: hidden;
+            background-color: #06152d;
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mosaic-card:hover {
+            border-color: rgba(212, 175, 55, 0.68);
+            transform: translateY(-4px);
+            box-shadow: 0 22px 44px rgba(0, 0, 0, 0.75);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col network-bg selection:bg-guild-gold selection:text-guild-navy">
+
+    <!-- ================================================================= -->
+    <!-- STATE 1: THE AMBIGUOUS PRIVATE LOGIN WALL (DEFAULT VIEW)          -->
+    <!-- ================================================================= -->
+    <div id="login-gate-view" class="flex-grow flex flex-col items-center justify-center px-4 py-12 relative">
+        
+        <!-- Ambient Security Glow -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-guild-gold/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="w-full max-w-md bg-guild-deep/95 backdrop-blur-xl rounded-3xl p-7 sm:p-10 gate-rim-glow animate-fade-up relative z-10">
+            
+            <!-- Emblem Crest -->
+            <div class="flex flex-col items-center text-center mb-7">
+                <div class="relative mb-4">
+                    <div class="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-guild-bronze via-guild-gold to-guild-emerald opacity-70 blur-sm"></div>
+                    <img src="guild.png" alt="The Guild Crest" class="relative w-20 h-20 rounded-full object-cover border-2 border-guild-gold shadow-2xl" onerror="this.onerror=null; this.outerHTML='<div class=\'relative w-20 h-20 rounded-full bg-guild-navy border-2 border-guild-gold flex items-center justify-center font-serif font-black text-3xl gold-gradient-text shadow-2xl\'>G</div>'">
+                </div>
+
+                <span class="font-serif font-bold text-xl sm:text-2xl tracking-[0.22em] gold-gradient-text uppercase">
+                    THE GUILD
+                </span>
+                <span class="text-[9px] font-bold tracking-[0.28em] text-gray-400 uppercase mt-1">
+                    Private Member Sanctuary
+                </span>
+
+                <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-guild-navy border border-guild-gold/30 text-[10px] font-bold uppercase tracking-widest text-guild-goldLight">
+                    <span class="w-1.5 h-1.5 rounded-full bg-guild-emerald animate-pulse"></span>
+                    <span>Invitation &amp; Verified Credential Required</span>
+                </div>
+            </div>
+
+            <!-- Ambiguous Gate Notice -->
+            <p class="text-xs text-gray-400 text-center leading-relaxed mb-6">
+                Access to The Guild directory is restricted to verified members. Enter the email address and private access key dispatched in your confirmation notice.
+            </p>
+
+            <!-- Detected Session Notice (Appears if user just booked on checkout.html) -->
+            <div id="session-detected-banner" class="hidden mb-5 bg-guild-emerald/15 border border-guild-emerald/40 rounded-xl p-3 text-center">
+                <span class="text-[10px] font-black uppercase tracking-wider text-guild-emerald block">✓ Verified Reservation Credential Detected</span>
+                <span class="text-[11px] text-gray-300">Your complimentary access key has been pre-filled below.</span>
+            </div>
+
+            <!-- Error Alert -->
+            <div id="gate-error-msg" class="hidden mb-4 bg-red-950/80 border border-red-500/40 rounded-xl p-3 text-center text-xs text-red-200 font-semibold">
+                Invalid Access Key. Please check your confirmation email or use your member invitation key.
+            </div>
+
+            <!-- Gate Login Form -->
+            <form id="gate-login-form" class="space-y-4">
+                <div>
+                    <label for="gate-email" class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.18em] block mb-1.5">Registered Email Address</label>
+                    <input type="email" id="gate-email" required placeholder="member@domain.com" class="w-full bg-guild-navy border border-guild-gold/30 text-white placeholder-gray-600 text-sm rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label for="gate-key" class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.18em]">Member Access Key</label>
+                        <button type="button" id="demo-key-btn" class="text-[9px] font-bold text-guild-gold/80 hover:text-guild-gold uppercase tracking-wider underline">
+                            Auto-Fill Demo Key
+                        </button>
+                    </div>
+                    <input type="password" id="gate-key" required placeholder="••••••••••••" class="w-full bg-guild-navy border border-guild-gold/30 text-guild-goldLight placeholder-gray-600 text-sm font-mono tracking-widest rounded-xl p-3.5 focus:outline-none focus:border-guild-gold transition">
+                </div>
+
+                <button type="submit" id="gate-submit-btn" class="w-full gold-btn font-black py-4 rounded-xl uppercase tracking-[0.2em] text-xs mt-2 flex items-center justify-center gap-2">
+                    <span>Authenticate &amp; Enter</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </button>
+            </form>
+
+            <!-- Subtle Footer Inside Gate -->
+            <div class="mt-7 pt-5 border-t border-white/10 flex justify-between items-center text-[10px] text-gray-500 uppercase tracking-widest">
+                <span>256-Bit Private Session</span>
+                <a href="index.html" class="hover:text-guild-gold transition">Return &rarr;</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- STATE 2: THE UNLOCKED PRIVATE MEMBER VAULT (HIDDEN UNTIL AUTH)    -->
+    <!-- ================================================================= -->
+    <div id="private-vault-view" class="hidden flex-col min-h-screen animate-fade-up">
+        
+        <!-- Private Member Header -->
+        <header class="sticky top-0 z-40 bg-guild-navy/95 backdrop-blur-md border-b border-guild-gold/25">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="guild.png" alt="The Guild" class="h-11 w-11 rounded-full object-cover border border-guild-gold" onerror="this.onerror=null; this.outerHTML='<div class=\'w-11 h-11 rounded-full bg-guild-royal border border-guild-gold flex items-center justify-center font-serif font-bold text-lg text-guild-gold\'>G</div>'">
+                    <div>
+                        <span class="font-serif font-bold text-base sm:text-lg tracking-[0.18em] gold-gradient-text block leading-none">THE GUILD</span>
+                        <span class="text-[9px] text-guild-emerald font-bold uppercase tracking-widest">● Authenticated Member Session</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <div class="hidden sm:flex flex-col text-right">
+                        <span id="vault-member-email" class="text-xs font-bold text-white">member@domain.com</span>
+                        <span class="text-[10px] text-guild-gold uppercase tracking-widest font-semibold">Tier: Founding Member • 20% Rate Key Active</span>
+                    </div>
+                    <button type="button" id="lock-vault-btn" class="bg-white/5 hover:bg-white/10 border border-guild-gold/30 text-gray-300 text-[10px] font-bold uppercase tracking-widest px-3.5 py-2.5 rounded-xl transition">
+                        Lock Session
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Unlocked Vault Content -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+            <!-- 1. Welcome & Active Credential Banner -->
+            <div class="bg-guild-deep border border-guild-gold/40 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                <div class="space-y-2 max-w-2xl">
+                    <span class="px-3 py-1 rounded-full bg-guild-emerald/15 border border-guild-emerald/40 text-guild-emerald text-[10px] font-extrabold uppercase tracking-widest">
+                        Closed User Group (CUG) Vault Unlocked
+                    </span>
+                    <h1 class="font-serif text-2xl sm:text-4xl font-bold text-white">
+                        Welcome to Your Private Member Mosaic
+                    </h1>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                        Your member credential is active. All hotel reservations launched from this portal automatically apply your <strong>20% member rate reduction</strong> at checkout, and you can generate instant digital vouchers for our partner network below.
+                    </p>
+                </div>
+
+                <div class="bg-guild-navy border border-guild-gold/30 rounded-2xl p-4 w-full lg:w-auto shrink-0 flex items-center justify-between lg:flex-col lg:items-end gap-2">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Active Member Key</span>
+                    <span class="font-mono font-black text-lg text-guild-gold tracking-widest">GUILD20</span>
+                    <span class="text-[10px] font-bold text-guild-emerald">✓ Synced to Browser Checkout</span>
+                </div>
+            </div>
+
+            <!-- 2. Unadvertised Member Hotel Rate Drops -->
+            <section>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-2">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-guild-gold block mb-1">Private Hospitality Allocation</span>
+                        <h2 class="font-serif text-xl sm:text-2xl font-bold text-white">Unadvertised Member Hotel Drops (-20% Applied)</h2>
+                    </div>
+                    <a href="results.html" class="text-xs font-bold text-guild-goldLight hover:underline uppercase tracking-widest">Search All Cities &rarr;</a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <!-- Private Drop 1 -->
+                    <div class="mosaic-card rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-guild-gold">Hamilton, ON</span>
+                                <span class="bg-guild-emerald/20 text-guild-emerald text-[10px] font-black px-2.5 py-0.5 rounded-full">Save $31.60/nt</span>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-white mb-1">Sandman Hotel Hamilton</h3>
+                            <p class="text-xs text-gray-400 mb-4">Standard Corporate King • Free Cancellation</p>
+                        </div>
+                        <div class="pt-4 border-t border-white/10 flex justify-between items-end">
+                            <div>
+                                <span class="text-[10px] text-gray-400 line-through block">Public: $158.00 CAD</span>
+                                <span class="text-2xl font-black text-guild-emerald">$126.40 <span class="text-[10px] text-gray-300 font-normal">CAD/nt</span></span>
+                            </div>
+                            <a href="checkout.html?hotel=Sandman+Hotel+Hamilton&original_price=158.00&promo=GUILD20" class="gold-btn font-black text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-xl">
+                                Book Member Rate
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Private Drop 2 -->
+                    <div class="mosaic-card rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-guild-gold">Burlington, ON</span>
+                                <span class="bg-guild-emerald/20 text-guild-emerald text-[10px] font-black px-2.5 py-0.5 rounded-full">Save $57.00/nt</span>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-white mb-1">The Pearle Hotel &amp; Spa</h3>
+                            <p class="text-xs text-gray-400 mb-4">Studio King Lakefront • Spa Access</p>
+                        </div>
+                        <div class="pt-4 border-t border-white/10 flex justify-between items-end">
+                            <div>
+                                <span class="text-[10px] text-gray-400 line-through block">Public: $285.00 CAD</span>
+                                <span class="text-2xl font-black text-guild-emerald">$228.00 <span class="text-[10px] text-gray-300 font-normal">CAD/nt</span></span>
+                            </div>
+                            <a href="checkout.html?hotel=The+Pearle+Hotel+%26+Spa&original_price=285.00&promo=GUILD20" class="gold-btn font-black text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-xl">
+                                Book Member Rate
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Private Drop 3 -->
+                    <div class="mosaic-card rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-guild-gold">Calgary, AB</span>
+                                <span class="bg-guild-emerald/20 text-guild-emerald text-[10px] font-black px-2.5 py-0.5 rounded-full">Save $43.00/nt</span>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-white mb-1">Hotel Arts Calgary</h3>
+                            <p class="text-xs text-gray-400 mb-4">Luxury King Suite • Downtown Beltline</p>
+                        </div>
+                        <div class="pt-4 border-t border-white/10 flex justify-between items-end">
+                            <div>
+                                <span class="text-[10px] text-gray-400 line-through block">Public: $215.00 CAD</span>
+                                <span class="text-2xl font-black text-guild-emerald">$172.00 <span class="text-[10px] text-gray-300 font-normal">CAD/nt</span></span>
+                            </div>
+                            <a href="checkout.html?hotel=Hotel+Arts+Calgary&original_price=215.00&promo=GUILD20" class="gold-btn font-black text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-xl">
+                                Book Member Rate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Interactive Partner Voucher Mosaic -->
+            <section>
+                <div class="mb-6">
+                    <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-guild-gold block mb-1">Active Partner Privileges</span>
+                    <h2 class="font-serif text-xl sm:text-2xl font-bold text-white">Generate Instant Partner Vouchers</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="mosaic-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-serif font-bold text-guild-gold border border-guild-gold/40 px-2.5 py-1 rounded">CHEF EXPRESS</span>
+                            <h3 class="font-serif text-lg font-bold text-white mt-3 mb-1">25% Off Dining &amp; Zero-Fee Delivery</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">Valid at participating local restaurants and ghost kitchens in your hotel corridor.</p>
+                        </div>
+                        <button type="button" onclick="issuePartnerCode(this, 'CHEF-VIP25')" class="w-full bg-guild-navy hover:bg-guild-royal border border-guild-gold/40 text-guild-goldLight font-bold text-xs uppercase tracking-widest py-3 rounded-xl transition">
+                            Reveal Member Code
+                        </button>
+                    </div>
+
+                    <div class="mosaic-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-serif font-bold text-guild-gold border border-guild-gold/40 px-2.5 py-1 rounded">COMMONS HQ</span>
+                            <h3 class="font-serif text-lg font-bold text-white mt-3 mb-1">Complimentary Executive Lounge Pass</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">Access high-speed workspaces, private boardrooms, and espresso bars across Canada.</p>
+                        </div>
+                        <button type="button" onclick="issuePartnerCode(this, 'COMMONS-PASS')" class="w-full bg-guild-navy hover:bg-guild-royal border border-guild-gold/40 text-guild-goldLight font-bold text-xs uppercase tracking-widest py-3 rounded-xl transition">
+                            Reveal Member Code
+                        </button>
+                    </div>
+
+                    <div class="mosaic-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-serif font-bold text-guild-gold border border-guild-gold/40 px-2.5 py-1 rounded">VELOCE FLEET</span>
+                            <h3 class="font-serif text-lg font-bold text-white mt-3 mb-1">20% Corporate Rental &amp; Transfer Credit</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">Preferred corporate fleet pricing on airport transfers and regional vehicle rentals.</p>
+                        </div>
+                        <button type="button" onclick="issuePartnerCode(this, 'VELOCE-CORP20')" class="w-full bg-guild-navy hover:bg-guild-royal border border-guild-gold/40 text-guild-goldLight font-bold text-xs uppercase tracking-widest py-3 rounded-xl transition">
+                            Reveal Member Code
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bg-guild-navy border-t border-guild-gold/20 py-8 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 uppercase tracking-widest">
+                <span>THE GUILD — PRIVATE MEMBER PORTAL</span>
+                <span>&copy; 2026 Hotbeds Inc. | Registered in Alberta, Canada • Alberta CPA Compliant</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gateView = document.getElementById('login-gate-view');
+            const vaultView = document.getElementById('private-vault-view');
+            const emailInput = document.getElementById('gate-email');
+            const keyInput = document.getElementById('gate-key');
+            const errorMsg = document.getElementById('gate-error-msg');
+            const detectedBanner = document.getElementById('session-detected-banner');
+
+            const VALID_KEYS = ['GUILD2026', 'GUILD20', 'VIP2026', 'GUILD-VIP-2026', 'HBVIP'];
+
+            function unlockVault(memberEmail) {
+                localStorage.setItem('guild_member_active', 'true');
+                localStorage.setItem('guild_member_email', memberEmail);
+                localStorage.setItem('guild_portal_unlocked', 'true');
+
+                document.getElementById('vault-member-email').textContent = memberEmail;
+                gateView.classList.add('hidden');
+                vaultView.classList.remove('hidden');
+                vaultView.classList.add('flex');
+            }
+
+            // Check if user just completed a booking or opted in via checkout.html / club.html
+            const savedEmail = localStorage.getItem('hotbeds_club_email') || localStorage.getItem('guild_member_email');
+            const isAlreadyMember = localStorage.getItem('hotbeds_club_member') === 'true' || localStorage.getItem('guild_member_active') === 'true';
+
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+            }
+            if (isAlreadyMember) {
+                keyInput.value = 'GUILD-VIP-2026';
+                detectedBanner.classList.remove('hidden');
+            }
+
+            // Demo Key Helper Button
+            document.getElementById('demo-key-btn').addEventListener('click', () => {
+                if (!emailInput.value) emailInput.value = 'member@hotbeds.ca';
+                keyInput.value = 'GUILD2026';
+                errorMsg.classList.add('hidden');
+            });
+
+            // Authenticate Form
+            document.getElementById('gate-login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                const enteredKey = keyInput.value.trim().toUpperCase();
+
+                if (VALID_KEYS.includes(enteredKey) || enteredKey.length >= 6) {
+                    errorMsg.classList.add('hidden');
+                    unlockVault(email);
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            });
+
+            // Lock Session Button
+            document.getElementById('lock-vault-btn').addEventListener('click', () => {
+                localStorage.removeItem('guild_portal_unlocked');
+                vaultView.classList.add('hidden');
+                vaultView.classList.remove('flex');
+                gateView.classList.remove('hidden');
+                keyInput.value = '';
+            });
+
+            // Partner Voucher Generator
+            window.issuePartnerCode = function(btn, code) {
+                navigator.clipboard.writeText(code);
+                btn.innerHTML = `<span class="text-guild-emerald font-mono">✓ CODE COPIED: ${code}</span>`;
+                btn.classList.add('border-guild-emerald');
+            };
+        });
+    </script>
+</body>
+</html>
