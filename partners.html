@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds.ca Partner Network — Zero-Fee Local Business & Hospitality Exposure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e63946',
+                            light: '#f8fafc',
+                            white: '#ffffff',
+                            text: '#0f172a',
+                            muted: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="text-brand-text flex flex-col min-h-screen pt-[108px]">
+
+    <!-- FIXED HEADER -->
+    <header class="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div class="bg-slate-900 text-white py-1.5 px-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
+                <div class="flex items-center gap-2 font-medium text-gray-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span><strong>MERCHANT &amp; HOTEL PARTNER GUARANTEE:</strong> $0.00 Upfront Listing Fees • 100% Performance-Based</span>
+                </div>
+                <span class="font-bold text-gray-300 hidden sm:inline">B2B Partner Division</span>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            <a href="index.html">
+                <img src="LOGO.png" alt="Hotbeds.ca" class="h-10 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Cities</a>
+                <a href="results.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Search Stays</a>
+                <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Corporate</a>
+                <a href="partners.html" class="text-brand-red font-extrabold uppercase text-[11px] tracking-widest border-b-2 border-brand-red pb-1">Partner Network</a>
+                <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">My Booking</a>
+            </nav>
+
+            <a href="#partner-application" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3 rounded-xl shadow-sm transition">
+                Claim Free Listing &darr;
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- HERO: THE ZERO-FEE PROMISE + PARTNER REVENUE SIMULATOR -->
+        <section class="bg-slate-900 text-white py-12 lg:py-16 border-b border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <!-- Left Copy -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-extrabold uppercase tracking-widest">
+                            <span>Zero Upfront Ad Spend • We Only Win When You Win</span>
+                        </div>
+
+                        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
+                            We Bring Verified Guests Through Your Door. <span class="text-brand-red">You Pay $0 Upfront.</span>
+                        </h1>
+
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+                            Every day, high-intent travelers, corporate professionals, and club members book stays through our regional network. We feature premier local restaurants, spas, workspaces, live venues, and hotels on our confirmation vouchers and private member drip feeds for <strong>$0.00 in listing or subscription fees</strong>.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                                <div class="text-emerald-400 font-black text-lg mb-0.5">$0.00 Forever</div>
+                                <div class="text-xs font-bold text-white">No Setup or Monthly Fees</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Never pay for impressions, clicks, or monthly software dues.</p>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                                <div class="text-brand-red font-black text-lg mb-0.5">100% Trackable</div>
+                                <div class="text-xs font-bold text-white">Verified Member Vouchers</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Every customer arrives with a trackable digital voucher code.</p>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                                <div class="text-white font-black text-lg mb-0.5">Closed Network</div>
+                                <div class="text-xs font-bold text-white">Protects Your Brand</div>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Your perks are shared privately with verified bookers—never on public coupon sites.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Card: Partner Net Revenue Simulator -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-white text-brand-text rounded-2xl p-6 sm:p-8 shadow-2xl border border-gray-100 space-y-5">
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Merchant ROI Estimator</span>
+                                    <h2 class="text-lg font-black text-brand-text">Estimate Your New Monthly Revenue</h2>
+                                </div>
+                                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
+                                    $0 Risk
+                                </span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-500 uppercase">Avg. Customer Spend / Bill:</span>
+                                        <span id="sim-spend-val" class="text-brand-text font-black">$85 CAD</span>
+                                    </div>
+                                    <input type="range" id="sim-spend-slider" min="25" max="300" step="5" value="85" class="w-full accent-brand-red">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1">
+                                        <span class="text-gray-500 uppercase">Monthly Referred Guests:</span>
+                                        <span id="sim-guests-val" class="text-brand-text font-black">40 Guests / mo</span>
+                                    </div>
+                                    <input type="range" id="sim-guests-slider" min="10" max="200" step="5" value="40" class="w-full accent-brand-red">
+                                </div>
+
+                                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-2 text-xs">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 font-semibold">Upfront Advertising Cost:</span>
+                                        <span class="font-black text-emerald-700">$0.00 CAD</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 font-semibold">New Gross Monthly Volume:</span>
+                                        <span id="sim-monthly-rev" class="font-black text-brand-text">$3,400.00 CAD / mo</span>
+                                    </div>
+                                    <div class="flex justify-between pt-2 border-t border-gray-200 items-baseline">
+                                        <span class="font-extrabold text-brand-text uppercase">Projected Annual Volume:</span>
+                                        <span id="sim-annual-rev" class="text-xl font-black text-emerald-700">+$40,800 CAD / yr</span>
+                                    </div>
+                                </div>
+
+                                <a href="#partner-application" class="block w-full text-center bg-brand-red hover:bg-red-700 text-white font-black py-3.5 rounded-xl uppercase tracking-widest text-xs shadow-md transition">
+                                    Apply for Free Partner Placement &darr;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SIDE-BY-SIDE COMPARISON: TRADITIONAL ADS VS. OUR ZERO-FEE MODEL -->
+        <section class="py-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Why Local Businesses Love Us</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Stop Paying for "Impressions." Only Pay for Results.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-soft">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1">Traditional Ad Agencies &amp; Delivery Apps</span>
+                    <h3 class="text-lg font-black text-gray-500 mb-4">High Upfront Risk &amp; Margin Erosion</h3>
+                    <ul class="space-y-3 text-xs text-gray-500 font-medium">
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-black">✕</span> <span><strong>$500 to $2,500/month</strong> in upfront retainers with zero guaranteed foot traffic.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-black">✕</span> <span>Public coupon sites cheapen your brand image to bargain hunters.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-black">✕</span> <span>Long-term lock-in contracts and setup fees before a single customer walks in.</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-900 text-white rounded-2xl border-2 border-brand-red p-6 sm:p-8 shadow-soft-lg">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">The Hotbeds.ca &amp; Private Member Network</span>
+                    <h3 class="text-lg font-black text-white mb-4">100% Free Placement • Performance-Only</h3>
+                    <ul class="space-y-3 text-xs text-gray-200 font-medium">
+                        <li class="flex items-start gap-2"><span class="text-emerald-400 font-black">✓</span> <span><strong>$0.00 Upfront Forever:</strong> Free photography placement on our confirmation pages and email drip sequences.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-emerald-400 font-black">✓</span> <span><strong>High-Intent Clientele:</strong> Reach hotel guests arriving in your city with money to spend on dining, wellness, and entertainment.</span></li>
+                        <li class="flex items-start gap-2"><span class="text-emerald-400 font-black">✓</span> <span><strong>Aligned Incentives:</strong> We only earn a modest performance commission when a verified member actually transacts with you.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 60-SECOND PARTNER APPLICATION FORM -->
+        <section id="partner-application" class="py-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-soft-lg">
+                
+                <div id="partner-form-box">
+                    <div class="mb-6 pb-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Zero-Fee Merchant Onboarding</span>
+                            <h2 class="text-2xl font-black text-brand-text">Apply for Complimentary Partner Placement</h2>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                            $0.00 Listing Fee
+                        </span>
+                    </div>
+
+                    <form id="merchant-application-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Business / Property Name *</label>
+                                <input type="text" id="merch-name" required placeholder="e.g. Isabelle Restaurant or FitPro Studio" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Industry Vertical *</label>
+                                <select id="merch-category" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
+                                    <option value="Restaurant / Culinary / Ghost Kitchen">Restaurant / Culinary / Ghost Kitchen</option>
+                                    <option value="Hotel / Resort / Boutique Property">Hotel / Resort / Boutique Property</option>
+                                    <option value="Executive Workspace / Co-Working">Executive Workspace / Co-Working</option>
+                                    <option value="Live Events / Entertainment / Excursions">Live Events / Entertainment / Excursions</option>
+                                    <option value="Spa / Fitness / Wellness">Spa / Fitness / Wellness</option>
+                                    <option value="Car Rental / Ground Mobility / Local Service">Car Rental / Ground Mobility / Local Service</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Owner or General Manager Name *</label>
+                                <input type="text" id="merch-owner" required placeholder="Full Name" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">City &amp; Province *</label>
+                                <input type="text" id="merch-city" required placeholder="e.g. Hamilton, ON or Calgary, AB" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Direct Email Address *</label>
+                                <input type="email" id="merch-email" required placeholder="owner@business.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Phone Number *</label>
+                                <input type="tel" id="merch-phone" required placeholder="(555) 000-0000" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Proposed Member Perk or Offer (Optional)</label>
+                            <input type="text" id="merch-offer" placeholder="e.g. 20% off member dining tab, complimentary day pass, or corporate room rate" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-4 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-md transition">
+                            Submit Free Partner Application &rarr;
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Application Success State -->
+                <div id="partner-success-box" class="hidden text-center py-8 space-y-4">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto font-black text-2xl">✓</div>
+                    <h3 class="text-2xl font-black text-brand-text">Partner Application Received!</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
+                        Thank you! Our partner onboarding team will review <strong id="merch-name-display" class="text-brand-text"></strong> and reach out to <strong id="merch-email-display" class="text-brand-text"></strong> to finalize your complimentary placement and custom tracking code.
+                    </p>
+                    <a href="index.html" class="inline-block bg-brand-text text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl">
+                        Return to Hotbeds.ca
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+            <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+            <div class="flex flex-wrap gap-4">
+                <a href="index.html" class="hover:text-brand-red font-bold">Home</a>
+                <a href="cities.html" class="hover:text-brand-red font-bold">Cities</a>
+                <a href="corporate.html" class="hover:text-brand-red font-bold">Corporate</a>
+                <a href="legal.html" class="hover:text-brand-red font-bold">Legal &amp; Alberta CPA</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const spendSlider = document.getElementById('sim-spend-slider');
+            const guestsSlider = document.getElementById('sim-guests-slider');
+            const spendVal = document.getElementById('sim-spend-val');
+            const guestsVal = document.getElementById('sim-guests-val');
+            const monthlyRev = document.getElementById('sim-monthly-rev');
+            const annualRev = document.getElementById('sim-annual-rev');
+
+            function updatePartnerSimulator() {
+                const s = parseInt(spendSlider.value, 10);
+                const g = parseInt(guestsSlider.value, 10);
+                const m = s * g;
+                const a = m * 12;
+
+                spendVal.textContent = `$${s} CAD`;
+                guestsVal.textContent = `${g} Guests / mo`;
+                monthlyRev.textContent = `$${m.toLocaleString()}.00 CAD / mo`;
+                annualRev.textContent = `+$${a.toLocaleString()} CAD / yr`;
+            }
+
+            spendSlider.addEventListener('input', updatePartnerSimulator);
+            guestsSlider.addEventListener('input', updatePartnerSimulator);
+
+            document.getElementById('merchant-application-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const payload = {
+                    business_name: document.getElementById('merch-name').value.trim(),
+                    category: document.getElementById('merch-category').value,
+                    contact_name: document.getElementById('merch-owner').value.trim(),
+                    city: document.getElementById('merch-city').value.trim(),
+                    email: document.getElementById('merch-email').value.trim(),
+                    phone: document.getElementById('merch-phone').value.trim(),
+                    proposed_offer: document.getElementById('merch-offer').value.trim(),
+                    created_at: new Date().toISOString()
+                };
+
+                localStorage.setItem('latest_partner_application', JSON.stringify(payload));
+                document.getElementById('merch-name-display').textContent = payload.business_name;
+                document.getElementById('merch-email-display').textContent = payload.email;
+                document.getElementById('partner-form-box').classList.add('hidden');
+                document.getElementById('partner-success-box').classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
