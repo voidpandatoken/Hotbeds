@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds.ca — Nationwide Canadian Hotel Reservations & Member Perks</title>
+    <title>Hotbeds.ca — Premium Canadian Stays & Live Flash Hotel Deals</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,6 +12,7 @@
                     colors: {
                         brand: {
                             red: '#e63946',
+                            redDark: '#c92a37',
                             light: '#f8fafc',
                             white: '#ffffff',
                             text: '#0f172a',
@@ -29,342 +30,1323 @@
                 }
             }
         }
+
+        // Global Mobile Menu Controller (Guaranteed to work immediately on tap)
+        window.toggleMobileMenu = function(forceClose = false) {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu) return;
+
+            const isHidden = menu.classList.contains('hidden');
+            if (forceClose || !isHidden) {
+                menu.classList.add('hidden');
+                if (openIcon) openIcon.classList.remove('hidden');
+                if (closeIcon) closeIcon.classList.add('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('hidden');
+                if (openIcon) openIcon.classList.add('hidden');
+                if (closeIcon) closeIcon.classList.remove('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+            }
+        };
     </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+        
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .prov-tab-active {
-            background-color: #e63946 !important;
-            color: #ffffff !important;
-            border-color: #e63946 !important;
+
+        /* High-Res Luxury Property Hero Background */
+        .hero-bg-layer {
+            background-image: url('https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px);
+            transform: scale(1.04);
+        }
+
+        /* --- FOMO WIDGET ANIMATIONS --- */
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(230, 57, 70, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+        .fomo-dot {
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes flash-price {
+            0% { color: #e63946; transform: scale(1.12); }
+            100% { color: #0f172a; transform: scale(1); }
+        }
+        .price-flash {
+            animation: flash-price 0.45s ease-out;
+        }
+
+        .progress-bar-inner {
+            transition: width 1s linear;
         }
     </style>
 </head>
 <body class="text-brand-text flex flex-col min-h-screen">
 
     <!-- ================================================================= -->
-    <!-- STICKY RESPONSIVE HEADER (ZERO MOBILE BLEEDING)                   -->
+    <!-- STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)           -->
     <!-- ================================================================= -->
-    <header class="sticky top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm">
         
-        <!-- Top Utility Bar -->
+        <!-- 1. Top Utility Bar & Nationwide Region Selector -->
         <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
-            <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 text-[10px] sm:text-[11px]">
-                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0 truncate">
+            <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
+                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-                    <span class="truncate"><strong>HOT BEDS CLUB:</strong> Automatic Points Enrollment on Your First Reservation &rarr;</span>
+                    <span id="top-bar-club-text" class="truncate">
+                        <strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points &amp; Private Flash Rates &rarr;
+                    </span>
                 </a>
-                <div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
-                    <span class="text-gray-300 font-semibold hidden md:inline">🇨🇦 Coast-to-Coast Canadian Inventory</span>
-                    <span class="font-bold text-white bg-white/10 px-2 py-0.5 rounded border border-white/15">CAD $</span>
+
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/15">
+                        <span class="text-brand-red text-[10px]">📍</span>
+                        <label for="region-select" class="sr-only">Select Region</label>
+                        <select id="region-select" class="bg-transparent text-white font-bold text-[10px] sm:text-[11px] focus:outline-none cursor-pointer pr-1">
+                            <option value="ALL" class="text-slate-900 font-bold">All Canada</option>
+                            <option value="ON" class="text-slate-900 font-bold" selected>Ontario (ON)</option>
+                            <option value="BC" class="text-slate-900 font-bold">British Columbia (BC)</option>
+                            <option value="AB" class="text-slate-900 font-bold">Alberta (AB)</option>
+                            <option value="QC" class="text-slate-900 font-bold">Quebec (QC)</option>
+                            <option value="PR" class="text-slate-900 font-bold">Prairies (MB/SK)</option>
+                            <option value="AT" class="text-slate-900 font-bold">Atlantic (NS/NB/NL)</option>
+                        </select>
+                    </div>
+                    <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
                 </div>
             </div>
         </div>
 
-        <!-- Main Navigation Bar -->
-        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8">
+        <!-- 2. Main Navigation Bar -->
+        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
             <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
                 
                 <!-- Brand Logo -->
-                <a href="index.html" class="flex items-center shrink-0">
-                    <img src="LOGO.png" alt="Hotbeds.ca" class="h-8 sm:h-11 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl sm:text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
-                </a>
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-2xl sm:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+                    </a>
+                </div>
                 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-7">
                     <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
-                    <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Search Stays</a>
-                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate</a>
-                    <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partners</a>
+                    <a href="#featured-stays" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Featured Stays</a>
+                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate Desk</a>
+                    <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partner Network</a>
                     <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">My Booking</a>
                 </nav>
                 
-                <!-- Right Action Area -->
+                <!-- Right CTA: Hot Beds Club Live Countdown Pill + Mobile Menu Button -->
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                    <a href="club.html" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shrink-0">
-                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    <div class="hidden sm:flex items-center">
+                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
+                            G.
+                        </a>
+                    </div>
+                    
+                    <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
                         <div class="flex flex-col justify-center text-left">
-                            <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
-                            <span id="header-club-sub" class="text-[8px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">Points &amp; Perks</span>
+                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
+                            <span id="header-club-sub" class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
+                                Free • <span id="club-timer" class="text-red-400 font-mono">6d 23h</span>
+                            </span>
                         </div>
                     </a>
 
-                    <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" class="lg:hidden p-2 rounded-lg text-brand-text hover:bg-gray-100 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <!-- High-Target Mobile Hamburger Toggle Button -->
+                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red focus:outline-none transition shrink-0">
+                        <svg id="menu-icon-open" class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Menu -->
-            <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100 py-2 bg-white flex flex-col space-y-1">
-                <a href="cities.html" class="px-3 py-2.5 text-brand-text font-bold hover:bg-gray-50 rounded-lg uppercase tracking-wider text-xs">Canadian Cities Directory</a>
-                <a href="results.html" class="px-3 py-2.5 text-brand-text font-bold hover:bg-gray-50 rounded-lg uppercase tracking-wider text-xs">Search All Stays</a>
-                <a href="corporate.html" class="px-3 py-2.5 text-brand-text font-bold hover:bg-gray-50 rounded-lg uppercase tracking-wider text-xs">Corporate &amp; Group Desk</a>
-                <a href="partners.html" class="px-3 py-2.5 text-brand-text font-bold hover:bg-gray-50 rounded-lg uppercase tracking-wider text-xs">Partner Network ($0 Fee)</a>
-                <a href="manage-booking.html" class="px-3 py-2.5 text-brand-text font-bold hover:bg-gray-50 rounded-lg uppercase tracking-wider text-xs">Manage My Booking</a>
-                <a href="club.html" class="px-3 py-3 bg-slate-900 text-white font-extrabold rounded-lg uppercase tracking-wider text-xs flex justify-between items-center">
-                    <span>Hot Beds Club Rewards</span>
+            <!-- Mobile Dropdown Navigation Drawer -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
+                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Canadian Cities Directory</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="#featured-stays" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Featured Flash Stays</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="#cities-section" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Browse by Province &amp; US Preview</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Corporate &amp; Group Blocks (5+ Rooms)</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Zero-Fee Partner Network</span>
+                    <span class="text-emerald-600 font-black text-[10px]">$0 Listing</span>
+                </a>
+                <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Manage My Booking &amp; Points</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>★ Hot Beds Club (1,000 Free Welcome Pts)</span>
                     <span class="text-brand-red">&rarr;</span>
                 </a>
             </div>
         </div>
 
-        <!-- Quick City Jump Pills Bar -->
-        <div class="bg-gray-50 border-t border-gray-100 py-2 px-3 sm:px-6">
-            <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto hide-scrollbar">
-                <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest shrink-0">Major Hubs:</span>
-                <a href="city.html?city=Toronto" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Toronto, ON</a>
-                <a href="city.html?city=Vancouver" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Vancouver, BC</a>
-                <a href="city.html?city=Calgary" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Calgary, AB</a>
-                <a href="city.html?city=Montreal" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Montreal, QC</a>
-                <a href="city.html?city=Hamilton" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Hamilton, ON</a>
-                <a href="city.html?city=Banff" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Banff, AB</a>
-                <a href="city.html?city=Niagara+Falls" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Niagara Falls, ON</a>
-                <a href="city.html?city=Ottawa" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Ottawa, ON</a>
-                <a href="city.html?city=Edmonton" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Edmonton, AB</a>
-                <a href="city.html?city=Halifax" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Halifax, NS</a>
-                <a href="city.html?city=Winnipeg" class="px-2.5 py-0.5 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 hover:border-brand-red hover:text-brand-red transition whitespace-nowrap">Winnipeg, MB</a>
+        <!-- 3. Quick-Select Nationwide City Pills Bar -->
+        <div class="bg-gray-50 border-t border-gray-100 py-2">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center">
+                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline whitespace-nowrap">
+                        Popular Hubs:
+                    </span>
+                    <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center">
+                        <!-- Dynamically populated by JS based on selected Province/Region -->
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- ================================================================= -->
-    <!-- HERO SECTION & NATIONWIDE OTA SEARCH ENGINE                       -->
+    <!-- HERO SECTION                                                      -->
+    <!-- Mobile Order: 1. Rate Scarcity -> 2. Title -> 3. Booking Engine   -->
+    <!-- Desktop Order: Left (Title + Booking) | Right (Rate Scarcity)     -->
     <!-- ================================================================= -->
-    <section class="relative bg-slate-900 text-white py-12 sm:py-16 lg:py-20 overflow-hidden">
-        <div class="absolute inset-0 opacity-30 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=80');"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/85 to-slate-950"></div>
+    <section class="relative w-full py-6 lg:py-14 flex items-center justify-center overflow-hidden shrink-0">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <div class="absolute inset-0 hero-bg-layer"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/85 backdrop-blur-[1px]"></div>
+        </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mb-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/20 border border-brand-red/40 text-red-300 text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4">
-                    <span>🇨🇦 Coast-to-Coast Canadian Hotel Network</span>
+        <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
+            
+            <!-- LEFT COLUMN ON DESKTOP (Title + Search) | Order 3 on Mobile, Order 1 on Desktop -->
+            <div class="w-full lg:w-7/12 flex flex-col order-3 lg:order-1">
+                
+                <!-- Desktop Headline -->
+                <div class="hidden lg:block mb-7">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest mb-3 backdrop-blur-sm">
+                        <span class="text-brand-red">●</span> Coast-to-Coast Canadian Hotel Inventory • 4.3+ Verified Rating
+                    </div>
+                    <h1 class="text-4xl xl:text-5xl font-black text-white tracking-tighter mb-3 leading-[1.08]">
+                        Premium stays. <br><span class="text-brand-red">Unbeatable live rates.</span>
+                    </h1>
+                    <p class="text-gray-300 font-medium text-base xl:text-lg max-w-xl">
+                        Search verified hotels across every major Canadian city or lock in the live ticking flash deal before the rate resets.
+                    </p>
                 </div>
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] mb-4">
-                    Verified Canadian Stays. <span class="text-brand-red">Transparent Rates.</span>
-                </h1>
-                <p class="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    Book top-rated hotels across every major Canadian city. Automatically earn <strong>Hot Beds Club</strong> points on your first reservation, plus unlock <strong>20% off your booking</strong> and local city perks at checkout.
-                </p>
+                
+                <!-- Smart OTA Booking Search Engine -->
+                <div class="bg-white rounded-2xl shadow-2xl p-5 sm:p-6 border border-gray-100">
+                    <form id="booking-search" action="results.html" method="GET" class="flex flex-col gap-4">
+                        
+                        <!-- Destination Input with Custom Nationwide Autocomplete Popover -->
+                        <div class="relative" id="destination-wrapper">
+                            <div class="flex justify-between items-center mb-1">
+                                <label for="search-city" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Destination or City</label>
+                                <button type="button" id="search-geo-hint" class="text-[10px] font-bold text-brand-red hover:underline">
+                                    Use My Regional Hub
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="search-city" name="destination" autocomplete="off" required placeholder="Where are you heading? (e.g. Hamilton, Toronto, Vancouver)" class="w-full p-3.5 sm:p-4 pl-10 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                <svg class="w-4 h-4 text-brand-red absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+
+                            <!-- Custom OTA Autocomplete Dropdown -->
+                            <div id="custom-autocomplete" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-gray-200 rounded-xl shadow-soft-xl z-50 max-h-64 overflow-y-auto divide-y divide-gray-100">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Auto-Default Check-In / Check-Out + Night Counter -->
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                            <div>
+                                <label for="check-in" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Check-in</label>
+                                <input type="date" id="check-in" name="checkin" required class="w-full p-3 sm:p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label for="check-out" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Check-out</label>
+                                    <span id="night-count-badge" class="text-[9px] font-extrabold uppercase bg-red-50 text-brand-red px-2 py-0.5 rounded-full">1 Night</span>
+                                </div>
+                                <input type="date" id="check-out" name="checkout" required class="w-full p-3 sm:p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Occupancy Selector & Search Availability CTA -->
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end">
+                            <div class="w-full sm:w-5/12">
+                                <label for="guests" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Rooms &amp; Guests</label>
+                                <select id="guests" name="guests" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-xs sm:text-sm font-semibold text-brand-text outline-none focus:border-brand-red">
+                                    <option value="1">1 Adult (1 Room)</option>
+                                    <option value="2" selected>2 Adults (1 Room)</option>
+                                    <option value="3">3 Adults (1 Room)</option>
+                                    <option value="4">4+ Guests / Group</option>
+                                </select>
+                            </div>
+                            <div class="w-full sm:w-7/12">
+                                <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white p-3.5 sm:p-4 rounded-xl font-black text-xs sm:text-sm transition-colors uppercase tracking-widest shadow-md flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    <span>Search Availability</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
 
-            <!-- Master Search Bar -->
-            <form id="hero-search-form" action="results.html" method="GET" class="bg-white text-brand-text p-3 sm:p-4 rounded-2xl shadow-soft-xl border border-gray-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
+            <!-- RIGHT COLUMN ON DESKTOP (1. FOMO Scarcity Widget + 2. Mobile Title) | Order 1 on Mobile, Order 2 on Desktop -->
+            <div class="w-full lg:w-5/12 max-w-md mx-auto lg:mx-0 order-1 lg:order-2 flex flex-col">
                 
-                <div class="lg:col-span-4">
-                    <label for="search-destination" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">City, Province or Property</label>
-                    <input type="text" id="search-destination" name="destination" list="canadian-cities-datalist" placeholder="e.g. Toronto, Vancouver, Calgary, Hamilton..." class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-bold outline-none transition">
-                    <datalist id="canadian-cities-datalist">
-                        <option value="Toronto, ON"></option>
-                        <option value="Hamilton, ON"></option>
-                        <option value="Niagara Falls, ON"></option>
-                        <option value="Ottawa, ON"></option>
-                        <option value="Mississauga, ON"></option>
-                        <option value="Burlington, ON"></option>
-                        <option value="Oakville, ON"></option>
-                        <option value="Vancouver, BC"></option>
-                        <option value="Victoria, BC"></option>
-                        <option value="Whistler, BC"></option>
-                        <option value="Kelowna, BC"></option>
-                        <option value="Calgary, AB"></option>
-                        <option value="Banff, AB"></option>
-                        <option value="Edmonton, AB"></option>
-                        <option value="Canmore, AB"></option>
-                        <option value="Montreal, QC"></option>
-                        <option value="Quebec City, QC"></option>
-                        <option value="Winnipeg, MB"></option>
-                        <option value="Saskatoon, SK"></option>
-                        <option value="Halifax, NS"></option>
-                    </datalist>
+                <!-- LIVE RATE SCARCITY FOMO WIDGET (THE BUSINESS ANCHOR) -->
+                <div id="hotbeds-widget" class="relative w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] overflow-hidden border border-gray-200">
+                    
+                    <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center">
+                        <div class="font-black text-base sm:text-lg tracking-tight">Hotbeds<span class="text-brand-red">.ca</span> <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Live Feed</span></div>
+                        <div class="flex items-center space-x-1.5 text-[10px] font-semibold text-gray-200">
+                            <span class="h-2 w-2 bg-red-500 rounded-full fomo-dot inline-block"></span>
+                            <span id="widget-viewers">4 others viewing now</span>
+                        </div>
+                    </div>
+
+                    <div class="relative h-36 bg-gray-900">
+                        <img id="hotel-image" src="sandman.png.jpg" alt="Featured Property" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent"></div>
+                        
+                        <div class="absolute bottom-3 left-4 right-4 text-white">
+                            <div class="flex items-center space-x-1 mb-0.5 text-yellow-400 text-xs">
+                                <span>★</span><span>★</span><span>★</span><span>★</span>
+                                <span id="widget-rating-tag" class="text-[10px] text-gray-200 font-bold ml-1">(4.5 Verified)</span>
+                            </div>
+                            <h2 id="hotel-name" class="text-lg sm:text-xl font-black leading-tight truncate">Sandman Hotel Hamilton</h2>
+                            <p id="hotel-location" class="text-xs text-gray-300 font-medium">Hamilton, ON</p>
+                        </div>
+                        <div class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black px-2.5 py-1 rounded shadow uppercase tracking-wider">
+                            Live Flash Rate
+                        </div>
+                    </div>
+
+                    <div class="p-5">
+                        <div class="flex justify-between items-end mb-3">
+                            <div>
+                                <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-0.5">Current Live Rate</p>
+                                <div class="flex items-start">
+                                    <span class="text-lg font-bold text-gray-900 mt-1">$</span>
+                                    <span id="current-price" class="text-4xl font-black text-gray-900 transition-colors">158</span>
+                                    <span class="text-xs font-bold text-gray-400 mt-4 ml-1">CAD / nt</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] font-extrabold text-brand-red uppercase tracking-wider mb-0.5">Rate resets in</p>
+                                <div class="text-2xl font-black text-brand-red font-mono" id="time-left">00:15</div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-100 rounded-full h-1.5 mb-3.5 overflow-hidden shadow-inner">
+                            <div id="progress-bar" class="progress-bar-inner bg-brand-red h-1.5 rounded-full" style="width: 100%"></div>
+                        </div>
+
+                        <div class="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5 mb-3.5">
+                            <p class="text-[9px] leading-tight text-gray-600 font-bold text-center uppercase tracking-widest">
+                                ✓ Upfront CAD Pricing • Extra 20% Off Option at Checkout
+                            </p>
+                        </div>
+
+                        <button type="button" onclick="lockPrice()" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-3.5 px-4 rounded-xl shadow-md transform transition active:scale-95 flex justify-center items-center group uppercase tracking-widest text-xs">
+                            <span>Lock In This Rate Now</span>
+                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+
+                    <!-- Success Overlay (Routes Locked Hotel & Province Directly to Checkout) -->
+                    <div id="success-overlay" class="absolute inset-0 bg-white/95 backdrop-blur z-50 hidden flex-col justify-center items-center p-6 text-center">
+                        <button type="button" onclick="unlockPrice()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-xs font-bold uppercase">&times; Close</button>
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-black text-brand-text mb-1 tracking-tight">Flash Rate Locked!</h3>
+                        <p class="text-gray-500 mb-4 font-medium text-xs">You held <span id="locked-hotel" class="font-bold text-brand-text"></span> before the timer reset.</p>
+                        
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 w-full mb-5 space-y-2">
+                            <div class="flex justify-between text-xs border-b border-gray-200 pb-2">
+                                <span class="text-gray-500 font-bold uppercase tracking-wider text-[10px]">Locked Nightly Rate</span>
+                                <span class="font-black text-brand-text">CAD $<span id="locked-price"></span></span>
+                            </div>
+                            <div class="flex justify-between text-[10px] text-emerald-700 font-extrabold uppercase tracking-wider">
+                                <span>20% Off Guild Option</span>
+                                <span>Available at Checkout</span>
+                            </div>
+                        </div>
+
+                        <a id="fomo-checkout-link" href="checkout.html" class="block w-full bg-brand-text hover:bg-black text-white font-black py-3.5 px-6 rounded-xl transition uppercase tracking-widest text-xs shadow-md">
+                            Proceed to Secure Checkout &rarr;
+                        </a>
+                    </div>
                 </div>
 
-                <div class="lg:col-span-2">
-                    <label for="search-checkin" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">Check-In</label>
-                    <input type="date" id="search-checkin" name="checkin" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red text-xs sm:text-sm font-bold outline-none">
+                <!-- Mobile Title (Positioned strictly between Scarcity Widget and Booking Form on Mobile) -->
+                <div class="block lg:hidden mt-5 mb-1 text-center w-full">
+                    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight mb-1.5">
+                        Premium stays. <span class="text-brand-red">Unbeatable live rates.</span>
+                    </h1>
+                    <p class="text-gray-200 font-medium text-xs px-2">
+                        Lock in the live flash deal above or search any Canadian city below.
+                    </p>
                 </div>
 
-                <div class="lg:col-span-2">
-                    <label for="search-checkout" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">Check-Out</label>
-                    <input type="date" id="search-checkout" name="checkout" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red text-xs sm:text-sm font-bold outline-none">
-                </div>
+            </div>
 
-                <div class="lg:col-span-2">
-                    <label for="search-guests" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">Rooms &amp; Guests</label>
-                    <select id="search-guests" name="guests" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red text-xs sm:text-sm font-bold outline-none">
-                        <option value="1">1 Adult (1 Room)</option>
-                        <option value="2" selected>2 Adults (1 Room)</option>
-                        <option value="3">3 Adults (1 Room)</option>
-                        <option value="4">4+ Guests / Group</option>
-                    </select>
-                </div>
-
-                <div class="lg:col-span-2">
-                    <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-3.5 px-5 rounded-xl uppercase tracking-widest text-xs shadow-md transition flex items-center justify-center gap-2">
-                        <span>Search Stays</span>
-                        <span>&rarr;</span>
-                    </button>
-                </div>
-
-            </form>
         </div>
     </section>
 
     <!-- ================================================================= -->
-    <!-- MAIN CONTENT: PROVINCE TABS, MAJOR CITIES & US COMING SOON        -->
+    <!-- HOT BEDS CLUB AUTOMATIC ENROLLMENT & TRIAL BANNER                 -->
     <!-- ================================================================= -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <section class="bg-slate-900 text-white border-b border-gray-800 py-4 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center shrink-0 shadow">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-white">Hot Beds Club — Automatic Points on Your First Stay</span>
+                        <span class="bg-brand-red text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">1,000 Welcome Pts</span>
+                    </div>
+                    <p class="text-xs text-gray-300 mt-0.5">
+                        Every guest is automatically enrolled in the Hot Beds Club on their first reservation—plus you can unlock an instant 20% off discount at checkout.
+                    </p>
+                </div>
+            </div>
+            <a href="club.html" class="w-full sm:w-auto text-center bg-white hover:bg-gray-100 text-brand-text font-extrabold text-xs uppercase tracking-widest px-5 py-3 rounded-xl shrink-0 transition">
+                Claim 1,000 Free Points &rarr;
+            </a>
+        </div>
+    </section>
 
-        <!-- SECTION 1: NATIONWIDE CANADIAN CITIES BY PROVINCE + US COMING SOON -->
-        <section id="cities-section">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
+    <!-- ================================================================= -->
+    <!-- MAIN CONTENT WORKSPACE                                            -->
+    <!-- ================================================================= -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+        
+        <!-- 1. FEATURED STAYS ACROSS CANADA -->
+        <section id="featured-stays">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b border-gray-200 pb-4 gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Verified 4.3+ Network</span>
+                        <span class="text-gray-300">•</span>
+                        <span id="stays-region-badge" class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Coast-to-Coast Inventory</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Featured Stays Right Now</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-0.5">Top-rated Canadian hotels with live rate locks and instant checkout savings.</p>
+                </div>
+
+                <!-- Interactive Stay-Type Filter Tabs -->
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full md:w-auto pb-1">
+                    <button type="button" data-filter="all" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-extrabold bg-brand-text text-white transition whitespace-nowrap">All Featured</button>
+                    <button type="button" data-filter="regional" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">📍 My Province</button>
+                    <button type="button" data-filter="luxury" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Luxury &amp; Spa</button>
+                    <button type="button" data-filter="business" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Business Hubs</button>
+                    <button type="button" data-filter="under185" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Under $185</button>
+                </div>
+            </div>
+
+            <!-- 4-Column Hotel Cards Grid -->
+            <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 2. NATIONWIDE CITIES DIRECTORY + PROVINCE TABS + US PREVIEW   -->
+        <!-- ============================================================= -->
+        <section id="cities-section" class="pt-4 border-t border-gray-200">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 gap-4">
                 <div>
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Coast-to-Coast Directory</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Explore Major Cities by Province</h2>
-                    <p class="text-xs sm:text-sm text-gray-500 mt-1">Click any city to view its dedicated City Guide, neighborhood amenities, and top verified hotels.</p>
+                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Explore Major Cities by Province</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-0.5">Select any province below to explore city guides, neighborhood amenities, and top hotels.</p>
                 </div>
                 <a href="cities.html" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest shrink-0">
-                    View Full Directory &rarr;
+                    Open Full Cities Directory &rarr;
                 </a>
             </div>
 
             <!-- Interactive Province & US Coming Soon Tabs -->
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-6 border-b border-gray-200">
-                <button type="button" data-prov="ALL" class="prov-tab prov-tab-active px-4 py-2 rounded-xl text-xs font-extrabold border border-gray-200 bg-white text-gray-700 transition whitespace-nowrap">
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-3 mb-6 border-b border-gray-100">
+                <button type="button" data-prov="ALL" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-text text-white shadow-sm transition whitespace-nowrap">
                     🇨🇦 All Major Canadian Cities
                 </button>
-                <button type="button" data-prov="ON" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
+                <button type="button" data-prov="ON" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
                     Ontario (ON)
                 </button>
-                <button type="button" data-prov="BC" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
+                <button type="button" data-prov="BC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
                     British Columbia (BC)
                 </button>
-                <button type="button" data-prov="AB" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
+                <button type="button" data-prov="AB" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
                     Alberta (AB)
                 </button>
-                <button type="button" data-prov="QC" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
+                <button type="button" data-prov="QC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
                     Quebec (QC)
                 </button>
-                <button type="button" data-prov="PR" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
+                <button type="button" data-prov="PR" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
                     Prairies (MB / SK)
                 </button>
-                <button type="button" data-prov="AT" class="prov-tab px-4 py-2 rounded-xl text-xs font-bold border border-gray-200 bg-white text-gray-700 hover:border-brand-red transition whitespace-nowrap">
-                    Atlantic (NS / NL / NB / PE)
+                <button type="button" data-prov="AT" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
+                    Atlantic (NS / NL)
                 </button>
-                <button type="button" data-prov="US" class="prov-tab px-4 py-2 rounded-xl text-xs font-extrabold border border-blue-200 bg-blue-50 text-blue-900 hover:border-blue-500 transition whitespace-nowrap flex items-center gap-1.5">
+                <button type="button" data-prov="US" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-50 text-brand-red border border-red-200 hover:bg-red-100 transition whitespace-nowrap flex items-center gap-1.5">
                     <span>🇺🇸 United States</span>
-                    <span class="bg-blue-900 text-white text-[9px] px-1.5 py-0.5 rounded uppercase">Coming Soon</span>
+                    <span class="bg-brand-red text-white text-[9px] px-1.5 py-0.5 rounded uppercase">Coming Soon</span>
                 </button>
             </div>
 
-            <!-- Dynamic Canadian Cities Grid -->
-            <div id="home-cities-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- Populated dynamically by JS below -->
+            <!-- Canadian Cities Bento Grid -->
+            <div id="cities-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Dynamically populated by JS -->
             </div>
 
-            <!-- United States (Coming Soon) Expansion Panel -->
-            <div id="us-coming-soon-panel" class="hidden bg-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-gray-800 shadow-soft-xl">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-7 space-y-4">
-                        <span class="inline-block bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                            🇺🇸 Cross-Border Expansion • Coming Soon
+            <!-- United States (Coming Soon) Expansion Showcase (Shown when US Tab is clicked) -->
+            <div id="us-coming-soon-panel" class="hidden bg-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-gray-800 shadow-soft-xl space-y-8">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-gray-800 pb-6">
+                    <div>
+                        <span class="inline-block bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+                            🇺🇸 Cross-Border Expansion • Launching Soon
                         </span>
-                        <h3 class="text-2xl sm:text-4xl font-black tracking-tight">
-                            United States Hotel Inventory &amp; Local City Perks Launching Soon
-                        </h3>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            We are expanding our direct corporate hotel blocks and local merchant partner networks into major U.S. destinations—including <strong>New York City, Miami, Las Vegas, Los Angeles, Chicago, and Orlando</strong>.
+                        <h3 class="text-2xl sm:text-3xl font-black tracking-tight">United States Hotel Network Coming Soon</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-2xl">
+                            We are finalizing contracted rate blocks across top U.S. leisure and corporate destinations for Canadian travelers. Enter your email to get early access and a 20% launch rebate.
                         </p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-2 text-xs font-bold text-gray-200">
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">🗽 New York, NY</div>
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">🌴 Miami, FL</div>
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">🎰 Las Vegas, NV</div>
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">🎬 Los Angeles, CA</div>
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">🏙️ Chicago, IL</div>
-                            <div class="bg-white/5 border border-white/10 p-3 rounded-xl">☀️ Orlando, FL</div>
+                    </div>
+
+                    <form id="us-waitlist-form" class="w-full lg:w-96 flex flex-col sm:flex-row gap-2">
+                        <input type="email" id="us-waitlist-email" required placeholder="Enter email for US launch alert" class="flex-grow bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-xs font-semibold text-white focus:outline-none focus:border-brand-red">
+                        <button type="submit" id="us-waitlist-btn" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-xl shrink-0 transition">
+                            Notify Me
+                        </button>
+                    </form>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=600&q=80" alt="New York City" class="w-full h-full object-cover opacity-55">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                        <div class="absolute bottom-3 left-4">
+                            <span class="text-[10px] font-bold uppercase text-gray-300">Midtown &amp; SoHo</span>
+                            <h4 class="text-lg font-black text-white">New York City, NY</h4>
                         </div>
                     </div>
-                    <div class="lg:col-span-5 bg-white text-brand-text p-6 rounded-2xl shadow-lg">
-                        <h4 class="text-base font-black mb-1">Get Early U.S. Launch Access</h4>
-                        <p class="text-xs text-gray-500 mb-4">Enter your email to be notified first when U.S. hotel bookings go live.</p>
-                        <form id="us-waitlist-form" class="space-y-3">
-                            <input type="email" id="us-waitlist-email" required placeholder="you@email.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
-                            <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-3.5 rounded-xl uppercase tracking-widest text-xs transition">
-                                Notify Me When U.S. Launches &rarr;
-                            </button>
-                        </form>
-                        <p id="us-waitlist-msg" class="hidden text-xs font-bold text-emerald-700 mt-3 text-center">
-                            ✓ You're on the priority U.S. launch list!
-                        </p>
+                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?auto=format&fit=crop&w=600&q=80" alt="Miami" class="w-full h-full object-cover opacity-55">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                        <div class="absolute bottom-3 left-4">
+                            <span class="text-[10px] font-bold uppercase text-gray-300">South Beach &amp; Brickell</span>
+                            <h4 class="text-lg font-black text-white">Miami, FL</h4>
+                        </div>
+                    </div>
+                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=600&q=80" alt="Las Vegas" class="w-full h-full object-cover opacity-55">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                        <div class="absolute bottom-3 left-4">
+                            <span class="text-[10px] font-bold uppercase text-gray-300">The Strip &amp; Convention Hub</span>
+                            <h4 class="text-lg font-black text-white">Las Vegas, NV</h4>
+                        </div>
+                    </div>
+                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=600&q=80" alt="Chicago" class="w-full h-full object-cover opacity-55">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                        <div class="absolute bottom-3 left-4">
+                            <span class="text-[10px] font-bold uppercase text-gray-300">The Loop &amp; Magnificent Mile</span>
+                            <h4 class="text-lg font-black text-white">Chicago, IL</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2: FEATURED VERIFIED CANADIAN PROPERTIES -->
-        <section id="featured-stays">
-            <div class="flex justify-between items-end mb-6">
+        <!-- ============================================================= -->
+        <!-- 3. CORPORATE DESK & ZERO-FEE PARTNER NETWORK MODULES          -->
+        <!-- ============================================================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
+            
+            <!-- Corporate & Group Desk Card -->
+            <div id="corporate-section" class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between border border-gray-800 shadow-soft">
                 <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Direct Partner Allocation</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Featured Stays Across Canada</h2>
+                    <span class="inline-block bg-white/10 border border-white/15 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full text-gray-200 mb-3">
+                        Corporate &amp; Group Desk (5+ Rooms)
+                    </span>
+                    <h3 class="text-xl sm:text-2xl font-black tracking-tight mb-2">Team Travel, Project Crews &amp; Consolidated Billing</h3>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+                        Coordinating hotel blocks for a sports tournament, construction crew, university delegation, or corporate conference? Lock in contracted multi-room rates and single-invoice billing across Canada.
+                    </p>
                 </div>
-                <a href="results.html" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest">See All Stays &rarr;</a>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="corporate.html" class="bg-brand-red hover:bg-brand-redDark text-white text-xs font-extrabold uppercase tracking-widest px-5 py-3.5 rounded-xl text-center transition">
+                        Request Group Room Block &rarr;
+                    </a>
+                    <button type="button" onclick="fillCorporateSearch()" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-5 py-3.5 rounded-xl border border-white/15 text-center transition">
+                        Quick Search 4+ Guests
+                    </button>
+                </div>
             </div>
 
+            <!-- Zero-Fee Local Business & Hotel Partner Card (Replaces $25 Referral Card) -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-soft">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
+                            B2B Merchant &amp; Hotel Network
+                        </span>
+                        <span class="text-xs font-black text-emerald-700">$0.00 Upfront Fees</span>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight mb-2">Own a Local Business or Hotel? Get Free Exposure.</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+                        We never charge local restaurants, spas, workspaces, live venues, or hotels upfront listing or subscription fees. Feature your business to incoming travelers in your city for free—we only succeed when we bring paying customers through your door.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="partners.html" class="bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl text-center transition">
+                        Apply for Free Partner Placement &rarr;
+                    </a>
+                    <a href="cities.html" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-bold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl text-center transition">
+                        View Active Cities
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 4-PILLAR OTA TRUST & GUARANTEE BAR -->
+        <section class="bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Property 1: Hamilton, ON -->
-                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col justify-between group">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center font-black shrink-0">✓</div>
                     <div>
-                        <div class="relative h-44 bg-gray-900 overflow-hidden">
-                            <img src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Sandman Hotel Hamilton" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 bg-slate-900/90 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded">Hamilton, ON</span>
-                            <span class="absolute top-3 right-3 bg-white text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">★ 4.5</span>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-base font-black text-brand-text mb-1">Sandman Hotel Hamilton</h3>
-                            <p class="text-xs text-gray-500">QEW Corridor • Indoor Pool &amp; Chop Steakhouse</p>
-                        </div>
-                    </div>
-                    <div class="px-5 pb-5 pt-3 border-t border-gray-100 flex justify-between items-center">
-                        <div>
-                            <span class="text-[10px] font-bold text-gray-400 uppercase block">From</span>
-                            <span class="text-xl font-black text-brand-text">$158 <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
-                        </div>
-                        <a href="hotel.html?id=sandman-hamilton" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
-                            View Rooms
-                        </a>
+                        <h4 class="text-sm font-extrabold text-brand-text">Curated 4.3+ Rated Stays</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Every featured Canadian property is vetted for guest satisfaction and comfort.</p>
                     </div>
                 </div>
-
-                <!-- Property 2: Burlington, ON -->
-                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col justify-between group">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-slate-200 text-brand-text flex items-center justify-center font-black shrink-0">⏱</div>
                     <div>
-                        <div class="relative h-44 bg-gray-900 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80" alt="The Pearle Hotel & Spa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 bg-slate-900/90 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded">Burlington, ON</span>
-                            <span class="absolute top-3 right-3 bg-white text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">★ 4.8</span>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-base font-black text-brand-text mb-1">The Pearle Hotel &amp; Spa</h3>
-                            <p class="text-xs text-gray-500">Downtown Waterfront • Luxury Spa &amp; Dining</p>
-                        </div>
-                    </div>
-                    <div class="px-5 pb-5 pt-3 border-t border-gray-100 flex justify-between items-center">
-                        <div>
-                            <span class="text-[10px] font-bold text-gray-400 uppercase block">From</span>
-                            <span class="text-xl font-black text-brand-text">$285 <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
-                        </div>
-                        <a href="hotel.html?id=pearle-burlington" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
-                            View Rooms
-                        </a>
+                        <h4 class="text-sm font-extrabold text-brand-text">Live Rate Lock Protection</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Hold live flash rates on high-demand nights before prices tick up.</p>
                     </div>
                 </div>
-
-                <!-- Property 3: Calgary, AB -->
-                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col justify-between group">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black shrink-0">%</div>
                     <div>
-                        <div class="relative h-44 bg-gray-900 overflow-hidden">
-                            <img src="
+                        <h4 class="text-sm font-extrabold text-brand-text">20% Off Checkout Option</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Unlock an instant 20% discount + local city perks right at checkout.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black shrink-0">★</div>
+                    <div>
+                        <h4 class="text-sm font-extrabold text-brand-text">Alberta CPA Protected</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Full tax &amp; fee transparency compliant with the Alberta Consumer Protection Act.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- 4-COLUMN ALBERTA CPA COMPLIANT OTA FOOTER                         -->
+    <!-- ================================================================= -->
+    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
+                    <p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        Canadian hotel reservation platform delivering live flash rates, automatic Hot Beds Club rewards, and curated local partner perks across every major Canadian city.
+                    </p>
+                    <a href="manage-booking.html" class="text-xs font-extrabold text-brand-red hover:underline">Manage Existing Booking &rarr;</a>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Major Canadian Hubs</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="city.html?city=Hamilton" class="hover:text-brand-red">Hamilton &amp; Burlington, ON</a></li>
+                        <li><a href="city.html?city=Toronto" class="hover:text-brand-red">Downtown Toronto, ON</a></li>
+                        <li><a href="city.html?city=Vancouver" class="hover:text-brand-red">Vancouver &amp; Whistler, BC</a></li>
+                        <li><a href="city.html?city=Calgary" class="hover:text-brand-red">Calgary &amp; Banff, AB</a></li>
+                        <li><a href="city.html?city=Montreal" class="hover:text-brand-red">Montreal &amp; Quebec City, QC</a></li>
+                        <li><a href="cities.html" class="text-brand-text font-bold hover:text-brand-red">View All Canadian Cities &rarr;</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; B2B</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (1,000 Free Points)</a></li>
+                        <li><a href="corporate.html" class="hover:text-brand-red">Corporate &amp; Group Desk (5+ Rooms)</a></li>
+                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Local Partner Network</a></li>
+                        <li><a href="portal-login.html" class="hover:text-brand-red">Private Member Portal Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Privacy</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="legal.html#privacy" class="hover:text-brand-red">Privacy &amp; Cookie Policy (PIPEDA)</a></li>
+                        <li><a href="legal.html#terms" class="hover:text-brand-red">Reservation Terms &amp; Conditions</a></li>
+                        <li><a href="legal.html#alberta-cpa" class="hover:text-brand-red">Alberta CPA Internet Sales Rules</a></li>
+                        <li><a href="legal.html#ontario-eco" class="hover:text-brand-red">Provincial Tax &amp; Eco Fee Disclosure</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+                <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
+                    Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation)
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- MASTER FRONTEND ENGINE: NATIONWIDE CATALOG, PROVINCE TABS & FOMO  -->
+    <!-- ================================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. SESSION CHECK FOR ACTIVE CLUB / GUILD MEMBERS ---
+            if (localStorage.getItem('hotbeds_club_member') === 'true' || localStorage.getItem('guild_member_active') === 'true') {
+                const memberName = localStorage.getItem('hotbeds_club_name') || localStorage.getItem('guild_member_name') || 'Member';
+                const pts = localStorage.getItem('hotbeds_points_balance') || '1,000';
+                document.getElementById('user-avatar-badge').textContent = memberName.charAt(0).toUpperCase() + '.';
+                document.getElementById('header-club-title').textContent = 'Hot Beds Club';
+                document.getElementById('header-club-sub').innerHTML = `<span class="text-green-400">✓ ${pts} Pts Active</span>`;
+            }
+
+            // --- 2. AUTO-DEFAULT DATES & NIGHT COUNTER ---
+            const checkinInput = document.getElementById('check-in');
+            const checkoutInput = document.getElementById('check-out');
+            const nightBadge = document.getElementById('night-count-badge');
+            const destInput = document.getElementById('search-city');
+
+            const todayDate = new Date();
+            const tomorrowDate = new Date();
+            tomorrowDate.setDate(todayDate.getDate() + 1);
+
+            const formatDateStr = (d) => d.toISOString().split('T')[0];
+            checkinInput.min = formatDateStr(todayDate);
+            checkoutInput.min = formatDateStr(tomorrowDate);
+            checkinInput.value = formatDateStr(todayDate);
+            checkoutInput.value = formatDateStr(tomorrowDate);
+
+            function updateNightCount() {
+                if (checkinInput.value && checkoutInput.value) {
+                    const d1 = new Date(checkinInput.value);
+                    const d2 = new Date(checkoutInput.value);
+                    let diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                    if (diff <= 0) {
+                        const nextD = new Date(d1);
+                        nextD.setDate(nextD.getDate() + 1);
+                        checkoutInput.value = formatDateStr(nextD);
+                        diff = 1;
+                    }
+                    nightBadge.textContent = `${diff} ${diff === 1 ? 'Night' : 'Nights'}`;
+                }
+            }
+            checkinInput.addEventListener('change', updateNightCount);
+            checkoutInput.addEventListener('change', updateNightCount);
+
+            // --- 3. NATIONWIDE CANADIAN CITIES & HOTEL INVENTORY ---
+            const NATIONWIDE_CITIES = [
+                { slug: 'Toronto', label: 'Toronto, ON', prov: 'ON', count: '64 Verified Stays', fromPrice: 219, sub: 'Downtown Financial Core & Waterfront', img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Hamilton', label: 'Hamilton, ON', prov: 'ON', count: '18 Verified Stays', fromPrice: 158, sub: 'QEW Corridor, Downtown & Mountain', img: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Burlington', label: 'Burlington & Oakville, ON', prov: 'ON', count: '17 Verified Stays', fromPrice: 169, sub: 'Lakefront Luxury & Corporate Park', img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Niagara-Falls', label: 'Niagara Falls, ON', prov: 'ON', count: '29 Verified Stays', fromPrice: 175, sub: 'Fallsview Boulevard & Casino District', img: 'https://images.unsplash.com/photo-1533094602577-198d3beab8ea?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Ottawa', label: 'Ottawa, ON', prov: 'ON', count: '27 Verified Stays', fromPrice: 185, sub: 'Parliament Hill & ByWard Market', img: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Mississauga', label: 'Mississauga, ON', prov: 'ON', count: '24 Verified Stays', fromPrice: 168, sub: 'YYZ Airport & Square One Centre', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Vancouver', label: 'Vancouver, BC', prov: 'BC', count: '52 Verified Stays', fromPrice: 235, sub: 'Coal Harbour, Yaletown & Waterfront', img: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Victoria', label: 'Victoria, BC', prov: 'BC', count: '21 Verified Stays', fromPrice: 199, sub: 'Inner Harbour & Historic Core', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Whistler', label: 'Whistler, BC', prov: 'BC', count: '19 Verified Stays', fromPrice: 269, sub: 'Whistler Village & Alpine Resorts', img: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Kelowna', label: 'Kelowna, BC', prov: 'BC', count: '16 Verified Stays', fromPrice: 182, sub: 'Okanagan Lakefront & Wine Country', img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Calgary', label: 'Calgary, AB', prov: 'AB', count: '42 Verified Stays', fromPrice: 169, sub: 'Downtown Beltline & Stampede Park', img: 'https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Banff', label: 'Banff & Canmore, AB', prov: 'AB', count: '34 Verified Stays', fromPrice: 245, sub: 'National Park & Mountain Hot Springs', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Edmonton', label: 'Edmonton, AB', prov: 'AB', count: '35 Verified Stays', fromPrice: 159, sub: 'ICE District & Downtown Jasper Ave', img: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Montreal', label: 'Montreal, QC', prov: 'QC', count: '48 Verified Stays', fromPrice: 195, sub: 'Old Montreal, Downtown & Plateau', img: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Quebec-City', label: 'Quebec City, QC', prov: 'QC', count: '22 Verified Stays', fromPrice: 189, sub: 'Old Quebec & Parliament Hill', img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Winnipeg', label: 'Winnipeg, MB', prov: 'PR', count: '19 Verified Stays', fromPrice: 154, sub: 'The Forks, Exchange District & Arena', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Saskatoon', label: 'Saskatoon & Regina, SK', prov: 'PR', count: '15 Verified Stays', fromPrice: 149, sub: 'South Saskatchewan Riverfront & Core', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                { slug: 'Halifax', label: 'Halifax, NS', prov: 'AT', count: '23 Verified Stays', fromPrice: 189, sub: 'Halifax Harbourwalk & Citadel', img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=700&q=80' }
+            ];
+
+            const allStaysInventory = [
+                {
+                    id: 'sandman-hamilton',
+                    name: 'Sandman Hotel Hamilton',
+                    location: 'Hamilton, ON',
+                    region: 'ON',
+                    category: ['business', 'under185'],
+                    rating: '4.5',
+                    basePrice: 158,
+                    tickAmount: 2,
+                    viewers: 4,
+                    badge: 'Popular Transit Hub',
+                    amenities: ['Indoor Pool', 'Chop Steakhouse', 'Free Wi-Fi'],
+                    image: 'sandman.png.jpg',
+                    fallbackImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'pearle-burlington',
+                    name: 'The Pearle Hotel & Spa',
+                    location: 'Burlington, ON',
+                    region: 'ON',
+                    category: ['luxury'],
+                    rating: '4.8',
+                    basePrice: 285,
+                    tickAmount: 4,
+                    viewers: 6,
+                    badge: 'Waterfront Luxury',
+                    amenities: ['Full Spa', 'Lakeview', 'Fine Dining'],
+                    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'sheraton-hamilton',
+                    name: 'Sheraton Hamilton Hotel',
+                    location: 'Hamilton, ON',
+                    region: 'ON',
+                    category: ['business'],
+                    rating: '4.4',
+                    basePrice: 195,
+                    tickAmount: 3,
+                    viewers: 3,
+                    badge: 'Downtown Core',
+                    amenities: ['Club Lounge', 'Indoor Pool', 'Convention Link'],
+                    image: 'sheraton.png.jpg',
+                    fallbackImage: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'royal-york-toronto',
+                    name: 'Fairmont Royal York',
+                    location: 'Toronto, ON',
+                    region: 'ON',
+                    category: ['luxury', 'business'],
+                    rating: '4.7',
+                    basePrice: 299,
+                    tickAmount: 5,
+                    viewers: 8,
+                    badge: 'Iconic Landmark',
+                    amenities: ['Union Station', 'Skylight Pool', '3 Restaurants'],
+                    image: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'pan-pacific-vancouver',
+                    name: 'Pan Pacific Vancouver Waterfront',
+                    location: 'Vancouver, BC',
+                    region: 'BC',
+                    category: ['luxury', 'business'],
+                    rating: '4.8',
+                    basePrice: 275,
+                    tickAmount: 4,
+                    viewers: 7,
+                    badge: 'Harbourfront 5-Star',
+                    amenities: ['Ocean View Pool', 'Spa', 'Canada Place'],
+                    image: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'hotel-arts-calgary',
+                    name: 'Hotel Arts Calgary',
+                    location: 'Calgary, AB',
+                    region: 'AB',
+                    category: ['luxury', 'business'],
+                    rating: '4.6',
+                    basePrice: 215,
+                    tickAmount: 3,
+                    viewers: 5,
+                    badge: 'Downtown Calgary',
+                    amenities: ['Heated Pool', 'Boutique Suites', 'Dining'],
+                    image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'banff-rimrock',
+                    name: 'Rimrock Resort Hotel Banff',
+                    location: 'Banff, AB',
+                    region: 'AB',
+                    category: ['luxury'],
+                    rating: '4.9',
+                    basePrice: 325,
+                    tickAmount: 5,
+                    viewers: 9,
+                    badge: 'Rockies Resort',
+                    amenities: ['Mountain Views', 'Alpine Spa', 'Fine Dining'],
+                    image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'mount-stephen-montreal',
+                    name: 'Le Mount Stephen Montreal',
+                    location: 'Montreal, QC',
+                    region: 'QC',
+                    category: ['luxury', 'business'],
+                    rating: '4.7',
+                    basePrice: 235,
+                    tickAmount: 3,
+                    viewers: 5,
+                    badge: 'Golden Square Mile',
+                    amenities: ['Boutique Luxury', 'Bar George', 'Spa'],
+                    image: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'fort-garry-winnipeg',
+                    name: 'The Fort Garry Hotel & Spa',
+                    location: 'Winnipeg, MB',
+                    region: 'PR',
+                    category: ['business', 'under185'],
+                    rating: '4.6',
+                    basePrice: 169,
+                    tickAmount: 2,
+                    viewers: 4,
+                    badge: 'Historic Landmark',
+                    amenities: ['Ten Spa', 'Downtown Core', 'Free Wi-Fi'],
+                    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    id: 'halifax-waterfront-hotel',
+                    name: 'Muir Autograph Collection Halifax',
+                    location: 'Halifax, NS',
+                    region: 'AT',
+                    category: ['luxury', 'business'],
+                    rating: '4.8',
+                    basePrice: 245,
+                    tickAmount: 4,
+                    viewers: 5,
+                    badge: 'Atlantic Waterfront',
+                    amenities: ['Harbour Views', 'Wellness Spa', 'Fine Dining'],
+                    image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80',
+                    fallbackImage: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80'
+                }
+            ];
+
+            let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
+            let activeStayFilter = 'all';
+            let activeProvinceTab = 'ALL';
+
+            // --- 4. CUSTOM OTA DESTINATION AUTOCOMPLETE POPOVER ---
+            const autocompleteBox = document.getElementById('custom-autocomplete');
+
+            function renderAutocompleteList(query = '') {
+                autocompleteBox.innerHTML = '';
+                const sorted = [...NATIONWIDE_CITIES].sort((a, b) => (a.prov === activeRegion ? -1 : 1));
+                const filtered = sorted.filter(item =>
+                    item.label.toLowerCase().includes(query.toLowerCase()) ||
+                    item.sub.toLowerCase().includes(query.toLowerCase())
+                );
+
+                if (filtered.length === 0) {
+                    autocompleteBox.classList.add('hidden');
+                    return;
+                }
+
+                filtered.slice(0, 7).forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'w-full px-4 py-2.5 text-left hover:bg-red-50 flex items-center justify-between transition';
+                    btn.innerHTML = `
+                        <div>
+                            <div class="text-xs font-extrabold text-brand-text">${item.label}</div>
+                            <div class="text-[10px] text-gray-400 font-medium">${item.sub} • ${item.count}</div>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-gray-100 text-gray-600">${item.prov}</span>
+                    `;
+                    btn.addEventListener('click', () => {
+                        destInput.value = item.label;
+                        autocompleteBox.classList.add('hidden');
+                    });
+                    autocompleteBox.appendChild(btn);
+                });
+                autocompleteBox.classList.remove('hidden');
+            }
+
+            destInput.addEventListener('focus', () => renderAutocompleteList(destInput.value));
+            destInput.addEventListener('input', () => renderAutocompleteList(destInput.value));
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('destination-wrapper').contains(e.target)) {
+                    autocompleteBox.classList.add('hidden');
+                }
+            });
+
+            // --- 5. RENDER FUNCTIONS (CITY PILLS, FEATURED STAYS & PROVINCE TABS) ---
+            function renderGeoPills(region) {
+                const pillsContainer = document.getElementById('city-pills-container');
+                pillsContainer.innerHTML = '';
+
+                const prioritized = region === 'ALL'
+                    ? NATIONWIDE_CITIES.slice(0, 8)
+                    : [
+                        ...NATIONWIDE_CITIES.filter(c => c.prov === region),
+                        ...NATIONWIDE_CITIES.filter(c => c.prov !== region)
+                      ].slice(0, 8);
+
+                prioritized.forEach(cityObj => {
+                    const a = document.createElement('a');
+                    a.href = `city.html?city=${encodeURIComponent(cityObj.slug)}`;
+                    a.className = 'px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
+                    a.textContent = cityObj.label;
+                    a.addEventListener('click', (e) => {
+                        // Sets search bar value and allows smooth navigation to city guide
+                        destInput.value = cityObj.label;
+                    });
+                    pillsContainer.appendChild(a);
+                });
+            }
+
+            function renderFeaturedStays(region, filterType = 'all') {
+                const container = document.getElementById('api-results-container');
+                container.innerHTML = '';
+
+                let sorted = [...allStaysInventory].sort((a, b) => {
+                    if (region !== 'ALL') {
+                        if (a.region === region && b.region !== region) return -1;
+                        if (a.region !== region && b.region === region) return 1;
+                    }
+                    return 0;
+                });
+
+                if (filterType === 'regional' && region !== 'ALL') {
+                    sorted = sorted.filter(h => h.region === region);
+                }
+                if (filterType === 'luxury') sorted = sorted.filter(h => h.category.includes('luxury'));
+                if (filterType === 'business') sorted = sorted.filter(h => h.category.includes('business'));
+                if (filterType === 'under185') sorted = sorted.filter(h => h.basePrice <= 185);
+
+                sorted.slice(0, 4).forEach(hotel => {
+                    const checkin = checkinInput.value;
+                    const checkout = checkoutInput.value;
+                    const amenityHtml = hotel.amenities.map(a => `<span class="text-[9px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2 py-0.5 rounded">${a}</span>`).join('');
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-soft hover:shadow-soft-xl transition-all duration-300 flex flex-col group';
+
+                    card.innerHTML = `
+                        <div class="relative h-48 overflow-hidden bg-gray-100">
+                            <a href="hotel.html?id=${encodeURIComponent(hotel.id)}&checkin=${checkin}&checkout=${checkout}">
+                                <img src="${hotel.image}" onerror="this.onerror=null; this.src='${hotel.fallbackImage}';" alt="${hotel.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </a>
+                            <span class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">
+                                ${hotel.badge}
+                            </span>
+                            <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-1 rounded shadow">
+                                ★ ${hotel.rating}
+                            </span>
+                        </div>
+                        <div class="p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="text-xs font-bold text-brand-red uppercase tracking-wider mb-0.5">${hotel.location}</div>
+                                <h3 class="text-lg font-extrabold text-brand-text leading-snug mb-2">
+                                    <a href="hotel.html?id=${encodeURIComponent(hotel.id)}&checkin=${checkin}&checkout=${checkout}" class="hover:text-brand-red transition">${hotel.name}</a>
+                                </h3>
+                                <div class="flex flex-wrap gap-1.5 mb-3">${amenityHtml}</div>
+                            </div>
+                            <div class="pt-4 border-t border-gray-100 mt-2 flex justify-between items-end">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase block">Nightly Rate</span>
+                                    <span class="text-2xl font-black text-brand-text">$${hotel.basePrice} <span class="text-[10px] font-normal text-gray-500">CAD</span></span>
+                                </div>
+                                <a href="checkout.html?hotel=${encodeURIComponent(hotel.name)}&prov=${hotel.region}&price=${hotel.basePrice}&checkin=${checkin}&checkout=${checkout}" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl transition shadow-sm">
+                                    Book Now
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            function renderCitiesGrid(provCode) {
+                const container = document.getElementById('cities-grid-container');
+                const usPanel = document.getElementById('us-coming-soon-panel');
+
+                if (provCode === 'US') {
+                    container.classList.add('hidden');
+                    usPanel.classList.remove('hidden');
+                    return;
+                }
+
+                usPanel.classList.add('hidden');
+                container.classList.remove('hidden');
+                container.innerHTML = '';
+
+                let list = provCode === 'ALL'
+                    ? NATIONWIDE_CITIES.slice(0, 8)
+                    : NATIONWIDE_CITIES.filter(c => c.prov === provCode);
+
+                list.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'group relative h-60 rounded-2xl overflow-hidden shadow-soft border border-gray-200 flex flex-col justify-end';
+                    card.innerHTML = `
+                        <img src="${item.img}" alt="${item.label}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent"></div>
+                        <div class="absolute top-3 left-3 bg-slate-900/85 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                            ${item.count}
+                        </div>
+                        <div class="absolute top-3 right-3 bg-white/95 text-brand-text text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow">
+                            From $${item.fromPrice}/nt
+                        </div>
+                        <div class="relative z-10 p-4 text-white">
+                            <p class="text-[10px] font-semibold text-gray-300 truncate">${item.sub}</p>
+                            <h3 class="text-xl font-black tracking-tight mb-2.5">${item.label}</h3>
+                            <div class="flex items-center gap-2">
+                                <a href="city.html?city=${encodeURIComponent(item.slug)}" class="bg-white/95 hover:bg-white text-brand-text font-extrabold text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
+                                    City Guide
+                                </a>
+                                <a href="results.html?destination=${encodeURIComponent(item.label)}&checkin=${checkinInput.value}&checkout=${checkoutInput.value}&guests=2" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
+                                    Search Stays &rarr;
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            // --- 6. REGION & PROVINCE TAB CONTROLLERS ---
+            const regionSelect = document.getElementById('region-select');
+
+            function setGeoPredisposition(regionCode) {
+                activeRegion = regionCode;
+                localStorage.setItem('hotbeds_region', activeRegion);
+                regionSelect.value = activeRegion;
+
+                const defaultHubMap = {
+                    ON: 'Hamilton, ON',
+                    BC: 'Vancouver, BC',
+                    AB: 'Calgary, AB',
+                    QC: 'Montreal, QC',
+                    PR: 'Winnipeg, MB',
+                    AT: 'Halifax, NS',
+                    ALL: 'Toronto, ON'
+                };
+                destInput.placeholder = `e.g. ${defaultHubMap[activeRegion] || 'Hamilton, ON'}`;
+
+                renderGeoPills(activeRegion);
+                renderFeaturedStays(activeRegion, activeStayFilter);
+                renderCitiesGrid(activeProvinceTab);
+            }
+
+            setGeoPredisposition(activeRegion);
+
+            regionSelect.addEventListener('change', (e) => {
+                setGeoPredisposition(e.target.value);
+                startCycle(0);
+            });
+
+            document.getElementById('search-geo-hint').addEventListener('click', () => {
+                const defaultHubMap = {
+                    ON: 'Hamilton, ON',
+                    BC: 'Vancouver, BC',
+                    AB: 'Calgary, AB',
+                    QC: 'Montreal, QC',
+                    PR: 'Winnipeg, MB',
+                    AT: 'Halifax, NS',
+                    ALL: 'Hamilton, ON'
+                };
+                destInput.value = defaultHubMap[activeRegion] || 'Hamilton, ON';
+            });
+
+            // Stay Filter Tabs
+            document.querySelectorAll('.stay-filter-tab').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.stay-filter-tab').forEach(b => {
+                        b.className = 'stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap';
+                    });
+                    e.currentTarget.className = 'stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-extrabold bg-brand-text text-white transition whitespace-nowrap';
+                    activeStayFilter = e.currentTarget.getAttribute('data-filter');
+                    renderFeaturedStays(activeRegion, activeStayFilter);
+                });
+            });
+
+            // Province Directory Tabs
+            document.querySelectorAll('.prov-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const prov = e.currentTarget.getAttribute('data-prov');
+                    activeProvinceTab = prov;
+
+                    document.querySelectorAll('.prov-tab').forEach(t => {
+                        if (t.getAttribute('data-prov') === 'US') {
+                            t.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-50 text-brand-red border border-red-200 hover:bg-red-100 transition whitespace-nowrap flex items-center gap-1.5';
+                        } else {
+                            t.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap';
+                        }
+                    });
+
+                    if (prov !== 'US') {
+                        e.currentTarget.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-text text-white shadow-sm transition whitespace-nowrap';
+                    } else {
+                        e.currentTarget.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-red text-white shadow-sm transition whitespace-nowrap flex items-center gap-1.5';
+                    }
+
+                    renderCitiesGrid(prov);
+                });
+            });
+
+            // US Waitlist Form
+            document.getElementById('us-waitlist-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('us-waitlist-btn');
+                btn.textContent = '✓ Subscribed!';
+                btn.classList.replace('bg-brand-red', 'bg-emerald-600');
+            });
+
+            // --- 7. LIVE FOMO SCARCITY WIDGET ENGINE ---
+            const CYCLE_DURATION = 15;
+            const TICK_INTERVAL = 3;
+            let currentCycleIndex = 0;
+            let currentPrice = 0;
+            let timeLeft = 0;
+            let mainInterval = null;
+            let activeWidgetHotel = null;
+
+            const elHotelName = document.getElementById('hotel-name');
+            const elHotelLocation = document.getElementById('hotel-location');
+            const elHotelImage = document.getElementById('hotel-image');
+            const elCurrentPrice = document.getElementById('current-price');
+            const elTimeLeft = document.getElementById('time-left');
+            const elProgressBar = document.getElementById('progress-bar');
+            const elSuccessOverlay = document.getElementById('success-overlay');
+
+            function getRegionalCycleList() {
+                if (activeRegion === 'ALL') return allStaysInventory;
+                const regional = allStaysInventory.filter(h => h.region === activeRegion);
+                const others = allStaysInventory.filter(h => h.region !== activeRegion);
+                return [...regional, ...others];
+            }
+
+            window.startCycle = function(index) {
+                const cycleList = getRegionalCycleList();
+                const hotel = cycleList[index % cycleList.length];
+                activeWidgetHotel = hotel;
+
+                currentPrice = hotel.basePrice;
+                timeLeft = CYCLE_DURATION;
+
+                elHotelName.textContent = hotel.name;
+                elHotelLocation.textContent = hotel.location;
+                document.getElementById('widget-viewers').textContent = `${hotel.viewers} others viewing now`;
+                document.getElementById('widget-rating-tag').textContent = `(${hotel.rating} Verified)`;
+                elHotelImage.src = hotel.image;
+                elHotelImage.onerror = () => { elHotelImage.src = hotel.fallbackImage; };
+
+                updatePriceDisplay();
+                updateTimerDisplay();
+
+                if (mainInterval) clearInterval(mainInterval);
+
+                mainInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+
+                    if (timeLeft > 0 && timeLeft % TICK_INTERVAL === 0) {
+                        currentPrice += hotel.tickAmount;
+                        updatePriceDisplay(true);
+                    }
+
+                    if (timeLeft <= 0) {
+                        clearInterval(mainInterval);
+                        currentCycleIndex = (currentCycleIndex + 1) % cycleList.length;
+                        startCycle(currentCycleIndex);
+                    }
+                }, 1000);
+            };
+
+            function updateTimerDisplay() {
+                const secondsStr = timeLeft < 10 ? `0${timeLeft}` : timeLeft;
+                elTimeLeft.textContent = `00:${secondsStr}`;
+                elProgressBar.style.width = `${(timeLeft / CYCLE_DURATION) * 100}%`;
+            }
+
+            function updatePriceDisplay(flash = false) {
+                elCurrentPrice.textContent = currentPrice;
+                if (flash) {
+                    elCurrentPrice.classList.remove('price-flash');
+                    void elCurrentPrice.offsetWidth;
+                    elCurrentPrice.classList.add('price-flash');
+                }
+            }
+
+            window.lockPrice = function() {
+                if (mainInterval) clearInterval(mainInterval);
+
+                document.getElementById('locked-hotel').textContent = activeWidgetHotel.name;
+                document.getElementById('locked-price').textContent = currentPrice.toFixed(2);
+
+                localStorage.setItem('locked_hotel_name', activeWidgetHotel.name);
+                localStorage.setItem('locked_hotel_price', currentPrice.toFixed(2));
+                localStorage.setItem('locked_hotel_province', activeWidgetHotel.region);
+
+                document.getElementById('fomo-checkout-link').href = `checkout.html?hotel=${encodeURIComponent(activeWidgetHotel.name)}&prov=${activeWidgetHotel.region}&price=${currentPrice.toFixed(2)}&checkin=${checkinInput.value}&checkout=${checkoutInput.value}`;
+
+                elSuccessOverlay.classList.remove('hidden');
+                elSuccessOverlay.classList.add('flex');
+            };
+
+            window.unlockPrice = function() {
+                elSuccessOverlay.classList.add('hidden');
+                elSuccessOverlay.classList.remove('flex');
+                startCycle(currentCycleIndex);
+            };
+
+            startCycle(0);
+
+            // --- 8. CORPORATE QUICK-FILL HELPER ---
+            window.fillCorporateSearch = function() {
+                document.getElementById('guests').value = '4';
+                destInput.value = activeRegion === 'AB' ? 'Calgary, AB' : (activeRegion === 'BC' ? 'Vancouver, BC' : 'Toronto, ON');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                destInput.focus();
+            };
+
+            // --- 9. HEADER 7-DAY CLUB COUNTDOWN TIMER ---
+            const clubTimerElement = document.getElementById('club-timer');
+            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + 3540;
+            setInterval(() => {
+                if (!clubTimerElement || clubTimeLeft <= 0) return;
+                clubTimeLeft--;
+                const days = Math.floor(clubTimeLeft / (24 * 3600));
+                const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
+                const mins = Math.floor((clubTimeLeft % 3600) / 60);
+                clubTimerElement.innerText = `${days}d ${hours}h ${mins}m`;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
