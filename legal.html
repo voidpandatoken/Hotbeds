@@ -368,7 +368,7 @@
                             <div>
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block mb-0.5">Official Electronic Contact &amp; Notice Address</span>
                                 <p class="font-bold text-brand-red"><a href="mailto:support@hotbeds.ca" class="hover:underline break-all">support@hotbeds.ca</a></p>
-                                <p class="text-gray-500 mt-0.5">Self-Service Portal: <a href="manage-booking.html" class="underline hover:text-brand-text break-all">hotbeds.ca/manage-booking.html</a></p>
+                                <p class="text-gray-500 mt-0.5">Self-Service Portal: <a href="manage-booking.html" class="underline hover:text-brand-text break-all">hotbeds.ca/manage-booking</a></p>
                             </div>
                             <div>
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block mb-0.5">Settlement Currency</span>
@@ -390,7 +390,7 @@
                             <li><strong>Itemized Price &amp; Currency Breakdown:</strong> A clear, detailed description of the hotel accommodation, room category, occupancy, check-in/check-out dates, base nightly rate in Canadian Dollars (<strong>CAD $</strong>), applicable federal and provincial sales taxes (GST, PST, HST, QST), and any applicable region-specific fees (such as the mandatory $2.25 CAD/night Ontario Eco Fee for Ontario properties only).</li>
                             <li><strong>Total Contract Obligation:</strong> The exact total amount payable by the consumer in Canadian Dollars (CAD $), with zero hidden surcharges, undisclosed resort markups, or post-checkout platform booking fees.</li>
                             <li><strong>Cancellation, Return, Exchange &amp; Refund Restrictions:</strong> Full disclosure of whether the selected tariff is a <em>Standard Refundable Rate</em> (eligible for free cancellation up to 24 hours prior to 3:00 PM property local time on the scheduled date of arrival) or a deeply discounted <em>Non-Refundable Flash Rate</em>.</li>
-                            <li><strong>Express Opportunity to Accept, Decline, or Correct Errors:</strong> At <code class="break-all">checkout.html</code>, consumers are presented with a complete summary of their reservation payload and may modify guest names, dates, province selection, or promotional opt-ins before clicking the final payment submission button.</li>
+                            <li><strong>Express Opportunity to Accept, Decline, or Correct Errors:</strong> At <strong>Checkout</strong>, consumers are presented with a complete summary of their reservation payload and may modify guest names, dates, province selection, or promotional opt-ins before clicking the final payment submission button.</li>
                             <li><strong>Permanent Copy Retention:</strong> Consumers may print or save these disclosures and their completed reservation voucher as a PDF at any time using the <em>"Print / Save Legal Disclosures (PDF)"</em> button at the top of this page or on their booking confirmation screen.</li>
                         </ul>
 
@@ -430,7 +430,7 @@
                         </p>
                         <ul class="list-disc pl-5 space-y-1.5">
                             <li><strong>15-Second Live Rate Feed:</strong> On our homepage and search feeds, live flash rates cycle on a <strong>15-second</strong> market timer with dynamic demand ticks every 3 seconds based on active concurrent property sessions.</li>
-                            <li><strong>Locking a Rate &amp; 14:59 Checkout Protection:</strong> When a user clicks <em>"Lock In This Rate Now"</em>, the current nightly rate (<code class="break-all">locked_hotel_price</code>), property name (<code class="break-all">locked_hotel_name</code>), and provincial tax jurisdiction (<code class="break-all">locked_hotel_province</code>) are frozen in browser session storage and held for <strong>14 minutes and 59 seconds (14:59)</strong> on <code class="break-all">checkout.html</code>. If checkout is not completed before the 14:59 timer expires, the temporary inventory allocation is released back to the wholesale pool and pricing reverts to current market availability.</li>
+                            <li><strong>Locking a Rate &amp; 14:59 Checkout Protection:</strong> When a user clicks <em>"Lock In This Rate Now"</em>, the current nightly rate (<code class="break-all">locked_hotel_price</code>), property name (<code class="break-all">locked_hotel_name</code>), and provincial tax jurisdiction (<code class="break-all">locked_hotel_province</code>) are frozen in browser session storage and held for <strong>14 minutes and 59 seconds (14:59)</strong> on the <strong>Checkout</strong> page. If checkout is not completed before the 14:59 timer expires, the temporary inventory allocation is released back to the wholesale pool and pricing reverts to current market availability.</li>
                         </ul>
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">2.2 Cancellation Policy: Refundable vs. Non-Refundable Flash Rates</h3>
@@ -439,7 +439,7 @@
                                 <span class="text-[10px] font-black uppercase tracking-widest text-emerald-700 block mb-1">Standard Refundable Rates</span>
                                 <h4 class="text-sm font-black text-brand-text mb-1">Free Cancellation up to 24h Prior</h4>
                                 <p class="text-xs text-gray-600">
-                                    Reservations booked under our Standard Refundable tariff may be cancelled free of charge up to <strong>24 hours prior to 3:00 PM (hotel local time)</strong> on the scheduled check-in date via <code class="break-all">manage-booking.html</code> or by emailing <code class="break-all">support@hotbeds.ca</code>. Cancellations requested within 24 hours of 3:00 PM check-in incur a penalty equal to the first night's room rate plus applicable taxes.
+                                    Reservations booked under our Standard Refundable tariff may be cancelled free of charge up to <strong>24 hours prior to 3:00 PM (hotel local time)</strong> on the scheduled check-in date via the <strong>Manage Booking</strong> page or by emailing <code class="break-all">support@hotbeds.ca</code>. Cancellations requested within 24 hours of 3:00 PM check-in incur a penalty equal to the first night's room rate plus applicable taxes.
                                 </p>
                             </div>
                             <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4">
@@ -608,9 +608,9 @@
                             <li><strong>Tokenized Payment Credentials (PCI-DSS Level 1):</strong> Credit card and debit card payments are processed directly via <strong>Stripe</strong> (a certified PCI-DSS Level 1 Service Provider). Hotbeds Inc. never stores raw 16-digit primary account numbers (PAN) or CVV security codes on its application servers; only encrypted payment tokens and non-sensitive card brand/last-4-digit confirmation metadata are retained for refund and audit reconciliation.</li>
                         </ul>
 
-                        <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.2 Database Architecture &amp; Supabase Row-Level Security (RLS)</h3>
+                        <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.2 Database Architecture &amp; Security</h3>
                         <p>
-                            All booking records, loyalty point ledgers, and partner applications are stored in encrypted PostgreSQL cloud databases powered by <strong>Supabase</strong> using TLS 1.3 encryption in transit and AES-256 encryption at rest. Our database tables enforce strict <strong>Row-Level Security (RLS)</strong> policies, ensuring that reservation payloads can only be queried by authenticated system functions or verified via matching Booking Reference ID and registered email verification on <code class="break-all">manage-booking.html</code>.
+                            All booking records, loyalty point ledgers, and partner applications are stored securely in encrypted cloud databases using TLS 1.3 encryption in transit and AES-256 encryption at rest. Our database architecture enforces strict security policies, ensuring that reservation payloads can only be queried by authenticated system functions or verified via matching Booking Reference ID and registered email verification on the <strong>Manage Booking</strong> page.
                         </p>
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.3 Strict Purpose Limitation &amp; Third-Party Sharing</h3>
@@ -655,7 +655,7 @@
                                 </div>
                                 <h3 class="text-base font-black mb-2">5.1 Hot Beds Club Rules</h3>
                                 <ul class="list-disc pl-4 space-y-1.5 text-xs text-gray-300">
-                                    <li><strong>Automatic Complimentary Enrollment:</strong> Every guest is automatically enrolled in the <em>Hot Beds Club</em> at $0.00 cost upon completing their first reservation or registering on <code class="break-all">club.html</code>.</li>
+                                    <li><strong>Automatic Complimentary Enrollment:</strong> Every guest is automatically enrolled in the <em>Hot Beds Club</em> at $0.00 cost upon completing their first reservation or registering on the <strong>Club</strong> page.</li>
                                     <li><strong>Welcome Bonus &amp; Earning Formula:</strong> New members receive <strong>1,000 Welcome Points</strong> (equal to <strong>$10.00 CAD</strong> in stay redemption value) plus <strong>10 Points per $1.00 CAD spent</strong> on eligible net room rates (excluding taxes and Ontario Eco Fees).</li>
                                     <li><strong>Redemption &amp; No Cash Surrender Value:</strong> Points may be applied toward future bookings on Hotbeds.ca. Points are promotional loyalty credits, are non-transferable, and carry <strong>no cash surrender value</strong>. If a reservation is cancelled or refunded, points earned on that booking are reversed.</li>
                                 </ul>
@@ -669,9 +669,9 @@
                                 </div>
                                 <h3 class="text-base font-black mb-2">5.2 The Guild Program Rules</h3>
                                 <ul class="list-disc pl-4 space-y-1.5 text-xs text-emerald-100">
-                                    <li><strong>Optional Free Checkout Opt-In:</strong> At <code class="break-all">checkout.html</code>, guests may optionally check the complimentary opt-in box to join <em>The Guild</em> for free ($0.00 membership fee).</li>
+                                    <li><strong>Optional Free Checkout Opt-In:</strong> At <strong>Checkout</strong>, guests may optionally check the complimentary opt-in box to join <em>The Guild</em> for free ($0.00 membership fee).</li>
                                     <li><strong>Immediate 20% Room Subtotal Discount:</strong> Opting into The Guild at checkout immediately deducts <strong>20% off the pre-tax room subtotal</strong> on your active reservation.</li>
-                                    <li><strong>Portal Access &amp; Local City Perks:</strong> Members receive private login credentials to <code class="break-all">portal-login.html</code>, unlocking private flash rates and curated dining, spa, coworking, and entertainment perks from our Zero-Fee Local Partner Network across Canada.</li>
+                                    <li><strong>Portal Access &amp; Local City Perks:</strong> Members receive private login credentials to the <strong>Member Portal</strong>, unlocking private flash rates and curated dining, spa, coworking, and entertainment perks from our Zero-Fee Local Partner Network across Canada.</li>
                                 </ul>
                             </div>
                         </div>
@@ -732,7 +732,7 @@
                                     </tr>
                                     <tr>
                                         <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold break-all">latest_booking_payload</td>
-                                        <td class="p-3 border border-gray-200">Stores your active reservation confirmation object so you can view, print, or cancel your stay instantly on <code class="break-all">manage-booking.html</code>.</td>
+                                        <td class="p-3 border border-gray-200">Stores your active reservation confirmation object so you can view, print, or cancel your stay instantly on the <strong>Manage Booking</strong> page.</td>
                                         <td id="live-key-booking" class="p-3 border border-gray-200 font-mono text-gray-700 break-words">Checking...</td>
                                     </tr>
                                 </tbody>
