@@ -76,17 +76,31 @@
         }
 
         @keyframes flash-highlight {
-            0% { background-color: rgba(230, 57, 70, 0.14); }
+            0% { background-color: rgba(230, 57, 70, 0.15); }
             100% { background-color: transparent; }
         }
         .receipt-flash {
             animation: flash-highlight 0.8s ease-out;
         }
 
-        /* Official Tax Receipt & Voucher Print Styles */
+        /* Clean Accordion Arrow Rotation */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] .accordion-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Print Media Styles for Official Voucher & Tax Invoice */
         @media print {
             header, footer, .no-print {
                 display: none !important;
+            }
+            #unlocked-booking-workspace {
+                display: block !important;
             }
             body {
                 background-color: #ffffff !important;
@@ -95,6 +109,7 @@
             .print-container {
                 box-shadow: none !important;
                 border: 1px solid #cbd5e1 !important;
+                break-inside: avoid;
             }
         }
     </style>
@@ -112,7 +127,7 @@
                 <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
                     <span id="top-bar-club-text" class="truncate">
-                        <strong>HOT BEDS CLUB:</strong> Automatic 1,000 Welcome Points + 20% Off Guild Network Access &rarr;
+                        <strong>HOT BEDS CLUB:</strong> 1,000 Free Welcome Points + 20% Off Guild Network &rarr;
                     </span>
                 </a>
 
@@ -146,7 +161,7 @@
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation Links (All 7 Core Routes) -->
+                <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-6 xl:space-x-7">
                     <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
                     <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Search Stays</a>
@@ -160,9 +175,9 @@
                 <!-- Right CTA: Untouchable #club-timer Pill + 44x44px Mobile Menu Button -->
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <div class="hidden sm:flex items-center">
-                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-red-50 hover:bg-red-100 border border-red-200 flex items-center justify-center text-brand-red font-black text-xs shadow-sm transition" title="Active Guest Session">
+                        <button type="button" onclick="window.openMemberPopup()" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-red-50 hover:bg-red-100 border border-red-200 flex items-center justify-center text-brand-red font-black text-xs shadow-sm transition" title="View Member Points Status">
                             G.
-                        </a>
+                        </button>
                     </div>
                     
                     <!-- PROTECTED HEADER PILL: #club-timer is NEVER overwritten by localStorage -->
@@ -230,7 +245,7 @@
                         City Guides:
                     </span>
                     <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center">
-                        <!-- Dynamically populated by JS based on selected Province -->
+                        <!-- Dynamically populated by JS -->
                     </div>
                 </div>
             </div>
@@ -238,799 +253,813 @@
     </header>
 
     <!-- ================================================================= -->
-    <!-- MAIN MANAGE-BOOKING WORKSPACE                                     -->
+    <!-- MAIN WORKSPACE: PROGRESSIVE DISCLOSURE (LOOKUP FIRST -> REVEAL)   -->
     <!-- ================================================================= -->
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
+    <main class="flex-grow w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6">
 
         <!-- ============================================================= -->
-        <!-- COMPONENT 4: DUAL-MODE ACCESS GATE (TOGGLEABLE ANYTIME)       -->
+        <!-- COMPONENT 4: SINGLE-FOCUS RESERVATION LOOKUP GATE (NO TABS)   -->
+        <!-- Appears FIRST on load. Collapses into a 1-line bar once       -->
+        <!-- the user finds their booking and unlocks the dashboard below. -->
         <!-- ============================================================= -->
-        <section id="access-gate-section" class="bg-white rounded-3xl border border-gray-200 shadow-soft-lg overflow-hidden no-print">
-            <div class="bg-slate-900 text-white px-5 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-brand-red fomo-dot"></span>
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300">Reservation &amp; Loyalty Command Center</span>
-                    </div>
-                    <h1 class="text-lg sm:text-xl font-black tracking-tight mt-0.5">Lookup Reservation, Customize Tax Invoice or Access Member Rewards</h1>
-                </div>
-                <button type="button" id="collapse-gate-btn" onclick="window.toggleAccessGate()" class="text-[11px] font-extrabold uppercase tracking-wider bg-white/10 hover:bg-white/20 text-white px-3.5 py-2 rounded-xl border border-white/15 transition shrink-0">
-                    Hide Lookup Panel ▲
-                </button>
-            </div>
-
-            <div id="access-gate-body" class="p-5 sm:p-8 space-y-6">
-                <!-- Mode Switcher Tabs -->
-                <div class="flex flex-wrap gap-2 border-b border-gray-200 pb-4 justify-between items-center">
-                    <div class="flex gap-2">
-                        <button type="button" id="gate-tab-lookup" onclick="window.switchAccessTab('lookup')" class="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-brand-red text-white shadow-sm transition">
-                            Tab A — Instant Reservation Lookup
-                        </button>
-                        <button type="button" id="gate-tab-member" onclick="window.switchAccessTab('member')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
-                            Tab B — Hot Beds Club Member Sign-In
-                        </button>
-                    </div>
-
-                    <!-- Instant Province Preset Switcher (To Test ON Eco Fee vs Non-ON Tax Math) -->
-                    <div class="flex flex-wrap items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-xl">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-500 mr-1">Test Provincial Tax Presets:</span>
-                        <button type="button" onclick="window.loadPresetBooking('ON')" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-slate-900 text-white hover:bg-brand-red transition">ON (13% HST + $2.25 Eco)</button>
-                        <button type="button" onclick="window.loadPresetBooking('AB')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white border border-gray-200 text-gray-700 hover:border-brand-red transition">AB (5% GST • $0 Eco)</button>
-                        <button type="button" onclick="window.loadPresetBooking('BC')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white border border-gray-200 text-gray-700 hover:border-brand-red transition">BC (13% Tax • $0 Eco)</button>
-                        <button type="button" onclick="window.loadPresetBooking('QC')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white border border-gray-200 text-gray-700 hover:border-brand-red transition">QC (15% Tax • $0 Eco)</button>
-                    </div>
-                </div>
-
-                <!-- TAB A: Instant Reservation Lookup -->
-                <div id="gate-panel-lookup" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-                    <form id="reservation-lookup-form" class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-                        <div class="sm:col-span-4">
-                            <label for="lookup-ref" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Booking Reference</label>
-                            <input type="text" id="lookup-ref" placeholder="HB-849204" value="HB-849204" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-black uppercase text-brand-text outline-none">
-                        </div>
-                        <div class="sm:col-span-5">
-                            <label for="lookup-email" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Guest Email Address</label>
-                            <input type="email" id="lookup-email" placeholder="guest@hotbeds.ca" value="gordon.culp@hotbeds.ca" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                        </div>
-                        <div class="sm:col-span-3">
-                            <button type="submit" class="w-full bg-brand-text hover:bg-black text-white font-black text-xs uppercase tracking-widest p-3.5 rounded-xl transition shadow-sm">
-                                Find Booking &rarr;
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="lg:col-span-4 flex flex-col justify-end">
-                        <button type="button" onclick="window.loadLatestOrDefaultBooking()" class="w-full bg-red-50 hover:bg-red-100 text-brand-red border-2 border-red-200 font-black text-xs uppercase tracking-wider p-3.5 rounded-xl transition flex items-center justify-center gap-2">
-                            <span>⚡ Load Latest / Default Hamilton Stay</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- TAB B: Hot Beds Club Member Sign-In -->
-                <div id="gate-panel-member" class="hidden">
-                    <form id="member-signin-form" class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
-                        <div class="sm:col-span-5">
-                            <label for="member-email-input" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Registered Hot Beds Club Email</label>
-                            <input type="email" id="member-email-input" placeholder="Enter your member email..." value="gordon.culp@hotbeds.ca" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label for="member-tier-preview" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Automatic Loyalty Benefit</label>
-                            <div id="member-tier-preview" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold">
-                                ✓ 1,000 Welcome Pts + 10 Pts/$1 Active
-                            </div>
-                        </div>
-                        <div class="sm:col-span-3">
-                            <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest p-3.5 rounded-xl transition shadow-md">
-                                Unlock Member Ledger &rarr;
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================================= -->
-        <!-- COMPONENT 5: LIVE RESERVATION STATUS BAR & VOUCHER HEADER     -->
-        <!-- ============================================================= -->
-        <section class="bg-white rounded-3xl border border-gray-200 p-5 sm:p-7 shadow-soft print-container">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                <div class="flex flex-wrap items-center gap-3">
-                    <span id="voucher-status-badge" class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-                        <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-                        CONFIRMED &amp; GUARANTEED
-                    </span>
-                    <div class="bg-gray-100 border border-gray-200 px-3.5 py-1.5 rounded-xl text-xs font-bold text-gray-600">
-                        Booking Ref: <strong id="display-booking-ref" class="text-brand-text font-mono">HB-849204</strong>
-                    </div>
-                    <div class="bg-slate-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold">
-                        Front Desk PIN: <strong id="display-checkin-pin" class="text-brand-red font-mono">4920</strong>
-                    </div>
-                    <span id="province-tax-pill" class="bg-red-50 text-brand-red border border-red-200 px-3 py-1.5 rounded-xl text-[11px] font-extrabold uppercase tracking-wider">
-                        Province: ON (13% HST + $2.25/nt Eco Fee)
-                    </span>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto no-print">
-                    <button type="button" onclick="window.toggleAccessGate(true)" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
-                        Switch Booking
-                    </button>
-                    <button type="button" onclick="window.print()" class="bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                        <span>Print Official Voucher</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================================= -->
-        <!-- COMPONENT 8 (INNOVATION #1): SECOND-CHANCE FREE GUILD BANNER  -->
-        <!-- ============================================================= -->
-        <section id="second-chance-guild-section" class="rounded-3xl overflow-hidden shadow-soft-lg border-2 border-brand-red bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white p-6 sm:p-8 no-print">
-            <!-- Unenrolled State: High-Converting 1-Click Activation -->
-            <div id="guild-unenrolled-view" class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                <div class="space-y-2 max-w-3xl">
-                    <div class="inline-flex items-center gap-2 bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                        <span>★ Second-Chance Member Unlock • $0.00 Free Opt-In</span>
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-black tracking-tight">
-                        Missed the 20% Guild Box at Checkout? Activate <span class="text-brand-red">The Guild</span> Free Right Now.
-                    </h2>
-                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                        In 1 click, unlock your instant <strong>20% Guild Booking Rebate / Discount</strong>, claim <strong>+500 Bonus Hot Beds Club Points</strong>, and get your private access key to hundreds of discounted restaurants, spas, and local services in <span class="guild-city-label font-bold text-white">Hamilton, ON</span>.
+        <section id="lookup-hero-section" class="no-print">
+            
+            <!-- Compact Collapsed Bar (Shown ONLY after booking is unlocked below) -->
+            <div id="lookup-collapsed-bar" class="hidden bg-slate-900 text-white rounded-2xl px-4 py-3 sm:px-6 sm:py-3.5 shadow-soft flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+                    <p class="text-xs sm:text-sm font-bold truncate">
+                        Viewing Reservation <span id="collapsed-ref-label" class="font-mono font-black text-brand-red">HB-849204</span> • <span id="collapsed-hotel-label" class="text-gray-200">Sandman Hotel Hamilton</span>
                     </p>
                 </div>
-
-                <div class="w-full lg:w-auto flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
-                    <button type="button" onclick="window.activateGuildOneClick()" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-6 py-4 rounded-2xl shadow-lg transition transform active:scale-95 text-center">
-                        Activate Free Guild Pass + 20% Off &rarr;
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <button type="button" onclick="window.openMemberPopup()" class="text-[11px] font-extrabold uppercase tracking-wider bg-white/10 hover:bg-white/20 text-emerald-300 px-3 py-1.5 rounded-xl border border-white/15 transition">
+                        ★ Member Points
                     </button>
-                    <span class="text-[10px] text-gray-400 font-semibold text-center">
-                        Instant activation • Updates your itemized receipt immediately
-                    </span>
-                </div>
-            </div>
-
-            <!-- Enrolled State: Active Guild Key + Portal Login CTA -->
-            <div id="guild-enrolled-view" class="hidden flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                <div class="space-y-2 max-w-2xl">
-                    <div class="inline-flex items-center gap-2 bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                        <span>✓ THE GUILD ACTIVE • 20% DISCOUNT &amp; CITY PERKS UNLOCKED</span>
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-black tracking-tight">
-                        Your Private Guild Pass for <span class="guild-city-label text-emerald-400">Hamilton, ON</span> is Active!
-                    </h2>
-                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                        Your <strong>-20% Guild Discount</strong> has been applied to your itemized tax receipt below, and your +20% bonus Hot Beds Club points are credited. Use your private access key to unlock merchant deals across the city.
-                    </p>
-                </div>
-
-                <div class="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-                    <div class="bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-center">
-                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Private Guild Access Key</span>
-                        <span id="guild-access-key-code" class="font-mono font-black text-base text-emerald-400 tracking-wider">GUILD-HB-2026VIP</span>
-                    </div>
-                    <a href="portal-login.html" class="bg-white hover:bg-gray-100 text-brand-text font-black text-xs uppercase tracking-widest px-5 py-4 rounded-2xl transition text-center flex items-center justify-center">
-                        Enter Guild Portal &rarr;
-                    </a>
-                    <button type="button" onclick="window.toggleGuildSimulation()" class="text-[10px] text-gray-400 hover:text-white underline px-2 py-1" title="Demo Toggle">
-                        Reset Demo State
+                    <button type="button" onclick="window.expandLookupGate()" class="text-[11px] font-extrabold uppercase tracking-wider bg-brand-red hover:bg-brand-redDark text-white px-3.5 py-1.5 rounded-xl transition">
+                        Lookup Another Stay
                     </button>
                 </div>
             </div>
-        </section>
 
-        <!-- ============================================================= -->
-        <!-- MAIN 2-COLUMN DASHBOARD GRID                                  -->
-        <!-- ============================================================= -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-            <!-- LEFT COLUMN (8 COLS): PROPERTY, ENHANCEMENTS, EDITOR, LOGISTICS -->
-            <div class="lg:col-span-8 space-y-8">
-
-                <!-- COMPONENT 6: VERIFIED PROPERTY & ROOM SUMMARY CARD -->
-                <section class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-soft print-container">
-                    <div class="grid grid-cols-1 md:grid-cols-12">
-                        <div class="md:col-span-5 relative min-h-[220px] bg-gray-900">
-                            <img id="summary-hotel-img" src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Booked Property" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                            <span id="summary-hotel-rating" class="absolute top-3 left-3 bg-white/95 text-brand-text text-xs font-black px-2.5 py-1 rounded-lg shadow">
-                                ★ 4.5 Verified Hotel
-                            </span>
-                            <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-white">
-                                <span id="summary-room-badge" class="bg-brand-red text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded">
-                                    Executive King Room
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-7 p-6 flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="flex justify-between items-start gap-2">
-                                    <div>
-                                        <span id="summary-city-tag" class="text-[11px] font-extrabold uppercase tracking-wider text-brand-red">Hamilton, ON</span>
-                                        <h2 id="summary-hotel-name" class="text-2xl font-black text-brand-text tracking-tight leading-snug">Sandman Hotel Hamilton</h2>
-                                    </div>
-                                    <span id="summary-nights-pill" class="bg-slate-900 text-white text-xs font-black px-3 py-1 rounded-full shrink-0">
-                                        2 Nights
-                                    </span>
-                                </div>
-                                <p id="summary-hotel-address" class="text-xs text-gray-500 font-medium mt-1">
-                                    560 Centennial Pkwy N, Hamilton, ON L8E 0G2 • QEW &amp; Red Hill Valley Pkwy Hub
-                                </p>
-                            </div>
-
-                            <!-- Check-in / Check-out Grid -->
-                            <div class="grid grid-cols-2 gap-3 bg-gray-50 border border-gray-200/80 rounded-2xl p-3.5">
-                                <div>
-                                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Check-In (From 3:00 PM)</span>
-                                    <span id="summary-checkin-date" class="text-sm font-black text-brand-text">Sat, Oct 17, 2026</span>
-                                    <span id="summary-arrival-window-badge" class="text-[10px] font-bold text-emerald-700 block mt-0.5">Est. Arrival: 3:00 PM – 5:00 PM</span>
-                                </div>
-                                <div class="border-l border-gray-200 pl-3">
-                                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Check-Out (Until 11:00 AM)</span>
-                                    <span id="summary-checkout-date" class="text-sm font-black text-brand-text">Mon, Oct 19, 2026</span>
-                                    <span id="summary-late-checkout-badge" class="text-[10px] font-bold text-gray-500 block mt-0.5">Standard 11:00 AM Check-Out</span>
-                                </div>
-                            </div>
-
-                            <!-- Guest & Direct Links -->
-                            <div class="flex flex-wrap justify-between items-center gap-3 pt-2 border-t border-gray-100 text-xs">
-                                <div class="text-gray-600 font-semibold">
-                                    Guest: <strong id="summary-guest-name" class="text-brand-text">Gordon Culp</strong>
-                                    <span id="summary-cotraveler-display" class="text-gray-400"></span>
-                                </div>
-                                <div class="flex items-center gap-3 no-print">
-                                    <a id="summary-hotel-link" href="hotel.html?id=sandman-hamilton" class="font-extrabold text-brand-red hover:underline uppercase tracking-wider text-[11px]">
-                                        Property Page &rarr;
-                                    </a>
-                                    <a id="summary-city-link" href="city.html?city=Hamilton" class="font-extrabold text-brand-text hover:text-brand-red uppercase tracking-wider text-[11px]">
-                                        City Guide &rarr;
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- COMPONENT 15: DIGITAL ITINERARY EXPORT STRIP -->
-                <section class="bg-white rounded-2xl border border-gray-200 p-4 shadow-soft flex flex-wrap justify-between items-center gap-3 no-print">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-red-50 text-brand-red flex items-center justify-center font-black text-sm">📅</span>
-                        <div>
-                            <h3 class="text-xs font-black uppercase tracking-wider text-brand-text">Digital Itinerary &amp; Accounting Tools</h3>
-                            <p class="text-[11px] text-gray-500">Sync check-in times to your calendar or export an official GST/HST tax receipt.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <button type="button" onclick="window.downloadICSFile()" class="bg-slate-900 hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5">
-                            <span>📥 Download .ICS Calendar</span>
-                        </button>
-                        <button type="button" onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-2.5 rounded-xl transition">
-                            🖨️ Print Tax Receipt
-                        </button>
-                        <button type="button" id="copy-itinerary-btn" onclick="window.copyShareableItinerary()" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-2.5 rounded-xl transition">
-                            🔗 Copy Shareable Link
-                        </button>
-                    </div>
-                </section>
-
-                <!-- COMPONENT 9 (INNOVATION #2): 1-CLICK HIGH-MARGIN STAY ENHANCEMENTS & UPSELL MATRIX -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-soft space-y-5 no-print">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-gray-100 pb-4">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Instant Front-Desk Dispatch</span>
-                            <h3 class="text-xl font-black text-brand-text tracking-tight">1-Click Stay Enhancements &amp; Flash Room Upgrades</h3>
-                            <p class="text-xs text-gray-500">Add enhancements below—your itemized receipt and front desk reservation update immediately.</p>
-                        </div>
-                        <div class="bg-slate-900 text-white px-3.5 py-2 rounded-xl flex items-center gap-2 shrink-0">
+            <!-- Primary Expanded Lookup Hero Card (Shown First on Page Load) -->
+            <div id="lookup-expanded-card" class="max-w-3xl mx-auto bg-white rounded-3xl border border-gray-200 shadow-soft-xl overflow-hidden">
+                
+                <!-- Dark Header Banner -->
+                <div class="bg-slate-900 text-white p-6 sm:p-8 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest text-gray-200 mb-3">
                             <span class="w-2 h-2 rounded-full bg-brand-red fomo-dot"></span>
-                            <span class="text-[10px] font-extrabold uppercase tracking-wider">Suite Flash Hold:</span>
-                            <span id="upgrade-flash-timer" class="font-mono font-black text-sm text-brand-red">00:15</span>
+                            <span>Instant Reservation &amp; Voucher Retrieval</span>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Enhancement 1: 1:00 PM Late Check-Out -->
-                        <div class="border border-gray-200 rounded-2xl p-4 flex flex-col justify-between hover:border-brand-red transition bg-gray-50/50">
-                            <div>
-                                <div class="flex justify-between items-start gap-2 mb-1.5">
-                                    <span class="bg-blue-100 text-blue-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Guaranteed Until 1:00 PM</span>
-                                    <span id="upsell-late-price-label" class="text-xs font-black text-brand-text">$19 CAD <span class="text-[10px] text-emerald-700 font-bold">(Free w/ Guild)</span></span>
-                                </div>
-                                <h4 class="text-sm font-black text-brand-text">1:00 PM Late Check-Out Request</h4>
-                                <p class="text-xs text-gray-500 mt-1">Sleep in or finish morning meetings without rushing the 11:00 AM housekeeping cutoff.</p>
-                            </div>
-                            <button type="button" id="btn-upsell-late" onclick="window.toggleEnhancement('lateCheckout')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition">
-                                + Add 1:00 PM Late Check-Out
-                            </button>
-                        </div>
-
-                        <!-- Enhancement 2: Early 12:00 PM Bag Drop & Priority Room Alert -->
-                        <div class="border border-gray-200 rounded-2xl p-4 flex flex-col justify-between hover:border-brand-red transition bg-gray-50/50">
-                            <div>
-                                <div class="flex justify-between items-start gap-2 mb-1.5">
-                                    <span class="bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Complimentary Benefit</span>
-                                    <span class="text-xs font-black text-emerald-700">FREE ($0.00)</span>
-                                </div>
-                                <h4 class="text-sm font-black text-brand-text">12:00 PM Bag Drop &amp; Priority Room Ready</h4>
-                                <p class="text-xs text-gray-500 mt-1">Drop bags at the front desk at noon and get first-in-line SMS notification when housekeeping clears your floor.</p>
-                            </div>
-                            <button type="button" id="btn-upsell-bagdrop" onclick="window.toggleEnhancement('earlyBagDrop')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition">
-                                + Activate Free 12:00 PM Priority
-                            </button>
-                        </div>
-
-                        <!-- Enhancement 3: Executive Suite / High-Floor Upgrade Hold (15-Sec Timer) -->
-                        <div class="border-2 border-red-200 rounded-2xl p-4 flex flex-col justify-between bg-red-50/30 relative overflow-hidden">
-                            <div>
-                                <div class="flex justify-between items-start gap-2 mb-1.5">
-                                    <span class="bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded flex items-center gap-1">
-                                        <span>⏱ Flash Rate Lock</span>
-                                        <span id="card-flash-timer" class="font-mono">00:15</span>
-                                    </span>
-                                    <span class="text-xs font-black text-brand-red">+$<span id="suite-upgrade-rate">29</span> CAD / nt</span>
-                                </div>
-                                <h4 class="text-sm font-black text-brand-text">Executive Suite / Top-Floor Corner Upgrade</h4>
-                                <p class="text-xs text-gray-600 mt-1">Lock in a top-floor quiet suite with panoramic view, Nespresso station &amp; lounge workspace before the rate ticks up.</p>
-                            </div>
-                            <button type="button" id="btn-upsell-suite" onclick="window.toggleEnhancement('suiteUpgrade')" class="mt-4 w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition shadow-sm">
-                                ⚡ Lock Suite Upgrade (+$<span id="suite-btn-rate">29</span>/nt)
-                            </button>
-                        </div>
-
-                        <!-- Enhancement 4: $25 Local Dining & Ghost Kitchen Delivery Credit -->
-                        <div class="border border-gray-200 rounded-2xl p-4 flex flex-col justify-between hover:border-brand-red transition bg-gray-50/50">
-                            <div>
-                                <div class="flex justify-between items-start gap-2 mb-1.5">
-                                    <span class="bg-amber-100 text-amber-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Save 24% • Room Delivery</span>
-                                    <span class="text-xs font-black text-brand-text">$19 CAD <span class="text-[10px] text-gray-400 line-through">$25</span></span>
-                                </div>
-                                <h4 class="text-sm font-black text-brand-text">$25 Local Dining &amp; Chef Express Pass</h4>
-                                <p class="text-xs text-gray-500 mt-1">Pre-load a $25 dining &amp; late-night ghost kitchen delivery voucher for only $19 CAD (instant code issued below).</p>
-                            </div>
-                            <button type="button" id="btn-upsell-dining" onclick="window.toggleEnhancement('diningCredit')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition">
-                                + Add $25 Dining Credit ($19)
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- COMPONENT 13: EXTEND MY STAY / ADD ROOM NIGHTS CALCULATOR -->
-                <section class="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 border border-gray-800 shadow-soft flex flex-col md:flex-row justify-between items-start md:items-center gap-6 no-print">
-                    <div class="space-y-1.5 max-w-xl">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Rate-Lock Protection Active</span>
-                        <h3 class="text-lg sm:text-xl font-black tracking-tight">Extend Your Stay at Your Locked Flash Rate ($<span id="extend-rate-display">158</span>/nt)</h3>
-                        <p class="text-xs text-gray-300">
-                            Avoid public weekend price surges. Add extra nights right now and keep your identical room without re-checking at the front desk.
+                        <h1 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
+                            Find Your Reservation
+                        </h1>
+                        <p class="text-xs sm:text-sm text-gray-300 mt-1.5 max-w-xl">
+                            Enter your 6-digit Hotbeds booking reference and email below to generate your live front-desk voucher, itemized tax receipt, and room upgrades.
                         </p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto shrink-0">
-                        <button type="button" onclick="window.adjustStayNights(1)" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
-                            1 Night
-                        </button>
-                        <button type="button" onclick="window.adjustStayNights(2)" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
-                            2 Nights
-                        </button>
-                        <button type="button" onclick="window.adjustStayNights(3)" class="px-4 py-2.5 rounded-xl text-xs font-black bg-brand-red hover:bg-brand-redDark text-white transition shadow">
-                            + Extend to 3 Nights
-                        </button>
-                        <button type="button" onclick="window.adjustStayNights(4)" class="px-4 py-2.5 rounded-xl text-xs font-black bg-white text-brand-text hover:bg-gray-100 transition">
-                            + Extend to 4 Nights
-                        </button>
-                    </div>
-                </section>
-
-                <!-- COMPONENT 10 (INNOVATION #3): INTERACTIVE GUEST, ARRIVAL & CORPORATE TAX INVOICE EDITOR -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-soft space-y-5 no-print">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-gray-100 pb-4">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Live Cloud &amp; LocalStorage Sync</span>
-                            <h3 class="text-xl font-black text-brand-text tracking-tight">Guest Preferences, Arrival Window &amp; Corporate Tax Invoice Editor</h3>
-                            <p class="text-xs text-gray-500">Customize your front-desk arrival details or add your company name for official GST/HST accounting receipts.</p>
-                        </div>
-                        <span id="editor-save-badge" class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full">
-                            ✓ Synced to Reservation
-                        </span>
-                    </div>
-
-                    <form id="guest-invoice-editor-form" class="space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label for="edit-primary-guest" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Primary Registered Guest</label>
-                                <input type="text" id="edit-primary-guest" value="Gordon Culp" required class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-bold text-brand-text outline-none">
-                            </div>
-                            <div>
-                                <label for="edit-co-traveler" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Authorized Co-Traveler (Can Check In)</label>
-                                <input type="text" id="edit-co-traveler" placeholder="e.g. Rica Palomo" value="Rica Palomo" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label for="edit-arrival-window" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Estimated Front Desk Arrival Window</label>
-                                <select id="edit-arrival-window" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                                    <option value="12:00 PM – 3:00 PM (Early Bag Drop)">12:00 PM – 3:00 PM (Early Bag Drop)</option>
-                                    <option value="3:00 PM – 5:00 PM (Standard Check-In)" selected>3:00 PM – 5:00 PM (Standard Check-In)</option>
-                                    <option value="5:00 PM – 8:00 PM (Evening Arrival)">5:00 PM – 8:00 PM (Evening Arrival)</option>
-                                    <option value="After 9:00 PM (Guaranteed Late Hold)">After 9:00 PM (Guaranteed Late Hold)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="edit-special-requests" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Housekeeping &amp; Room Placement</label>
-                                <select id="edit-special-requests" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                                    <option value="Quiet High Floor (Away from Ice/Elevator)" selected>Quiet High Floor (Away from Ice/Elevator)</option>
-                                    <option value="Close to Elevator & Lobby Access">Close to Elevator &amp; Lobby Access</option>
-                                    <option value="Extra Feather-Free Pillows & Towels">Extra Feather-Free Pillows &amp; Towels</option>
-                                    <option value="Work Desk + High-Speed Ethernet Priority">Work Desk + High-Speed Ethernet Priority</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Corporate Expense & GST/HST Invoice Customizer -->
-                        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-brand-text">Corporate Expense &amp; GST/HST Tax Receipt Customizer</span>
-                                <span class="text-[10px] font-bold text-gray-400">Appears on Printable Voucher</span>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div>
-                                    <label for="edit-company-name" class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Company / Organization Name</label>
-                                    <input type="text" id="edit-company-name" placeholder="e.g. Summit Society Inc. / Hotbeds Corp" value="Summit Society Inc." class="w-full p-2.5 rounded-xl bg-white border border-gray-200 text-xs font-semibold text-brand-text outline-none focus:border-brand-red">
-                                </div>
-                                <div>
-                                    <label for="edit-project-code" class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Business Address or Cost Center / PO #</label>
-                                    <input type="text" id="edit-project-code" placeholder="e.g. Hamilton HQ • Cost Code #Q4-2026" value="Hamilton HQ • Cost Code #Q4-2026" class="w-full p-2.5 rounded-xl bg-white border border-gray-200 text-xs font-semibold text-brand-text outline-none focus:border-brand-red">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button type="submit" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-6 py-3 rounded-xl transition shadow-sm">
-                                Save Guest &amp; Corporate Tax Details &rarr;
-                            </button>
-                        </div>
-                    </form>
-                </section>
-
-                <!-- COMPONENT 12: DESTINATION CITY PERKS & LOCAL PARTNER VOUCHER DRAWER -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-soft space-y-5 no-print">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-gray-100 pb-4">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Zero-Fee Local Merchant Network</span>
-                            <h3 class="text-xl font-black text-brand-text tracking-tight">Destination Perks Unlocked in <span class="guild-city-label text-brand-red">Hamilton, ON</span></h3>
-                            <p class="text-xs text-gray-500">Tap any voucher code below to copy and redeem at participating local partner venues during your stay.</p>
-                        </div>
-                        <a href="partners.html" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase tracking-wider shrink-0">
-                            Partner Directory &rarr;
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between">
-                            <div>
-                                <span class="text-[9px] font-black uppercase bg-red-100 text-brand-red px-2 py-0.5 rounded">Dining &amp; Steakhouse</span>
-                                <h4 class="text-sm font-black text-brand-text mt-2">20% Off Appetizers &amp; Late Dining</h4>
-                                <p class="text-xs text-gray-500 mt-1">Valid at participating local dining partners &amp; hotel chop house lounges.</p>
-                            </div>
-                            <button type="button" onclick="window.copyVoucherCode('HB-DINE20', this)" class="mt-4 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2 px-3 rounded-xl transition">
-                                Copy: HB-DINE20
-                            </button>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between">
-                            <div>
-                                <span class="text-[9px] font-black uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Executive Workspace</span>
-                                <h4 class="text-sm font-black text-brand-text mt-2">Free Day Pass + Boardroom Hour</h4>
-                                <p class="text-xs text-gray-500 mt-1">High-speed fiber desk &amp; gourmet espresso access at downtown partner hubs.</p>
-                            </div>
-                            <button type="button" onclick="window.copyVoucherCode('GUILD-DESKVIP', this)" class="mt-4 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2 px-3 rounded-xl transition">
-                                Copy: GUILD-DESKVIP
-                            </button>
-                        </div>
-
-                        <div class="border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between">
-                            <div>
-                                <span class="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Transit &amp; Parking</span>
-                                <h4 class="text-sm font-black text-brand-text mt-2">$15 Off Airport / Regional Transfer</h4>
-                                <p class="text-xs text-gray-500 mt-1">Redeemable on regional executive shuttles and partner car rentals.</p>
-                            </div>
-                            <button type="button" onclick="window.copyVoucherCode('HB-RIDE15', this)" class="mt-4 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2 px-3 rounded-xl transition">
-                                Copy: HB-RIDE15
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- COMPONENT 16 & 17: HIGHWAY/TRANSIT LOGISTICS & FRONT DESK CHECK-IN CHECKLIST -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Component 16: Highway, Transit & Parking Logistics Card -->
-                    <section class="bg-white rounded-3xl border border-gray-200 p-6 shadow-soft space-y-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xs">🛣️</span>
-                            <div>
-                                <h3 class="text-sm font-black uppercase tracking-wider text-brand-text">Highway, Transit &amp; Parking</h3>
-                                <p id="logistics-city-sub" class="text-[11px] text-gray-500">Regional Arrival &amp; Commuter Guide</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-2.5 text-xs text-gray-600 pt-2 border-t border-gray-100">
-                            <li class="flex items-start gap-2">
-                                <span class="text-brand-red font-black">•</span>
-                                <span><strong>Highway Artery:</strong> <span id="logistics-hwy">Direct access off QEW Niagara/Toronto &amp; Red Hill Valley Pkwy (Centennial Pkwy N exit).</span></span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-brand-red font-black">•</span>
-                                <span><strong>Transit &amp; Rail:</strong> <span id="logistics-transit">5 mins to Confederation GO Station; direct Hamilton HSR transit corridor access.</span></span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-brand-red font-black">•</span>
-                                <span><strong>Surface &amp; Oversized Parking:</strong> <span id="logistics-parking">Complimentary surface lot parking included for registered Hotbeds.ca guests.</span></span>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <!-- Component 17: Front Desk Check-In Checklist -->
-                    <section class="bg-white rounded-3xl border border-gray-200 p-6 shadow-soft space-y-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black text-xs">✓</span>
-                            <div>
-                                <h3 class="text-sm font-black uppercase tracking-wider text-brand-text">Front Desk Check-In Checklist</h3>
-                                <p class="text-[11px] text-gray-500">3-Step Express Keycard Handover</p>
-                            </div>
-                        </div>
-                        <ol class="space-y-2.5 text-xs text-gray-600 pt-2 border-t border-gray-100">
-                            <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0">1</span>
-                                <span><strong>Government Photo ID:</strong> Valid Driver's License or Passport matching <strong id="checklist-guest-name" class="text-brand-text">Gordon Culp</strong> (or listed Co-Traveler).</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0">2</span>
-                                <span><strong>Incidentals Card:</strong> Major credit card or Visa/Mastercard debit for standard refundable property security hold.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0">3</span>
-                                <span><strong>Hotbeds Reference &amp; PIN:</strong> Quote Booking Ref <strong id="checklist-ref" class="text-brand-red font-mono">HB-849204</strong> (PIN <strong class="font-mono">4920</strong>).</span>
-                            </li>
-                        </ol>
-                    </section>
                 </div>
 
-                <!-- COMPONENT 18: UPCOMING VS. PAST RESERVATIONS TABS -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-soft space-y-5 no-print">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-gray-100 pb-4">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Hot Beds Club Stay History</span>
-                            <h3 class="text-lg font-black text-brand-text tracking-tight">Upcoming &amp; Past Reservations</h3>
-                        </div>
-                        <div class="flex gap-2">
-                            <button type="button" id="tab-stays-upcoming" onclick="window.switchHistoryTab('upcoming')" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-brand-text text-white transition">
-                                Upcoming Stays (1)
-                            </button>
-                            <button type="button" id="tab-stays-past" onclick="window.switchHistoryTab('past')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">
-                                Past Stays (2)
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Upcoming Stays List -->
-                    <div id="history-panel-upcoming" class="space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200">
+                <!-- Tab-Free Lookup Form -->
+                <div class="p-5 sm:p-8 space-y-6">
+                    <form id="reservation-lookup-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <span class="text-[10px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Active Confirmed Stay</span>
-                                <h4 id="upcoming-list-hotel" class="text-sm font-black text-brand-text mt-1">Sandman Hotel Hamilton — Hamilton, ON</h4>
-                                <p id="upcoming-list-meta" class="text-xs text-gray-500">Ref: HB-849204 • Check-In: Sat, Oct 17, 2026</p>
-                            </div>
-                            <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-wider">
-                                Viewing Active Voucher ↑
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Past Stays List -->
-                    <div id="history-panel-past" class="hidden space-y-3">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200">
-                            <div>
-                                <span class="text-[10px] font-bold uppercase bg-gray-200 text-gray-700 px-2 py-0.5 rounded">Completed • +1,850 Pts Earned</span>
-                                <h4 class="text-sm font-black text-brand-text mt-1">The Pearle Hotel &amp; Spa — Burlington, ON</h4>
-                                <p class="text-xs text-gray-500">Ref: HB-710392 • 1 Night • Paid $285.00 CAD + ON Taxes</p>
-                            </div>
-                            <a href="checkout.html?hotel=The%20Pearle%20Hotel%20%26%20Spa&prov=ON&price=285" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shrink-0">
-                                Book Again at Member Rate &rarr;
-                            </a>
-                        </div>
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200">
-                            <div>
-                                <span class="text-[10px] font-bold uppercase bg-gray-200 text-gray-700 px-2 py-0.5 rounded">Completed • +2,150 Pts Earned</span>
-                                <h4 class="text-sm font-black text-brand-text mt-1">Hotel Arts Calgary — Calgary, AB</h4>
-                                <p class="text-xs text-gray-500">Ref: HB-604918 • 1 Night • Paid $215.00 CAD + 5% AB GST ($0 Eco Fee)</p>
-                            </div>
-                            <a href="checkout.html?hotel=Hotel%20Arts%20Calgary&prov=AB&price=215" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shrink-0">
-                                Book Again at Member Rate &rarr;
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-            <!-- RIGHT COLUMN (4 COLS): ITEMIZED TAX RECEIPT, POINTS LEDGER, CPA TRACKER, SUPPORT -->
-            <div class="lg:col-span-4 space-y-8">
-
-                <!-- COMPONENT 7: OFFICIAL ITEMIZED PAYMENT & TAX RECEIPT -->
-                <section id="official-tax-receipt" class="bg-white rounded-3xl border-2 border-gray-200 overflow-hidden shadow-soft-lg print-container">
-                    <div class="bg-slate-900 text-white p-5 border-b border-gray-800">
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Official Itemized Tax Receipt</span>
-                            <span id="receipt-prov-badge" class="bg-white/10 text-white text-[10px] font-black px-2.5 py-0.5 rounded">ON Tax Rules</span>
-                        </div>
-                        <h3 class="text-lg font-black tracking-tight mt-1">CAD $ Payment Breakdown</h3>
-                        <p class="text-[11px] text-gray-400">Compliant with Alberta CPA &amp; Canadian GST/HST Rules</p>
-                    </div>
-
-                    <div class="p-5 sm:p-6 space-y-4">
-                        <!-- Corporate Bill-To Block (Populated from Component 10 Editor) -->
-                        <div id="receipt-corporate-box" class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs">
-                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-gray-400 block">Corporate Bill-To / Expense Allocation</span>
-                            <div id="receipt-company-display" class="font-black text-brand-text mt-0.5">Summit Society Inc.</div>
-                            <div id="receipt-project-display" class="text-[11px] text-gray-500 font-medium">Hamilton HQ • Cost Code #Q4-2026</div>
-                        </div>
-
-                        <!-- Line Items -->
-                        <div class="space-y-2.5 text-xs border-b border-gray-200 pb-4">
-                            <div class="flex justify-between items-center">
-                                <span id="receipt-room-line-label" class="text-gray-600 font-semibold">Room Rate ($158.00 × 2 nights)</span>
-                                <span id="receipt-room-subtotal" class="font-bold text-brand-text">$316.00</span>
-                            </div>
-
-                            <!-- 20% Guild Discount Row (Shown when Guild is active) -->
-                            <div id="receipt-guild-discount-row" class="hidden justify-between items-center text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
-                                <span class="font-extrabold">✓ The Guild Member Discount (-20%)</span>
-                                <span id="receipt-guild-discount-amount" class="font-black">-$63.20</span>
-                            </div>
-
-                            <!-- Post-Booking Enhancements Row (Shown when any upsell is added) -->
-                            <div id="receipt-enhancements-row" class="hidden justify-between items-center text-brand-text">
-                                <span id="receipt-enhancements-label" class="text-gray-600 font-semibold">Stay Enhancements / Upgrades</span>
-                                <span id="receipt-enhancements-amount" class="font-bold text-brand-text">$0.00</span>
-                            </div>
-
-                            <!-- STRICT ONTARIO-ONLY ECO FEE ROW ($2.25/nt = $2.00 + 13% HST) -->
-                            <!-- Automatically hidden for BC, AB, QC, PR, AT -->
-                            <div id="receipt-ontario-eco-row" class="flex justify-between items-center text-amber-900 bg-amber-50/70 px-2.5 py-1.5 rounded-lg border border-amber-200/80">
-                                <div>
-                                    <span class="font-bold block">Ontario Municipal &amp; Eco Fee</span>
-                                    <span id="receipt-eco-subtext" class="text-[10px] text-amber-700">$2.25 CAD/night ($2.00 + HST) • ON Only</span>
+                                <label for="lookup-ref" class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1.5">
+                                    Booking Reference Number
+                                </label>
+                                <div class="relative">
+                                    <input type="text" id="lookup-ref" placeholder="e.g. HB-849204" value="HB-849204" required class="w-full p-4 pl-10 rounded-2xl bg-gray-50 border-2 border-gray-200 focus:border-brand-red focus:bg-white text-sm sm:text-base font-mono font-black uppercase text-brand-text outline-none transition">
+                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-red font-black text-sm">#</span>
                                 </div>
-                                <span id="receipt-eco-amount" class="font-extrabold">$4.50</span>
                             </div>
 
-                            <!-- Provincial Tax Row (Dynamic per Province) -->
-                            <div class="flex justify-between items-center">
-                                <span id="receipt-tax-label" class="text-gray-600 font-semibold">Ontario HST (13%)</span>
-                                <span id="receipt-tax-amount" class="font-bold text-brand-text">$41.08</span>
-                            </div>
-                        </div>
-
-                        <!-- Total Paid CAD -->
-                        <div class="flex justify-between items-end pt-1">
                             <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block">Total Settled (CAD)</span>
-                                <span class="text-[11px] font-bold text-emerald-700">✓ Paid via Visa •••• 4829</span>
-                            </div>
-                            <div class="text-right">
-                                <span id="receipt-grand-total" class="text-3xl font-black text-brand-text tracking-tight">$361.58</span>
-                                <span class="text-[10px] font-bold text-gray-400 block">All-Inclusive CAD $</span>
+                                <label for="lookup-email" class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1.5">
+                                    Registered Guest Email
+                                </label>
+                                <div class="relative">
+                                    <input type="email" id="lookup-email" placeholder="name@domain.com" value="gordon.culp@hotbeds.ca" required class="w-full p-4 pl-10 rounded-2xl bg-gray-50 border-2 border-gray-200 focus:border-brand-red focus:bg-white text-sm sm:text-base font-semibold text-brand-text outline-none transition">
+                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">✉</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-[10px] text-gray-500 font-medium leading-relaxed">
-                            <strong>Tax &amp; Fee Transparency:</strong> Hotbeds Inc. GST/HST Reg #79482-9102-RT0001. Ontario (`ON`) bookings include the mandatory $2.25/night Eco Fee. Non-Ontario bookings (`AB`, `BC`, `QC`, `PR`, `AT`) are 100% exempt from the Ontario Eco Fee.
+                        <!-- Error Banner (Shown if empty/invalid) -->
+                        <div id="lookup-error-msg" class="hidden bg-red-50 border border-red-200 text-brand-red text-xs font-bold p-3.5 rounded-xl">
+                            Please enter a valid Hotbeds reference (e.g., HB-849204) and guest email address.
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-xs sm:text-sm uppercase tracking-widest py-4 px-6 rounded-2xl shadow-lg transition transform active:scale-[0.99] flex items-center justify-center gap-2">
+                            <span>Find My Booking &amp; Generate Voucher</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+
+                    <!-- Clean 1-Tap Demo & Provincial Tax Preset Strip -->
+                    <div class="pt-5 border-t border-gray-100 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
+                                Quick-Fill Saved / Demo Stays (Test Provincial Tax &amp; ON Eco Fee Math):
+                            </span>
+                            <button type="button" onclick="window.instantUnlockWithoutModal()" class="text-[11px] font-extrabold text-brand-red hover:underline text-left sm:text-right">
+                                ⚡ Instant Load Latest Stay &rarr;
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="window.selectPresetInLookup('ON')" class="p-2.5 rounded-xl border border-gray-200 hover:border-brand-red bg-gray-50 hover:bg-red-50/40 text-left transition">
+                                <span class="text-[10px] font-black text-brand-red block">ONTARIO (ON)</span>
+                                <span class="text-xs font-extrabold text-brand-text block truncate">Sandman Hamilton</span>
+                                <span class="text-[9px] text-gray-500 font-semibold">13% HST + $2.25 Eco</span>
+                            </button>
+                            <button type="button" onclick="window.selectPresetInLookup('AB')" class="p-2.5 rounded-xl border border-gray-200 hover:border-brand-red bg-gray-50 hover:bg-red-50/40 text-left transition">
+                                <span class="text-[10px] font-black text-emerald-700 block">ALBERTA (AB)</span>
+                                <span class="text-xs font-extrabold text-brand-text block truncate">Hotel Arts Calgary</span>
+                                <span class="text-[9px] text-gray-500 font-semibold">5% GST • $0 Eco Fee</span>
+                            </button>
+                            <button type="button" onclick="window.selectPresetInLookup('BC')" class="p-2.5 rounded-xl border border-gray-200 hover:border-brand-red bg-gray-50 hover:bg-red-50/40 text-left transition">
+                                <span class="text-[10px] font-black text-blue-700 block">B.C. (BC)</span>
+                                <span class="text-xs font-extrabold text-brand-text block truncate">Pan Pacific Van</span>
+                                <span class="text-[9px] text-gray-500 font-semibold">13% Tax • $0 Eco Fee</span>
+                            </button>
+                            <button type="button" onclick="window.selectPresetInLookup('QC')" class="p-2.5 rounded-xl border border-gray-200 hover:border-brand-red bg-gray-50 hover:bg-red-50/40 text-left transition">
+                                <span class="text-[10px] font-black text-purple-700 block">QUEBEC (QC)</span>
+                                <span class="text-xs font-extrabold text-brand-text block truncate">Mount Stephen MTL</span>
+                                <span class="text-[9px] text-gray-500 font-semibold">15% Tax • $0 Eco Fee</span>
+                            </button>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
-                <!-- COMPONENT 11: HOT BEDS CLUB POINTS LEDGER & TIER PROGRESS CARD -->
-                <section class="bg-slate-900 text-white rounded-3xl p-6 border border-gray-800 shadow-soft-lg space-y-4 no-print">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Automatic Loyalty Ledger</span>
-                            <h3 class="text-lg font-black tracking-tight mt-0.5">Hot Beds Club Rewards</h3>
+        <!-- ============================================================= -->
+        <!-- UNLOCKED BOOKING WORKSPACE (HIDDEN UNTIL USER FINDS BOOKING)  -->
+        <!-- ============================================================= -->
+        <div id="unlocked-booking-workspace" class="hidden space-y-6 sm:space-y-8">
+
+            <!-- COMPONENT 6: LIVE RESERVATION STATUS BAR & OFFICIAL PRINTABLE VOUCHER HEADER -->
+            <section class="bg-white rounded-3xl border border-gray-200 p-4 sm:p-6 shadow-soft print-container">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    
+                    <!-- Mobile-Clean 2x2 Status Pill Grid -->
+                    <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full lg:w-auto">
+                        <span id="voucher-status-badge" class="col-span-2 sm:col-span-1 inline-flex items-center justify-center sm:justify-start gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                            CONFIRMED &amp; GUARANTEED
+                        </span>
+                        <div class="bg-gray-100 border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold text-gray-600 text-center sm:text-left">
+                            Ref: <strong id="display-booking-ref" class="text-brand-text font-mono">HB-849204</strong>
                         </div>
-                        <span class="bg-brand-red text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
-                            Gold Member
+                        <div class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold text-center sm:text-left">
+                            Check-In PIN: <strong id="display-checkin-pin" class="text-brand-red font-mono">4920</strong>
+                        </div>
+                        <span id="province-tax-pill" class="col-span-2 sm:col-span-1 bg-red-50 text-brand-red border border-red-200 px-3 py-1.5 rounded-xl text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-center">
+                            Province: ON (13% HST + $2.25/nt Eco Fee)
                         </span>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2.5 text-xs">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Automatic First-Stay Welcome Bonus</span>
-                            <span class="font-mono font-bold text-white">+1,000 Pts</span>
+                    <div class="flex items-center gap-2 w-full lg:w-auto no-print">
+                        <button type="button" onclick="window.print()" class="w-full lg:w-auto bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            <span>Print Official Voucher</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPONENT 9 (INNOVATION #1): SECOND-CHANCE FREE GUILD ACTIVATION BANNER -->
+            <section id="second-chance-guild-section" class="rounded-3xl overflow-hidden shadow-soft-lg border-2 border-brand-red bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white p-5 sm:p-7 no-print">
+                <!-- Unenrolled View -->
+                <div id="guild-unenrolled-view" class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5">
+                    <div class="space-y-1.5 max-w-2xl">
+                        <div class="inline-flex items-center gap-1.5 bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
+                            <span>★ Second-Chance Member Unlock • $0.00 Free Opt-In</span>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Base Stay Earnings (10 Pts / $1)</span>
-                            <span id="points-base-earned" class="font-mono font-bold text-white">+3,160 Pts</span>
-                        </div>
-                        <div id="points-guild-bonus-row" class="hidden justify-between items-center text-emerald-400">
-                            <span>Guild Member +20% Points Multiplier</span>
-                            <span id="points-guild-bonus" class="font-mono font-black">+632 Pts</span>
-                        </div>
-                        <div class="border-t border-white/10 pt-2.5 flex justify-between items-end">
-                            <div>
-                                <span class="text-[10px] uppercase tracking-wider text-gray-400 font-bold block">Total Available Balance</span>
-                                <span id="points-total-balance" class="text-2xl font-black text-white">4,160 Pts</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block">Cash Rebate Value</span>
-                                <span id="points-cad-value" class="text-base font-black text-emerald-400">$41.60 CAD</span>
-                            </div>
-                        </div>
+                        <h2 class="text-lg sm:text-2xl font-black tracking-tight leading-snug">
+                            Missed the 20% Guild Box at Checkout? Activate <span class="text-brand-red">The Guild</span> Free Now.
+                        </h2>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Tap once to apply an instant <strong>-20% Guild Discount</strong> to your booking, earn <strong>+20% Bonus Hot Beds Club Points</strong>, and unlock hundreds of local merchant deals in <span class="guild-city-label font-bold text-white">Hamilton, ON</span>.
+                        </p>
                     </div>
 
-                    <!-- Progress Bar toward Next $25 Stay Rebate -->
-                    <div>
-                        <div class="flex justify-between text-[10px] font-bold text-gray-300 mb-1.5">
-                            <span>Progress to Next $25 Instant Stay Rebate</span>
-                            <span id="points-progress-label" class="text-brand-red">83% (4,160 / 5,000 Pts)</span>
+                    <div class="w-full lg:w-auto flex flex-col gap-1.5 shrink-0">
+                        <button type="button" onclick="window.activateGuildOneClick()" class="w-full lg:w-auto bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-6 py-4 rounded-2xl shadow-lg transition transform active:scale-95 text-center">
+                            Activate Free Guild Pass (-20% Off) &rarr;
+                        </button>
+                        <span class="text-[10px] text-gray-400 font-semibold text-center">
+                            Updates your itemized tax receipt below immediately
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Enrolled View -->
+                <div id="guild-enrolled-view" class="hidden flex-col lg:flex-row justify-between items-start lg:items-center gap-5">
+                    <div class="space-y-1.5 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
+                            <span>✓ THE GUILD ACTIVE • 20% OFF &amp; LOCAL CITY PERKS UNLOCKED</span>
                         </div>
-                        <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
-                            <div id="points-progress-bar" class="bg-brand-red h-2 rounded-full transition-all duration-500" style="width: 83%"></div>
-                        </div>
+                        <h2 class="text-lg sm:text-2xl font-black tracking-tight">
+                            Your Private Guild Pass for <span class="guild-city-label text-emerald-400">Hamilton, ON</span> is Live!
+                        </h2>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Your <strong>-20% Guild Discount</strong> and <strong>+20% Points Multiplier</strong> are active on your receipt. Use your VIP key below to access private city discounts.
+                        </p>
                     </div>
 
-                    <a href="club.html" class="block w-full bg-white hover:bg-gray-100 text-brand-text font-black text-xs uppercase tracking-widest py-3 rounded-xl text-center transition">
-                        Redeem Points on Next Stay &rarr;
-                    </a>
-                </section>
-
-                <!-- COMPONENT 14: ALBERTA CPA CANCELLATION & REFUND TRACKER -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 shadow-soft space-y-4 no-print">
-                    <div>
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Alberta CPA Protected Contract</span>
-                        <h3 class="text-base font-black text-brand-text tracking-tight mt-0.5">Free Cancellation &amp; Refund Timeline</h3>
-                        <p class="text-xs text-gray-500 mt-0.5">100% refund guaranteed up to 24 hours prior to 3:00 PM check-in.</p>
-                    </div>
-
-                    <!-- Visual Timeline -->
-                    <div class="space-y-3 pt-1">
-                        <div class="flex items-start gap-3">
-                            <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">✓</span>
-                            <div>
-                                <div class="text-xs font-black text-emerald-800">100% Free Cancellation Window Active</div>
-                                <div class="text-[11px] text-gray-500">Full CAD refund to original payment method up to 24h before arrival.</div>
-                            </div>
+                    <div class="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+                        <div class="bg-white/10 border border-white/20 rounded-2xl px-4 py-2.5 text-center">
+                            <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Private Guild Access Key</span>
+                            <span id="guild-access-key-code" class="font-mono font-black text-sm sm:text-base text-emerald-400 tracking-wider">GUILD-HB-2026VIP</span>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">!</span>
-                            <div>
-                                <div class="text-xs font-bold text-brand-text">Within 24h of Check-In</div>
-                                <div class="text-[11px] text-gray-500">Subject to 1-night room + tax hold; dates remain transferable.</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" onclick="window.openCancelModal()" class="w-full bg-gray-100 hover:bg-red-50 hover:text-brand-red border border-gray-200 text-gray-700 font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition">
-                        Request Date Change or Cancellation
-                    </button>
-                </section>
-
-                <!-- COMPONENT 19: 24/7 PRIORITY SUPPORT & GROUP BLOCK ESCALATION CARD -->
-                <section class="bg-white rounded-3xl border border-gray-200 p-6 shadow-soft space-y-4 no-print">
-                    <div class="flex justify-between items-center">
-                        <span class="bg-red-50 text-brand-red text-[10px] font-black uppercase px-2.5 py-1 rounded-full">24/7 Priority Desk</span>
-                        <span class="text-xs font-bold text-gray-400">Avg Wait: &lt; 90 Sec</span>
-                    </div>
-                    <h3 class="text-base font-black text-brand-text tracking-tight">Need 5+ Rooms for a Crew, Tournament or Corporate Team?</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Convert or expand this booking into a multi-room corporate block with consolidated GST/HST invoicing and contracted crew rates.
-                    </p>
-                    <div class="flex flex-col gap-2">
-                        <a href="corporate.html" class="w-full bg-brand-text hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3 rounded-xl text-center transition">
-                            Escalate to Corporate Desk (5+ Rooms) &rarr;
+                        <a href="portal-login.html" class="bg-white hover:bg-gray-100 text-brand-text font-black text-xs uppercase tracking-widest px-5 py-3.5 rounded-2xl transition text-center flex items-center justify-center">
+                            Enter Guild Portal &rarr;
                         </a>
-                        <a href="mailto:support@hotbeds.ca?subject=Priority%20Support%20Ref%20HB-849204" class="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-brand-text font-bold text-xs uppercase tracking-wider py-2.5 rounded-xl text-center transition">
-                            Contact 24/7 Guest Support
-                        </a>
+                        <button type="button" onclick="window.toggleGuildSimulation()" class="text-[10px] text-gray-400 hover:text-white underline py-1 text-center">
+                            Reset Demo
+                        </button>
                     </div>
-                </section>
+                </div>
+            </section>
+
+            <!-- ========================================================= -->
+            <!-- RESPONSIVE 12-COLUMN GRID (CLEAN MOBILE STACKING)         -->
+            <!-- ========================================================= -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+
+                <!-- LEFT / PRIMARY COLUMN (8 COLS ON DESKTOP) -->
+                <div class="lg:col-span-8 space-y-6 sm:space-y-8">
+
+                    <!-- COMPONENT 7: VERIFIED PROPERTY & ROOM SUMMARY CARD -->
+                    <section class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-soft print-container">
+                        <div class="grid grid-cols-1 md:grid-cols-12">
+                            <div class="md:col-span-5 relative h-48 md:h-auto bg-gray-900">
+                                <img id="summary-hotel-img" src="sandman.png.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80';" alt="Booked Property" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                <span id="summary-hotel-rating" class="absolute top-3 left-3 bg-white/95 text-brand-text text-xs font-black px-2.5 py-1 rounded-lg shadow">
+                                    ★ 4.5 Verified
+                                </span>
+                                <span id="summary-nights-pill" class="absolute top-3 right-3 bg-slate-900/90 text-white text-xs font-black px-3 py-1 rounded-full">
+                                    2 Nights
+                                </span>
+                                <div class="absolute bottom-3 left-3 right-3">
+                                    <span id="summary-room-badge" class="inline-block bg-brand-red text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded">
+                                        Executive King Room
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-7 p-5 sm:p-6 flex flex-col justify-between space-y-4">
+                                <div>
+                                    <span id="summary-city-tag" class="text-[10px] font-extrabold uppercase tracking-wider text-brand-red">Hamilton, ON</span>
+                                    <h2 id="summary-hotel-name" class="text-xl sm:text-2xl font-black text-brand-text tracking-tight leading-snug">Sandman Hotel Hamilton</h2>
+                                    <p id="summary-hotel-address" class="text-xs text-gray-500 font-medium mt-1">
+                                        560 Centennial Pkwy N, Hamilton, ON L8E 0G2 • QEW &amp; Red Hill Pkwy
+                                    </p>
+                                </div>
+
+                                <!-- Check-In / Check-Out Side-by-Side Box -->
+                                <div class="grid grid-cols-2 gap-2.5 bg-gray-50 border border-gray-200/80 rounded-2xl p-3">
+                                    <div>
+                                        <span class="text-[9px] sm:text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Check-In (3:00 PM)</span>
+                                        <span id="summary-checkin-date" class="text-xs sm:text-sm font-black text-brand-text block mt-0.5">Sat, Oct 17, 2026</span>
+                                        <span id="summary-arrival-window-badge" class="text-[10px] font-bold text-emerald-700 block truncate mt-0.5">3:00 PM – 5:00 PM</span>
+                                    </div>
+                                    <div class="border-l border-gray-200 pl-2.5">
+                                        <span class="text-[9px] sm:text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Check-Out (11:00 AM)</span>
+                                        <span id="summary-checkout-date" class="text-xs sm:text-sm font-black text-brand-text block mt-0.5">Mon, Oct 19, 2026</span>
+                                        <span id="summary-late-checkout-badge" class="text-[10px] font-bold text-gray-500 block truncate mt-0.5">Standard 11:00 AM</span>
+                                    </div>
+                                </div>
+
+                                <!-- Guest Name & Quick Links -->
+                                <div class="flex flex-wrap justify-between items-center gap-2 pt-2 border-t border-gray-100 text-xs">
+                                    <div class="text-gray-600 font-semibold">
+                                        Guest: <strong id="summary-guest-name" class="text-brand-text">Gordon Culp</strong>
+                                        <span id="summary-cotraveler-display" class="text-gray-400"></span>
+                                    </div>
+                                    <div class="flex items-center gap-3 no-print">
+                                        <a id="summary-hotel-link" href="hotel.html?id=sandman-hamilton" class="font-extrabold text-brand-red hover:underline uppercase tracking-wider text-[11px]">
+                                            Hotel Details &rarr;
+                                        </a>
+                                        <a id="summary-city-link" href="city.html?city=Hamilton" class="font-extrabold text-brand-text hover:text-brand-red uppercase tracking-wider text-[11px]">
+                                            City Guide &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 15: DIGITAL ITINERARY EXPORT STRIP (3-COL SYMMETRICAL MOBILE BAR) -->
+                    <section class="bg-white rounded-2xl border border-gray-200 p-3 sm:p-4 shadow-soft no-print">
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="window.downloadICSFile()" class="bg-slate-900 hover:bg-black text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider py-3 px-2 rounded-xl transition text-center truncate">
+                                📅 .ICS Calendar
+                            </button>
+                            <button type="button" onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[10px] sm:text-xs uppercase tracking-wider py-3 px-2 rounded-xl transition text-center truncate">
+                                🖨️ Tax Receipt
+                            </button>
+                            <button type="button" id="copy-itinerary-btn" onclick="window.copyShareableItinerary()" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[10px] sm:text-xs uppercase tracking-wider py-3 px-2 rounded-xl transition text-center truncate">
+                                🔗 Share Link
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 10 (INNOVATION #2): 1-CLICK STAY ENHANCEMENTS (MOBILE SWIPE CAROUSEL / DESKTOP GRID) -->
+                    <section class="bg-white rounded-3xl border border-gray-200 p-5 sm:p-7 shadow-soft space-y-4 no-print">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-gray-100 pb-3.5">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Instant Front-Desk Dispatch</span>
+                                    <span class="sm:hidden text-[10px] font-bold text-gray-400">• Swipe &rarr;</span>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-black text-brand-text tracking-tight">1-Click Stay Enhancements &amp; Flash Upgrades</h3>
+                            </div>
+                            <div class="bg-slate-900 text-white px-3 py-1.5 rounded-xl flex items-center gap-2 shrink-0">
+                                <span class="w-2 h-2 rounded-full bg-brand-red fomo-dot"></span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider">Suite Rate Hold:</span>
+                                <span id="upgrade-flash-timer" class="font-mono font-black text-xs sm:text-sm text-brand-red">00:15</span>
+                            </div>
+                        </div>
+
+                        <!-- Touch-Snap Horizontal Carousel on Mobile | 2x2 Grid on Desktop -->
+                        <div class="flex sm:grid sm:grid-cols-2 gap-3.5 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-1">
+                            
+                            <!-- Card 1: Executive Suite Upgrade (15s Flash Timer) -->
+                            <div class="min-w-[84%] sm:min-w-0 snap-center border-2 border-red-200 rounded-2xl p-4 flex flex-col justify-between bg-red-50/30 shrink-0">
+                                <div>
+                                    <div class="flex justify-between items-start gap-2 mb-1.5">
+                                        <span class="bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded flex items-center gap-1">
+                                            <span>⏱ Flash Lock</span>
+                                            <span id="card-flash-timer" class="font-mono">00:15</span>
+                                        </span>
+                                        <span class="text-xs font-black text-brand-red">+$<span id="suite-upgrade-rate">29</span>/nt</span>
+                                    </div>
+                                    <h4 class="text-sm font-black text-brand-text">Executive Corner Suite Upgrade</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Top-floor panoramic suite, Nespresso bar &amp; executive lounge workspace.</p>
+                                </div>
+                                <button type="button" id="btn-upsell-suite" onclick="window.toggleEnhancement('suiteUpgrade')" class="mt-4 w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition shadow-sm">
+                                    ⚡ Lock Suite (+$<span id="suite-btn-rate">29</span>/nt)
+                                </button>
+                            </div>
+
+                            <!-- Card 2: 1:00 PM Late Check-Out -->
+                            <div class="min-w-[84%] sm:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 flex flex-col justify-between bg-gray-50/60 shrink-0">
+                                <div>
+                                    <div class="flex justify-between items-start gap-2 mb-1.5">
+                                        <span class="bg-blue-100 text-blue-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Guaranteed 1:00 PM</span>
+                                        <span class="text-xs font-black text-brand-text">$19 <span class="text-[10px] text-emerald-700 font-bold">(Free w/ Guild)</span></span>
+                                    </div>
+                                    <h4 class="text-sm font-black text-brand-text">1:00 PM Late Check-Out</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Extend your room keycard validity until 1:00 PM on departure day.</p>
+                                </div>
+                                <button type="button" id="btn-upsell-late" onclick="window.toggleEnhancement('lateCheckout')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition">
+                                    + Add 1:00 PM Check-Out
+                                </button>
+                            </div>
+
+                            <!-- Card 3: Free 12:00 PM Bag Drop -->
+                            <div class="min-w-[84%] sm:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 flex flex-col justify-between bg-gray-50/60 shrink-0">
+                                <div>
+                                    <div class="flex justify-between items-start gap-2 mb-1.5">
+                                        <span class="bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Complimentary</span>
+                                        <span class="text-xs font-black text-emerald-700">FREE ($0.00)</span>
+                                    </div>
+                                    <h4 class="text-sm font-black text-brand-text">12:00 PM Bag Drop &amp; Priority Ready</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Drop bags at noon &amp; receive priority SMS alert when housekeeping finishes.</p>
+                                </div>
+                                <button type="button" id="btn-upsell-bagdrop" onclick="window.toggleEnhancement('earlyBagDrop')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition">
+                                    + Activate Free Priority
+                                </button>
+                            </div>
+
+                            <!-- Card 4: $25 Local Dining & Chef Express Pass -->
+                            <div class="min-w-[84%] sm:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 flex flex-col justify-between bg-gray-50/60 shrink-0">
+                                <div>
+                                    <div class="flex justify-between items-start gap-2 mb-1.5">
+                                        <span class="bg-amber-100 text-amber-800 text-[9px] font-black uppercase px-2 py-0.5 rounded">Save 24% • Room Delivery</span>
+                                        <span class="text-xs font-black text-brand-text">$19 CAD <span class="text-[10px] text-gray-400 line-through">$25</span></span>
+                                    </div>
+                                    <h4 class="text-sm font-black text-brand-text">$25 Dining &amp; Chef Express Credit</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Pre-load a $25 local restaurant &amp; ghost-kitchen delivery credit for $19.</p>
+                                </div>
+                                <button type="button" id="btn-upsell-dining" onclick="window.toggleEnhancement('diningCredit')" class="mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition">
+                                    + Add $25 Credit ($19)
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 14: EXTEND MY STAY / ADD NIGHTS CALCULATOR (4-COL TOUCH BAR) -->
+                    <section class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 border border-gray-800 shadow-soft flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 no-print">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Flash Rate Lock Active</span>
+                            <h3 class="text-base sm:text-lg font-black tracking-tight">Extend Stay at $<span id="extend-rate-display">158</span>/nt</h3>
+                            <p class="text-xs text-gray-300 mt-0.5">Add extra nights now and keep your locked rate.</p>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 w-full sm:w-auto shrink-0">
+                            <button type="button" onclick="window.adjustStayNights(1)" id="night-pill-1" class="night-pill px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+                                1 Nt
+                            </button>
+                            <button type="button" onclick="window.adjustStayNights(2)" id="night-pill-2" class="night-pill px-3 py-2.5 rounded-xl text-xs font-black bg-brand-red text-white shadow transition">
+                                2 Nts
+                            </button>
+                            <button type="button" onclick="window.adjustStayNights(3)" id="night-pill-3" class="night-pill px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+                                3 Nts
+                            </button>
+                            <button type="button" onclick="window.adjustStayNights(4)" id="night-pill-4" class="night-pill px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition">
+                                4 Nts
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 11 (INNOVATION #3): COLLAPSIBLE GUEST, ARRIVAL & CORPORATE TAX INVOICE EDITOR -->
+                    <section class="bg-white rounded-3xl border border-gray-200 shadow-soft overflow-hidden no-print">
+                        <details id="editor-accordion" class="group">
+                            <summary class="p-5 sm:p-6 cursor-pointer flex justify-between items-center gap-4 hover:bg-gray-50/70 transition select-none">
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Live Cloud &amp; Receipt Editor</span>
+                                        <span id="editor-save-badge" class="text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Synced</span>
+                                    </div>
+                                    <h3 class="text-base sm:text-lg font-black text-brand-text tracking-tight mt-0.5">
+                                        Edit Guest Names, Arrival Window &amp; Corporate GST/HST Invoice
+                                    </h3>
+                                    <p class="text-xs text-gray-500">Tap to customize co-traveler check-in authorization or add your company name to the receipt.</p>
+                                </div>
+                                <span class="accordion-chevron w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-brand-text font-black text-xs transition-transform shrink-0">▼</span>
+                            </summary>
+
+                            <div class="px-5 pb-6 sm:px-6 border-t border-gray-100 pt-4">
+                                <form id="guest-invoice-editor-form" class="space-y-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                        <div>
+                                            <label for="edit-primary-guest" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Primary Registered Guest</label>
+                                            <input type="text" id="edit-primary-guest" value="Gordon Culp" required class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-bold text-brand-text outline-none">
+                                        </div>
+                                        <div>
+                                            <label for="edit-co-traveler" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Authorized Co-Traveler (Can Check In)</label>
+                                            <input type="text" id="edit-co-traveler" placeholder="e.g. Rica Palomo" value="Rica Palomo" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                        <div>
+                                            <label for="edit-arrival-window" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Estimated Front Desk Arrival</label>
+                                            <select id="edit-arrival-window" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                                                <option value="12:00 PM – 3:00 PM (Early Bag Drop)">12:00 PM – 3:00 PM (Early Bag Drop)</option>
+                                                <option value="3:00 PM – 5:00 PM (Standard)" selected>3:00 PM – 5:00 PM (Standard)</option>
+                                                <option value="5:00 PM – 8:00 PM (Evening)">5:00 PM – 8:00 PM (Evening)</option>
+                                                <option value="After 9:00 PM (Guaranteed Late Hold)">After 9:00 PM (Guaranteed Late Hold)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="edit-special-requests" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Room Placement Preference</label>
+                                            <select id="edit-special-requests" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                                                <option value="Quiet High Floor (Away from Elevator)" selected>Quiet High Floor (Away from Elevator)</option>
+                                                <option value="Close to Elevator & Lobby">Close to Elevator &amp; Lobby</option>
+                                                <option value="Extra Pillows & Towels">Extra Pillows &amp; Towels</option>
+                                                <option value="Work Desk + Ethernet Priority">Work Desk + Ethernet Priority</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3">
+                                        <span class="text-[10px] font-black uppercase tracking-widest text-brand-text block">Corporate Expense &amp; GST/HST Tax Invoice Details</span>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div>
+                                                <label for="edit-company-name" class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Company / Organization</label>
+                                                <input type="text" id="edit-company-name" value="Summit Society Inc." class="w-full p-2.5 rounded-xl bg-white border border-gray-200 text-xs font-semibold text-brand-text outline-none focus:border-brand-red">
+                                            </div>
+                                            <div>
+                                                <label for="edit-project-code" class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Business Address / Cost Code</label>
+                                                <input type="text" id="edit-project-code" value="Hamilton HQ • Cost Code #Q4-2026" class="w-full p-2.5 rounded-xl bg-white border border-gray-200 text-xs font-semibold text-brand-text outline-none focus:border-brand-red">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="w-full sm:w-auto bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl transition shadow-sm">
+                                        Save &amp; Update Tax Receipt &rarr;
+                                    </button>
+                                </form>
+                            </div>
+                        </details>
+                    </section>
+
+                    <!-- COMPONENT 13: DESTINATION CITY PERKS (MOBILE SWIPE CAROUSEL / DESKTOP 3-COL) -->
+                    <section class="bg-white rounded-3xl border border-gray-200 p-5 sm:p-7 shadow-soft space-y-4 no-print">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Zero-Fee Local Merchant Perks</span>
+                                    <span class="sm:hidden text-[10px] font-bold text-gray-400">• Swipe &rarr;</span>
+                                </div>
+                                <h3 class="text-lg font-black text-brand-text tracking-tight">Unlocked Vouchers in <span class="guild-city-label text-brand-red">Hamilton, ON</span></h3>
+                            </div>
+                            <a href="partners.html" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase tracking-wider shrink-0">All Perks &rarr;</a>
+                        </div>
+
+                        <div class="flex md:grid md:grid-cols-3 gap-3.5 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-1">
+                            <div class="min-w-[80%] md:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between shrink-0">
+                                <div>
+                                    <span class="text-[9px] font-black uppercase bg-red-100 text-brand-red px-2 py-0.5 rounded">Dining &amp; Lounge</span>
+                                    <h4 class="text-sm font-black text-brand-text mt-2">20% Off Steakhouse &amp; Late Dining</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Show code at participating hotel chop houses &amp; city dining partners.</p>
+                                </div>
+                                <button type="button" onclick="window.copyVoucherCode('HB-DINE20', this)" class="mt-3.5 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2.5 px-3 rounded-xl transition">
+                                    Copy: HB-DINE20
+                                </button>
+                            </div>
+
+                            <div class="min-w-[80%] md:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between shrink-0">
+                                <div>
+                                    <span class="text-[9px] font-black uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Executive Workspace</span>
+                                    <h4 class="text-sm font-black text-brand-text mt-2">Free Coworking Day Pass + Espresso</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Complimentary fiber desk &amp; boardroom hour at downtown partner hubs.</p>
+                                </div>
+                                <button type="button" onclick="window.copyVoucherCode('GUILD-DESKVIP', this)" class="mt-3.5 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2.5 px-3 rounded-xl transition">
+                                    Copy: GUILD-DESKVIP
+                                </button>
+                            </div>
+
+                            <div class="min-w-[80%] md:min-w-0 snap-center border border-gray-200 rounded-2xl p-4 bg-gray-50/60 flex flex-col justify-between shrink-0">
+                                <div>
+                                    <span class="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Transit &amp; Transfer</span>
+                                    <h4 class="text-sm font-black text-brand-text mt-2">$15 Off Regional / Airport Transfer</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Valid on partner executive shuttles and regional car rentals.</p>
+                                </div>
+                                <button type="button" onclick="window.copyVoucherCode('HB-RIDE15', this)" class="mt-3.5 w-full bg-white hover:bg-gray-100 border border-gray-300 text-brand-text font-mono font-black text-xs py-2.5 px-3 rounded-xl transition">
+                                    Copy: HB-RIDE15
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 17 & 18: COLLAPSIBLE MOBILE ACCORDIONS FOR LOGISTICS & CHECK-IN CHECKLIST -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                        
+                        <!-- Component 17: Highway, Transit & Parking Logistics Accordion -->
+                        <details class="bg-white rounded-3xl border border-gray-200 shadow-soft overflow-hidden group" open>
+                            <summary class="p-5 cursor-pointer flex justify-between items-center gap-3 select-none">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">🛣️</span>
+                                    <div>
+                                        <h3 class="text-sm font-black uppercase tracking-wider text-brand-text">Highway, Transit &amp; Parking</h3>
+                                        <p class="text-[11px] text-gray-500">Regional Commuter Logistics</p>
+                                    </div>
+                                </div>
+                                <span class="accordion-chevron text-xs font-black text-gray-400 transition-transform">▼</span>
+                            </summary>
+                            <div class="px-5 pb-5 pt-2 border-t border-gray-100">
+                                <ul class="space-y-2 text-xs text-gray-600">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-brand-red font-black">•</span>
+                                        <span><strong>Highway:</strong> <span id="logistics-hwy">Direct access off QEW Niagara/Toronto &amp; Red Hill Valley Pkwy.</span></span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-brand-red font-black">•</span>
+                                        <span><strong>Transit:</strong> <span id="logistics-transit">5 mins to Confederation GO Station &amp; HSR corridor.</span></span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-brand-red font-black">•</span>
+                                        <span><strong>Parking:</strong> <span id="logistics-parking">Complimentary surface lot parking included for Hotbeds guests.</span></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </details>
+
+                        <!-- Component 18: Front Desk Check-In Checklist Accordion -->
+                        <details class="bg-white rounded-3xl border border-gray-200 shadow-soft overflow-hidden group" open>
+                            <summary class="p-5 cursor-pointer flex justify-between items-center gap-3 select-none">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black text-xs shrink-0">✓</span>
+                                    <div>
+                                        <h3 class="text-sm font-black uppercase tracking-wider text-brand-text">Front Desk Check-In Checklist</h3>
+                                        <p class="text-[11px] text-gray-500">3-Step Express Keycard Handover</p>
+                                    </div>
+                                </div>
+                                <span class="accordion-chevron text-xs font-black text-gray-400 transition-transform">▼</span>
+                            </summary>
+                            <div class="px-5 pb-5 pt-2 border-t border-gray-100">
+                                <ol class="space-y-2 text-xs text-gray-600">
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-4 h-4 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                        <span><strong>Photo ID:</strong> Gov ID matching <strong id="checklist-guest-name" class="text-brand-text">Gordon Culp</strong> or Co-Traveler.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-4 h-4 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                        <span><strong>Incidentals:</strong> Credit or Visa/MC Debit for standard property hold.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-4 h-4 rounded-full bg-gray-100 text-brand-text font-black text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                        <span><strong>Reference:</strong> Quote <strong id="checklist-ref" class="text-brand-red font-mono">HB-849204</strong> (PIN <strong class="font-mono">4920</strong>).</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- COMPONENT 19: TAB-FREE MEMBER STAY HISTORY & 1-CLICK RE-BOOK DRAWER -->
+                    <section class="bg-white rounded-3xl border border-gray-200 shadow-soft overflow-hidden no-print">
+                        <details class="group">
+                            <summary class="p-5 sm:p-6 cursor-pointer flex justify-between items-center gap-4 hover:bg-gray-50/70 transition select-none">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Member Stay Ledger (No Tabs)</span>
+                                    <h3 class="text-base sm:text-lg font-black text-brand-text tracking-tight mt-0.5">
+                                        Past Stays &amp; 1-Click Member Re-Booking (2 Completed Stays)
+                                    </h3>
+                                    <p class="text-xs text-gray-500">Tap to view previous invoices or re-book past properties at your locked member rate.</p>
+                                </div>
+                                <span class="accordion-chevron w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-brand-text font-black text-xs transition-transform shrink-0">▼</span>
+                            </summary>
+                            <div class="px-5 pb-6 sm:px-6 pt-3 border-t border-gray-100 space-y-3">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200">
+                                    <div>
+                                        <span class="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Completed • +1,850 Pts Earned</span>
+                                        <h4 class="text-sm font-black text-brand-text mt-1">The Pearle Hotel &amp; Spa — Burlington, ON</h4>
+                                        <p class="text-xs text-gray-500">Ref: HB-710392 • 1 Night • $285.00 CAD + ON HST/Eco</p>
+                                    </div>
+                                    <a href="checkout.html?hotel=The%20Pearle%20Hotel%20%26%20Spa&prov=ON&price=285" class="w-full sm:w-auto text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shrink-0">
+                                        Book Again ($285) &rarr;
+                                    </a>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200">
+                                    <div>
+                                        <span class="text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Completed • +2,150 Pts Earned</span>
+                                        <h4 class="text-sm font-black text-brand-text mt-1">Hotel Arts Calgary — Calgary, AB</h4>
+                                        <p class="text-xs text-gray-500">Ref: HB-604918 • 1 Night • $215.00 CAD + 5% AB GST ($0 Eco Fee)</p>
+                                    </div>
+                                    <a href="checkout.html?hotel=Hotel%20Arts%20Calgary&prov=AB&price=215" class="w-full sm:w-auto text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shrink-0">
+                                        Book Again ($215) &rarr;
+                                    </a>
+                                </div>
+                            </div>
+                        </details>
+                    </section>
+
+                </div>
+
+                <!-- RIGHT COLUMN (4 COLS ON DESKTOP): RECEIPT, POINTS LEDGER, CPA TRACKER, SUPPORT -->
+                <div class="lg:col-span-4 space-y-6 sm:space-y-8">
+
+                    <!-- COMPONENT 8: OFFICIAL ITEMIZED PAYMENT & TAX RECEIPT -->
+                    <section id="official-tax-receipt" class="bg-white rounded-3xl border-2 border-gray-200 overflow-hidden shadow-soft-lg print-container">
+                        <div class="bg-slate-900 text-white p-5 border-b border-gray-800">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Official Itemized Tax Receipt</span>
+                                <span id="receipt-prov-badge" class="bg-white/10 text-white text-[10px] font-black px-2.5 py-0.5 rounded">ON Tax Rules</span>
+                            </div>
+                            <h3 class="text-lg font-black tracking-tight mt-1">CAD $ Payment Summary</h3>
+                            <p class="text-[11px] text-gray-400">Alberta CPA &amp; Canadian GST/HST Compliant</p>
+                        </div>
+
+                        <div class="p-5 space-y-4">
+                            <!-- Corporate Bill-To Block -->
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[9px] font-extrabold uppercase tracking-wider text-gray-400">Corporate Bill-To</span>
+                                    <button type="button" onclick="window.openInvoiceEditor()" class="text-[10px] font-bold text-brand-red hover:underline no-print">Edit</button>
+                                </div>
+                                <div id="receipt-company-display" class="font-black text-brand-text mt-0.5">Summit Society Inc.</div>
+                                <div id="receipt-project-display" class="text-[11px] text-gray-500 font-medium">Hamilton HQ • Cost Code #Q4-2026</div>
+                            </div>
+
+                            <!-- Itemized Lines -->
+                            <div class="space-y-2.5 text-xs border-b border-gray-200 pb-4">
+                                <div class="flex justify-between items-center">
+                                    <span id="receipt-room-line-label" class="text-gray-600 font-semibold">Room Rate ($158.00 × 2 nights)</span>
+                                    <span id="receipt-room-subtotal" class="font-bold text-brand-text">$316.00</span>
+                                </div>
+
+                                <!-- 20% Guild Discount Row -->
+                                <div id="receipt-guild-discount-row" class="hidden justify-between items-center text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                                    <span class="font-extrabold">✓ The Guild Discount (-20%)</span>
+                                    <span id="receipt-guild-discount-amount" class="font-black">-$63.20</span>
+                                </div>
+
+                                <!-- Enhancements Row -->
+                                <div id="receipt-enhancements-row" class="hidden justify-between items-center text-brand-text">
+                                    <span class="text-gray-600 font-semibold">Stay Enhancements / Upgrades</span>
+                                    <span id="receipt-enhancements-amount" class="font-bold text-brand-text">$0.00</span>
+                                </div>
+
+                                <!-- STRICT ONTARIO-ONLY ECO FEE ROW ($2.25/nt = $2.00 + HST) -->
+                                <!-- Automatically hidden for BC, AB, QC, PR, AT -->
+                                <div id="receipt-ontario-eco-row" class="flex justify-between items-center text-amber-900 bg-amber-50/70 px-2.5 py-1.5 rounded-lg border border-amber-200/80">
+                                    <div>
+                                        <span class="font-bold block">Ontario Municipal &amp; Eco Fee</span>
+                                        <span id="receipt-eco-subtext" class="text-[10px] text-amber-700">$2.25 CAD/nt ($2.00 + HST) • ON Only</span>
+                                    </div>
+                                    <span id="receipt-eco-amount" class="font-extrabold">$4.50</span>
+                                </div>
+
+                                <!-- Provincial Tax Row -->
+                                <div class="flex justify-between items-center">
+                                    <span id="receipt-tax-label" class="text-gray-600 font-semibold">Ontario HST (13%)</span>
+                                    <span id="receipt-tax-amount" class="font-bold text-brand-text">$41.08</span>
+                                </div>
+                            </div>
+
+                            <!-- Grand Total -->
+                            <div class="flex justify-between items-end pt-1">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block">Total Settled (CAD)</span>
+                                    <span class="text-[11px] font-bold text-emerald-700">✓ Visa •••• 4829</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="receipt-grand-total" class="text-3xl font-black text-brand-text tracking-tight">$361.58</span>
+                                    <span class="text-[10px] font-bold text-gray-400 block">All-Inclusive CAD $</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-2.5 text-[10px] text-gray-500 font-medium leading-relaxed">
+                                <strong>Tax Disclosure:</strong> GST/HST Reg #79482-9102-RT0001. The $2.25/nt Eco Fee applies strictly to Ontario (`ON`) stays and is $0.00 across `AB`, `BC`, `QC`, `PR`, and `AT`.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- COMPONENT 12: HOT BEDS CLUB POINTS LEDGER & TIER PROGRESS -->
+                    <section class="bg-slate-900 text-white rounded-3xl p-5 sm:p-6 border border-gray-800 shadow-soft-lg space-y-4 no-print">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Automatic Loyalty Ledger</span>
+                                <h3 class="text-lg font-black tracking-tight mt-0.5">Hot Beds Club Rewards</h3>
+                            </div>
+                            <span id="member-sync-pill" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
+                                ✓ Points Active
+                            </span>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">First-Stay Welcome Bonus</span>
+                                <span class="font-mono font-bold text-white">+1,000 Pts</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Stay Earnings (10 Pts/$1)</span>
+                                <span id="points-base-earned" class="font-mono font-bold text-white">+3,160 Pts</span>
+                            </div>
+                            <div id="points-guild-bonus-row" class="hidden justify-between items-center text-emerald-400">
+                                <span>Guild +20% Points Multiplier</span>
+                                <span id="points-guild-bonus" class="font-mono font-black">+632 Pts</span>
+                            </div>
+                            <div class="border-t border-white/10 pt-2.5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-[10px] uppercase tracking-wider text-gray-400 font-bold block">Total Balance</span>
+                                    <span id="points-total-balance" class="text-2xl font-black text-white">4,160 Pts</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block">Cash Value</span>
+                                    <span id="points-cad-value" class="text-base font-black text-emerald-400">$41.60 CAD</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold text-gray-300 mb-1.5">
+                                <span>Next $25 Stay Rebate</span>
+                                <span id="points-progress-label" class="text-brand-red">83% (4,160 / 5,000 Pts)</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                                <div id="points-progress-bar" class="bg-brand-red h-2 rounded-full transition-all duration-500" style="width: 83%"></div>
+                            </div>
+                        </div>
+
+                        <a href="club.html" class="block w-full bg-white hover:bg-gray-100 text-brand-text font-black text-xs uppercase tracking-widest py-3 rounded-xl text-center transition">
+                            Redeem Points on Next Stay &rarr;
+                        </a>
+                    </section>
+
+                    <!-- COMPONENT 16: ALBERTA CPA CANCELLATION & REFUND TRACKER -->
+                    <section class="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-soft space-y-3.5 no-print">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700">Alberta CPA Protected</span>
+                            <h3 class="text-base font-black text-brand-text tracking-tight mt-0.5">Free Cancellation Timeline</h3>
+                        </div>
+
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                                <div>
+                                    <div class="font-black text-emerald-800">100% Free Refund Window Active</div>
+                                    <div class="text-[11px] text-gray-500">Cancel or shift dates free up to 24h before 3:00 PM check-in.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <div>
+                                    <div class="font-bold text-brand-text">Within 24h of Check-In</div>
+                                    <div class="text-[11px] text-gray-500">1-night hold applies; dates remain transferable.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="window.openCancelModal()" class="w-full bg-gray-100 hover:bg-red-50 hover:text-brand-red border border-gray-200 text-gray-700 font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition">
+                            Modify Dates or Cancel Stay
+                        </button>
+                    </section>
+
+                    <!-- COMPONENT 20A: 24/7 PRIORITY SUPPORT & GROUP BLOCK ESCALATION -->
+                    <section class="bg-white rounded-3xl border border-gray-200 p-5 sm:p-6 shadow-soft space-y-3 no-print">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-red-50 text-brand-red text-[10px] font-black uppercase px-2.5 py-1 rounded-full">24/7 Priority Desk</span>
+                            <span class="text-[11px] font-bold text-gray-400">Wait &lt; 90s</span>
+                        </div>
+                        <h3 class="text-base font-black text-brand-text tracking-tight">Need 5+ Rooms for a Crew or Team?</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            Expand this reservation into a corporate or tournament block with single-invoice GST/HST billing.
+                        </p>
+                        <a href="corporate.html" class="block w-full bg-brand-text hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3 rounded-xl text-center transition">
+                            Escalate to Corporate Desk &rarr;
+                        </a>
+                    </section>
+
+                </div>
 
             </div>
 
@@ -1039,7 +1068,55 @@
     </main>
 
     <!-- ================================================================= -->
-    <!-- MODAL FOR COMPONENT 14: DATE CHANGE / CANCELLATION REQUEST        -->
+    <!-- COMPONENT 5: SMART MEMBER REMINDER & SIGN-IN POPUP MODAL          -->
+    <!-- Triggered when hitting "Find My Booking" (Replaces old Sign-In Tab)-->
+    <!-- ================================================================= -->
+    <div id="member-reminder-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden border border-gray-200 shadow-2xl animate-fade-in">
+            
+            <!-- Modal Top Banner -->
+            <div class="bg-slate-900 text-white p-6 relative">
+                <button type="button" onclick="window.confirmUnlockBooking(false)" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center font-black text-sm" title="Skip to Voucher">&times;</button>
+                <div class="inline-flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full mb-2">
+                    <span>✓ Reservation <span id="popup-ref-badge">HB-849204</span> Located!</span>
+                </div>
+                <h3 class="text-xl font-black tracking-tight leading-snug">
+                    Wait! Don't Leave Your <span id="popup-pts-highlight" class="text-brand-red">4,160 Club Points</span> Behind.
+                </h3>
+                <p class="text-xs text-gray-300 mt-1">
+                    Your booking at <strong id="popup-hotel-highlight" class="text-white">Sandman Hotel Hamilton</strong> automatically includes <strong>1,000 Welcome Points + 10 Pts/$1 spent</strong>.
+                </p>
+            </div>
+
+            <!-- Modal Body: 1-Click Member Sync or Instant Guest Pass-Through -->
+            <div class="p-6 space-y-4">
+                <form id="popup-member-sync-form" class="space-y-3">
+                    <div>
+                        <label for="popup-member-email" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">
+                            Confirm Email to Sync Hot Beds Club Points &amp; Guild Key
+                        </label>
+                        <input type="email" id="popup-member-email" value="gordon.culp@hotbeds.ca" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-bold text-brand-text outline-none">
+                    </div>
+
+                    <div class="bg-red-50/70 border border-red-200/80 rounded-xl p-3 flex items-center justify-between text-xs">
+                        <span class="font-bold text-brand-text">Redeemable Cash Rebate Value:</span>
+                        <span id="popup-cad-rebate" class="font-black text-brand-red text-sm">$41.60 CAD</span>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest py-4 px-5 rounded-xl shadow-md transition">
+                        ★ Sync My Points &amp; Reveal Booking &rarr;
+                    </button>
+                </form>
+
+                <button type="button" onclick="window.confirmUnlockBooking(false)" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-extrabold text-xs uppercase tracking-wider py-3 px-4 rounded-xl transition">
+                    Continue Straight to My Voucher
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODAL FOR COMPONENT 16: DATE CHANGE / CANCELLATION REQUEST        -->
     <!-- ================================================================= -->
     <div id="cancel-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 border border-gray-200 shadow-2xl space-y-4">
@@ -1052,7 +1129,7 @@
             </div>
 
             <p class="text-xs text-gray-600 leading-relaxed">
-                Before cancelling Booking <strong id="modal-ref-display" class="text-brand-text">HB-849204</strong>, you can shift your dates for free and keep your locked flash rate, or claim a **+$15 Hot Beds Club Stay Credit** to keep your reservation active.
+                Before cancelling Booking <strong id="modal-ref-display" class="text-brand-text">HB-849204</strong>, you can shift your dates for free and keep your locked flash rate, or claim **+500 Bonus Hot Beds Club Points** to keep your stay active.
             </p>
 
             <div class="space-y-2.5 pt-2">
@@ -1070,7 +1147,7 @@
     </div>
 
     <!-- ================================================================= -->
-    <!-- COMPONENT 20: SUPABASE SYNC STATUS BAR & 4-COLUMN CPA FOOTER      -->
+    <!-- COMPONENT 20B: SUPABASE SYNC STATUS BAR & 4-COLUMN CPA FOOTER     -->
     <!-- ================================================================= -->
     <footer class="bg-white border-t border-gray-200 pt-10 pb-8 mt-auto no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1080,7 +1157,7 @@
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span class="font-bold text-brand-text">Persistence Engine:</span>
-                    <span id="cloud-sync-status" class="text-gray-500 font-medium">LocalStorage (`latest_booking_payload`) + Supabase Cloud Queue Synchronized</span>
+                    <span class="text-gray-500 font-medium">LocalStorage (`latest_booking_payload`) + Supabase Cloud Queue Synchronized</span>
                 </div>
                 <span class="font-mono text-[11px] text-gray-400" id="last-synced-timestamp">Synced: Live Session</span>
             </div>
@@ -1134,12 +1211,12 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- MASTER JAVASCRIPT ENGINE FOR ALL 20 COMPONENTS                    -->
+    <!-- MASTER JAVASCRIPT ENGINE: LOOKUP GATE, POPUP & PROVINCIAL TAXES   -->
     <!-- ================================================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- 1. NATIONWIDE CITIES & PROVINCIAL TAX MATRIX ---
+            // --- 1. NATIONWIDE CITIES & STRICT PROVINCIAL TAX RULES ---
             const NATIONWIDE_CITIES = [
                 { slug: 'Hamilton', label: 'Hamilton, ON', prov: 'ON' },
                 { slug: 'Toronto', label: 'Toronto, ON', prov: 'ON' },
@@ -1158,7 +1235,6 @@
                 { slug: 'Halifax', label: 'Halifax, NS', prov: 'AT' }
             ];
 
-            // STRICT PROVINCIAL TAX & ONTARIO-ONLY ECO FEE RULES
             const PROVINCE_TAX_RULES = {
                 ON: { rate: 0.13, label: 'Ontario HST (13%)', ecoFeePerNight: 2.25, badge: 'ON (13% HST + $2.25/nt Eco Fee)' },
                 AB: { rate: 0.05, label: 'Alberta GST (5%)', ecoFeePerNight: 0.00, badge: 'AB (5% GST • $0.00 Eco Fee)' },
@@ -1179,13 +1255,13 @@
                     province: 'ON',
                     rating: '4.5',
                     roomType: 'Executive King Room',
-                    address: '560 Centennial Pkwy N, Hamilton, ON L8E 0G2 • QEW & Red Hill Valley Pkwy Hub',
+                    address: '560 Centennial Pkwy N, Hamilton, ON L8E 0G2 • QEW & Red Hill Pkwy',
                     baseNightlyRate: 158,
                     nights: 2,
                     image: 'sandman.png.jpg',
-                    hwy: 'Direct access off QEW Niagara/Toronto & Red Hill Valley Pkwy (Centennial Pkwy N exit).',
-                    transit: '5 mins to Confederation GO Station; direct Hamilton HSR transit corridor access.',
-                    parking: 'Complimentary surface lot parking included for registered Hotbeds.ca guests.'
+                    hwy: 'Direct access off QEW Niagara/Toronto & Red Hill Valley Pkwy.',
+                    transit: '5 mins to Confederation GO Station & HSR corridor.',
+                    parking: 'Complimentary surface lot parking included for Hotbeds guests.'
                 },
                 AB: {
                     bookingRef: 'HB-604918',
@@ -1197,13 +1273,13 @@
                     province: 'AB',
                     rating: '4.6',
                     roomType: 'Luxury Designer King Suite',
-                    address: '119 12 Ave SW, Calgary, AB T2R 0G8 • Downtown Beltline & Stampede District',
+                    address: '119 12 Ave SW, Calgary, AB T2R 0G8 • Downtown Beltline',
                     baseNightlyRate: 215,
                     nights: 2,
                     image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
-                    hwy: 'Direct access via Macleod Trail SE & Trans-Canada Hwy 1 / Deerfoot Trail.',
+                    hwy: 'Direct access via Macleod Trail SE & Trans-Canada Hwy 1.',
                     transit: '4 mins walk to Victoria Park / Stampede CTrain LRT Station.',
-                    parking: 'On-site heated underground valet & self-parking with 24/7 security.'
+                    parking: 'On-site heated underground valet & self-parking.'
                 },
                 BC: {
                     bookingRef: 'HB-519032',
@@ -1215,13 +1291,13 @@
                     province: 'BC',
                     rating: '4.8',
                     roomType: 'Harbourview Premier King',
-                    address: '999 Canada Pl #300, Vancouver, BC V6C 3B5 • Coal Harbour & Waterfront',
+                    address: '999 Canada Pl #300, Vancouver, BC V6C 3B5 • Coal Harbour',
                     baseNightlyRate: 275,
                     nights: 2,
                     image: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80',
-                    hwy: 'Connected via Hwy 99 & West Cordova St downtown waterfront arterial.',
-                    transit: 'Adjacent to Waterfront SkyTrain Station (Canada Line to YVR Airport & SeaBus).',
-                    parking: 'Direct elevator access from Canada Place underground secure parkade.'
+                    hwy: 'Connected via Hwy 99 & West Cordova St waterfront arterial.',
+                    transit: 'Adjacent to Waterfront SkyTrain Station (YVR Airport Line).',
+                    parking: 'Direct elevator access from Canada Place underground parkade.'
                 },
                 QC: {
                     bookingRef: 'HB-392817',
@@ -1233,17 +1309,17 @@
                     province: 'QC',
                     rating: '4.7',
                     roomType: 'Golden Square Mile Sky Loft',
-                    address: '1440 Drummond St, Montreal, QC H3G 1V9 • Downtown Golden Square Mile',
+                    address: '1440 Drummond St, Montreal, QC H3G 1V9 • Golden Square Mile',
                     baseNightlyRate: 235,
                     nights: 2,
                     image: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80',
-                    hwy: '2 mins from Autoroute 720 (Ville-Marie) Guy St / René-Lévesque exit.',
-                    transit: 'Steps from Peel Metro Station (Green Line) & Gare Centrale.',
+                    hwy: '2 mins from Autoroute 720 Guy St / René-Lévesque exit.',
+                    transit: 'Steps from Peel Metro Station & Gare Centrale.',
                     parking: '24/7 indoor heated valet parking with EV fast chargers.'
                 }
             };
 
-            // --- 2. LOAD OR INITIALIZE ACTIVE BOOKING PAYLOAD ---
+            // --- 2. STATE INITIALIZATION ---
             let activeBooking = {
                 ...PRESET_PROPERTIES.ON,
                 guestName: 'Gordon Culp',
@@ -1251,8 +1327,8 @@
                 guestEmail: 'gordon.culp@hotbeds.ca',
                 checkinDate: '2026-10-17',
                 checkoutDate: '2026-10-19',
-                arrivalWindow: '3:00 PM – 5:00 PM (Standard Check-In)',
-                specialRequests: 'Quiet High Floor (Away from Ice/Elevator)',
+                arrivalWindow: '3:00 PM – 5:00 PM (Standard)',
+                specialRequests: 'Quiet High Floor (Away from Elevator)',
                 companyName: 'Summit Society Inc.',
                 projectCode: 'Hamilton HQ • Cost Code #Q4-2026',
                 member_drip_enrolled: false,
@@ -1265,39 +1341,26 @@
                 suiteFlashRate: 29
             };
 
-            // Check URL params or localStorage('latest_booking_payload')
-            function hydrateBookingFromStorage() {
-                try {
-                    const raw = localStorage.getItem('latest_booking_payload');
-                    if (raw) {
-                        const parsed = JSON.parse(raw);
-                        activeBooking = {
-                            ...activeBooking,
-                            ...parsed,
-                            enhancements: {
-                                ...activeBooking.enhancements,
-                                ...(parsed.enhancements || {})
-                            }
-                        };
-                    } else if (localStorage.getItem('locked_hotel_name')) {
-                        const lockedProv = localStorage.getItem('locked_hotel_province') || 'ON';
-                        const preset = PRESET_PROPERTIES[lockedProv] || PRESET_PROPERTIES.ON;
-                        activeBooking = {
-                            ...activeBooking,
-                            ...preset,
-                            hotelName: localStorage.getItem('locked_hotel_name'),
-                            baseNightlyRate: parseFloat(localStorage.getItem('locked_hotel_price')) || preset.baseNightlyRate,
-                            province: lockedProv
-                        };
-                    }
-                } catch (e) {
-                    console.warn('Using default reservation payload.');
+            // Hydrate from localStorage if available
+            try {
+                const raw = localStorage.getItem('latest_booking_payload');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    activeBooking = {
+                        ...activeBooking,
+                        ...parsed,
+                        enhancements: { ...activeBooking.enhancements, ...(parsed.enhancements || {}) }
+                    };
                 }
+            } catch (e) {
+                console.warn('Using default reservation payload.');
             }
 
-            hydrateBookingFromStorage();
+            // Populate initial lookup inputs
+            document.getElementById('lookup-ref').value = activeBooking.bookingRef || 'HB-849204';
+            document.getElementById('lookup-email').value = activeBooking.guestEmail || 'gordon.culp@hotbeds.ca';
 
-            // --- 3. RENDER CITY PILLS BAR ---
+            // --- 3. CITY PILLS & PROVINCE BAR ---
             const regionSelect = document.getElementById('region-select');
             function renderCityPills(regionCode) {
                 const container = document.getElementById('city-pills-container');
@@ -1325,11 +1388,11 @@
                 const val = e.target.value;
                 renderCityPills(val);
                 if (PRESET_PROPERTIES[val]) {
-                    window.loadPresetBooking(val);
+                    window.selectPresetInLookup(val, true);
                 }
             });
 
-            // --- 4. MASTER UI & STRICT PROVINCIAL TAX ENGINE ---
+            // --- 4. MASTER UI & STRICT PROVINCIAL TAX CALCULATOR ---
             function formatHumanDate(isoStr) {
                 const d = new Date(isoStr + 'T12:00:00');
                 return d.toLocaleDateString('en-CA', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
@@ -1341,18 +1404,24 @@
                 const nights = Math.max(1, parseInt(activeBooking.nights, 10) || 1);
                 const baseRate = parseFloat(activeBooking.baseNightlyRate) || 158;
 
-                // Update checkout date based on nights
+                // Calculate Checkout Date
                 const dIn = new Date((activeBooking.checkinDate || '2026-10-17') + 'T12:00:00');
                 const dOut = new Date(dIn);
                 dOut.setDate(dIn.getDate() + nights);
                 activeBooking.checkoutDate = dOut.toISOString().split('T')[0];
 
-                // 1. Status Bar & Summary Card
+                // Update Collapsed Bar & Popup Labels
+                document.getElementById('collapsed-ref-label').textContent = activeBooking.bookingRef;
+                document.getElementById('collapsed-hotel-label').textContent = `${activeBooking.hotelName} (${activeBooking.cityLabel})`;
+                document.getElementById('popup-ref-badge').textContent = activeBooking.bookingRef;
+                document.getElementById('popup-hotel-highlight').textContent = activeBooking.hotelName;
+
+                // Status & Summary Card
                 document.getElementById('display-booking-ref').textContent = activeBooking.bookingRef;
                 document.getElementById('display-checkin-pin').textContent = activeBooking.pin;
                 document.getElementById('province-tax-pill').textContent = `Province: ${taxRule.badge}`;
                 document.getElementById('summary-hotel-img').src = activeBooking.image;
-                document.getElementById('summary-hotel-rating').textContent = `★ ${activeBooking.rating} Verified Hotel`;
+                document.getElementById('summary-hotel-rating').textContent = `★ ${activeBooking.rating} Verified`;
                 document.getElementById('summary-room-badge').textContent = activeBooking.enhancements.suiteUpgrade
                     ? 'Executive Corner Suite (Upgraded)'
                     : activeBooking.roomType;
@@ -1362,10 +1431,10 @@
                 document.getElementById('summary-hotel-address').textContent = activeBooking.address;
                 document.getElementById('summary-checkin-date').textContent = formatHumanDate(activeBooking.checkinDate);
                 document.getElementById('summary-checkout-date').textContent = formatHumanDate(activeBooking.checkoutDate);
-                document.getElementById('summary-arrival-window-badge').textContent = `Est. Arrival: ${activeBooking.arrivalWindow}`;
+                document.getElementById('summary-arrival-window-badge').textContent = activeBooking.arrivalWindow;
                 document.getElementById('summary-late-checkout-badge').textContent = activeBooking.enhancements.lateCheckout
-                    ? '✓ Guaranteed 1:00 PM Late Check-Out'
-                    : 'Standard 11:00 AM Check-Out';
+                    ? '✓ 1:00 PM Late Check-Out'
+                    : 'Standard 11:00 AM';
                 document.getElementById('summary-guest-name').textContent = activeBooking.guestName;
                 document.getElementById('summary-cotraveler-display').textContent = activeBooking.coTraveler
                     ? ` (+ ${activeBooking.coTraveler})`
@@ -1373,12 +1442,11 @@
                 document.getElementById('summary-hotel-link').href = `hotel.html?id=${encodeURIComponent(activeBooking.hotelId)}`;
                 document.getElementById('summary-city-link').href = `city.html?city=${encodeURIComponent(activeBooking.citySlug)}`;
 
-                // Update City Labels in Guild & Perks
                 document.querySelectorAll('.guild-city-label').forEach(el => {
                     el.textContent = activeBooking.cityLabel;
                 });
 
-                // 2. Second-Chance Guild Banner State
+                // Guild Banner State
                 const unenrolledView = document.getElementById('guild-unenrolled-view');
                 const enrolledView = document.getElementById('guild-enrolled-view');
                 if (activeBooking.member_drip_enrolled) {
@@ -1391,79 +1459,79 @@
                     enrolledView.classList.remove('flex');
                 }
 
-                // 3. Enhancements Buttons State
+                // Enhancements Buttons State
                 const lateBtn = document.getElementById('btn-upsell-late');
                 if (activeBooking.enhancements.lateCheckout) {
-                    lateBtn.textContent = '✓ 1:00 PM Late Check-Out Added (Click to Remove)';
-                    lateBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                    lateBtn.textContent = '✓ 1:00 PM Added (Tap to Remove)';
+                    lateBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 } else {
                     lateBtn.textContent = activeBooking.member_drip_enrolled
-                        ? '+ Add Free 1:00 PM Late Check-Out ($0 Guild Perk)'
-                        : '+ Add 1:00 PM Late Check-Out ($19)';
-                    lateBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                        ? '+ Add Free 1:00 PM Check-Out ($0)'
+                        : '+ Add 1:00 PM Check-Out ($19)';
+                    lateBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 }
 
                 const bagBtn = document.getElementById('btn-upsell-bagdrop');
                 if (activeBooking.enhancements.earlyBagDrop) {
-                    bagBtn.textContent = '✓ 12:00 PM Bag Drop & SMS Alert Active';
-                    bagBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                    bagBtn.textContent = '✓ 12:00 PM Priority Active';
+                    bagBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 } else {
-                    bagBtn.textContent = '+ Activate Free 12:00 PM Priority';
-                    bagBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                    bagBtn.textContent = '+ Activate Free Priority';
+                    bagBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 }
 
                 const suiteBtn = document.getElementById('btn-upsell-suite');
                 if (activeBooking.enhancements.suiteUpgrade) {
-                    suiteBtn.textContent = `✓ Executive Suite Locked (+$${activeBooking.suiteFlashRate}/nt)`;
-                    suiteBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition shadow-sm';
+                    suiteBtn.textContent = `✓ Suite Locked (+$${activeBooking.suiteFlashRate}/nt)`;
+                    suiteBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition shadow-sm';
                 } else {
-                    suiteBtn.innerHTML = `⚡ Lock Suite Upgrade (+$<span id="suite-btn-rate">${activeBooking.suiteFlashRate}</span>/nt)`;
-                    suiteBtn.className = 'mt-4 w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition shadow-sm';
+                    suiteBtn.innerHTML = `⚡ Lock Suite (+$<span id="suite-btn-rate">${activeBooking.suiteFlashRate}</span>/nt)`;
+                    suiteBtn.className = 'mt-4 w-full bg-brand-red hover:bg-brand-redDark text-white font-black text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition shadow-sm';
                 }
 
                 const diningBtn = document.getElementById('btn-upsell-dining');
                 if (activeBooking.enhancements.diningCredit) {
-                    diningBtn.textContent = '✓ $25 Dining Pass Added (Code: CHEF25VIP)';
-                    diningBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                    diningBtn.textContent = '✓ $25 Pass Added (CHEF25VIP)';
+                    diningBtn.className = 'mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 } else {
-                    diningBtn.textContent = '+ Add $25 Dining Credit ($19)';
-                    diningBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-4 rounded-xl transition';
+                    diningBtn.textContent = '+ Add $25 Credit ($19)';
+                    diningBtn.className = 'mt-4 w-full bg-brand-text hover:bg-black text-white font-extrabold text-[11px] uppercase tracking-wider py-3 px-4 rounded-xl transition';
                 }
 
-                // 4. Extend My Stay Rate Display
+                // Extend Stay Night Pills
                 document.getElementById('extend-rate-display').textContent = baseRate.toFixed(0);
+                [1, 2, 3, 4].forEach(n => {
+                    const pill = document.getElementById(`night-pill-${n}`);
+                    if (pill) {
+                        pill.className = (n === nights)
+                            ? 'night-pill px-3 py-2.5 rounded-xl text-xs font-black bg-brand-red text-white shadow transition'
+                            : 'night-pill px-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition';
+                    }
+                });
 
-                // 5. STRICT ITEMIZED RECEIPT & ONTARIO-ONLY ECO FEE MATH
+                // STRICT ITEMIZED RECEIPT & ONTARIO-ONLY ECO FEE MATH
                 const rawRoomSubtotal = baseRate * nights;
                 const guildDiscount = activeBooking.member_drip_enrolled ? (rawRoomSubtotal * 0.20) : 0;
                 const netRoomSubtotal = rawRoomSubtotal - guildDiscount;
 
                 let enhancementsTotal = 0;
-                if (activeBooking.enhancements.lateCheckout && !activeBooking.member_drip_enrolled) {
-                    enhancementsTotal += 19;
-                }
-                if (activeBooking.enhancements.suiteUpgrade) {
-                    enhancementsTotal += (activeBooking.suiteFlashRate * nights);
-                }
-                if (activeBooking.enhancements.diningCredit) {
-                    enhancementsTotal += 19;
-                }
+                if (activeBooking.enhancements.lateCheckout && !activeBooking.member_drip_enrolled) enhancementsTotal += 19;
+                if (activeBooking.enhancements.suiteUpgrade) enhancementsTotal += (activeBooking.suiteFlashRate * nights);
+                if (activeBooking.enhancements.diningCredit) enhancementsTotal += 19;
 
-                // ONTARIO-ONLY ECO FEE ($2.25/night = $2.00 + 13% HST)
                 const isOntario = (prov === 'ON');
                 const ecoFeeTotal = isOntario ? (2.25 * nights) : 0.00;
                 const ecoRowEl = document.getElementById('receipt-ontario-eco-row');
                 if (isOntario) {
                     ecoRowEl.classList.remove('hidden');
                     ecoRowEl.classList.add('flex');
-                    document.getElementById('receipt-eco-subtext').textContent = `$2.25 CAD/night × ${nights} nt ($2.00 + HST) • ON Only`;
+                    document.getElementById('receipt-eco-subtext').textContent = `$2.25 CAD/nt × ${nights} nt ($2.00 + HST) • ON Only`;
                     document.getElementById('receipt-eco-amount').textContent = `$${ecoFeeTotal.toFixed(2)}`;
                 } else {
                     ecoRowEl.classList.add('hidden');
                     ecoRowEl.classList.remove('flex');
                 }
 
-                // Provincial Tax Calculation
                 const taxableAmount = netRoomSubtotal + enhancementsTotal;
                 const provincialTaxAmount = taxableAmount * taxRule.rate;
                 const grandTotal = taxableAmount + provincialTaxAmount + ecoFeeTotal;
@@ -1496,11 +1564,10 @@
                 document.getElementById('receipt-tax-amount').textContent = `$${provincialTaxAmount.toFixed(2)}`;
                 document.getElementById('receipt-grand-total').textContent = `$${grandTotal.toFixed(2)}`;
 
-                // Corporate Receipt Fields
                 document.getElementById('receipt-company-display').textContent = activeBooking.companyName || activeBooking.guestName;
                 document.getElementById('receipt-project-display').textContent = activeBooking.projectCode || 'Standard Guest Folio';
 
-                // 6. Hot Beds Club Points Ledger (1,000 Welcome + 10 pts/$1 + 20% Guild Bonus)
+                // Points Calculation
                 const welcomePts = 1000;
                 const basePts = Math.round(taxableAmount * 10);
                 const guildBonusPts = activeBooking.member_drip_enrolled ? Math.round(basePts * 0.20) : 0;
@@ -1523,7 +1590,11 @@
                 document.getElementById('points-progress-label').textContent = `${progressPct}% (${totalPts.toLocaleString()} / 5,000 Pts)`;
                 document.getElementById('points-progress-bar').style.width = `${progressPct}%`;
 
-                // Show points badge in header WITHOUT touching #club-timer
+                // Update Popup Modal Points Preview
+                document.getElementById('popup-pts-highlight').textContent = `${totalPts.toLocaleString()} Club Points`;
+                document.getElementById('popup-cad-rebate').textContent = `$${cadValue} CAD`;
+
+                // Header Points Badge (Never touches #club-timer)
                 const headerPtsBadge = document.getElementById('header-member-pts-pill');
                 if (headerPtsBadge) {
                     headerPtsBadge.classList.remove('hidden');
@@ -1531,24 +1602,17 @@
                 }
                 document.getElementById('user-avatar-badge').textContent = (activeBooking.guestName || 'G').charAt(0).toUpperCase() + '.';
 
-                // 7. Logistics, Checklist & Upcoming List
+                // Logistics & Checklist
                 document.getElementById('logistics-hwy').textContent = activeBooking.hwy;
                 document.getElementById('logistics-transit').textContent = activeBooking.transit;
                 document.getElementById('logistics-parking').textContent = activeBooking.parking;
                 document.getElementById('checklist-guest-name').textContent = activeBooking.guestName;
                 document.getElementById('checklist-ref').textContent = activeBooking.bookingRef;
-                document.getElementById('upcoming-list-hotel').textContent = `${activeBooking.hotelName} — ${activeBooking.cityLabel}`;
-                document.getElementById('upcoming-list-meta').textContent = `Ref: ${activeBooking.bookingRef} • Check-In: ${formatHumanDate(activeBooking.checkinDate)}`;
                 document.getElementById('modal-ref-display').textContent = activeBooking.bookingRef;
 
-                // 8. Persist to localStorage & Simulated Supabase Cloud Sync Queue
+                // Save to localStorage
                 localStorage.setItem('latest_booking_payload', JSON.stringify(activeBooking));
-                localStorage.setItem('hotbeds_club_member', 'true');
-                localStorage.setItem('hotbeds_club_name', activeBooking.guestName);
                 localStorage.setItem('hotbeds_points_balance', totalPts.toLocaleString());
-                if (activeBooking.member_drip_enrolled) {
-                    localStorage.setItem('guild_member_active', 'true');
-                }
 
                 const nowStr = new Date().toLocaleTimeString('en-CA', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 document.getElementById('last-synced-timestamp').textContent = `Synced: ${nowStr}`;
@@ -1563,42 +1627,88 @@
 
             syncAndRenderAll(false);
 
-            // --- 5. GLOBAL INTERACTIVE CONTROLLERS ---
+            // --- 5. PROGRESSIVE LOOKUP -> POPUP -> UNLOCK WORKSPACE FLOW ---
+            const lookupForm = document.getElementById('reservation-lookup-form');
+            const memberModal = document.getElementById('member-reminder-modal');
+            const expandedCard = document.getElementById('lookup-expanded-card');
+            const collapsedBar = document.getElementById('lookup-collapsed-bar');
+            const unlockedWorkspace = document.getElementById('unlocked-booking-workspace');
 
-            // Dual-Mode Access Gate Tabs & Collapse
-            window.switchAccessTab = function(mode) {
-                const tabLookup = document.getElementById('gate-tab-lookup');
-                const tabMember = document.getElementById('gate-tab-member');
-                const panelLookup = document.getElementById('gate-panel-lookup');
-                const panelMember = document.getElementById('gate-panel-member');
+            // Step 1: User clicks "Find My Booking" -> Opens the Member Reminder Popup
+            lookupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const refInput = document.getElementById('lookup-ref').value.trim().toUpperCase();
+                const emailInput = document.getElementById('lookup-email').value.trim();
+                const errBox = document.getElementById('lookup-error-msg');
 
-                if (mode === 'lookup') {
-                    tabLookup.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-brand-red text-white shadow-sm transition';
-                    tabMember.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-gray-200 transition';
-                    panelLookup.classList.remove('hidden');
-                    panelMember.classList.add('hidden');
-                } else {
-                    tabMember.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider bg-brand-red text-white shadow-sm transition';
-                    tabLookup.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-gray-200 transition';
-                    panelMember.classList.remove('hidden');
-                    panelLookup.classList.add('hidden');
+                if (!refInput || !emailInput) {
+                    errBox.classList.remove('hidden');
+                    return;
                 }
+                errBox.classList.add('hidden');
+
+                // Match preset if reference matches one of our provincial demos
+                Object.keys(PRESET_PROPERTIES).forEach(code => {
+                    if (PRESET_PROPERTIES[code].bookingRef === refInput) {
+                        activeBooking = { ...activeBooking, ...PRESET_PROPERTIES[code] };
+                        regionSelect.value = code;
+                        renderCityPills(code);
+                    }
+                });
+
+                activeBooking.bookingRef = refInput;
+                activeBooking.guestEmail = emailInput;
+                document.getElementById('popup-member-email').value = emailInput;
+                syncAndRenderAll(false);
+
+                // Show Member Reminder Popup Modal
+                window.openMemberPopup();
+            });
+
+            window.openMemberPopup = function() {
+                memberModal.classList.remove('hidden');
+                memberModal.classList.add('flex');
             };
 
-            window.toggleAccessGate = function(forceOpen = false) {
-                const body = document.getElementById('access-gate-body');
-                const btn = document.getElementById('collapse-gate-btn');
-                if (forceOpen || body.classList.contains('hidden')) {
-                    body.classList.remove('hidden');
-                    btn.textContent = 'Hide Lookup Panel ▲';
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    body.classList.add('hidden');
-                    btn.textContent = 'Open Lookup / Switch Province ▼';
+            // Step 2: User clicks "Sync My Points & Reveal Booking" or "Continue Straight to My Voucher"
+            document.getElementById('popup-member-sync-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const syncedEmail = document.getElementById('popup-member-email').value.trim();
+                if (syncedEmail) activeBooking.guestEmail = syncedEmail;
+                localStorage.setItem('hotbeds_club_member', 'true');
+                window.confirmUnlockBooking(true);
+            });
+
+            window.confirmUnlockBooking = function(syncedMember = false) {
+                memberModal.classList.add('hidden');
+                memberModal.classList.remove('flex');
+
+                // Collapse the top lookup card into a sleek 1-line bar & reveal the booking workspace
+                expandedCard.classList.add('hidden');
+                collapsedBar.classList.remove('hidden');
+                unlockedWorkspace.classList.remove('hidden');
+
+                if (syncedMember) {
+                    const pill = document.getElementById('member-sync-pill');
+                    pill.textContent = '✓ Member Synced';
                 }
+
+                syncAndRenderAll(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             };
 
-            window.loadPresetBooking = function(provCode) {
+            window.instantUnlockWithoutModal = function() {
+                window.confirmUnlockBooking(true);
+            };
+
+            window.expandLookupGate = function() {
+                collapsedBar.classList.add('hidden');
+                expandedCard.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            // Quick-Fill Preset Selector in Lookup Card
+            window.selectPresetInLookup = function(provCode, autoUnlockIfOpen = false) {
                 const preset = PRESET_PROPERTIES[provCode] || PRESET_PROPERTIES.ON;
                 activeBooking = {
                     ...activeBooking,
@@ -1608,29 +1718,16 @@
                 regionSelect.value = provCode;
                 renderCityPills(provCode);
                 syncAndRenderAll(true);
+
+                // If workspace is already unlocked, update in place; otherwise trigger the Member Popup
+                if (!unlockedWorkspace.classList.contains('hidden') || autoUnlockIfOpen) {
+                    syncAndRenderAll(true);
+                } else {
+                    window.openMemberPopup();
+                }
             };
 
-            window.loadLatestOrDefaultBooking = function() {
-                window.loadPresetBooking('ON');
-            };
-
-            document.getElementById('reservation-lookup-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const refVal = document.getElementById('lookup-ref').value.trim().toUpperCase() || 'HB-849204';
-                const emailVal = document.getElementById('lookup-email').value.trim();
-                activeBooking.bookingRef = refVal;
-                activeBooking.guestEmail = emailVal;
-                syncAndRenderAll(true);
-            });
-
-            document.getElementById('member-signin-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const emailVal = document.getElementById('member-email-input').value.trim();
-                activeBooking.guestEmail = emailVal;
-                syncAndRenderAll(true);
-            });
-
-            // Innovation #1: Second-Chance Free Guild Activation
+            // --- 6. DASHBOARD INTERACTIVE CONTROLLERS ---
             window.activateGuildOneClick = function() {
                 activeBooking.member_drip_enrolled = true;
                 syncAndRenderAll(true);
@@ -1641,19 +1738,24 @@
                 syncAndRenderAll(true);
             };
 
-            // Innovation #2: 1-Click Stay Enhancements Matrix
             window.toggleEnhancement = function(key) {
                 activeBooking.enhancements[key] = !activeBooking.enhancements[key];
                 syncAndRenderAll(true);
             };
 
-            // Component 13: Extend My Stay Calculator
             window.adjustStayNights = function(newNights) {
                 activeBooking.nights = newNights;
                 syncAndRenderAll(true);
             };
 
-            // Innovation #3: Guest, Arrival & Corporate Tax Invoice Editor
+            window.openInvoiceEditor = function() {
+                const acc = document.getElementById('editor-accordion');
+                if (acc) {
+                    acc.open = true;
+                    acc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            };
+
             document.getElementById('guest-invoice-editor-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 activeBooking.guestName = document.getElementById('edit-primary-guest').value.trim() || 'Gordon Culp';
@@ -1664,16 +1766,15 @@
                 activeBooking.projectCode = document.getElementById('edit-project-code').value.trim();
 
                 const badge = document.getElementById('editor-save-badge');
-                badge.textContent = '✓ Saved & Applied to Tax Receipt!';
-                badge.className = 'text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white px-3 py-1 rounded-full transition';
+                badge.textContent = '✓ Saved to Receipt!';
+                badge.className = 'text-[9px] font-black uppercase bg-emerald-600 text-white px-2.5 py-0.5 rounded-full';
                 syncAndRenderAll(true);
                 setTimeout(() => {
-                    badge.textContent = '✓ Synced to Reservation';
-                    badge.className = 'text-[10px] font-extrabold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full transition';
+                    badge.textContent = 'Synced';
+                    badge.className = 'text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full';
                 }, 2500);
             });
 
-            // Component 12: Copy Partner Voucher Code
             window.copyVoucherCode = function(code, btnEl) {
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(code).catch(() => {});
@@ -1687,7 +1788,6 @@
                 }, 2000);
             };
 
-            // Component 15: Dynamic .ICS Calendar File Generator & Shareable Link
             window.downloadICSFile = function() {
                 const startClean = (activeBooking.checkinDate || '2026-10-17').replace(/-/g, '') + 'T150000';
                 const endClean = (activeBooking.checkoutDate || '2026-10-19').replace(/-/g, '') + 'T110000';
@@ -1699,9 +1799,9 @@
                     `UID:${activeBooking.bookingRef}@hotbeds.ca`,
                     `DTSTART:${startClean}`,
                     `DTEND:${endClean}`,
-                    `SUMMARY:Hotel Check-In: ${activeBooking.hotelName} (${activeBooking.bookingRef})`,
+                    `SUMMARY:Hotel Stay: ${activeBooking.hotelName} (${activeBooking.bookingRef})`,
                     `LOCATION:${activeBooking.address}`,
-                    `DESCRIPTION:Confirmed Hotbeds.ca Reservation ${activeBooking.bookingRef} | Front Desk PIN: ${activeBooking.pin} | Primary Guest: ${activeBooking.guestName}`,
+                    `DESCRIPTION:Confirmed Hotbeds.ca Booking ${activeBooking.bookingRef} | PIN: ${activeBooking.pin} | Guest: ${activeBooking.guestName}`,
                     'END:VEVENT',
                     'END:VCALENDAR'
                 ].join('\r\n');
@@ -1723,33 +1823,12 @@
                     navigator.clipboard.writeText(shareUrl).catch(() => {});
                 }
                 const btn = document.getElementById('copy-itinerary-btn');
-                btn.textContent = '✓ Itinerary Link Copied!';
+                btn.textContent = '✓ Link Copied!';
                 setTimeout(() => {
-                    btn.textContent = '🔗 Copy Shareable Link';
+                    btn.textContent = '🔗 Share Link';
                 }, 2000);
             };
 
-            // Component 18: Upcoming vs Past Reservations Switcher
-            window.switchHistoryTab = function(tab) {
-                const btnUp = document.getElementById('tab-stays-upcoming');
-                const btnPast = document.getElementById('tab-stays-past');
-                const panelUp = document.getElementById('history-panel-upcoming');
-                const panelPast = document.getElementById('history-panel-past');
-
-                if (tab === 'upcoming') {
-                    btnUp.className = 'px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-brand-text text-white transition';
-                    btnPast.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition';
-                    panelUp.classList.remove('hidden');
-                    panelPast.classList.add('hidden');
-                } else {
-                    btnPast.className = 'px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-brand-text text-white transition';
-                    btnUp.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition';
-                    panelPast.classList.remove('hidden');
-                    panelUp.classList.add('hidden');
-                }
-            };
-
-            // Component 14: Alberta CPA Cancellation Modal
             window.openCancelModal = function() {
                 const modal = document.getElementById('cancel-modal');
                 modal.classList.remove('hidden');
@@ -1765,18 +1844,18 @@
             window.claimKeepStayBonus = function() {
                 window.closeCancelModal();
                 const badge = document.getElementById('voucher-status-badge');
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span> CONFIRMED &amp; GUARANTEED (+500 KEEP-STAY PTS CREDITED)`;
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span> CONFIRMED (+500 BONUS PTS CREDITED)`;
                 syncAndRenderAll(true);
             };
 
             window.processCancellationRequest = function() {
                 window.closeCancelModal();
                 const badge = document.getElementById('voucher-status-badge');
-                badge.className = 'inline-flex items-center gap-1.5 bg-amber-100 text-amber-900 border border-amber-300 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider';
-                badge.textContent = 'CANCELLATION REVIEW / DATE HOLD ACTIVE (100% REFUND ELIGIBLE)';
+                badge.className = 'col-span-2 sm:col-span-1 inline-flex items-center justify-center gap-1.5 bg-amber-100 text-amber-900 border border-amber-300 px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider';
+                badge.textContent = 'CANCELLATION / REFUND IN PROGRESS';
             };
 
-            // --- 6. LIVE 15-SECOND UPGRADE / FLASH RATE-HOLD TIMER ---
+            // --- 7. LIVE 15-SECOND UPGRADE / FLASH RATE-HOLD TIMER ---
             let upgradeSeconds = 15;
             const upgradeTopTimer = document.getElementById('upgrade-flash-timer');
             const upgradeCardTimer = document.getElementById('card-flash-timer');
@@ -1801,7 +1880,7 @@
                 if (upgradeCardTimer) upgradeCardTimer.textContent = `00:${secStr}`;
             }, 1000);
 
-            // --- 7. UNTOUCHABLE HEADER 7-DAY CLUB COUNTDOWN TIMER (#club-timer) ---
+            // --- 8. UNTOUCHABLE HEADER 7-DAY CLUB COUNTDOWN TIMER (#club-timer) ---
             const clubTimerElement = document.getElementById('club-timer');
             let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + (59 * 60) + 59;
             setInterval(() => {
