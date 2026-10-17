@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds.ca — Canadian Cities & Regional Hotel Corridors</title>
+    <title>Hotbeds.ca — Canadian Cities Directory, Provincial Corridors & Flash Stays</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,6 +12,7 @@
                     colors: {
                         brand: {
                             red: '#e63946',
+                            redDark: '#c92a37',
                             light: '#f8fafc',
                             white: '#ffffff',
                             text: '#0f172a',
@@ -29,140 +30,343 @@
                 }
             }
         }
+
+        // Global Mobile Menu Controller (Guaranteed instant response on mobile tap)
+        window.toggleMobileMenu = function(forceClose = false) {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu) return;
+
+            const isHidden = menu.classList.contains('hidden');
+            if (forceClose || !isHidden) {
+                menu.classList.add('hidden');
+                if (openIcon) openIcon.classList.remove('hidden');
+                if (closeIcon) closeIcon.classList.add('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('hidden');
+                if (openIcon) openIcon.classList.add('hidden');
+                if (closeIcon) closeIcon.classList.remove('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+            }
+        };
     </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(230, 57, 70, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+        .urgency-dot {
+            animation: pulse-dot 2s infinite;
+        }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[146px] md:pt-[164px]">
+<body class="text-brand-text flex flex-col min-h-screen">
 
-    <!-- FIXED HEADER (100% Synced with index.html) -->
-    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
-        <div class="bg-slate-900 text-white py-1.5 px-4">
-            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
-                <a href="club.html" class="flex items-center gap-2 font-medium text-gray-200 hover:text-white transition truncate pr-2">
+    <!-- ================================================================= -->
+    <!-- STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)           -->
+    <!-- ================================================================= -->
+    <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm">
+        
+        <!-- 1. Top Utility Bar & Nationwide Region Selector -->
+        <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
+            <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
+                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-                    <span><strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points &amp; Private Hotel Flash Drops &rarr;</span>
+                    <span id="top-bar-club-text" class="truncate">
+                        <strong>HOT BEDS CLUB:</strong> Automatic Points on First Stay + 20% Off Guild Option at Checkout &rarr;
+                    </span>
                 </a>
-                <div class="flex items-center gap-3 shrink-0">
-                    <div class="flex items-center gap-1.5 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">
-                        <span class="text-brand-red">📍</span>
-                        <span class="text-gray-300 hidden sm:inline">Prioritized:</span>
-                        <button id="geo-toggle-btn" type="button" class="font-bold text-white hover:text-red-300 underline decoration-dotted underline-offset-2">
-                            Ontario Corridor
-                        </button>
+
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/15">
+                        <span class="text-brand-red text-[10px]">📍</span>
+                        <label for="region-select" class="sr-only">Select Region</label>
+                        <select id="region-select" class="bg-transparent text-white font-bold text-[10px] sm:text-[11px] focus:outline-none cursor-pointer pr-1">
+                            <option value="ALL" class="text-slate-900 font-bold" selected>All Canada</option>
+                            <option value="ON" class="text-slate-900 font-bold">Ontario (ON)</option>
+                            <option value="BC" class="text-slate-900 font-bold">British Columbia (BC)</option>
+                            <option value="AB" class="text-slate-900 font-bold">Alberta (AB)</option>
+                            <option value="QC" class="text-slate-900 font-bold">Quebec (QC)</option>
+                            <option value="PR" class="text-slate-900 font-bold">Prairies (MB/SK)</option>
+                            <option value="AT" class="text-slate-900 font-bold">Atlantic (NS/NB/NL)</option>
+                        </select>
                     </div>
                     <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
-            <div class="flex justify-between items-center h-20 md:h-24">
-                <div class="flex-shrink-0 flex items-center cursor-pointer w-[32%] md:w-1/4">
-                    <a href="index.html">
-                        <img src="LOGO.png" alt="Hotbeds" class="h-10 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+        <!-- 2. Main Navigation Bar -->
+        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
+            <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
+                
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-2xl sm:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
                     </a>
                 </div>
                 
-                <nav class="hidden lg:flex flex-1 justify-center space-x-8">
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-7">
                     <a href="cities.html" class="text-brand-red font-extrabold uppercase text-[11px] tracking-widest border-b-2 border-brand-red pb-1">Cities</a>
                     <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Search Stays</a>
-                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate</a>
+                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate Desk</a>
                     <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partner Network</a>
                     <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">My Booking</a>
                 </nav>
                 
-                <div class="flex items-center justify-end w-[68%] md:w-1/3 gap-2.5 md:gap-4">
-                    <a href="club.html" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all">
-                        <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner">
-                            <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                <!-- Right CTA: Protected Hot Beds Club Live Countdown Pill + Mobile Menu Button -->
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="hidden sm:flex items-center">
+                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
+                            G.
+                        </a>
+                    </div>
+                    
+                    <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
-                        <div class="flex flex-col justify-center">
-                            <span class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
-                            <span class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">1,000 Free Pts</span>
+                        <div class="flex flex-col justify-center text-left">
+                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
+                            <span class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
+                                Free • <span id="club-timer" class="text-red-400 font-mono">6d 23h 59m</span>
+                            </span>
                         </div>
                     </a>
+
+                    <!-- High-Target Mobile Hamburger Toggle Button -->
+                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red focus:outline-none transition shrink-0">
+                        <svg id="menu-icon-open" class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
                 </div>
+            </div>
+
+            <!-- Mobile Dropdown Navigation Drawer -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
+                <a href="index.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Home &amp; Live Flash Feed</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-red font-extrabold bg-red-50/40 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Canadian Cities Directory</span>
+                    <span class="text-brand-red">&rarr;</span>
+                </a>
+                <a href="results.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Search All Stays</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Corporate &amp; Group Blocks (5+ Rooms)</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Zero-Fee Partner Network</span>
+                    <span class="text-emerald-600 font-black text-[10px]">$0 Listing</span>
+                </a>
+                <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Manage My Booking &amp; Points</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>★ Hot Beds Club (1,000 Free Welcome Pts)</span>
+                    <span class="text-brand-red">&rarr;</span>
+                </a>
             </div>
         </div>
 
-        <div class="bg-gray-50/95 border-t border-gray-100 py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 3. Quick-Select Nationwide City Guide Pills Bar -->
+        <div class="bg-gray-50 border-t border-gray-100 py-2">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
                 <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center">
-                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 whitespace-nowrap">Corridors:</span>
-                    <div id="city-pills-container" class="flex gap-2 items-center"></div>
+                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline whitespace-nowrap">
+                        Open City Guide:
+                    </span>
+                    <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center"></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO BANNER & LIVE CITY FILTER BAR -->
-    <section class="bg-slate-900 text-white py-12 border-b border-gray-800">
+    <!-- ================================================================= -->
+    <!-- HERO BANNER, LIVE SCARCITY STRIP & PROVINCE TABS                  -->
+    <!-- ================================================================= -->
+    <section class="bg-slate-900 text-white py-10 sm:py-12 border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Top Scarcity Rate-Lock Anchor Strip -->
+            <div class="inline-flex flex-wrap items-center gap-3 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 mb-5">
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-red-300">
+                    <span class="w-2 h-2 rounded-full bg-brand-red urgency-dot"></span>
+                    Live Corridor Flash Rate Window
+                </span>
+                <span id="directory-fomo-timer" class="font-mono font-black text-xs text-brand-red bg-slate-950 px-2 py-0.5 rounded">00:15</span>
+                <span class="text-[10px] font-semibold text-gray-300 hidden sm:inline">• Automatic Hot Beds Club Points + Free 20% Off Guild Option at Checkout</span>
+            </div>
+
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
                 <div>
-                    <span class="inline-block bg-brand-red/20 border border-brand-red/40 text-red-300 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-3">
-                        Canadian Destination Directory
-                    </span>
                     <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-                        Explore Verified Hotel <span class="text-brand-red">Corridors.</span>
+                        Coast-to-Coast Canadian <span class="text-brand-red">Hotel Corridors.</span>
                     </h1>
-                    <p class="text-gray-300 text-sm sm:text-base mt-2 max-w-2xl">
-                        Browse live hotel inventory across Ontario and Alberta’s highest-demand business, convention, waterfront, and mountain resort hubs.
+                    <p class="text-gray-300 text-xs sm:text-base mt-2 max-w-2xl leading-relaxed">
+                        Explore city guides, highway and transit arteries, neighborhood amenities, and top verified hotels across every major Canadian province—plus our upcoming U.S. expansion.
                     </p>
                 </div>
 
-                <!-- Instant City Search Input -->
+                <!-- Instant City / Highway / Landmark Search Input -->
                 <div class="w-full lg:w-80">
-                    <label for="city-search-input" class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1.5">Quick Filter by City or Landmark</label>
-                    <input type="text" id="city-search-input" placeholder="e.g. Hamilton, Banff, QEW, Airport..." class="w-full p-3.5 rounded-xl bg-gray-800 border border-gray-700 focus:border-brand-red text-sm font-semibold text-white outline-none">
+                    <label for="city-search-input" class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1.5">Filter by City, Highway or Landmark</label>
+                    <div class="relative">
+                        <input type="text" id="city-search-input" placeholder="e.g. Hamilton, Vancouver, QEW, Banff..." class="w-full p-3.5 pl-9 rounded-xl bg-gray-800 border border-gray-700 focus:border-brand-red text-xs sm:text-sm font-semibold text-white outline-none">
+                        <svg class="w-4 h-4 text-brand-red absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
                 </div>
             </div>
 
-            <!-- Corridor Category Tabs -->
+            <!-- Interactive Province & US Coming Soon Tabs -->
             <div class="flex gap-2 overflow-x-auto hide-scrollbar mt-8 pt-6 border-t border-gray-800">
-                <button type="button" data-corridor="all" class="corridor-tab px-4 py-2 rounded-xl text-xs font-extrabold bg-brand-red text-white transition whitespace-nowrap">All Canadian Hubs (12)</button>
-                <button type="button" data-corridor="ON" class="corridor-tab px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">📍 Ontario &amp; GTHA Corridor (8)</button>
-                <button type="button" data-corridor="AB" class="corridor-tab px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">🏔️ Alberta &amp; Rockies (4)</button>
-                <button type="button" data-corridor="business" class="corridor-tab px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">💼 Corporate &amp; Transit</button>
-                <button type="button" data-corridor="leisure" class="corridor-tab px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">✨ Waterfront &amp; Mountain Resorts</button>
+                <button type="button" data-prov="ALL" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-red text-white transition whitespace-nowrap">
+                    🇨🇦 All Canada (18 Cities)
+                </button>
+                <button type="button" data-prov="ON" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    Ontario (6)
+                </button>
+                <button type="button" data-prov="BC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    British Columbia (4)
+                </button>
+                <button type="button" data-prov="AB" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    Alberta &amp; Rockies (3)
+                </button>
+                <button type="button" data-prov="QC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    Quebec (2)
+                </button>
+                <button type="button" data-prov="PR" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    Prairies • MB/SK (2)
+                </button>
+                <button type="button" data-prov="AT" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap">
+                    Atlantic • NS (1)
+                </button>
+                <button type="button" data-prov="US" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-950/80 text-red-300 border border-red-500/40 hover:bg-red-900/60 transition whitespace-nowrap flex items-center gap-1.5">
+                    <span>🇺🇸 United States</span>
+                    <span class="bg-brand-red text-white text-[9px] px-1.5 py-0.5 rounded uppercase">Coming Soon</span>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- MAIN CITIES BENTO GRID -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-14">
+    <!-- ================================================================= -->
+    <!-- MAIN CITIES DIRECTORY WORKSPACE                                   -->
+    <!-- ================================================================= -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-14">
         
+        <!-- 1. CANADIAN CITIES BENTO GRID -->
         <div id="cities-directory-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Dynamically populated by JavaScript below -->
         </div>
 
-        <!-- Regional Tax & Fee Transparency Callout -->
+        <!-- 2. UNITED STATES COMING SOON PANEL (Toggles when US Tab is active or at bottom) -->
+        <section id="us-expansion-panel" class="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-gray-800 shadow-soft-xl space-y-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-gray-800 pb-6">
+                <div>
+                    <span class="inline-block bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+                        🇺🇸 Cross-Border Expansion • Coming Soon
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight">United States Hotel Corridors Launching Soon</h2>
+                    <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-2xl leading-relaxed">
+                        We are finalizing contracted rate blocks across major U.S. corporate and leisure corridors for Canadian members. Join the priority notification list to unlock a 20% launch discount when U.S. bookings open.
+                    </p>
+                </div>
+
+                <form id="us-directory-waitlist" class="w-full lg:w-96 flex flex-col sm:flex-row gap-2">
+                    <input type="email" required placeholder="Enter email for US launch alert" class="flex-grow bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-xs font-semibold text-white focus:outline-none focus:border-brand-red">
+                    <button type="submit" id="us-waitlist-submit" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-xl shrink-0 transition">
+                        Notify Me
+                    </button>
+                </form>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=600&q=80" alt="New York City" class="w-full h-full object-cover opacity-55">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-[10px] font-bold uppercase text-gray-300">Midtown, SoHo &amp; Financial Core</span>
+                        <h3 class="text-lg font-black text-white">New York City, NY</h3>
+                    </div>
+                </div>
+                <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?auto=format&fit=crop&w=600&q=80" alt="Miami" class="w-full h-full object-cover opacity-55">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-[10px] font-bold uppercase text-gray-300">South Beach, Brickell &amp; Cruise Port</span>
+                        <h3 class="text-lg font-black text-white">Miami, FL</h3>
+                    </div>
+                </div>
+                <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=600&q=80" alt="Las Vegas" class="w-full h-full object-cover opacity-55">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-[10px] font-bold uppercase text-gray-300">The Strip &amp; Convention Corridor</span>
+                        <h3 class="text-lg font-black text-white">Las Vegas, NV</h3>
+                    </div>
+                </div>
+                <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=600&q=80" alt="Chicago" class="w-full h-full object-cover opacity-55">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-[10px] font-bold uppercase text-gray-300">The Loop, River North &amp; O'Hare</span>
+                        <h3 class="text-lg font-black text-white">Chicago, IL</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PROVINCIAL TAX & ONTARIO-ONLY ECO FEE TRANSPARENCY + B2B DESK -->
         <section class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-soft grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Ontario Corridor</span>
-                <h3 class="text-base font-black text-brand-text mb-1">GTHA, Hamilton &amp; Niagara</h3>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Ontario Corridor Rule</span>
+                <h3 class="text-base font-black text-brand-text mb-1">13% HST + $2.25/nt ON Eco Fee</h3>
                 <p class="text-xs text-gray-500 leading-relaxed">
-                    Direct QEW, 401, and GO Transit corridor access. Checkout displays full 13% HST and the standard $2.25/night ($2.00 + tax) Ontario Eco Fee upfront.
+                    Stays in Ontario cities (Hamilton, Burlington, Oakville, Mississauga, Toronto, Niagara Falls, Ottawa) display itemized 13% HST and the $2.25/night ($2.00 + tax) Ontario Eco Fee at checkout.
                 </p>
             </div>
             <div>
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Alberta &amp; Rockies</span>
-                <h3 class="text-base font-black text-brand-text mb-1">Calgary, Banff, Edmonton &amp; Canmore</h3>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 block mb-1">Rest of Canada Rule</span>
+                <h3 class="text-base font-black text-brand-text mb-1">$0.00 Eco Fees Outside Ontario</h3>
                 <p class="text-xs text-gray-500 leading-relaxed">
-                    Curated corporate towers in Calgary and Edmonton alongside 4- and 5-star alpine resorts in Banff and Canmore.
+                    Properties in British Columbia, Alberta, Quebec, Manitoba, Saskatchewan, and Nova Scotia carry <strong>$0.00 Ontario Eco Fees</strong> and apply only their standard provincial tax rate.
                 </p>
             </div>
             <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col justify-between">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-widest text-brand-red block">Need 5+ Rooms in Any City?</span>
                     <h4 class="text-sm font-black mt-0.5">Corporate &amp; Tournament Desk</h4>
+                    <p class="text-[11px] text-gray-300 mt-1">Single master invoice &amp; contracted group rates across all 18 Canadian hubs.</p>
                 </div>
-                <a href="corporate.html" class="mt-3 inline-block bg-brand-red hover:bg-red-700 text-white text-center text-xs font-extrabold uppercase tracking-widest py-2.5 px-4 rounded-lg transition">
+                <a href="corporate.html" class="mt-3 inline-block bg-brand-red hover:bg-brand-redDark text-white text-center text-xs font-extrabold uppercase tracking-widest py-2.5 px-4 rounded-lg transition">
                     Request Group Block &rarr;
                 </a>
             </div>
@@ -170,172 +374,343 @@
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
-            <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
-            <div class="flex flex-wrap gap-4">
-                <a href="index.html" class="hover:text-brand-red font-bold">Home</a>
-                <a href="corporate.html" class="hover:text-brand-red font-bold">Corporate</a>
-                <a href="partners.html" class="hover:text-brand-red font-bold">Partners</a>
-                <a href="legal.html" class="hover:text-brand-red font-bold">Legal &amp; Alberta CPA</a>
+    <!-- ================================================================= -->
+    <!-- 4-COLUMN ALBERTA CPA & PIPEDA COMPLIANT FOOTER                    -->
+    <!-- ================================================================= -->
+    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+                <div>
+                    <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
+                    <p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        Canadian hotel reservation platform delivering live flash rates, automatic Hot Beds Club rewards, and curated local partner perks across every major Canadian city.
+                    </p>
+                    <a href="manage-booking.html" class="text-xs font-extrabold text-brand-red hover:underline">Manage Existing Booking &rarr;</a>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Major Canadian Hubs</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="city.html?city=Hamilton" class="hover:text-brand-red">Hamilton &amp; Burlington, ON</a></li>
+                        <li><a href="city.html?city=Toronto" class="hover:text-brand-red">Downtown Toronto, ON</a></li>
+                        <li><a href="city.html?city=Vancouver" class="hover:text-brand-red">Vancouver &amp; Whistler, BC</a></li>
+                        <li><a href="city.html?city=Calgary" class="hover:text-brand-red">Calgary &amp; Banff, AB</a></li>
+                        <li><a href="city.html?city=Montreal" class="hover:text-brand-red">Montreal &amp; Quebec City, QC</a></li>
+                        <li><a href="cities.html" class="text-brand-text font-bold hover:text-brand-red">View All Canadian Cities &rarr;</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; B2B</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (1,000 Free Points)</a></li>
+                        <li><a href="corporate.html" class="hover:text-brand-red">Corporate &amp; Group Desk (5+ Rooms)</a></li>
+                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Local Partner Network</a></li>
+                        <li><a href="portal-login.html" class="hover:text-brand-red">Private Member Portal Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Privacy</h5>
+                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
+                        <li><a href="legal.html#privacy" class="hover:text-brand-red">Privacy &amp; Cookie Policy (PIPEDA)</a></li>
+                        <li><a href="legal.html#terms" class="hover:text-brand-red">Reservation Terms &amp; Conditions</a></li>
+                        <li><a href="legal.html#alberta-cpa" class="hover:text-brand-red">Alberta CPA Internet Sales Rules</a></li>
+                        <li><a href="legal.html#ontario-eco" class="hover:text-brand-red">Provincial Tax &amp; Eco Fee Disclosure</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+                <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
+                    Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation)
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- ================================================================= -->
+    <!-- MASTER DIRECTORY ENGINE: 18 CANADIAN CITIES + PROVINCE FILTER     -->
+    <!-- ================================================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. SESSION CHECK (NEVER OVERWRITES #club-timer) ---
+            if (localStorage.getItem('hotbeds_club_member') === 'true' || localStorage.getItem('guild_member_active') === 'true') {
+                const memberName = localStorage.getItem('hotbeds_club_name') || localStorage.getItem('guild_member_name') || 'Member';
+                const pts = localStorage.getItem('hotbeds_points_balance') || '1,000';
+                document.getElementById('user-avatar-badge').textContent = memberName.charAt(0).toUpperCase() + '.';
+                document.getElementById('top-bar-club-text').innerHTML = `<strong>✓ HOT BEDS CLUB ACTIVE (${pts} PTS):</strong> Extra 20% Off Guild Option Ready at Checkout &rarr;`;
+            }
+
+            // --- 2. 18-CITY COAST-TO-COAST CANADIAN DIRECTORY DATABASE ---
             const CITIES_DATABASE = [
                 {
+                    slug: 'Hamilton',
                     city: 'Hamilton, ON',
                     region: 'ON',
-                    tags: ['business'],
                     stays: 18,
                     fromPrice: 158,
                     flagshipId: 'sandman-hamilton',
                     flagshipName: 'Sandman Hotel Hamilton',
-                    highlights: 'QEW Highway Corridor • Downtown Convention Centre • Confederation GO',
+                    highways: 'QEW • Hwy 403 • Confederation & West Harbour GO',
+                    highlights: 'Hamilton Stadium, Downtown Convention Centre & QEW Transit Hub',
                     img: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Burlington',
                     city: 'Burlington, ON',
                     region: 'ON',
-                    tags: ['leisure', 'business'],
                     stays: 9,
                     fromPrice: 185,
                     flagshipId: 'pearle-burlington',
                     flagshipName: 'The Pearle Hotel & Spa',
-                    highlights: 'Spencer Smith Waterfront • Lakeshore Dining • QEW / 403 Hub',
+                    highways: 'QEW • Hwy 403 • Hwy 407 ETR • Burlington GO',
+                    highlights: 'Spencer Smith Waterfront Pier, Luxury Spa & Lakeshore Dining',
                     img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Oakville',
                     city: 'Oakville, ON',
                     region: 'ON',
-                    tags: ['business'],
                     stays: 8,
                     fromPrice: 169,
-                    flagshipId: 'sandman-hamilton',
+                    flagshipId: 'sandman-oakville',
                     flagshipName: 'Sandman Hotel Oakville',
-                    highlights: 'South Service Corporate Park • Oakville Harbour • Sheridan Corridor',
+                    highways: 'QEW • South Service Corporate Corridor • Oakville GO',
+                    highlights: 'Oakville Harbourfront, Bronte Creek & Corporate Business Parks',
                     img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Mississauga',
                     city: 'Mississauga, ON',
                     region: 'ON',
-                    tags: ['business'],
                     stays: 24,
-                    fromPrice: 172,
-                    flagshipId: 'sandman-hamilton',
+                    fromPrice: 168,
+                    flagshipId: 'sandman-mississauga',
                     flagshipName: 'Sandman Signature Mississauga',
-                    highlights: 'YYZ Pearson Airport Hub • Square One City Centre • Dixie Corporate',
+                    highways: 'Hwy 401 • Hwy 403 • Hwy 427 • UP Express to YYZ',
+                    highlights: 'Toronto Pearson Airport (YYZ) Hub, Square One & Corporate Centre',
                     img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Toronto',
                     city: 'Toronto, ON',
                     region: 'ON',
-                    tags: ['business', 'leisure'],
                     stays: 64,
-                    fromPrice: 229,
-                    flagshipId: 'pearle-burlington',
+                    fromPrice: 219,
+                    flagshipId: 'royal-york-toronto',
                     flagshipName: 'Fairmont Royal York',
-                    highlights: 'Financial District • Union Station • Metro Toronto Convention Centre',
+                    highways: 'Gardiner Expy • DVP • Union Station Rail & Subway Hub',
+                    highlights: 'Financial District, MTCC Convention Centre, Arenas & Harbourfront',
                     img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Niagara-Falls',
                     city: 'Niagara Falls, ON',
                     region: 'ON',
-                    tags: ['leisure'],
                     stays: 29,
-                    fromPrice: 179,
-                    flagshipId: 'pearle-burlington',
-                    flagshipName: 'Fallsview Resort & Suites',
-                    highlights: 'Fallsview Boulevard • Clifton Hill • Winery & Casino District',
+                    fromPrice: 175,
+                    flagshipId: 'hilton-niagara',
+                    flagshipName: 'Fallsview Boulevard Resort & Suites',
+                    highways: 'QEW • Hwy 420 • Rainbow Bridge U.S. Border Crossing',
+                    highlights: 'Fallsview Boulevard, Casino Resort, Clifton Hill & Wine Route',
                     img: 'https://images.unsplash.com/photo-1533094602577-198d3beab8ea?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    city: 'Kitchener-Waterloo, ON',
-                    region: 'ON',
-                    tags: ['business'],
-                    stays: 14,
-                    fromPrice: 162,
-                    flagshipId: 'sheraton-hamilton',
-                    flagshipName: 'Crowne Plaza Kitchener-Waterloo',
-                    highlights: 'Tech Innovation District • University Corridor • Highway 401',
-                    img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80'
-                },
-                {
+                    slug: 'Ottawa',
                     city: 'Ottawa, ON',
                     region: 'ON',
-                    tags: ['business', 'leisure'],
                     stays: 27,
-                    fromPrice: 189,
-                    flagshipId: 'sheraton-hamilton',
-                    flagshipName: 'Downtown Parliament Suites',
-                    highlights: 'Parliament Hill • ByWard Market • Shaw Convention Centre',
+                    fromPrice: 185,
+                    flagshipId: 'ottawa-parliament-suites',
+                    flagshipName: 'Metcalfe Boutique Hotel Ottawa',
+                    highways: 'Hwy 417 (The Queensway) • O-Train LRT • YOW Airport',
+                    highlights: 'Parliament Hill, Shaw Convention Centre, Rideau Canal & ByWard Market',
                     img: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Vancouver',
+                    city: 'Vancouver, BC',
+                    region: 'BC',
+                    stays: 52,
+                    fromPrice: 235,
+                    flagshipId: 'pan-pacific-vancouver',
+                    flagshipName: 'Pan Pacific Vancouver Waterfront',
+                    highways: 'Trans-Canada Hwy 1 • Hwy 99 • Canada Line SkyTrain to YVR',
+                    highlights: 'Coal Harbour, Canada Place Cruise Terminal, Yaletown & Stanley Park',
+                    img: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Victoria',
+                    city: 'Victoria, BC',
+                    region: 'BC',
+                    stays: 21,
+                    fromPrice: 199,
+                    flagshipId: 'pan-pacific-vancouver',
+                    flagshipName: 'Inner Harbour Waterfront Suites',
+                    highways: 'Hwy 17 (Swartz Bay Ferry & YYJ) • Trans-Canada Hwy 1',
+                    highlights: 'Inner Harbour Causeway, BC Parliament Precinct & Coastal Dining',
+                    img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Whistler',
+                    city: 'Whistler, BC',
+                    region: 'BC',
+                    stays: 19,
+                    fromPrice: 269,
+                    flagshipId: 'whistler-alpine-resort',
+                    flagshipName: 'Pan Pacific Whistler Mountainside',
+                    highways: 'Sea-to-Sky Highway 99 • Whistler & Blackcomb Gondola Base',
+                    highlights: 'Ski-In/Ski-Out Alpine Suites, Heated Mountain Pools & Nordic Spas',
+                    img: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Kelowna',
+                    city: 'Kelowna, BC',
+                    region: 'BC',
+                    stays: 16,
+                    fromPrice: 182,
+                    flagshipId: 'pan-pacific-vancouver',
+                    flagshipName: 'Okanagan Lakefront Resort',
+                    highways: 'Hwy 97 Okanagan Corridor • Hwy 97C Connector • YLW Airport',
+                    highlights: 'Okanagan Lake Marina, Estate Wineries & Championship Golf',
+                    img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Calgary',
                     city: 'Calgary, AB',
                     region: 'AB',
-                    tags: ['business', 'leisure'],
                     stays: 42,
                     fromPrice: 169,
                     flagshipId: 'hotel-arts-calgary',
                     flagshipName: 'Hotel Arts Calgary',
-                    highlights: 'Downtown Beltline • BMO Convention Centre • Stampede Park',
+                    highways: 'Trans-Canada Hwy 1 • QEII Hwy 2 (Deerfoot Trail) • CTrain LRT',
+                    highlights: 'Downtown Beltline, BMO Convention Centre, Stampede Park & 0% PST',
                     img: 'https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    city: 'Banff, AB',
+                    slug: 'Banff',
+                    city: 'Banff & Canmore, AB',
                     region: 'AB',
-                    tags: ['leisure'],
-                    stays: 24,
-                    fromPrice: 259,
-                    flagshipId: 'hotel-arts-calgary',
+                    stays: 34,
+                    fromPrice: 245,
+                    flagshipId: 'banff-rimrock',
                     flagshipName: 'Rimrock Resort Hotel Banff',
-                    highlights: 'Banff National Park • Sulphur Mountain Gondola • Alpine Hot Springs',
+                    highways: 'Trans-Canada Hwy 1 • Icefields Parkway (Hwy 93) • Roam Transit',
+                    highlights: 'Banff National Park, Sulphur Mountain Hot Springs & Lake Louise',
                     img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'
                 },
                 {
+                    slug: 'Edmonton',
                     city: 'Edmonton, AB',
                     region: 'AB',
-                    tags: ['business'],
                     stays: 35,
                     fromPrice: 159,
-                    flagshipId: 'hotel-arts-calgary',
+                    flagshipId: 'matrix-edmonton',
                     flagshipName: 'Matrix Hotel Edmonton',
-                    highlights: 'ICE District • Jasper Ave Corporate Core • West Edmonton Corridor',
+                    highways: 'QEII Hwy 2 • Yellowhead Hwy 16 • Anthony Henday Ring Road',
+                    highlights: 'Rogers Place & ICE District, Jasper Ave Core & Legislature Grounds',
                     img: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    city: 'Canmore, AB',
-                    region: 'AB',
-                    tags: ['leisure'],
+                    slug: 'Montreal',
+                    city: 'Montreal, QC',
+                    region: 'QC',
+                    stays: 48,
+                    fromPrice: 195,
+                    flagshipId: 'mount-stephen-montreal',
+                    flagshipName: 'Le Mount Stephen Montreal',
+                    highways: 'Autoroutes 15, 20 & 40 • STM Metro & REM • YUL Airport',
+                    highlights: 'Golden Square Mile, Old Montreal, Bell Centre & Palais des congrès',
+                    img: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Quebec-City',
+                    city: 'Quebec City, QC',
+                    region: 'QC',
+                    stays: 22,
+                    fromPrice: 189,
+                    flagshipId: 'mount-stephen-montreal',
+                    flagshipName: 'Old Quebec Parliament Suites',
+                    highways: 'Autoroutes 20, 40 & 73 • Gare du Palais Rail • YQB Airport',
+                    highlights: 'Old Quebec UNESCO Ramparts, Petit-Champlain & Convention Centre',
+                    img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Winnipeg',
+                    city: 'Winnipeg, MB',
+                    region: 'PR',
                     stays: 19,
-                    fromPrice: 215,
-                    flagshipId: 'hotel-arts-calgary',
-                    flagshipName: 'The Malcolm Hotel Canmore',
-                    highlights: 'Bow Valley Trail • Three Sisters Peaks • Heated Outdoor Pools',
-                    img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80'
+                    fromPrice: 154,
+                    flagshipId: 'fort-garry-winnipeg',
+                    flagshipName: 'The Fort Garry Hotel & Spa',
+                    highways: 'Trans-Canada Hwy 1 • Perimeter Hwy 100 • Union Station Rail',
+                    highlights: 'The Forks Riverwalk, Ten Spa Hammam, RBC Convention & Exchange District',
+                    img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Saskatoon',
+                    city: 'Saskatoon, SK',
+                    region: 'PR',
+                    stays: 15,
+                    fromPrice: 149,
+                    flagshipId: 'fort-garry-winnipeg',
+                    flagshipName: 'South Saskatchewan Riverfront Suites',
+                    highways: 'Yellowhead Hwy 16 • Hwy 11 Corridor • Circle Drive • YXE Airport',
+                    highlights: 'Meewasin Riverfront Trails, Remai Modern, TCU Place & Innovation Hub',
+                    img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                    slug: 'Halifax',
+                    city: 'Halifax, NS',
+                    region: 'AT',
+                    stays: 23,
+                    fromPrice: 189,
+                    flagshipId: 'halifax-waterfront-hotel',
+                    flagshipName: 'Muir, Autograph Collection Halifax',
+                    highways: 'Hwy 102 & Hwy 103 • Harbour Bridges & Ferries • YHZ Airport',
+                    highlights: 'Queen’s Marque Waterfront, 4km Harbourwalk, Citadel & Convention Hub',
+                    img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=800&q=80'
                 }
             ];
 
-            let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
-            let activeCorridorTab = 'all';
+            let activeProvince = 'ALL';
             const grid = document.getElementById('cities-directory-grid');
             const searchInput = document.getElementById('city-search-input');
+            const regionSelect = document.getElementById('region-select');
+            const usPanel = document.getElementById('us-expansion-panel');
 
-            function renderTopPills() {
+            function renderTopPills(prov) {
                 const pillsContainer = document.getElementById('city-pills-container');
                 pillsContainer.innerHTML = '';
-                document.getElementById('geo-toggle-btn').textContent = activeRegion === 'AB' ? 'Alberta & Rockies' : 'Ontario Corridor';
 
-                CITIES_DATABASE.filter(c => c.region === activeRegion).forEach(item => {
+                const prioritized = prov === 'ALL' || prov === 'US'
+                    ? CITIES_DATABASE.slice(0, 9)
+                    : [
+                        ...CITIES_DATABASE.filter(c => c.region === prov),
+                        ...CITIES_DATABASE.filter(c => c.region !== prov)
+                      ].slice(0, 9);
+
+                prioritized.forEach(item => {
                     const a = document.createElement('a');
-                    a.href = `results.html?destination=${encodeURIComponent(item.city)}`;
-                    a.className = 'px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red transition whitespace-nowrap shadow-sm';
-                    a.textContent = item.city.split(',')[0];
+                    a.href = `city.html?city=${encodeURIComponent(item.slug)}`;
+                    a.className = 'px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition whitespace-nowrap shadow-sm';
+                    a.textContent = item.city;
                     pillsContainer.appendChild(a);
+                });
+            }
+
+            function syncTabStyles(prov) {
+                document.querySelectorAll('.prov-tab').forEach(t => {
+                    const p = t.getAttribute('data-prov');
+                    if (p === 'US') {
+                        t.className = p === prov
+                            ? 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-red text-white transition whitespace-nowrap flex items-center gap-1.5'
+                            : 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-950/80 text-red-300 border border-red-500/40 hover:bg-red-900/60 transition whitespace-nowrap flex items-center gap-1.5';
+                    } else {
+                        t.className = p === prov
+                            ? 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-red text-white transition whitespace-nowrap'
+                            : 'prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap';
+                    }
                 });
             }
 
@@ -343,45 +718,67 @@
                 const query = searchInput.value.trim().toLowerCase();
                 grid.innerHTML = '';
 
-                let sorted = [...CITIES_DATABASE].sort((a, b) => (a.region === activeRegion && b.region !== activeRegion ? -1 : 1));
+                if (activeProvince === 'US') {
+                    grid.classList.add('hidden');
+                    usPanel.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                } else {
+                    grid.classList.remove('hidden');
+                }
 
-                const filtered = sorted.filter(item => {
-                    if (activeCorridorTab === 'ON' && item.region !== 'ON') return false;
-                    if (activeCorridorTab === 'AB' && item.region !== 'AB') return false;
-                    if (activeCorridorTab === 'business' && !item.tags.includes('business')) return false;
-                    if (activeCorridorTab === 'leisure' && !item.tags.includes('leisure')) return false;
-                    if (query && !item.city.toLowerCase().includes(query) && !item.highlights.toLowerCase().includes(query)) return false;
+                const filtered = CITIES_DATABASE.filter(item => {
+                    if (activeProvince !== 'ALL' && item.region !== activeProvince) return false;
+                    if (query && !item.city.toLowerCase().includes(query) && !item.highways.toLowerCase().includes(query) && !item.highlights.toLowerCase().includes(query)) return false;
                     return true;
                 });
 
                 filtered.forEach(item => {
+                    const isOntario = item.region === 'ON';
+                    const taxBadge = isOntario
+                        ? 'ON: 13% HST + $2.25/nt Eco Fee'
+                        : `${item.region}: $0.00 Eco Fee`;
+
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-soft hover:shadow-soft-xl transition-all duration-300 flex flex-col group';
                     card.innerHTML = `
                         <div class="relative h-52 overflow-hidden bg-gray-900">
-                            <img src="${item.img}" alt="${item.city}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                            <a href="city.html?city=${encodeURIComponent(item.slug)}">
+                                <img src="${item.img}" alt="${item.city}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                            </a>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent pointer-events-none"></div>
                             <span class="absolute top-3 left-3 bg-slate-900/90 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded">
                                 ${item.stays} Verified Stays
                             </span>
                             <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2.5 py-1 rounded shadow">
                                 From $${item.fromPrice} CAD
                             </span>
-                            <div class="absolute bottom-3 left-4 right-4 text-white">
+                            <div class="absolute bottom-3 left-4 right-4 text-white pointer-events-none">
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-red-300 block">${taxBadge}</span>
                                 <h2 class="text-2xl font-black tracking-tight">${item.city}</h2>
                             </div>
                         </div>
                         <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red mb-1">Key Corridors &amp; Landmarks</div>
-                                <p class="text-xs text-gray-600 font-medium leading-relaxed">${item.highlights}</p>
+                            <div class="space-y-2">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Highways &amp; Transit Arteries</span>
+                                    <p class="text-xs text-brand-text font-bold">${item.highways}</p>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block">Corridor Highlights</span>
+                                    <p class="text-xs text-gray-600 font-medium leading-relaxed">${item.highlights}</p>
+                                </div>
+                                <div class="pt-1">
+                                    <a href="hotel.html?id=${encodeURIComponent(item.flagshipId)}" class="text-[11px] font-extrabold text-emerald-700 hover:underline inline-flex items-center gap-1">
+                                        <span>★ Flagship: ${item.flagshipName}</span>
+                                    </a>
+                                </div>
                             </div>
                             <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
-                                <a href="hotel.html?id=${item.flagshipId}" class="text-[11px] font-bold text-gray-500 hover:text-brand-text truncate">
-                                    ★ ${item.flagshipName}
+                                <a href="city.html?city=${encodeURIComponent(item.slug)}" class="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-3 rounded-xl transition">
+                                    📍 City Guide
                                 </a>
-                                <a href="results.html?destination=${encodeURIComponent(item.city)}" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-[11px] uppercase tracking-wider px-4 py-2.5 rounded-xl shrink-0 transition">
-                                    Explore Stays &rarr;
+                                <a href="results.html?destination=${encodeURIComponent(item.city)}&prov=${item.region}" class="flex-1 text-center bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-3 rounded-xl transition shadow-sm">
+                                    Search Stays &rarr;
                                 </a>
                             </div>
                         </div>
@@ -390,28 +787,60 @@
                 });
             }
 
-            document.getElementById('geo-toggle-btn').addEventListener('click', () => {
-                activeRegion = activeRegion === 'ON' ? 'AB' : 'ON';
-                localStorage.setItem('hotbeds_region', activeRegion);
-                renderTopPills();
+            // Wire Events
+            searchInput.addEventListener('input', renderCities);
+
+            regionSelect.addEventListener('change', (e) => {
+                activeProvince = e.target.value;
+                localStorage.setItem('hotbeds_region', activeProvince);
+                syncTabStyles(activeProvince);
+                renderTopPills(activeProvince);
                 renderCities();
             });
 
-            searchInput.addEventListener('input', renderCities);
-
-            document.querySelectorAll('.corridor-tab').forEach(tab => {
+            document.querySelectorAll('.prov-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
-                    document.querySelectorAll('.corridor-tab').forEach(t => {
-                        t.className = 'corridor-tab px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700 transition whitespace-nowrap';
-                    });
-                    e.currentTarget.className = 'corridor-tab px-4 py-2 rounded-xl text-xs font-extrabold bg-brand-red text-white transition whitespace-nowrap';
-                    activeCorridorTab = e.currentTarget.getAttribute('data-corridor');
+                    activeProvince = e.currentTarget.getAttribute('data-prov');
+                    if (activeProvince !== 'US') {
+                        regionSelect.value = activeProvince;
+                        localStorage.setItem('hotbeds_region', activeProvince);
+                    }
+                    syncTabStyles(activeProvince);
+                    renderTopPills(activeProvince);
                     renderCities();
                 });
             });
 
-            renderTopPills();
+            document.getElementById('us-directory-waitlist').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('us-waitlist-submit');
+                btn.textContent = '✓ Subscribed!';
+                btn.classList.replace('bg-brand-red', 'bg-emerald-600');
+            });
+
+            renderTopPills(activeProvince);
             renderCities();
+
+            // --- 3. PROTECTED DUAL SCARCITY TIMERS (HERO 15s + HEADER 7-DAY) ---
+            const fomoEl = document.getElementById('directory-fomo-timer');
+            let fomoSec = 15;
+            setInterval(() => {
+                fomoSec = fomoSec <= 1 ? 15 : fomoSec - 1;
+                if (fomoEl) {
+                    fomoEl.textContent = `00:${fomoSec < 10 ? '0' + fomoSec : fomoSec}`;
+                }
+            }, 1000);
+
+            const clubTimerElement = document.getElementById('club-timer');
+            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + 3540;
+            setInterval(() => {
+                if (!clubTimerElement || clubTimeLeft <= 0) return;
+                clubTimeLeft--;
+                const days = Math.floor(clubTimeLeft / (24 * 3600));
+                const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
+                const mins = Math.floor((clubTimeLeft % 3600) / 60);
+                clubTimerElement.innerText = `${days}d ${hours}h ${mins}m`;
+            }, 1000);
         });
     </script>
 </body>
