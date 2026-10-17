@@ -12,6 +12,7 @@
                     colors: {
                         brand: {
                             red: '#e63946',
+                            redDark: '#c92a37',
                             light: '#f8fafc',
                             white: '#ffffff',
                             text: '#0f172a',
@@ -29,6 +30,28 @@
                 }
             }
         }
+
+        // Global Mobile Menu Controller (Guaranteed instant response on mobile tap)
+        window.toggleMobileMenu = function(forceClose = false) {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu) return;
+
+            const isHidden = menu.classList.contains('hidden');
+            if (forceClose || !isHidden) {
+                menu.classList.add('hidden');
+                if (openIcon) openIcon.classList.remove('hidden');
+                if (closeIcon) closeIcon.classList.add('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('hidden');
+                if (openIcon) openIcon.classList.add('hidden');
+                if (closeIcon) closeIcon.classList.remove('hidden');
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+            }
+        };
     </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -36,7 +59,8 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; 
+            background-color: #f8fafc;
+            overflow-x: hidden;
         }
         
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -52,100 +76,131 @@
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[146px] md:pt-[164px] pb-20 lg:pb-0">
+<body class="text-brand-text flex flex-col min-h-screen pb-20 lg:pb-0">
 
     <!-- ================================================================= -->
-    <!-- COMPONENT 01-03: FIXED HEADER, GEO BAR, NAV & CITY PILLS          -->
+    <!-- STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)           -->
     <!-- ================================================================= -->
-    <header class="fixed top-0 w-full z-50 flex flex-col bg-white border-b border-gray-100 shadow-sm">
+    <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm">
         
-        <!-- COMPONENT 01: Top Utility Bar & Geographic Predisposition Switcher -->
-        <div class="bg-slate-900 text-white py-1.5 px-4">
-            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
-                <a href="club.html" class="flex items-center gap-2 font-medium text-gray-200 hover:text-white transition truncate pr-2">
+        <!-- 1. Top Utility Bar & Nationwide Region Selector -->
+        <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
+            <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
+                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-                    <span id="top-bar-club-text"><strong>HOT BEDS CLUB:</strong> Free 7-Day Trial Open ($0.00 Charged Today) • Unlock Member Rebates at Checkout &rarr;</span>
+                    <span id="top-bar-club-text" class="truncate">
+                        <strong>HOT BEDS CLUB:</strong> Automatic Points on First Stay + 20% Off Guild Option at Checkout &rarr;
+                    </span>
                 </a>
-                <div class="flex items-center gap-3 shrink-0">
-                    <div class="flex items-center gap-1.5 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">
-                        <span class="text-brand-red">📍</span>
-                        <span class="text-gray-300 hidden sm:inline">Region:</span>
-                        <button id="geo-toggle-btn" type="button" class="font-bold text-white hover:text-red-300 underline decoration-dotted underline-offset-2" title="Click to switch featured region">
-                            Ontario Corridor
-                        </button>
+
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/15">
+                        <span class="text-brand-red text-[10px]">📍</span>
+                        <label for="region-select" class="sr-only">Select Region</label>
+                        <select id="region-select" class="bg-transparent text-white font-bold text-[10px] sm:text-[11px] focus:outline-none cursor-pointer pr-1">
+                            <option value="ALL" class="text-slate-900 font-bold">All Canada</option>
+                            <option value="ON" class="text-slate-900 font-bold" selected>Ontario (ON)</option>
+                            <option value="BC" class="text-slate-900 font-bold">British Columbia (BC)</option>
+                            <option value="AB" class="text-slate-900 font-bold">Alberta (AB)</option>
+                            <option value="QC" class="text-slate-900 font-bold">Quebec (QC)</option>
+                            <option value="PR" class="text-slate-900 font-bold">Prairies (MB/SK)</option>
+                            <option value="AT" class="text-slate-900 font-bold">Atlantic (NS/NB/NL)</option>
+                        </select>
                     </div>
                     <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
                 </div>
             </div>
         </div>
 
-        <!-- COMPONENT 02: Main Navigation & "Hot Beds Club" Anchor Pill -->
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
-            <div class="flex justify-between items-center h-20 md:h-24">
+        <!-- 2. Main Navigation Bar -->
+        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
+            <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
                 
-                <!-- Enlarged Hotbeds Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer w-[32%] md:w-1/4">
-                    <a href="index.html">
-                        <img src="LOGO.png" alt="Hotbeds" class="h-10 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-2xl sm:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
                     </a>
                 </div>
                 
                 <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex flex-1 justify-center space-x-8">
-                    <a href="index.html#cities-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Cities</a>
-                    <a href="index.html#featured-stays" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Featured Stays</a>
-                    <a href="index.html#corporate-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Corporate</a>
-                    <a href="index.html#referral-section" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest flex items-center gap-1">
-                        Referral Program <span class="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
-                    </a>
-                    <a href="club.html" class="text-brand-text hover:text-brand-red font-bold transition-colors duration-200 uppercase text-[11px] tracking-widest">Members Sign In</a>
+                <nav class="hidden lg:flex items-center space-x-7">
+                    <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
+                    <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Search Stays</a>
+                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate Desk</a>
+                    <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partner Network</a>
+                    <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">My Booking</a>
                 </nav>
                 
-                <!-- Right CTA: Signature "Hot Beds Club" Anchor Button -->
-                <div class="flex items-center justify-end w-[68%] md:w-1/3 gap-2.5 md:gap-4">
-                    <div class="hidden sm:flex flex-col items-center">
-                        <div id="user-avatar-badge" class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-brand-text font-black text-sm shadow-sm">
-                            J.
-                        </div>
+                <!-- Right CTA: Protected Hot Beds Club Live Countdown Pill + Mobile Menu Button -->
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="hidden sm:flex items-center">
+                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
+                            G.
+                        </a>
                     </div>
                     
-                    <a href="club.html" class="group flex items-center gap-2 md:gap-3 bg-brand-text hover:bg-black text-white px-1 py-1 md:px-1.5 md:py-1.5 pr-4 md:pr-6 rounded-full shadow-sm border border-gray-800 transition-all transform hover:-translate-y-0.5">
-                        <div class="w-7 h-7 md:w-9 md:h-9 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-3.5 h-3.5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
-                        <div class="flex flex-col justify-center">
-                            <span id="header-club-title" class="text-[9px] md:text-[11px] font-extrabold uppercase tracking-widest text-white leading-tight">Hot Beds Club</span>
-                            <span id="header-club-sub" class="text-[7px] md:text-[9px] font-bold text-gray-400 uppercase tracking-wider">Free for <span id="club-timer">6d 23h</span></span>
+                        <div class="flex flex-col justify-center text-left">
+                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
+                            <span class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
+                                Free • <span id="club-timer" class="text-red-400 font-mono">6d 23h 59m</span>
+                            </span>
                         </div>
                     </a>
 
-                    <button id="mobile-menu-btn" aria-label="Toggle Menu" class="lg:hidden text-brand-text hover:text-brand-red focus:outline-none ml-1">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <!-- High-Target Mobile Hamburger Toggle Button -->
+                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red focus:outline-none transition shrink-0">
+                        <svg id="menu-icon-open" class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="menu-icon-close" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Menu -->
-            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-2xl z-50 flex flex-col">
-                <a href="index.html#cities-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Cities</a>
-                <a href="index.html#featured-stays" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Featured Stays</a>
-                <a href="index.html#corporate-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Corporate Desk</a>
-                <a href="index.html#referral-section" class="px-6 py-3.5 text-brand-text font-bold border-b border-gray-50 hover:bg-gray-50 uppercase tracking-widest text-xs">Referral Program ($25 Credit)</a>
-                <a href="club.html" class="px-6 py-4 bg-slate-900 text-white font-extrabold uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Hot Beds Club (Free Pass)</span>
+            <!-- Mobile Dropdown Navigation Drawer -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
+                <a href="index.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Home &amp; Live Flash Feed</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Canadian Cities Directory</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="results.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Search All Stays</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Corporate &amp; Group Blocks (5+ Rooms)</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Zero-Fee Partner Network</span>
+                    <span class="text-emerald-600 font-black text-[10px]">$0 Listing</span>
+                </a>
+                <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Manage My Booking &amp; Points</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>★ Hot Beds Club (1,000 Free Welcome Pts)</span>
                     <span class="text-brand-red">&rarr;</span>
                 </a>
             </div>
         </div>
 
-        <!-- COMPONENT 03: Geo-Predisposed Quick-Select City Pills -->
-        <div class="bg-gray-50/95 border-t border-gray-100 py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center justify-start">
-                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden md:flex items-center gap-1 whitespace-nowrap">
-                        Nearby Deals:
+        <!-- 3. Quick-Select Nationwide City Pills Bar -->
+        <div class="bg-gray-50 border-t border-gray-100 py-2">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center">
+                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline whitespace-nowrap">
+                        Explore City Guides:
                     </span>
-                    <div id="city-pills-container" class="flex gap-2 items-center"></div>
+                    <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center"></div>
                 </div>
             </div>
         </div>
@@ -156,17 +211,22 @@
     <!-- ================================================================= -->
     <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        <!-- COMPONENT 04: Structured Breadcrumb Trail & Share/Save Bar -->
+        <!-- COMPONENT 04: Structured Breadcrumb Trail (Wired to cities.html & city.html) -->
         <div class="flex flex-wrap justify-between items-center gap-4 mb-5 pb-3 border-b border-gray-200/70">
             <nav class="flex items-center gap-2 text-xs font-semibold text-gray-500 overflow-x-auto hide-scrollbar whitespace-nowrap">
                 <a href="index.html" class="hover:text-brand-red transition">Home</a>
                 <span>/</span>
-                <a id="breadcrumb-region" href="results.html?destination=Hamilton%2C+ON" class="hover:text-brand-red transition">Ontario Stays</a>
+                <a href="cities.html" class="hover:text-brand-red transition">Canadian Cities</a>
+                <span>/</span>
+                <a id="breadcrumb-city-guide" href="city.html?city=Hamilton" class="hover:text-brand-red transition">Hamilton Guide</a>
                 <span>/</span>
                 <span id="breadcrumb-hotel" class="text-brand-text font-bold truncate max-w-[200px] sm:max-w-xs">Loading Property...</span>
             </nav>
 
             <div class="flex items-center gap-2.5">
+                <a id="top-city-guide-btn" href="city.html?city=Hamilton" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 border border-red-200 text-xs font-extrabold text-brand-red hover:bg-red-100 transition">
+                    <span>📍 City Guide</span>
+                </a>
                 <button type="button" id="share-property-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-xs font-bold text-brand-text hover:border-brand-red transition shadow-sm">
                     <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
                     <span id="share-btn-label">Share</span>
@@ -186,15 +246,15 @@
                     <span id="hotel-badge-pill" class="text-[10px] font-extrabold text-white uppercase tracking-widest bg-slate-900 px-2.5 py-0.5 rounded">Verified Partner Property</span>
                     <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-red bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                         <span class="w-1.5 h-1.5 rounded-full bg-brand-red urgency-dot"></span>
-                        <span id="hotel-demand-text">Booked 4 times in the last 24h</span>
+                        <span id="hotel-demand-text">Booked 5 times in the last 24h</span>
                     </span>
                 </div>
-                <h1 id="hotel-name" class="text-3xl sm:text-4xl font-black text-brand-text tracking-tight mb-1.5">Sandman Hotel Hamilton</h1>
+                <h1 id="hotel-name" class="text-2xl sm:text-4xl font-black text-brand-text tracking-tight mb-1.5">Sandman Hotel Hamilton</h1>
                 <p class="text-xs sm:text-sm font-semibold text-gray-500 flex flex-wrap items-center gap-1.5">
                     <svg class="w-4 h-4 text-brand-red shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
                     <span id="hotel-address">560 Centennial Pkwy N, Hamilton, ON L8E 0G2</span>
                     <span class="text-gray-300">•</span>
-                    <a href="#location-section" class="text-brand-red font-bold hover:underline">View Neighborhood &amp; Transit</a>
+                    <a href="#location-section" class="text-brand-red font-bold hover:underline">View Neighborhood &amp; Landmarks</a>
                 </p>
             </div>
 
@@ -207,14 +267,14 @@
                     </div>
                     <div id="hotel-score" class="bg-brand-text text-white text-lg font-black px-3 py-2 rounded-xl shadow-sm">4.5</div>
                 </div>
-                <a href="#room-selection" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition whitespace-nowrap">
+                <a href="#room-selection" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition whitespace-nowrap">
                     Select Room &darr;
                 </a>
             </div>
         </div>
 
         <!-- COMPONENT 06: 5-Photo Bento Gallery Grid with Lightbox Trigger -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5 h-[300px] sm:h-[420px] rounded-2xl overflow-hidden mb-6 shadow-soft relative group">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2.5 h-[280px] sm:h-[420px] rounded-2xl overflow-hidden mb-6 shadow-soft relative group">
             <!-- Primary Feature Image (2 Cols, Full Height) -->
             <div onclick="openGalleryModal(0)" class="md:col-span-2 relative h-full bg-gray-200 cursor-pointer overflow-hidden">
                 <img id="img-main" src="" alt="Property Exterior" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
@@ -250,8 +310,8 @@
             </button>
         </div>
 
-        <!-- COMPONENT 07: Sticky In-Page Section Jump Bar -->
-        <div class="sticky top-[146px] md:top-[164px] z-30 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-2.5 mb-8 shadow-sm flex items-center justify-between gap-4 overflow-x-auto hide-scrollbar">
+        <!-- COMPONENT 07: In-Page Section Jump Bar -->
+        <div class="bg-white border border-gray-200 rounded-xl px-4 py-3 mb-8 shadow-sm flex items-center justify-between gap-4 overflow-x-auto hide-scrollbar">
             <div class="flex items-center gap-6 text-xs font-extrabold uppercase tracking-wider whitespace-nowrap">
                 <a href="#overview-section" class="text-brand-red border-b-2 border-brand-red pb-0.5">Overview</a>
                 <a href="#room-selection" class="text-gray-600 hover:text-brand-red transition">Available Rooms</a>
@@ -285,33 +345,35 @@
                         <span class="text-xs font-black text-brand-text">24-Hour Reception</span>
                     </div>
                     <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Connectivity</span>
-                        <span class="text-xs font-black text-green-600">✓ Free High-Speed Wi-Fi</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">First Stay Bonus</span>
+                        <span class="text-xs font-black text-green-600">✓ Auto Hot Beds Pts</span>
                     </div>
                     <div class="bg-white p-4 rounded-xl border border-gray-200/80 shadow-soft">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Price Protection</span>
-                        <span class="text-xs font-black text-brand-red">Alberta CPA Verified</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-0.5">Checkout Option</span>
+                        <span class="text-xs font-black text-brand-red">20% Off + Local Perks</span>
                     </div>
                 </div>
 
-                <!-- Property Narrative -->
+                <!-- Property Narrative + Automatic Points & Free Guild 20% Callout -->
                 <section id="overview-section" class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-soft">
                     <h2 class="text-lg font-extrabold text-brand-text mb-3 uppercase tracking-tight">Property Overview</h2>
                     <p id="hotel-description" class="text-sm text-gray-600 leading-relaxed mb-5"></p>
                     
-                    <!-- COMPONENT 15: Subtle Hot Beds Club Checkout Rebate Callout (Protects Public Rate Parity) -->
-                    <div class="bg-slate-900 text-white rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-brand-red flex items-center justify-center shrink-0 font-black text-xs">★</div>
+                    <!-- Clear Two-Part Loyalty & Checkout Discount Banner -->
+                    <div class="bg-slate-900 text-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-start sm:items-center gap-3.5">
+                            <div class="w-9 h-9 rounded-full bg-brand-red flex items-center justify-center shrink-0 font-black text-xs mt-0.5 sm:mt-0">★</div>
                             <div>
-                                <div class="text-xs font-extrabold uppercase tracking-wider text-white">Hot Beds Club Member Perk Eligible</div>
-                                <p class="text-[11px] text-gray-300 mt-0.5">
-                                    Reserve any room below to unlock your instant member rebate at checkout—plus 7-day complimentary club access ($0.00 charged today).
+                                <div class="text-xs font-extrabold uppercase tracking-wider text-white">
+                                    Automatic Hot Beds Club Points + Free 20% Off Guild Option
+                                </div>
+                                <p class="text-[11px] text-gray-300 mt-1 leading-relaxed">
+                                    Your first reservation automatically enrolls you in the <strong>Hot Beds Club</strong> to earn stay points—and at checkout, you can opt into <strong>The Guild</strong> for free to take <strong>20% off this booking</strong> and unlock hundreds of discounted products and services in your local city.
                                 </p>
                             </div>
                         </div>
-                        <a href="club.html" class="text-[11px] font-extrabold uppercase tracking-widest text-brand-red bg-white px-3.5 py-2 rounded-lg shrink-0 hover:bg-gray-100 transition">
-                            Learn More
+                        <a href="#room-selection" class="text-[11px] font-extrabold uppercase tracking-widest text-brand-red bg-white px-4 py-2.5 rounded-lg shrink-0 hover:bg-gray-100 transition">
+                            View Rooms &darr;
                         </a>
                     </div>
                 </section>
@@ -326,12 +388,22 @@
 
             </div>
 
-            <!-- COMPONENT 10: Right Column (1/3) — Interactive Stay Recalculator Widget -->
+            <!-- COMPONENT 10: Right Column (1/3) — Interactive Stay Recalculator + Scarcity Timer -->
             <div class="w-full lg:w-1/3">
-                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-soft-xl sticky top-[220px] border border-gray-800">
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-soft-xl sticky top-[150px] border border-gray-800">
+                    
+                    <!-- Live FOMO Flash Rate Timer Strip -->
+                    <div class="flex justify-between items-center bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 mb-4">
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-red-400">
+                            <span class="w-2 h-2 rounded-full bg-brand-red urgency-dot"></span>
+                            Live Flash Rate Window
+                        </span>
+                        <span id="sidebar-fomo-timer" class="font-mono font-black text-sm text-brand-red">00:15</span>
+                    </div>
+
                     <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-800">
                         <div>
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-brand-red block">Live Rate Calculator</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Live Stay Calculator</span>
                             <h3 class="text-base font-extrabold uppercase tracking-wide">Your Stay Details</h3>
                         </div>
                         <span id="sidebar-nights-pill" class="bg-brand-red text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">
@@ -359,28 +431,31 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Price Summary Preview -->
+                    <!-- Dynamic Price & Province Tax Summary Preview -->
                     <div class="bg-gray-800/90 border border-gray-700 rounded-xl p-3.5 mb-5 space-y-1.5 text-xs">
                         <div class="flex justify-between text-gray-300">
                             <span>Starting Nightly Rate:</span>
                             <span id="sidebar-base-rate" class="font-bold text-white">$158.00 CAD</span>
                         </div>
                         <div class="flex justify-between text-gray-300">
-                            <span>Estimated Stay Total (<span id="sidebar-nights-count">1</span> nt):</span>
+                            <span>Room Subtotal (<span id="sidebar-nights-count">1</span> nt):</span>
                             <span id="sidebar-total-rate" class="font-black text-white text-sm">$158.00 CAD</span>
                         </div>
-                        <div class="pt-1.5 border-t border-gray-700 flex justify-between text-[10px] text-green-400 font-bold uppercase">
-                            <span>Hot Beds Club Rebate:</span>
-                            <span>Available at Checkout</span>
+                        <div class="pt-1.5 border-t border-gray-700 flex justify-between text-[10px] text-emerald-400 font-bold uppercase">
+                            <span>20% Off Guild Option:</span>
+                            <span id="sidebar-guild-preview">-$31.60 at Checkout</span>
+                        </div>
+                        <div id="sidebar-tax-eco-note" class="text-[10px] text-gray-400 pt-1">
+                            +13% HST &amp; $2.25/nt Ontario Eco Fee at checkout
                         </div>
                     </div>
                     
-                    <button type="button" onclick="document.getElementById('room-selection').scrollIntoView({behavior: 'smooth'})" class="w-full bg-brand-red hover:bg-red-700 text-white font-extrabold py-3.5 rounded-xl uppercase tracking-widest text-xs transition-colors shadow-md">
-                        View Available Rooms &darr;
+                    <button type="button" onclick="document.getElementById('room-selection').scrollIntoView({behavior: 'smooth'})" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-extrabold py-3.5 rounded-xl uppercase tracking-widest text-xs transition-colors shadow-md">
+                        Select Room &amp; Lock Rate &darr;
                     </button>
 
                     <p class="text-[9px] text-gray-400 text-center uppercase tracking-wider mt-3">
-                        ✓ Transparent All-In CAD Pricing • Alberta CPA Compliant
+                        ✓ Alberta CPA Compliant • Full Tax Breakdown at Checkout
                     </p>
                 </div>
             </div>
@@ -462,7 +537,7 @@
                             <span class="text-xs font-extrabold text-brand-text">Sarah T. • Weekend Getaway</span>
                             <span class="text-xs font-black text-brand-text">★ 4.6</span>
                         </div>
-                        <p class="text-xs text-gray-600 leading-relaxed">"Great amenities and super convenient highway and transit access. Activate the Hot Beds Club option at checkout—it saved us a bundle on a busy Friday night."</p>
+                        <p class="text-xs text-gray-600 leading-relaxed">"Great amenities and super convenient highway and transit access. Checking the free Guild option at checkout saved us 20% on our room plus gave us local dining discounts."</p>
                     </div>
                 </div>
             </section>
@@ -472,7 +547,10 @@
                 
                 <!-- COMPONENT 17: Location & Nearby Landmarks -->
                 <section id="location-section" class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-soft">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Neighborhood &amp; Transit</span>
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Neighborhood &amp; Transit</span>
+                        <a id="location-city-guide-link" href="city.html?city=Hamilton" class="text-[10px] font-extrabold text-brand-text hover:text-brand-red underline uppercase">Open City Guide &rarr;</a>
+                    </div>
                     <h3 class="text-lg font-black text-brand-text uppercase tracking-tight mb-3">Location Highlights</h3>
                     <p id="location-summary" class="text-xs text-gray-500 mb-4">Prime corridor access to business districts, dining, and highway transit.</p>
                     <ul id="landmarks-list" class="space-y-2.5 text-xs font-semibold text-gray-700">
@@ -480,10 +558,10 @@
                     </ul>
                 </section>
 
-                <!-- COMPONENT 18: Property Policies & House Rules (Alberta CPA Internet Sales Disclosure) -->
+                <!-- COMPONENT 18: Property Policies & House Rules (Alberta CPA + Provincial Tax Disclosure) -->
                 <section id="policies-section" class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-soft">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1"> Reservation Disclosures</span>
-                    <h3 class="text-lg font-black text-brand-text uppercase tracking-tight mb-4">House Rules &amp; Policies</h3>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1">Reservation Disclosures</span>
+                    <h3 class="text-lg font-black text-brand-text uppercase tracking-tight mb-4">House Rules &amp; Tax Policy</h3>
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between py-2 border-b border-gray-100">
                             <span class="font-bold text-gray-500">Check-In / Check-Out</span>
@@ -494,11 +572,11 @@
                             <span class="font-semibold text-gray-700">Gov Photo ID + Credit Card</span>
                         </div>
                         <div class="flex justify-between py-2 border-b border-gray-100">
-                            <span class="font-bold text-gray-500">Parking &amp; Wi-Fi</span>
-                            <span class="font-semibold text-green-600">On-Site Available • Free Wi-Fi</span>
+                            <span class="font-bold text-gray-500">Applicable Tax &amp; Eco Fee</span>
+                            <span id="policy-tax-eco-label" class="font-extrabold text-brand-text">13% HST + $2.25/nt ON Eco Fee</span>
                         </div>
                         <div class="pt-1 text-[11px] text-gray-400 leading-relaxed">
-                            All rates are displayed in Canadian Dollars (CAD). Full cancellation terms and total charges are disclosed prior to payment in accordance with the <strong>Alberta Consumer Protection Act</strong>.
+                            All rates are displayed in Canadian Dollars (CAD). Full cancellation terms, applicable provincial taxes, and total charges are disclosed prior to payment in accordance with the <strong>Alberta Consumer Protection Act</strong>.
                         </div>
                     </div>
                 </section>
@@ -512,10 +590,10 @@
         <section class="pt-8 border-t border-gray-200 mb-8">
             <div class="flex justify-between items-end mb-6">
                 <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Compare Nearby</span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Compare Coast-to-Coast</span>
                     <h2 class="text-2xl font-black text-brand-text uppercase tracking-tight">Similar Verified Properties</h2>
                 </div>
-                <a href="index.html#featured-stays" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest">View All &rarr;</a>
+                <a href="results.html" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest">View All Stays &rarr;</a>
             </div>
             <div id="similar-hotels-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <!-- Populated dynamically by JS -->
@@ -535,7 +613,7 @@
                 <span class="text-[10px] font-bold text-gray-500">CAD / night</span>
             </div>
         </div>
-        <a href="#room-selection" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl shadow-md">
+        <a href="#room-selection" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl shadow-md">
             Select Room &uarr;
         </a>
     </div>
@@ -558,47 +636,52 @@
     </div>
 
     <!-- ================================================================= -->
-    <!-- COMPONENT 22: 4-COLUMN ALBERTA CPA COMPLIANT OTA FOOTER           -->
+    <!-- COMPONENT 22: 4-COLUMN ALBERTA CPA & PIPEDA COMPLIANT FOOTER      -->
     <!-- ================================================================= -->
     <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
                 <div>
                     <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Canadian hotel reservation platform delivering live peak-night rates and exclusive Hot Beds Club member perks.
+                    <p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        Canadian hotel reservation platform delivering live flash rates, automatic Hot Beds Club rewards, and curated local partner perks across every major Canadian city.
                     </p>
+                    <a href="manage-booking.html" class="text-xs font-extrabold text-brand-red hover:underline">Manage Existing Booking &rarr;</a>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Popular Cities</h5>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Major Canadian Hubs</h5>
                     <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="results.html?destination=Hamilton%2C+ON" class="hover:text-brand-red">Hamilton &amp; Burlington Hotels</a></li>
-                        <li><a href="results.html?destination=Toronto%2C+ON" class="hover:text-brand-red">Downtown Toronto Stays</a></li>
-                        <li><a href="results.html?destination=Calgary%2C+AB" class="hover:text-brand-red">Calgary Corporate Hotels</a></li>
-                        <li><a href="results.html?destination=Banff%2C+AB" class="hover:text-brand-red">Banff &amp; Canmore Resorts</a></li>
+                        <li><a href="city.html?city=Hamilton" class="hover:text-brand-red">Hamilton &amp; Burlington, ON</a></li>
+                        <li><a href="city.html?city=Toronto" class="hover:text-brand-red">Downtown Toronto, ON</a></li>
+                        <li><a href="city.html?city=Vancouver" class="hover:text-brand-red">Vancouver &amp; Whistler, BC</a></li>
+                        <li><a href="city.html?city=Calgary" class="hover:text-brand-red">Calgary &amp; Banff, AB</a></li>
+                        <li><a href="city.html?city=Montreal" class="hover:text-brand-red">Montreal &amp; Quebec City, QC</a></li>
+                        <li><a href="cities.html" class="text-brand-text font-bold hover:text-brand-red">View All Canadian Cities &rarr;</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; Perks</h5>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; B2B</h5>
                     <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (Free 7-Day Pass)</a></li>
-                        <li><a href="index.html#corporate-section" class="hover:text-brand-red">Corporate &amp; Group Desk</a></li>
-                        <li><a href="index.html#referral-section" class="hover:text-brand-red">Referral Program ($25 Credit)</a></li>
+                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (1,000 Free Points)</a></li>
+                        <li><a href="corporate.html" class="hover:text-brand-red">Corporate &amp; Group Desk (5+ Rooms)</a></li>
+                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Local Partner Network</a></li>
+                        <li><a href="portal-login.html" class="hover:text-brand-red">Private Member Portal Login</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Compliance</h5>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Privacy</h5>
                     <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="#" class="hover:text-brand-red">Terms &amp; Conditions</a></li>
-                        <li><a href="#" class="hover:text-brand-red">Privacy &amp; Cookie Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-red">Internet Sales Contract Rules</a></li>
+                        <li><a href="legal.html#privacy" class="hover:text-brand-red">Privacy &amp; Cookie Policy (PIPEDA)</a></li>
+                        <li><a href="legal.html#terms" class="hover:text-brand-red">Reservation Terms &amp; Conditions</a></li>
+                        <li><a href="legal.html#alberta-cpa" class="hover:text-brand-red">Alberta CPA Internet Sales Rules</a></li>
+                        <li><a href="legal.html#ontario-eco" class="hover:text-brand-red">Provincial Tax &amp; Eco Fee Disclosure</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
                 <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
-                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold">
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
                     Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation)
                 </p>
             </div>
@@ -606,16 +689,33 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- MASTER PROPERTY ENGINE: API + FALLBACK CATALOG + LIVE CALCULATOR  -->
+    <!-- MASTER PROPERTY ENGINE: 16-HOTEL NATIONWIDE CATALOG + TAX LOGIC   -->
     <!-- ================================================================= -->
     <script>
-        // Built-in Resilient Canadian Property Catalog (Prevents broken demos if API is offline)
+        const DEFAULT_GALLERY = [
+            'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80',
+            'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80'
+        ];
+
+        function buildStandardRooms(basePrice) {
+            return [
+                { name: 'Standard Corporate King Room', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 335, price: basePrice, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
+                { name: 'Deluxe Two Queen Guestroom', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 380, price: basePrice + 20, left: 4, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
+                { name: 'Executive One-Bedroom King Suite', category: 'suite', beds: '1 King Bed + Sofa Bed', sleeps: 3, sqft: 520, price: basePrice + 60, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
+            ];
+        }
+
+        // Complete 16-Property Coast-to-Coast Canadian Catalog
         const PROPERTY_CATALOG = {
             'sandman-hamilton': {
                 id: 'sandman-hamilton',
                 name: 'Sandman Hotel Hamilton',
                 region: 'ON',
                 city: 'Hamilton, ON',
+                citySlug: 'Hamilton',
                 address: '560 Centennial Pkwy N, Hamilton, ON L8E 0G2',
                 stars: '★★★★',
                 score: '4.5',
@@ -623,63 +723,17 @@
                 badge: 'Popular Business & Transit Pick',
                 demand: 'Booked 5 times in the last 24h',
                 description: 'Strategically positioned near the QEW corridor between Toronto and Niagara, Sandman Hotel Hamilton combines modern executive comfort with effortless regional access. Guests enjoy an indoor heated pool, hot tub, 24-hour fitness center, high-speed workspace Wi-Fi, and two on-site dining venues including Chop Steakhouse & Bar and Denny’s.',
-                images: [
-                    'sandman.png.jpg',
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80'
-                ],
+                images: ['sandman.png.jpg', ...DEFAULT_GALLERY.slice(1)],
                 amenities: ['Indoor Heated Pool', 'Hot Tub & Whirlpool', '24-Hour Front Desk', 'Free High-Speed Wi-Fi', 'Chop Steakhouse On-Site', 'Fitness Center', 'Free On-Site Parking', 'Business Workstations', 'Pet-Friendly Rooms'],
-                landmarks: [
-                    'Confederation GO Station & QEW Access — 2 min drive',
-                    'Hamilton Stadium — 10 min drive',
-                    'Downtown Hamilton & Convention Centre — 14 min drive',
-                    'Burlington Waterfront — 12 min drive'
-                ],
-                rooms: [
-                    { name: 'Standard Corporate King', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 320, price: 158.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Deluxe Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 365, price: 174.00, left: 4, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Executive King Suite with Kitchenette', category: 'suite', beds: '1 King Bed + Sofa Bed', sleeps: 3, sqft: 480, price: 215.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
-                ]
-            },
-            'pearle-burlington': {
-                id: 'pearle-burlington',
-                name: 'The Pearle Hotel & Spa',
-                region: 'ON',
-                city: 'Burlington, ON',
-                address: '3 Elizabeth St, Burlington, ON L7R 0M7',
-                stars: '★★★★★',
-                score: '4.8',
-                reviews: '312 Verified Guest Reviews',
-                badge: 'Waterfront Luxury & Spa',
-                demand: 'Booked 6 times in the last 24h',
-                description: 'Overlooking the shores of Lake Ontario in downtown Burlington, The Pearle Hotel & Spa offers floor-to-ceiling waterfront views, a full-service luxury spa with hammam and indoor pool, and acclaimed lakeside dining at Isabelle Restaurant + Lounge.',
-                images: [
-                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80'
-                ],
-                amenities: ['Full-Service Luxury Spa', 'Lakefront Dining', 'Indoor Pool & Steam Room', 'Valet Parking', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Event Ballrooms', 'Room Service'],
-                landmarks: [
-                    'Spencer Smith Park & Pier — 1 min walk',
-                    'Burlington Performing Arts Centre — 4 min walk',
-                    'Royal Botanical Gardens — 10 min drive',
-                    'Oakville Harbour — 15 min drive'
-                ],
-                rooms: [
-                    { name: 'Studio King Guestroom', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 390, price: 285.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Lakeview Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 430, price: 315.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Waterfront Corner One-Bedroom Suite', category: 'suite', beds: '1 King Bed', sleeps: 2, sqft: 640, price: 395.00, left: 1, non_refundable: false, img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=700&q=80' }
-                ]
+                landmarks: ['Confederation GO Station & QEW Access — 2 min drive', 'Hamilton Stadium — 10 min drive', 'Downtown Hamilton & Convention Centre — 14 min drive', 'Burlington Waterfront — 12 min drive'],
+                rooms: buildStandardRooms(158)
             },
             'sheraton-hamilton': {
                 id: 'sheraton-hamilton',
                 name: 'Sheraton Hamilton Hotel',
                 region: 'ON',
                 city: 'Hamilton, ON',
+                citySlug: 'Hamilton',
                 address: '116 King St W, Hamilton, ON L8P 4V3',
                 stars: '★★★★',
                 score: '4.4',
@@ -687,31 +741,161 @@
                 badge: 'Downtown Core & Convention Hub',
                 demand: 'Booked 4 times in the last 24h',
                 description: 'Located in the heart of downtown Hamilton with direct indoor skywalk access to the Hamilton Convention Centre, FirstOntario Concert Hall, and Jackson Square, Sheraton Hamilton is built for seamless business and event stays.',
-                images: [
-                    'sheraton.png.jpg',
-                    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=900&q=80'
-                ],
-                amenities: ['Sheraton Club Lounge', 'Indoor Heated Pool', '24-Hour Fitness Center', 'Chagall’s Restaurant', 'Direct Arena & Convention Access', 'High-Speed Wi-Fi', 'Valet & Self Parking', 'Conference Rooms', 'Pet Friendly'],
-                landmarks: [
-                    'Hamilton Convention Centre — 2 min indoor walk',
-                    'Art Gallery of Hamilton — 2 min walk',
-                    'Hamilton GO Centre — 8 min walk',
-                    'McMaster University — 8 min drive'
-                ],
-                rooms: [
-                    { name: 'Traditional King Room', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 330, price: 195.00, left: 4, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Traditional Two Double Beds', category: 'free_cancel', beds: '2 Double Beds', sleeps: 4, sqft: 350, price: 209.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Sheraton Club Level King Suite', category: 'suite', beds: '1 King Bed + Lounge Access', sleeps: 2, sqft: 510, price: 259.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
-                ]
+                images: ['sheraton.png.jpg', ...DEFAULT_GALLERY.slice(1)],
+                amenities: ['Sheraton Club Lounge', 'Indoor Heated Pool', '24-Hour Fitness Center', 'Chagall’s Restaurant', 'Direct Convention Access', 'High-Speed Wi-Fi', 'Valet & Self Parking', 'Conference Rooms', 'Pet Friendly'],
+                landmarks: ['Hamilton Convention Centre — 2 min indoor walk', 'Art Gallery of Hamilton — 2 min walk', 'Hamilton GO Centre — 8 min walk', 'McMaster University — 8 min drive'],
+                rooms: buildStandardRooms(195)
+            },
+            'pearle-burlington': {
+                id: 'pearle-burlington',
+                name: 'The Pearle Hotel & Spa',
+                region: 'ON',
+                city: 'Burlington, ON',
+                citySlug: 'Burlington',
+                address: '3 Elizabeth St, Burlington, ON L7R 0M7',
+                stars: '★★★★★',
+                score: '4.8',
+                reviews: '312 Verified Guest Reviews',
+                badge: 'Waterfront Luxury & Spa',
+                demand: 'Booked 6 times in the last 24h',
+                description: 'Overlooking the shores of Lake Ontario in downtown Burlington, The Pearle Hotel & Spa offers floor-to-ceiling waterfront views, a full-service luxury spa with hammam and indoor pool, and acclaimed lakeside dining at Isabelle Restaurant + Lounge.',
+                images: ['https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Full-Service Luxury Spa', 'Lakefront Dining', 'Indoor Pool & Steam Room', 'Valet Parking', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Event Ballrooms', 'Room Service'],
+                landmarks: ['Spencer Smith Park & Pier — 1 min walk', 'Burlington Performing Arts Centre — 4 min walk', 'Royal Botanical Gardens — 10 min drive', 'Oakville Harbour — 15 min drive'],
+                rooms: buildStandardRooms(285)
+            },
+            'sandman-oakville': {
+                id: 'sandman-oakville',
+                name: 'Sandman Hotel Oakville',
+                region: 'ON',
+                city: 'Oakville, ON',
+                citySlug: 'Burlington',
+                address: '3451 South Service Rd W, Oakville, ON L6L 0C3',
+                stars: '★★★★',
+                score: '4.5',
+                reviews: '289 Verified Guest Reviews',
+                badge: 'Corporate Transit Hub',
+                demand: 'Booked 4 times in the last 24h',
+                description: 'Positioned along the QEW corporate corridor between Burlington and Mississauga, Sandman Hotel Oakville features spacious executive suites, an indoor pool and whirlpool, Chop Steakhouse & Bar on-site, and complimentary parking.',
+                images: ['https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Indoor Pool & Hot Tub', 'Chop Steakhouse On-Site', 'Free On-Site Parking', '24-Hour Front Desk', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Business Workstations', 'Room Service', 'Pet Friendly'],
+                landmarks: ['Bronte Creek Provincial Park — 4 min drive', 'Oakville GO Station — 10 min drive', 'Downtown Oakville Harbour — 12 min drive', 'Burlington Waterfront — 10 min drive'],
+                rooms: buildStandardRooms(169)
+            },
+            'sandman-mississauga': {
+                id: 'sandman-mississauga',
+                name: 'Sandman Signature Mississauga Hotel',
+                region: 'ON',
+                city: 'Mississauga, ON',
+                citySlug: 'Mississauga',
+                address: '5400 Dixie Rd, Mississauga, ON L4W 4T4',
+                stars: '★★★★',
+                score: '4.4',
+                reviews: '475 Verified Guest Reviews',
+                badge: 'Airport & Business Pick',
+                demand: 'Booked 6 times in the last 24h',
+                description: 'Minutes from Toronto Pearson International Airport (YYZ) and Mississauga’s corporate business parks, this all-suite signature hotel features an indoor pool, fitness center, and full executive workspaces.',
+                images: ['https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Indoor Heated Pool', 'Airport Corridor Access', 'On-Site Dining', 'Free High-Speed Wi-Fi', 'Free Parking', '24-Hour Front Desk', 'Fitness Center', 'Meeting Rooms', 'All-Suite Options'],
+                landmarks: ['Toronto Pearson Airport (YYZ) — 10 min drive', 'Square One Shopping Centre — 12 min drive', 'Paramount Fine Foods Centre — 6 min drive', 'Highway 401 & 403 Hub — 3 min drive'],
+                rooms: buildStandardRooms(172)
+            },
+            'royal-york-toronto': {
+                id: 'royal-york-toronto',
+                name: 'Fairmont Royal York',
+                region: 'ON',
+                city: 'Toronto, ON',
+                citySlug: 'Toronto',
+                address: '100 Front St W, Toronto, ON M5J 1E3',
+                stars: '★★★★★',
+                score: '4.7',
+                reviews: '890 Verified Guest Reviews',
+                badge: 'Iconic Downtown Landmark',
+                demand: 'Booked 9 times in the last 24h',
+                description: 'Directly across from Union Station in downtown Toronto’s Financial District, Fairmont Royal York blends grand heritage luxury with an indoor skylight pool, luxury spa, and three acclaimed cocktail and dining venues.',
+                images: ['https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=1200&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Indoor Skylight Pool', '3 Signature Restaurants', 'Full Luxury Spa', 'Direct Union Station Link', '24-Hour Concierge', 'High-Speed Wi-Fi', 'Fitness Club', 'Valet Parking', 'Executive Gold Lounge'],
+                landmarks: ['Union Station & UP Express — 1 min walk', 'Scotiabank Arena & Rogers Centre — 6 min walk', 'Metro Toronto Convention Centre — 5 min walk', 'CN Tower & Harbourfront — 8 min walk'],
+                rooms: buildStandardRooms(299)
+            },
+            'hilton-niagara': {
+                id: 'hilton-niagara',
+                name: 'Fallsview Boulevard Resort & Suites',
+                region: 'ON',
+                city: 'Niagara Falls, ON',
+                citySlug: 'Niagara-Falls',
+                address: '6361 Fallsview Blvd, Niagara Falls, ON L2G 3V9',
+                stars: '★★★★',
+                score: '4.5',
+                reviews: '615 Verified Guest Reviews',
+                badge: 'Fallsview District',
+                demand: 'Booked 7 times in the last 24h',
+                description: 'Rising above the entertainment district in Niagara Falls, this resort property features an indoor aquatic center, rooftop Fallsview dining, and direct walking access to Fallsview Casino and the Horseshoe Falls.',
+                images: ['https://images.unsplash.com/photo-1533094602577-198d3beab8ea?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Indoor Pool & Hot Tub', 'Fallsview Rooftop Dining', 'Walk to Falls & Casino', '24-Hour Reception', 'Free High-Speed Wi-Fi', 'Fitness Center', 'On-Site Parking', 'Concierge Desk', 'Family Suites'],
+                landmarks: ['Fallsview Casino Resort — 2 min walk', 'Horseshoe Falls Brink — 6 min walk', 'Clifton Hill Entertainment — 12 min walk', 'Niagara-on-the-Lake Wineries — 20 min drive'],
+                rooms: buildStandardRooms(179)
+            },
+            'ottawa-parliament-suites': {
+                id: 'ottawa-parliament-suites',
+                name: 'Metcalfe Boutique Hotel Ottawa',
+                region: 'ON',
+                city: 'Ottawa, ON',
+                citySlug: 'Ottawa',
+                address: '123 Metcalfe St, Ottawa, ON K1P 5L9',
+                stars: '★★★★',
+                score: '4.6',
+                reviews: '340 Verified Guest Reviews',
+                badge: 'Capital Core Pick',
+                demand: 'Booked 5 times in the last 24h',
+                description: 'Steps from Parliament Hill and the Rideau Canal in downtown Ottawa, this boutique executive hotel features an indoor pool, modern coworking lobby lounge, and on-site French-Canadian bistro dining.',
+                images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Indoor Heated Pool', 'Steps to Parliament Hill', 'On-Site Bistro & Bar', 'Free High-Speed Wi-Fi', 'Fitness Studio', '24-Hour Front Desk', 'Valet Parking', 'Boardroom Spaces', 'Pet Friendly'],
+                landmarks: ['Parliament Hill — 5 min walk', 'Shaw Centre & Rideau Canal — 8 min walk', 'ByWard Market — 12 min walk', 'National Gallery of Canada — 15 min walk'],
+                rooms: buildStandardRooms(185)
+            },
+            'pan-pacific-vancouver': {
+                id: 'pan-pacific-vancouver',
+                name: 'Pan Pacific Vancouver Waterfront',
+                region: 'BC',
+                city: 'Vancouver, BC',
+                citySlug: 'Vancouver',
+                address: '999 Canada Pl #300, Vancouver, BC V6C 3B5',
+                stars: '★★★★★',
+                score: '4.8',
+                reviews: '780 Verified Guest Reviews',
+                badge: '5-Star Harbourfront',
+                demand: 'Booked 8 times in the last 24h',
+                description: 'Perched atop Canada Place on the downtown Vancouver waterfront, Pan Pacific Vancouver delivers panoramic views of Coal Harbour and the North Shore mountains, complete with a heated outdoor saltwater pool and luxury spa.',
+                images: ['https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Heated Saltwater Pool', 'Harbour & Mountain Views', 'Full Luxury Spa', 'Oceans 999 Dining', 'Coal Harbour Bar', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Club', 'Valet Parking'],
+                landmarks: ['Canada Place & Cruise Terminal — Direct Access', 'Vancouver Convention Centre — 2 min walk', 'Gastown & Waterfront SkyTrain — 4 min walk', 'Stanley Park Seawall — 10 min walk'],
+                rooms: buildStandardRooms(275)
+            },
+            'whistler-alpine-resort': {
+                id: 'whistler-alpine-resort',
+                name: 'Pan Pacific Whistler Mountainside',
+                region: 'BC',
+                city: 'Whistler, BC',
+                citySlug: 'Whistler',
+                address: '4320 Sundial Crescent, Whistler, BC V8E 1G5',
+                stars: '★★★★★',
+                score: '4.9',
+                reviews: '520 Verified Guest Reviews',
+                badge: 'Ski-In / Gondola Base',
+                demand: 'Booked 7 times in the last 24h',
+                description: 'Located at the base of both the Whistler and Blackcomb gondolas, this all-suite alpine resort offers heated outdoor pools, two mountainside hot tubs, full kitchens, and cozy fireplace suites.',
+                images: ['https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Heated Outdoor Pool', '2 Mountainside Hot Tubs', 'Full Kitchen Suites', 'Ski & Bike Valet', 'Dubh Linn Gate Pub', 'Free High-Speed Wi-Fi', 'Fitness Studio', '24h Reception', 'Underground Parking'],
+                landmarks: ['Whistler & Blackcomb Gondolas — 1 min walk', 'Whistler Village Stroll — 2 min walk', 'Audain Art Museum — 8 min walk', 'Peak 2 Peak 360 Experience — Direct Access'],
+                rooms: buildStandardRooms(269)
             },
             'hotel-arts-calgary': {
                 id: 'hotel-arts-calgary',
                 name: 'Hotel Arts Calgary',
                 region: 'AB',
                 city: 'Calgary, AB',
+                citySlug: 'Calgary',
                 address: '119 12 Ave SW, Calgary, AB T2R 0G8',
                 stars: '★★★★',
                 score: '4.6',
@@ -719,25 +903,100 @@
                 badge: 'Downtown Calgary Boutique',
                 demand: 'Booked 7 times in the last 24h',
                 description: 'Calgary’s premier designer boutique hotel in the vibrant Beltline and Downtown district, featuring a heated outdoor pool patio, Yellow Door Bistro, and modern executive suites steps from the Stampede Grounds and corporate towers.',
-                images: [
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80',
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
-                    'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=900&q=80'
-                ],
+                images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80', ...DEFAULT_GALLERY],
                 amenities: ['Heated Pool Patio', 'Yellow Door Bistro', 'Cruiser Bike Rentals', 'Fitness Center', '24-Hour Front Desk', 'Free High-Speed Wi-Fi', 'Valet Parking', 'Executive Event Space', 'Room Service'],
-                landmarks: [
-                    'Calgary Tower & Stephen Ave — 6 min walk',
-                    'BMO Centre & Stampede Park — 10 min walk',
-                    '17th Ave Retail & Dining — 7 min walk',
-                    'YYC Calgary International Airport — 22 min drive'
-                ],
-                rooms: [
-                    { name: 'Luxury King Room', category: 'free_cancel', beds: '1 King Bed', sleeps: 2, sqft: 340, price: 215.00, left: 3, non_refundable: false, img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Poolview Two Queen Room', category: 'free_cancel', beds: '2 Queen Beds', sleeps: 4, sqft: 380, price: 239.00, left: 2, non_refundable: false, img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
-                    { name: 'Designer One-Bedroom King Suite', category: 'suite', beds: '1 King Bed', sleeps: 3, sqft: 580, price: 295.00, left: 1, non_refundable: false, img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' }
-                ]
+                landmarks: ['Calgary Tower & Stephen Ave — 6 min walk', 'BMO Centre & Stampede Park — 10 min walk', '17th Ave Retail & Dining — 7 min walk', 'YYC Calgary International Airport — 22 min drive'],
+                rooms: buildStandardRooms(215)
+            },
+            'banff-rimrock': {
+                id: 'banff-rimrock',
+                name: 'Rimrock Resort Hotel Banff',
+                region: 'AB',
+                city: 'Banff, AB',
+                citySlug: 'Banff',
+                address: '300 Mountain Ave, Banff, AB T1L 1J2',
+                stars: '★★★★★',
+                score: '4.9',
+                reviews: '740 Verified Guest Reviews',
+                badge: '5-Star Mountain Resort',
+                demand: 'Booked 8 times in the last 24h',
+                description: 'Set high on Sulphur Mountain in Banff National Park with sweeping views of the Canadian Rockies, the Rimrock Resort offers an indoor heated pool, full alpine spa, and AAA Four-Diamond dining.',
+                images: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Panoramic Rockies Views', 'Full Alpine Spa & Pool', 'Eden Fine Dining', 'Hot Springs Access', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness & Squash Club', 'Shuttle to Banff Ave', 'Valet Parking'],
+                landmarks: ['Banff Gondola & Upper Hot Springs — 3 min walk', 'Downtown Banff Avenue — 6 min drive', 'Fairmont Banff Springs Golf — 8 min drive', 'Lake Louise — 40 min scenic drive'],
+                rooms: buildStandardRooms(325)
+            },
+            'matrix-edmonton': {
+                id: 'matrix-edmonton',
+                name: 'Matrix Hotel Edmonton',
+                region: 'AB',
+                city: 'Edmonton, AB',
+                citySlug: 'Edmonton',
+                address: '10640 100 Ave NW, Edmonton, AB T5J 3N8',
+                stars: '★★★★',
+                score: '4.5',
+                reviews: '385 Verified Guest Reviews',
+                badge: 'Executive Value Pick',
+                demand: 'Booked 5 times in the last 24h',
+                description: 'Located in the heart of downtown Edmonton just blocks from the Alberta Legislature and ICE District, Matrix Hotel delivers sleek mid-century modern suites, Loft106 dining, and complimentary parking.',
+                images: ['https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Loft106 Dining & Lounge', 'Free On-Site Parking', '24-Hour Fitness Center', 'Free High-Speed Wi-Fi', '24-Hour Reception', 'Executive Boardrooms', 'Espresso Bar', 'Dry Cleaning', 'Pet Friendly'],
+                landmarks: ['Alberta Legislature Grounds — 5 min walk', 'Rogers Place & ICE District — 12 min walk', 'Jasper Ave Financial Core — 2 min walk', 'West Edmonton Mall — 18 min drive'],
+                rooms: buildStandardRooms(164)
+            },
+            'mount-stephen-montreal': {
+                id: 'mount-stephen-montreal',
+                name: 'Le Mount Stephen Montreal',
+                region: 'QC',
+                city: 'Montreal, QC',
+                citySlug: 'Montreal',
+                address: '1440 Drummond St, Montreal, QC H3G 1V9',
+                stars: '★★★★★',
+                score: '4.7',
+                reviews: '495 Verified Guest Reviews',
+                badge: '5-Star Heritage Luxury',
+                demand: 'Booked 6 times in the last 24h',
+                description: 'Set inside a restored 1880 mansion in Montreal’s Golden Square Mile, Le Mount Stephen pairs neoclassical heritage architecture with floor-to-ceiling contemporary suites, Bar George, and a full luxury spa.',
+                images: ['https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Bar George Restaurant', 'Full Prestige Spa', 'Golden Square Mile Core', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Valet Parking', 'Private Event Salons', 'Room Service'],
+                landmarks: ['Sainte-Catherine St Shopping — 2 min walk', 'Bell Centre — 6 min walk', 'Montreal Museum of Fine Arts — 5 min walk', 'Old Montreal & Old Port — 8 min drive'],
+                rooms: buildStandardRooms(235)
+            },
+            'fort-garry-winnipeg': {
+                id: 'fort-garry-winnipeg',
+                name: 'The Fort Garry Hotel, Spa & Conference Centre',
+                region: 'PR',
+                city: 'Winnipeg, MB',
+                citySlug: 'Winnipeg',
+                address: '222 Broadway, Winnipeg, MB R3C 0R3',
+                stars: '★★★★',
+                score: '4.6',
+                reviews: '410 Verified Guest Reviews',
+                badge: 'Prairies Landmark',
+                demand: 'Booked 4 times in the last 24h',
+                description: 'Built in 1913 by the Grand Trunk Pacific Railway, this iconic chateau-style Winnipeg hotel features Ten Spa (including a authentic Turkish hammam), the Oval Room Brasserie, and prime downtown access.',
+                images: ['https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Ten Spa & Turkish Hammam', 'Oval Room Brasserie', '24-Hour Fitness Center', 'Free High-Speed Wi-Fi', '24-Hour Front Desk', 'Valet & Self Parking', 'Grand Ballrooms', 'Business Center', 'Pet Friendly'],
+                landmarks: ['The Forks Market & Riverwalk — 5 min walk', 'Canadian Museum for Human Rights — 6 min walk', 'RBC Convention Centre — 8 min walk', 'Canada Life Centre Arena — 10 min walk'],
+                rooms: buildStandardRooms(169)
+            },
+            'halifax-waterfront-hotel': {
+                id: 'halifax-waterfront-hotel',
+                name: 'Muir, Autograph Collection Halifax',
+                region: 'AT',
+                city: 'Halifax, NS',
+                citySlug: 'Halifax',
+                address: '1709 Lower Water St, Halifax, NS B3J 1S5',
+                stars: '★★★★★',
+                score: '4.8',
+                reviews: '295 Verified Guest Reviews',
+                badge: 'Atlantic Waterfront',
+                demand: 'Booked 5 times in the last 24h',
+                description: 'Located directly on the Halifax Waterfront in the Queen’s Marque district, Muir offers oceanfront luxury, a wellness center with hydrotherapy vitality pools and halotherapy salt room, and Drift coastal dining.',
+                images: ['https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=1000&q=80', ...DEFAULT_GALLERY],
+                amenities: ['Hydrotherapy Vitality Pool', 'Halotherapy Salt Spa', 'Drift Coastal Dining', 'Harbourfront Views', '24-Hour Concierge', 'Free High-Speed Wi-Fi', 'Fitness Studio', 'Valet Parking', 'Private Speakeasy'],
+                landmarks: ['Halifax Waterfront Boardwalk — Direct Access', 'Halifax Convention Centre — 5 min walk', 'Halifax Citadel National Historic Site — 10 min walk', 'Maritime Museum of the Atlantic — 2 min walk'],
+                rooms: buildStandardRooms(245)
             }
         };
 
@@ -765,51 +1024,21 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
 
-            // --- 1. MOBILE MENU & HEADER SESSION CHECK ---
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-
-            if (localStorage.getItem('guild_member_active') === 'true') {
-                const memberName = localStorage.getItem('guild_member_name') || 'Member';
+            // --- 1. SESSION CHECK (NEVER OVERWRITES #club-timer) ---
+            if (localStorage.getItem('hotbeds_club_member') === 'true' || localStorage.getItem('guild_member_active') === 'true') {
+                const memberName = localStorage.getItem('hotbeds_club_name') || localStorage.getItem('guild_member_name') || 'Member';
+                const pts = localStorage.getItem('hotbeds_points_balance') || '1,000';
                 document.getElementById('user-avatar-badge').textContent = memberName.charAt(0).toUpperCase() + '.';
-                document.getElementById('header-club-sub').innerHTML = '<span class="text-green-400">✓ Member Active</span>';
-                document.getElementById('top-bar-club-text').innerHTML = `<strong>✓ HOT BEDS CLUB ACTIVE:</strong> Your member rebate will automatically apply at checkout!`;
+                document.getElementById('top-bar-club-text').innerHTML = `<strong>✓ HOT BEDS CLUB ACTIVE (${pts} PTS):</strong> Extra 20% Off Guild Option Ready at Checkout &rarr;`;
             }
 
-            // --- 2. GEOGRAPHIC PREDISPOSITION PILLS ---
-            const regionalPills = {
-                ON: ['Hamilton', 'Mississauga', 'Oakville', 'Burlington', 'Toronto', 'Niagara Falls'],
-                AB: ['Calgary', 'Banff', 'Edmonton', 'Canmore', 'Jasper', 'Lake Louise']
-            };
-            let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
-
-            function renderGeoPills(region) {
-                const container = document.getElementById('city-pills-container');
-                container.innerHTML = '';
-                document.getElementById('geo-toggle-btn').textContent = region === 'AB' ? 'Alberta & Rockies' : 'Ontario Corridor';
-                regionalPills[region].forEach(city => {
-                    const a = document.createElement('a');
-                    a.href = `results.html?destination=${encodeURIComponent(city + ', ' + region)}`;
-                    a.className = 'px-3 py-0.5 rounded-full bg-white border border-gray-200 text-xs font-medium text-gray-600 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
-                    a.textContent = city;
-                    container.appendChild(a);
-                });
-            }
-            renderGeoPills(activeRegion);
-
-            document.getElementById('geo-toggle-btn').addEventListener('click', () => {
-                activeRegion = activeRegion === 'ON' ? 'AB' : 'ON';
-                localStorage.setItem('hotbeds_region', activeRegion);
-                renderGeoPills(activeRegion);
-            });
-
-            // --- 3. RESOLVE URL PARAMETERS & DEFAULT DATES ---
+            // --- 2. RESOLVE URL PARAMETERS & DEFAULT DATES ---
             const urlParams = new URLSearchParams(window.location.search);
             const rawHotelId = (urlParams.get('id') || 'sandman-hamilton').toLowerCase();
             const calcCheckin = document.getElementById('calc-checkin');
             const calcCheckout = document.getElementById('calc-checkout');
             const calcGuests = document.getElementById('calc-guests');
+            const regionSelect = document.getElementById('region-select');
 
             const today = new Date();
             const tomorrow = new Date();
@@ -822,7 +1051,7 @@
             calcCheckout.value = urlParams.get('checkout') && urlParams.get('checkout') !== 'Not Selected' ? urlParams.get('checkout') : fmt(tomorrow);
             calcGuests.value = urlParams.get('guests') || '2';
 
-            // --- 4. LOAD PROPERTY DATA (API FIRST -> RESILIENT CATALOG FALLBACK) ---
+            // --- 3. LOAD PROPERTY DATA (API FIRST -> RESILIENT CATALOG FALLBACK) ---
             let propertyData = PROPERTY_CATALOG[rawHotelId] || PROPERTY_CATALOG['sandman-hamilton'];
 
             try {
@@ -837,10 +1066,84 @@
                 // Uses resilient local catalog automatically
             }
 
-            // Populate Header & Gallery
+            // --- 4. NATIONWIDE CITY PILLS & PROVINCE STATE ---
+            const regionalPills = {
+                ALL: [
+                    { name: 'Toronto, ON', slug: 'Toronto' },
+                    { name: 'Vancouver, BC', slug: 'Vancouver' },
+                    { name: 'Calgary, AB', slug: 'Calgary' },
+                    { name: 'Montreal, QC', slug: 'Montreal' },
+                    { name: 'Hamilton, ON', slug: 'Hamilton' },
+                    { name: 'Banff, AB', slug: 'Banff' },
+                    { name: 'Winnipeg, MB', slug: 'Winnipeg' },
+                    { name: 'Halifax, NS', slug: 'Halifax' }
+                ],
+                ON: [
+                    { name: 'Hamilton, ON', slug: 'Hamilton' },
+                    { name: 'Burlington, ON', slug: 'Burlington' },
+                    { name: 'Toronto, ON', slug: 'Toronto' },
+                    { name: 'Mississauga, ON', slug: 'Mississauga' },
+                    { name: 'Niagara Falls, ON', slug: 'Niagara-Falls' },
+                    { name: 'Ottawa, ON', slug: 'Ottawa' }
+                ],
+                BC: [
+                    { name: 'Vancouver, BC', slug: 'Vancouver' },
+                    { name: 'Whistler, BC', slug: 'Whistler' },
+                    { name: 'Victoria, BC', slug: 'Victoria' },
+                    { name: 'Kelowna, BC', slug: 'Kelowna' }
+                ],
+                AB: [
+                    { name: 'Calgary, AB', slug: 'Calgary' },
+                    { name: 'Banff, AB', slug: 'Banff' },
+                    { name: 'Edmonton, AB', slug: 'Edmonton' }
+                ],
+                QC: [
+                    { name: 'Montreal, QC', slug: 'Montreal' },
+                    { name: 'Quebec City, QC', slug: 'Quebec-City' }
+                ],
+                PR: [
+                    { name: 'Winnipeg, MB', slug: 'Winnipeg' },
+                    { name: 'Saskatoon, SK', slug: 'Saskatoon' }
+                ],
+                AT: [
+                    { name: 'Halifax, NS', slug: 'Halifax' }
+                ]
+            };
+
+            let activeRegion = propertyData.region || localStorage.getItem('hotbeds_region') || 'ON';
+            regionSelect.value = activeRegion;
+
+            function renderGeoPills(region) {
+                const container = document.getElementById('city-pills-container');
+                container.innerHTML = '';
+                const list = regionalPills[region] || regionalPills['ALL'];
+                list.forEach(item => {
+                    const a = document.createElement('a');
+                    a.href = `city.html?city=${encodeURIComponent(item.slug)}`;
+                    a.className = 'px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
+                    a.textContent = item.name;
+                    container.appendChild(a);
+                });
+            }
+            renderGeoPills(activeRegion);
+
+            regionSelect.addEventListener('change', (e) => {
+                activeRegion = e.target.value;
+                localStorage.setItem('hotbeds_region', activeRegion);
+                renderGeoPills(activeRegion);
+            });
+
+            // --- 5. POPULATE HEADER, CITY GUIDE BREADCRUMBS & PROVINCE TAX RULES ---
+            const citySlug = propertyData.citySlug || 'Hamilton';
+            const cleanCityName = (propertyData.city || 'Hamilton, ON').split(',')[0];
+
             document.title = `${propertyData.name} — Hotbeds.ca`;
-            document.getElementById('breadcrumb-region').textContent = propertyData.region === 'AB' ? 'Alberta Stays' : 'Ontario Stays';
-            document.getElementById('breadcrumb-region').href = `results.html?destination=${encodeURIComponent(propertyData.city || 'Hamilton, ON')}`;
+            document.getElementById('breadcrumb-city-guide').textContent = `${cleanCityName} Guide`;
+            document.getElementById('breadcrumb-city-guide').href = `city.html?city=${encodeURIComponent(citySlug)}`;
+            document.getElementById('top-city-guide-btn').href = `city.html?city=${encodeURIComponent(citySlug)}`;
+            document.getElementById('top-city-guide-btn').innerHTML = `<span>📍 ${cleanCityName} Guide</span>`;
+            document.getElementById('location-city-guide-link').href = `city.html?city=${encodeURIComponent(citySlug)}`;
+
             document.getElementById('breadcrumb-hotel').textContent = propertyData.name;
             document.getElementById('hotel-name').textContent = propertyData.name;
             document.getElementById('hotel-address').textContent = propertyData.address;
@@ -852,8 +1155,23 @@
             if (propertyData.badge) document.getElementById('hotel-badge-pill').textContent = propertyData.badge;
             if (propertyData.demand) document.getElementById('hotel-demand-text').textContent = propertyData.demand;
 
-            const fallbackImg = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80';
-            activeGalleryImages = propertyData.images && propertyData.images.length >= 3 ? propertyData.images : [fallbackImg, fallbackImg, fallbackImg, fallbackImg, fallbackImg];
+            // Provincial Tax & Ontario-Only Eco Fee Labels
+            const isOntario = propertyData.region === 'ON';
+            const taxPolicyMap = {
+                ON: '13% HST + $2.25/nt ON Eco Fee',
+                AB: '5% GST (No Eco Fee)',
+                BC: '13% GST/PST (No Eco Fee)',
+                QC: '15% GST/QST (No Eco Fee)',
+                PR: '12% Provincial/GST (No Eco Fee)',
+                AT: '15% HST (No Eco Fee)'
+            };
+            document.getElementById('policy-tax-eco-label').textContent = taxPolicyMap[propertyData.region] || '13% HST + $2.25/nt ON Eco Fee';
+            document.getElementById('sidebar-tax-eco-note').textContent = isOntario
+                ? '+13% HST & $2.25/nt ($2.00 + tax) Ontario Eco Fee at checkout'
+                : `No Ontario Eco Fee • ${taxPolicyMap[propertyData.region] || 'Provincial tax'} at checkout`;
+
+            const fallbackImg = DEFAULT_GALLERY[0];
+            activeGalleryImages = propertyData.images && propertyData.images.length >= 3 ? propertyData.images : DEFAULT_GALLERY;
 
             const imgIds = ['img-main', 'img-sub-1', 'img-sub-2', 'img-sub-3', 'img-sub-4'];
             imgIds.forEach((id, idx) => {
@@ -884,7 +1202,7 @@
                 landmarksList.appendChild(li);
             });
 
-            // --- 5. LIVE ROOM MATRIX & MULTI-NIGHT STAY CALCULATOR ---
+            // --- 6. LIVE ROOM MATRIX & MULTI-NIGHT STAY CALCULATOR ---
             let activeRoomFilter = 'all';
 
             function getNightCount() {
@@ -902,17 +1220,17 @@
 
             function renderRoomsMatrix() {
                 const nights = getNightCount();
-                const checkin = calcCheckin.value;
-                const checkout = calcCheckout.value;
-                const guests = calcGuests.value;
-
                 const minPrice = Math.min(...propertyData.rooms.map(r => r.price));
+                const minSubtotal = minPrice * nights;
+                const minGuildSave = (minSubtotal * 0.20).toFixed(2);
+
                 document.getElementById('jumpbar-start-price').textContent = `$${minPrice.toFixed(0)} CAD`;
                 document.getElementById('mobile-bar-price').textContent = `$${minPrice.toFixed(0)}`;
                 document.getElementById('sidebar-nights-pill').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
                 document.getElementById('sidebar-nights-count').textContent = nights;
                 document.getElementById('sidebar-base-rate').textContent = `$${minPrice.toFixed(2)} CAD`;
-                document.getElementById('sidebar-total-rate').textContent = `$${(minPrice * nights).toFixed(2)} CAD`;
+                document.getElementById('sidebar-total-rate').textContent = `$${minSubtotal.toFixed(2)} CAD`;
+                document.getElementById('sidebar-guild-preview').textContent = `Save $${minGuildSave} at Checkout`;
 
                 const roomsContainer = document.getElementById('rooms-container');
                 roomsContainer.innerHTML = '';
@@ -925,8 +1243,12 @@
 
                 filteredRooms.forEach((room) => {
                     const stayTotal = (room.price * nights).toFixed(2);
+                    const guildDiscountPreview = (room.price * nights * 0.20).toFixed(2);
                     const roomImg = room.img || activeGalleryImages[1] || fallbackImg;
                     const leftCount = room.left || 3;
+                    const roomTaxNote = isOntario
+                        ? '+13% HST & $2.25/nt ON Eco Fee at checkout'
+                        : `No Eco Fee • ${taxPolicyMap[propertyData.region]} at checkout`;
 
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all flex flex-col md:flex-row';
@@ -942,20 +1264,20 @@
                             <div class="flex flex-col md:flex-row justify-between gap-6">
                                 <div class="space-y-2.5">
                                     <h3 class="text-lg sm:text-xl font-black text-brand-text">${room.name}</h3>
-                                    <div class="flex flex-wrap items-center gap-3 text-xs font-bold text-gray-500">
+                                    <div class="flex flex-wrap items-center gap-2.5 text-xs font-bold text-gray-500">
                                         <span class="bg-gray-100 px-2.5 py-1 rounded-lg">🛏️ ${room.beds}</span>
                                         <span class="bg-gray-100 px-2.5 py-1 rounded-lg">👥 Sleeps ${room.sleeps}</span>
                                         <span class="bg-gray-100 px-2.5 py-1 rounded-lg">📏 ${room.sqft} sq ft</span>
                                     </div>
                                     <ul class="text-xs font-semibold space-y-1 pt-1">
                                         <li class="flex items-center gap-1.5 text-gray-600">
-                                            <span class="text-green-600 font-black">✓</span> High-Speed Wi-Fi &amp; Workspace Included
+                                            <span class="text-green-600 font-black">✓</span> Automatic Hot Beds Club Points + Free High-Speed Wi-Fi
                                         </li>
                                         <li class="flex items-center gap-1.5 ${room.non_refundable ? 'text-brand-red' : 'text-green-600'} font-bold">
                                             <span>${room.non_refundable ? '✕ Non-Refundable Rate' : '✓ Free Cancellation Available'}</span>
                                         </li>
                                         <li class="flex items-center gap-1.5 text-slate-700 font-bold">
-                                            <span class="text-brand-red">★</span> Hot Beds Club Member Rebate Eligible at Checkout
+                                            <span class="text-brand-red">★</span> Free Guild Option at Checkout: <strong>Save $${guildDiscountPreview} CAD (-20%) + Local City Perks</strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -964,12 +1286,13 @@
                                     <div class="md:text-right mb-3">
                                         <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block">Nightly Rate</span>
                                         <div class="text-3xl font-black text-brand-text tracking-tighter">$${room.price.toFixed(2)} <span class="text-xs font-bold text-gray-400">CAD</span></div>
-                                        <span class="text-[11px] font-bold text-gray-500 block mt-0.5">
-                                            Total for ${nights} ${nights === 1 ? 'night' : 'nights'}: <strong>$${stayTotal} CAD</strong>
+                                        <span class="text-[11px] font-bold text-gray-600 block mt-0.5">
+                                            ${nights} ${nights === 1 ? 'night' : 'nights'} room subtotal: <strong>$${stayTotal} CAD</strong>
                                         </span>
+                                        <span class="text-[9px] font-semibold text-gray-400 block mt-0.5">${roomTaxNote}</span>
                                     </div>
 
-                                    <button type="button" onclick="reserveRoom('${propertyData.name.replace(/'/g, "\\'")}', '${room.name.replace(/'/g, "\\'")}', ${stayTotal})" class="w-full bg-brand-red hover:bg-red-700 text-white font-extrabold py-3.5 px-5 rounded-xl shadow-md transition uppercase tracking-widest text-xs">
+                                    <button type="button" onclick="reserveRoom('${propertyData.name.replace(/'/g, "\\'")}', '${room.name.replace(/'/g, "\\'")}', '${propertyData.region}', ${stayTotal})" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-extrabold py-3.5 px-5 rounded-xl shadow-md transition uppercase tracking-widest text-xs">
                                         Reserve Room &rarr;
                                     </button>
                                 </div>
@@ -980,14 +1303,13 @@
                 });
             }
 
-            // Reserve Handler (Bridges exact selection into localStorage + checkout.html)
-            window.reserveRoom = function(hotelName, roomName, totalPrice) {
+            // Reserve Handler (Bridges exact Hotel, Room, Province & Price to localStorage + checkout.html)
+            window.reserveRoom = function(hotelName, roomName, provinceCode, totalPrice) {
                 localStorage.setItem('locked_hotel_name', `${hotelName} (${roomName})`);
                 localStorage.setItem('locked_hotel_price', parseFloat(totalPrice).toFixed(2));
-                sessionStorage.setItem('selected_hotel_name', `${hotelName} (${roomName})`);
-                sessionStorage.setItem('selected_hotel_price', parseFloat(totalPrice).toFixed(2));
+                localStorage.setItem('locked_hotel_province', provinceCode);
 
-                const url = `checkout.html?hotel=${encodeURIComponent(hotelName)}&room=${encodeURIComponent(roomName)}&price=${parseFloat(totalPrice).toFixed(2)}&checkin=${encodeURIComponent(calcCheckin.value)}&checkout=${encodeURIComponent(calcCheckout.value)}&guests=${encodeURIComponent(calcGuests.value)}`;
+                const url = `checkout.html?hotel=${encodeURIComponent(hotelName)}&room=${encodeURIComponent(roomName)}&prov=${encodeURIComponent(provinceCode)}&price=${parseFloat(totalPrice).toFixed(2)}&checkin=${encodeURIComponent(calcCheckin.value)}&checkout=${encodeURIComponent(calcCheckout.value)}&guests=${encodeURIComponent(calcGuests.value)}`;
                 window.location.href = url;
             };
 
@@ -1008,36 +1330,37 @@
 
             renderRoomsMatrix();
 
-            // --- 6. SIMILAR PROPERTIES CROSS-SELL GRID ---
+            // --- 7. SIMILAR PROPERTIES CROSS-SELL GRID ---
             const similarGrid = document.getElementById('similar-hotels-grid');
-            Object.values(PROPERTY_CATALOG)
-                .filter(p => p.id !== propertyData.id)
-                .slice(0, 3)
-                .forEach(item => {
-                    const startRate = item.rooms[0].price;
-                    const card = document.createElement('a');
-                    card.href = `hotel.html?id=${item.id}&checkin=${calcCheckin.value}&checkout=${calcCheckout.value}&guests=${calcGuests.value}`;
-                    card.className = 'bg-white rounded-2xl border border-gray-200/80 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col group';
-                    card.innerHTML = `
-                        <div class="relative h-40 bg-gray-100 overflow-hidden">
-                            <img src="${item.images[1] || item.images[0]}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">★ ${item.score}</span>
-                        </div>
-                        <div class="p-4 flex-grow flex flex-col justify-between">
-                            <div>
-                                <span class="text-[10px] font-bold text-brand-red uppercase tracking-wider">${item.city}</span>
-                                <h4 class="text-base font-extrabold text-brand-text">${item.name}</h4>
-                            </div>
-                            <div class="pt-3 mt-3 border-t border-gray-100 flex justify-between items-center">
-                                <span class="text-lg font-black text-brand-text">$${startRate} <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
-                                <span class="text-xs font-extrabold text-brand-red uppercase">View Rooms &rarr;</span>
-                            </div>
-                        </div>
-                    `;
-                    similarGrid.appendChild(card);
-                });
+            const allProps = Object.values(PROPERTY_CATALOG).filter(p => p.id !== propertyData.id);
+            const sameRegionProps = allProps.filter(p => p.region === propertyData.region);
+            const otherRegionProps = allProps.filter(p => p.region !== propertyData.region);
 
-            // --- 7. SHARE & SAVE BUTTONS ---
+            [...sameRegionProps, ...otherRegionProps].slice(0, 3).forEach(item => {
+                const startRate = item.rooms[0].price;
+                const card = document.createElement('a');
+                card.href = `hotel.html?id=${item.id}&checkin=${calcCheckin.value}&checkout=${calcCheckout.value}&guests=${calcGuests.value}`;
+                card.className = 'bg-white rounded-2xl border border-gray-200/80 overflow-hidden shadow-soft hover:shadow-soft-lg transition flex flex-col group';
+                card.innerHTML = `
+                    <div class="relative h-40 bg-gray-100 overflow-hidden">
+                        <img src="${item.images[0]}" onerror="this.onerror=null; this.src='${DEFAULT_GALLERY[0]}';" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-0.5 rounded shadow">★ ${item.score}</span>
+                    </div>
+                    <div class="p-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-brand-red uppercase tracking-wider">${item.city}</span>
+                            <h4 class="text-base font-extrabold text-brand-text">${item.name}</h4>
+                        </div>
+                        <div class="pt-3 mt-3 border-t border-gray-100 flex justify-between items-center">
+                            <span class="text-lg font-black text-brand-text">$${startRate} <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
+                            <span class="text-xs font-extrabold text-brand-red uppercase">View Rooms &rarr;</span>
+                        </div>
+                    </div>
+                `;
+                similarGrid.appendChild(card);
+            });
+
+            // --- 8. SHARE & SAVE BUTTONS ---
             document.getElementById('share-property-btn').addEventListener('click', () => {
                 navigator.clipboard.writeText(window.location.href);
                 const lbl = document.getElementById('share-btn-label');
@@ -1053,15 +1376,25 @@
                 lbl.textContent = 'Saved';
             });
 
-            // --- 8. HEADER 7-DAY COUNTDOWN TIMER ---
+            // --- 9. PROTECTED DUAL SCARCITY TIMERS (SIDEBAR 15s + HEADER 7-DAY) ---
+            const sidebarFomoEl = document.getElementById('sidebar-fomo-timer');
+            let fomoSec = 15;
+            setInterval(() => {
+                fomoSec = fomoSec <= 1 ? 15 : fomoSec - 1;
+                if (sidebarFomoEl) {
+                    sidebarFomoEl.textContent = `00:${fomoSec < 10 ? '0' + fomoSec : fomoSec}`;
+                }
+            }, 1000);
+
             const clubTimerElement = document.getElementById('club-timer');
-            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600);
+            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + 3540;
             setInterval(() => {
                 if (!clubTimerElement || clubTimeLeft <= 0) return;
                 clubTimeLeft--;
                 const days = Math.floor(clubTimeLeft / (24 * 3600));
                 const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
-                clubTimerElement.innerText = `${days}d ${hours.toString().padStart(2, '0')}h`;
+                const mins = Math.floor((clubTimeLeft % 3600) / 60);
+                clubTimerElement.innerText = `${days}d ${hours}h ${mins}m`;
             }, 1000);
         });
     </script>
