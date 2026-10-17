@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden max-w-[100vw]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,10 +57,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
-            overflow-x: hidden;
         }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -108,7 +112,7 @@
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen">
+<body class="text-brand-text flex flex-col min-h-screen overflow-x-hidden max-w-[100vw]">
 
     <!-- ================================================================= -->
     <!-- STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)           -->
@@ -253,7 +257,7 @@
                     <span class="text-gray-400">|</span>
                     <span>Effective: October 17, 2026</span>
                 </div>
-                <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white mb-2">
+                <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white mb-2 break-words">
                     Master Legal, Privacy &amp; Regulatory Compliance Hub
                 </h1>
                 <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed">
@@ -263,7 +267,7 @@
 
             <!-- Statutory Print / Save PDF Button (Required by Alta. Reg. 81/2001 s. 4(2)) -->
             <div class="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-2.5 w-full lg:w-auto shrink-0 no-print">
-                <button type="button" onclick="window.print()" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                <button type="button" onclick="window.print()" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 whitespace-normal text-center">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     <span>Print / Save Legal Disclosures (PDF)</span>
                 </button>
@@ -322,7 +326,7 @@
                     <p class="text-[11px] text-gray-600 leading-relaxed">
                         <strong>Legal Entity:</strong> Hotbeds Inc.<br>
                         <strong>Jurisdiction:</strong> Province of Alberta, Canada<br>
-                        <strong>Support &amp; Privacy:</strong> <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline">support@hotbeds.ca</a>
+                        <strong>Support &amp; Privacy:</strong> <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline break-all">support@hotbeds.ca</a>
                     </p>
                     <button type="button" onclick="window.print()" class="w-full mt-1 bg-white hover:bg-gray-100 text-brand-text border border-gray-200 font-extrabold text-[10px] uppercase tracking-wider py-2 px-3 rounded-lg transition shadow-sm">
                         Download / Print PDF Copy
@@ -340,18 +344,18 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 01 • Statutory Consumer Protection</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Alberta Consumer Protection Act (Internet Sales Contract Regulation — Alta. Reg. 81/2001) Disclosures
                             </h2>
                         </div>
-                        <span class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             Alta. Reg. 81/2001 Compliant
                         </span>
                     </div>
 
                     <div class="space-y-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
                         <p>
-                            This Pre-Contractual and Post-Contractual Statutory Disclosure Statement is provided to every consumer prior to and upon entering into an online accommodation reservation agreement on <strong>https://hotbeds.ca</strong>, in strict compliance with the <em>Consumer Protection Act</em>, RSA 2000, c C-26.3, and the <em>Internet Sales Contract Regulation</em>, Alta. Reg. 81/2001.
+                            This Pre-Contractual and Post-Contractual Statutory Disclosure Statement is provided to every consumer prior to and upon entering into an online accommodation reservation agreement on <strong class="break-all">https://hotbeds.ca</strong>, in strict compliance with the <em>Consumer Protection Act</em>, RSA 2000, c C-26.3, and the <em>Internet Sales Contract Regulation</em>, Alta. Reg. 81/2001.
                         </p>
 
                         <!-- Mandatory Statutory Identity Box -->
@@ -363,8 +367,8 @@
                             </div>
                             <div>
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block mb-0.5">Official Electronic Contact &amp; Notice Address</span>
-                                <p class="font-bold text-brand-red"><a href="mailto:support@hotbeds.ca" class="hover:underline">support@hotbeds.ca</a></p>
-                                <p class="text-gray-500 mt-0.5">Self-Service Portal: <a href="manage-booking.html" class="underline hover:text-brand-text">hotbeds.ca/manage-booking.html</a></p>
+                                <p class="font-bold text-brand-red"><a href="mailto:support@hotbeds.ca" class="hover:underline break-all">support@hotbeds.ca</a></p>
+                                <p class="text-gray-500 mt-0.5">Self-Service Portal: <a href="manage-booking.html" class="underline hover:text-brand-text break-all">hotbeds.ca/manage-booking.html</a></p>
                             </div>
                             <div>
                                 <span class="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 block mb-0.5">Settlement Currency</span>
@@ -386,7 +390,7 @@
                             <li><strong>Itemized Price &amp; Currency Breakdown:</strong> A clear, detailed description of the hotel accommodation, room category, occupancy, check-in/check-out dates, base nightly rate in Canadian Dollars (<strong>CAD $</strong>), applicable federal and provincial sales taxes (GST, PST, HST, QST), and any applicable region-specific fees (such as the mandatory $2.25 CAD/night Ontario Eco Fee for Ontario properties only).</li>
                             <li><strong>Total Contract Obligation:</strong> The exact total amount payable by the consumer in Canadian Dollars (CAD $), with zero hidden surcharges, undisclosed resort markups, or post-checkout platform booking fees.</li>
                             <li><strong>Cancellation, Return, Exchange &amp; Refund Restrictions:</strong> Full disclosure of whether the selected tariff is a <em>Standard Refundable Rate</em> (eligible for free cancellation up to 24 hours prior to 3:00 PM property local time on the scheduled date of arrival) or a deeply discounted <em>Non-Refundable Flash Rate</em>.</li>
-                            <li><strong>Express Opportunity to Accept, Decline, or Correct Errors:</strong> At `checkout.html`, consumers are presented with a complete summary of their reservation payload and may modify guest names, dates, province selection, or promotional opt-ins before clicking the final payment submission button.</li>
+                            <li><strong>Express Opportunity to Accept, Decline, or Correct Errors:</strong> At <code class="break-all">checkout.html</code>, consumers are presented with a complete summary of their reservation payload and may modify guest names, dates, province selection, or promotional opt-ins before clicking the final payment submission button.</li>
                             <li><strong>Permanent Copy Retention:</strong> Consumers may print or save these disclosures and their completed reservation voucher as a PDF at any time using the <em>"Print / Save Legal Disclosures (PDF)"</em> button at the top of this page or on their booking confirmation screen.</li>
                         </ul>
 
@@ -398,7 +402,7 @@
                             <li><strong>15-Day Written Contract Copy Rule (Sec. 5):</strong> Hotbeds Inc. delivers a complete, printable electronic copy of the executed Internet sales contract (including your Booking Reference ID, itemized CAD receipt, and hotel voucher) immediately upon payment authorization and to your designated email address within <strong>15 days</strong> after the contract is entered into.</li>
                             <li><strong>Statutory Cancellation for Non-Disclosure or Late Copy Delivery (Sec. 6(1)):</strong> A consumer may cancel an Internet sales contract at any time from the date the contract is entered into until <strong>7 days</strong> after the consumer receives a copy of the contract if Hotbeds Inc. failed to provide the mandatory Section 4 pre-contract disclosures or failed to provide an express opportunity to accept, decline, or correct errors immediately before entering into the contract. Furthermore, a consumer may cancel the contract within <strong>30 days</strong> from the date the contract is entered into if Hotbeds Inc. does not provide a copy of the contract within 15 days after the transaction date.</li>
                             <li><strong>Statutory Cancellation for Non-Delivery of Services (Sec. 6(2)):</strong> A consumer may cancel an Internet sales contract at any time before the accommodation service is provided if the contracted hotel accommodation is not made available within <strong>30 days</strong> of the stated check-in date (or an amended check-in date agreed to in writing by the consumer).</li>
-                            <li><strong>Effect of Statutory Cancellation &amp; 15-Day Refund Mandate (Sec. 7 &amp; 8):</strong> Notice of statutory cancellation may be delivered to <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline">support@hotbeds.ca</a>. Upon valid statutory cancellation under the Alberta CPA, Hotbeds Inc. will refund 100% of all money paid by the consumer within <strong>15 days</strong> after the notice of cancellation is given, and if a credit card was used, will process a full credit card reversal upon request in accordance with Section 8 of the Regulation.</li>
+                            <li><strong>Effect of Statutory Cancellation &amp; 15-Day Refund Mandate (Sec. 7 &amp; 8):</strong> Notice of statutory cancellation may be delivered to <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline break-all">support@hotbeds.ca</a>. Upon valid statutory cancellation under the Alberta CPA, Hotbeds Inc. will refund 100% of all money paid by the consumer within <strong>15 days</strong> after the notice of cancellation is given, and if a credit card was used, will process a full credit card reversal upon request in accordance with Section 8 of the Regulation.</li>
                         </ul>
                     </div>
                 </section>
@@ -410,11 +414,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 02 • Commercial Booking Agreement</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Master Reservation Terms, RateHawk Supplier Rules &amp; Cancellation Policy
                             </h2>
                         </div>
-                        <span class="bg-red-50 text-brand-red border border-red-200 text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-red-50 text-brand-red border border-red-200 text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             RateHawk / ETG B2B Pass-Through
                         </span>
                     </div>
@@ -426,7 +430,7 @@
                         </p>
                         <ul class="list-disc pl-5 space-y-1.5">
                             <li><strong>15-Second Live Rate Feed:</strong> On our homepage and search feeds, live flash rates cycle on a <strong>15-second</strong> market timer with dynamic demand ticks every 3 seconds based on active concurrent property sessions.</li>
-                            <li><strong>Locking a Rate &amp; 14:59 Checkout Protection:</strong> When a user clicks <em>"Lock In This Rate Now"</em>, the current nightly rate (`locked_hotel_price`), property name (`locked_hotel_name`), and provincial tax jurisdiction (`locked_hotel_province`) are frozen in browser session storage and held for <strong>14 minutes and 59 seconds (14:59)</strong> on `checkout.html`. If checkout is not completed before the 14:59 timer expires, the temporary inventory allocation is released back to the wholesale pool and pricing reverts to current market availability.</li>
+                            <li><strong>Locking a Rate &amp; 14:59 Checkout Protection:</strong> When a user clicks <em>"Lock In This Rate Now"</em>, the current nightly rate (<code class="break-all">locked_hotel_price</code>), property name (<code class="break-all">locked_hotel_name</code>), and provincial tax jurisdiction (<code class="break-all">locked_hotel_province</code>) are frozen in browser session storage and held for <strong>14 minutes and 59 seconds (14:59)</strong> on <code class="break-all">checkout.html</code>. If checkout is not completed before the 14:59 timer expires, the temporary inventory allocation is released back to the wholesale pool and pricing reverts to current market availability.</li>
                         </ul>
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">2.2 Cancellation Policy: Refundable vs. Non-Refundable Flash Rates</h3>
@@ -435,7 +439,7 @@
                                 <span class="text-[10px] font-black uppercase tracking-widest text-emerald-700 block mb-1">Standard Refundable Rates</span>
                                 <h4 class="text-sm font-black text-brand-text mb-1">Free Cancellation up to 24h Prior</h4>
                                 <p class="text-xs text-gray-600">
-                                    Reservations booked under our Standard Refundable tariff may be cancelled free of charge up to <strong>24 hours prior to 3:00 PM (hotel local time)</strong> on the scheduled check-in date via `manage-booking.html` or by emailing `support@hotbeds.ca`. Cancellations requested within 24 hours of 3:00 PM check-in incur a penalty equal to the first night's room rate plus applicable taxes.
+                                    Reservations booked under our Standard Refundable tariff may be cancelled free of charge up to <strong>24 hours prior to 3:00 PM (hotel local time)</strong> on the scheduled check-in date via <code class="break-all">manage-booking.html</code> or by emailing <code class="break-all">support@hotbeds.ca</code>. Cancellations requested within 24 hours of 3:00 PM check-in incur a penalty equal to the first night's room rate plus applicable taxes.
                                 </p>
                             </div>
                             <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4">
@@ -463,7 +467,7 @@
                         </p>
                         <ul class="list-disc pl-5 space-y-1.5">
                             <li><strong>Meal Plan Codes:</strong> Room tariffs are governed by standardized international meal codes shown at checkout: <code>RO</code> (Room Only — no meals included), <code>BB</code> (Bed &amp; Breakfast for registered adult occupancy), <code>HB</code> (Half Board), or <code>AI</code> (All-Inclusive). Unconsumed meals cannot be refunded or exchanged for property credit.</li>
-                            <li><strong>No-Show Policy:</strong> Standard check-in opens at <strong>3:00 PM</strong> and check-out is by <strong>11:00 AM</strong> local property time. If a guest fails to arrive before 11:59 PM on the scheduled check-in date without prior notice to `support@hotbeds.ca` or the hotel front desk, the supplier classifies the booking as a <strong>No-Show</strong>, cancels the remaining nights of the reservation to prevent room spoilage, and retains 100% of the first night's charge (or 100% of the stay total on Non-Refundable tariffs).</li>
+                            <li><strong>No-Show Policy:</strong> Standard check-in opens at <strong>3:00 PM</strong> and check-out is by <strong>11:00 AM</strong> local property time. If a guest fails to arrive before 11:59 PM on the scheduled check-in date without prior notice to <code class="break-all">support@hotbeds.ca</code> or the hotel front desk, the supplier classifies the booking as a <strong>No-Show</strong>, cancels the remaining nights of the reservation to prevent room spoilage, and retains 100% of the first night's charge (or 100% of the stay total on Non-Refundable tariffs).</li>
                             <li><strong>Bedding &amp; Special Requests:</strong> Special requests (e.g., high floor, early check-in, adjacent rooms, or king vs. two queen bedding on "Run of House" categories) are transmitted via the RateHawk API to the property front desk but remain subject to on-site operational availability at check-in.</li>
                             <li><strong>Relocation ("Walk") Protection:</strong> In the rare event a supplier property is overbooked or experiences an unforeseen maintenance outage, Hotbeds Inc. and its wholesale supply partner will coordinate comparable or higher-tier alternate accommodation in the same municipal hub at no additional cost to the guest, or provide an immediate 100% refund at the consumer's election.</li>
                         </ul>
@@ -477,11 +481,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 03 • Nationwide Tax &amp; Fee Transparency</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Provincial Tax Schedule &amp; Ontario-Only Eco Fee Disclosure
                             </h2>
                         </div>
-                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             Strict Regional Isolation
                         </span>
                     </div>
@@ -492,11 +496,11 @@
                         </p>
 
                         <!-- Bordered Reference Table -->
-                        <div class="overflow-x-auto my-4">
-                            <table class="w-full text-left border-collapse border border-gray-200 rounded-xl overflow-hidden text-xs">
+                        <div class="overflow-x-auto my-4 max-w-full">
+                            <table class="w-full text-left border-collapse border border-gray-200 rounded-xl overflow-hidden text-xs table-auto">
                                 <thead>
                                     <tr class="bg-slate-900 text-white uppercase tracking-wider text-[10px]">
-                                        <th class="p-3.5 border border-slate-800">Province / Region Code</th>
+                                        <th class="p-3.5 border border-slate-800 whitespace-nowrap">Province / Region Code</th>
                                         <th class="p-3.5 border border-slate-800">Applicable Statutory Tax Rate</th>
                                         <th class="p-3.5 border border-slate-800">Tax Breakdown</th>
                                         <th class="p-3.5 border border-slate-800">Ontario Eco Fee Handling</th>
@@ -580,11 +584,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 04 • Data Governance &amp; Security</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Comprehensive Privacy Policy (PIPEDA &amp; Alberta PIPA Compliant)
                             </h2>
                         </div>
-                        <span class="bg-slate-100 text-slate-800 border border-slate-300 text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-slate-100 text-slate-800 border border-slate-300 text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             PIPEDA &amp; PIPA Certified
                         </span>
                     </div>
@@ -606,7 +610,7 @@
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.2 Database Architecture &amp; Supabase Row-Level Security (RLS)</h3>
                         <p>
-                            All booking records, loyalty point ledgers, and partner applications are stored in encrypted PostgreSQL cloud databases powered by <strong>Supabase</strong> using TLS 1.3 encryption in transit and AES-256 encryption at rest. Our database tables enforce strict <strong>Row-Level Security (RLS)</strong> policies, ensuring that reservation payloads can only be queried by authenticated system functions or verified via matching Booking Reference ID and registered email verification on `manage-booking.html`.
+                            All booking records, loyalty point ledgers, and partner applications are stored in encrypted PostgreSQL cloud databases powered by <strong>Supabase</strong> using TLS 1.3 encryption in transit and AES-256 encryption at rest. Our database tables enforce strict <strong>Row-Level Security (RLS)</strong> policies, ensuring that reservation payloads can only be queried by authenticated system functions or verified via matching Booking Reference ID and registered email verification on <code class="break-all">manage-booking.html</code>.
                         </p>
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.3 Strict Purpose Limitation &amp; Third-Party Sharing</h3>
@@ -620,7 +624,7 @@
 
                         <h3 class="text-sm font-extrabold text-brand-text uppercase tracking-wider pt-2">4.4 Your Statutory Rights: Data Access, Export, Correction &amp; Deletion</h3>
                         <p>
-                            Under PIPEDA and Alberta PIPA, you have the right to request a portable export of all personal data held about you, correct inaccurate records, or request permanent deletion/anonymization of your personal profile (subject to statutory Canadian tax and financial audit retention periods). Submit any data access, export, or deletion request to our Privacy Officer at <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline">support@hotbeds.ca</a> with the subject line <code>PRIVACY REQUEST</code>; we respond to all verified inquiries within 30 calendar days.
+                            Under PIPEDA and Alberta PIPA, you have the right to request a portable export of all personal data held about you, correct inaccurate records, or request permanent deletion/anonymization of your personal profile (subject to statutory Canadian tax and financial audit retention periods). Submit any data access, export, or deletion request to our Privacy Officer at <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline break-all">support@hotbeds.ca</a> with the subject line <code>PRIVACY REQUEST</code>; we respond to all verified inquiries within 30 calendar days.
                         </p>
                     </div>
                 </section>
@@ -632,11 +636,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 05 • Loyalty, Member Perks &amp; Anti-Spam Rules</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Hot Beds Club &amp; The Guild Program Rules + CASL Email Consent
                             </h2>
                         </div>
-                        <span class="bg-slate-900 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-slate-900 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             CASL S.C. 2010, c. 23 Compliant
                         </span>
                     </div>
@@ -647,11 +651,11 @@
                             <div class="bg-slate-900 text-white rounded-2xl p-5 border border-gray-800">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-[10px] font-black uppercase tracking-widest text-brand-red">Loyalty Program</span>
-                                    <span class="bg-brand-red text-white text-[9px] font-black px-2 py-0.5 rounded uppercase">1,000 Welcome Pts</span>
+                                    <span class="bg-brand-red text-white text-[9px] font-black px-2 py-0.5 rounded uppercase whitespace-nowrap">1,000 Welcome Pts</span>
                                 </div>
                                 <h3 class="text-base font-black mb-2">5.1 Hot Beds Club Rules</h3>
                                 <ul class="list-disc pl-4 space-y-1.5 text-xs text-gray-300">
-                                    <li><strong>Automatic Complimentary Enrollment:</strong> Every guest is automatically enrolled in the <em>Hot Beds Club</em> at $0.00 cost upon completing their first reservation or registering on `club.html`.</li>
+                                    <li><strong>Automatic Complimentary Enrollment:</strong> Every guest is automatically enrolled in the <em>Hot Beds Club</em> at $0.00 cost upon completing their first reservation or registering on <code class="break-all">club.html</code>.</li>
                                     <li><strong>Welcome Bonus &amp; Earning Formula:</strong> New members receive <strong>1,000 Welcome Points</strong> (equal to <strong>$10.00 CAD</strong> in stay redemption value) plus <strong>10 Points per $1.00 CAD spent</strong> on eligible net room rates (excluding taxes and Ontario Eco Fees).</li>
                                     <li><strong>Redemption &amp; No Cash Surrender Value:</strong> Points may be applied toward future bookings on Hotbeds.ca. Points are promotional loyalty credits, are non-transferable, and carry <strong>no cash surrender value</strong>. If a reservation is cancelled or refunded, points earned on that booking are reversed.</li>
                                 </ul>
@@ -661,13 +665,13 @@
                             <div class="bg-emerald-950 text-white rounded-2xl p-5 border border-emerald-800">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Private Discount Network</span>
-                                    <span class="bg-emerald-600 text-white text-[9px] font-black px-2 py-0.5 rounded uppercase">Instant 20% Off</span>
+                                    <span class="bg-emerald-600 text-white text-[9px] font-black px-2 py-0.5 rounded uppercase whitespace-nowrap">Instant 20% Off</span>
                                 </div>
                                 <h3 class="text-base font-black mb-2">5.2 The Guild Program Rules</h3>
                                 <ul class="list-disc pl-4 space-y-1.5 text-xs text-emerald-100">
-                                    <li><strong>Optional Free Checkout Opt-In:</strong> At `checkout.html`, guests may optionally check the complimentary opt-in box to join <em>The Guild</em> for free ($0.00 membership fee).</li>
+                                    <li><strong>Optional Free Checkout Opt-In:</strong> At <code class="break-all">checkout.html</code>, guests may optionally check the complimentary opt-in box to join <em>The Guild</em> for free ($0.00 membership fee).</li>
                                     <li><strong>Immediate 20% Room Subtotal Discount:</strong> Opting into The Guild at checkout immediately deducts <strong>20% off the pre-tax room subtotal</strong> on your active reservation.</li>
-                                    <li><strong>Portal Access &amp; Local City Perks:</strong> Members receive private login credentials to `portal-login.html`, unlocking private flash rates and curated dining, spa, coworking, and entertainment perks from our Zero-Fee Local Partner Network across Canada.</li>
+                                    <li><strong>Portal Access &amp; Local City Perks:</strong> Members receive private login credentials to <code class="break-all">portal-login.html</code>, unlocking private flash rates and curated dining, spa, coworking, and entertainment perks from our Zero-Fee Local Partner Network across Canada.</li>
                                 </ul>
                             </div>
                         </div>
@@ -678,7 +682,7 @@
                         </p>
                         <ul class="list-disc pl-5 space-y-1.5">
                             <li><strong>Transactional vs. Commercial Electronic Messages (CEMs):</strong> Booking confirmations, statutory Alberta CPA contract receipts, and cancellation notices are mandatory transactional messages sent to fulfill your reservation contract. Marketing communications—including curated email drip offers from partner hotels and local city merchants through <em>The Guild</em> or <em>Hot Beds Club</em>—are sent strictly upon your express opt-in consent.</li>
-                            <li><strong>Sender Identification:</strong> All commercial emails clearly identify <strong>Hotbeds Inc.</strong> as the sender and include our active contact email (<a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline">support@hotbeds.ca</a>) and corporate mailing details.</li>
+                            <li><strong>Sender Identification:</strong> All commercial emails clearly identify <strong>Hotbeds Inc.</strong> as the sender and include our active contact email (<a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline break-all">support@hotbeds.ca</a>) and corporate mailing details.</li>
                             <li><strong>Unconditional 1-Click Unsubscribe Rights:</strong> Every commercial email sent by Hotbeds Inc. contains a prominent, zero-friction <strong>1-click Unsubscribe link</strong>. Unsubscribe requests are processed immediately (and never later than 10 business days, well ahead of CASL statutory maximums) without revoking any discount already applied to a completed reservation.</li>
                         </ul>
                     </div>
@@ -691,11 +695,11 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-4 mb-5">
                         <div>
                             <span class="text-[10px] font-black uppercase tracking-widest text-brand-red block">Section 06 • Client-Side State Transparency</span>
-                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight">
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight break-words">
                                 Cookie, Session Storage &amp; Rate-Lock Persistence Policy
                             </h2>
                         </div>
-                        <span class="bg-gray-100 text-gray-800 border border-gray-300 text-[10px] font-black uppercase px-3 py-1 rounded-full">
+                        <span class="bg-gray-100 text-gray-800 border border-gray-300 text-[10px] font-black uppercase px-3 py-1 rounded-full whitespace-normal text-center">
                             Zero Third-Party Ad Trackers
                         </span>
                     </div>
@@ -706,30 +710,30 @@
                         </p>
 
                         <!-- Technical State Key Reference Table -->
-                        <div class="overflow-x-auto my-3">
-                            <table class="w-full text-left border-collapse border border-gray-200 rounded-xl overflow-hidden text-xs">
+                        <div class="overflow-x-auto my-3 max-w-full">
+                            <table class="w-full text-left border-collapse border border-gray-200 rounded-xl overflow-hidden text-xs table-auto">
                                 <thead>
                                     <tr class="bg-gray-100 text-brand-text uppercase tracking-wider text-[10px]">
-                                        <th class="p-3 border border-gray-200">Browser Storage Key</th>
+                                        <th class="p-3 border border-gray-200 whitespace-nowrap">Browser Storage Key</th>
                                         <th class="p-3 border border-gray-200">Functional Purpose</th>
                                         <th class="p-3 border border-gray-200">Live Value in Your Browser</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 font-medium">
                                     <tr>
-                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold">locked_hotel_price</td>
-                                        <td class="p-3 border border-gray-200">Holds the frozen nightly flash rate (in CAD $) when you click "Lock In This Rate Now", alongside <code>locked_hotel_name</code> and <code>locked_hotel_province</code>.</td>
-                                        <td id="live-key-price" class="p-3 border border-gray-200 font-mono text-gray-700">Checking...</td>
+                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold break-all">locked_hotel_price</td>
+                                        <td class="p-3 border border-gray-200">Holds the frozen nightly flash rate (in CAD $) when you click "Lock In This Rate Now", alongside <code class="break-all">locked_hotel_name</code> and <code class="break-all">locked_hotel_province</code>.</td>
+                                        <td id="live-key-price" class="p-3 border border-gray-200 font-mono text-gray-700 break-words">Checking...</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold">hotbeds_region</td>
-                                        <td class="p-3 border border-gray-200">Persists your selected Canadian province (<code>ON</code>, <code>AB</code>, <code>BC</code>, <code>QC</code>, <code>PR</code>, <code>AT</code>, or <code>ALL</code>) for accurate regional tax and city sorting.</td>
-                                        <td id="live-key-region" class="p-3 border border-gray-200 font-mono text-gray-700">Checking...</td>
+                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold break-all">hotbeds_region</td>
+                                        <td class="p-3 border border-gray-200">Persists your selected Canadian province (<code class="break-all">ON</code>, <code class="break-all">AB</code>, <code class="break-all">BC</code>, <code class="break-all">QC</code>, <code class="break-all">PR</code>, <code class="break-all">AT</code>, or <code class="break-all">ALL</code>) for accurate regional tax and city sorting.</td>
+                                        <td id="live-key-region" class="p-3 border border-gray-200 font-mono text-gray-700 break-words">Checking...</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold">latest_booking_payload</td>
-                                        <td class="p-3 border border-gray-200">Stores your active reservation confirmation object so you can view, print, or cancel your stay instantly on <code>manage-booking.html</code>.</td>
-                                        <td id="live-key-booking" class="p-3 border border-gray-200 font-mono text-gray-700">Checking...</td>
+                                        <td class="p-3 border border-gray-200 font-mono text-brand-red font-bold break-all">latest_booking_payload</td>
+                                        <td class="p-3 border border-gray-200">Stores your active reservation confirmation object so you can view, print, or cancel your stay instantly on <code class="break-all">manage-booking.html</code>.</td>
+                                        <td id="live-key-booking" class="p-3 border border-gray-200 font-mono text-gray-700 break-words">Checking...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -737,17 +741,17 @@
 
                         <!-- Interactive 1-Click Clear Session & Rate Lock Controller -->
                         <div class="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 no-print">
-                            <div>
+                            <div class="flex-grow min-w-0">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="w-2 h-2 rounded-full bg-brand-red"></span>
                                     <span class="text-[10px] font-black uppercase tracking-widest text-gray-300">Interactive Privacy Control</span>
                                 </div>
-                                <h3 class="text-sm sm:text-base font-black text-white">Reset Browser Rate Locks &amp; Session Storage</h3>
-                                <p id="clear-storage-status" class="text-xs text-gray-300 mt-0.5">
-                                    Click the button to immediately purge <code>locked_hotel_price</code>, <code>hotbeds_region</code>, and cached session state from this browser.
+                                <h3 class="text-sm sm:text-base font-black text-white break-words">Reset Browser Rate Locks &amp; Session Storage</h3>
+                                <p id="clear-storage-status" class="text-xs text-gray-300 mt-0.5 break-words">
+                                    Click the button to immediately purge <code class="break-all">locked_hotel_price</code>, <code class="break-all">hotbeds_region</code>, and cached session state from this browser.
                                 </p>
                             </div>
-                            <button type="button" id="clear-session-btn" onclick="window.clearBrowserRateLocks()" class="w-full sm:w-auto bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition shrink-0">
+                            <button type="button" id="clear-session-btn" onclick="window.clearBrowserRateLocks()" class="w-full sm:w-auto bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl shadow-md transition shrink-0 whitespace-normal text-center">
                                 Clear My Browser Rate Locks &amp; Session Data
                             </button>
                         </div>
@@ -803,8 +807,8 @@
             </div>
 
             <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
-                <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada. Support: <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline">support@hotbeds.ca</a></p>
-                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
+                <p class="break-words text-center sm:text-left">&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada. Support: <a href="mailto:support@hotbeds.ca" class="text-brand-red font-bold hover:underline break-all">support@hotbeds.ca</a></p>
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center break-words">
                     Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation — Alta. Reg. 81/2001)
                 </p>
             </div>
@@ -910,7 +914,7 @@
                     btn.classList.replace('bg-brand-red', 'bg-emerald-600');
                 }
                 if (status) {
-                    status.innerHTML = '<span class="text-emerald-400 font-bold">Success:</span> All rate-lock keys (<code>locked_hotel_price</code>, <code>hotbeds_region</code>, and <code>latest_booking_payload</code>) have been purged from your browser.';
+                    status.innerHTML = '<span class="text-emerald-400 font-bold">Success:</span> All rate-lock keys (<code class="break-all">locked_hotel_price</code>, <code class="break-all">hotbeds_region</code>, and <code class="break-all">latest_booking_payload</code>) have been purged from your browser.';
                 }
             };
 
