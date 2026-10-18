@@ -1,376 +1,664 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds.ca Corporate Desk — Group Room Blocks, Project Crews & Team Travel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            red: '#e63946',
-                            light: '#f8fafc',
-                            white: '#ffffff',
-                            text: '#0f172a',
-                            muted: '#64748b'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)',
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate & Group Blocks (5+ Rooms) | Hotbeds.ca</title>
+  <meta name="description" content="Direct wholesale multi-room hotel blocks across Canada for corporate teams, sports tournaments, and production crews. Consolidated CAD GST/HST invoicing." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              red: '#E11D48',
+              dark: '#0F172A',
+              slate: '#1E293B',
+              gold: '#F59E0B',
             }
+          }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-    </style>
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0B0F19;
+      color: #F8FAFC;
+      margin: 0;
+      padding: 0; /* Zero fixed body padding offsets */
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    @media print {
+      header, footer, #rfp-hero-section, #rfp-benefits-grid, #rfp-form-container {
+        display: none !important;
+      }
+      body {
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+      }
+      #rfp-confirmation-state {
+        display: block !important;
+        border: 1px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen pt-[108px]">
+<body class="min-h-screen flex flex-col selection:bg-rose-600 selection:text-white">
 
-    <!-- FIXED HEADER -->
-    <header class="fixed top-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
-        <div class="bg-slate-900 text-white py-1.5 px-4">
-            <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px]">
-                <div class="flex items-center gap-2 font-medium text-gray-200">
-                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-                    <span><strong>HOTBEDS CORPORATE &amp; GROUP DESK:</strong> Consolidated Invoicing &amp; Preferred Net Rates for 5+ Rooms</span>
-                </div>
-                <span class="font-bold text-gray-300 hidden sm:inline">Ontario &amp; Alberta Corridors • CAD $</span>
-            </div>
+  <!-- STICKY HEADER (sticky top-0 w-full z-50, zero fixed body offset) -->
+  <header class="sticky top-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo with Zero-404 Fallback -->
+      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+        <img 
+          src="LOGO.png" 
+          alt="Hotbeds.ca Logo" 
+          class="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+          onerror="this.onerror=null; this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
+        />
+        <div id="logo-fallback" class="hidden flex items-center gap-2">
+          <span class="w-9 h-9 rounded-lg bg-rose-600 flex items-center justify-center font-display font-extrabold text-white text-lg shadow-lg shadow-rose-600/30">H</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-xl tracking-tight text-white">hotbeds<span class="text-rose-500">.ca</span></span>
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Canadian Wholesale Stays</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-white transition-colors">Search Stays</a>
+        <a href="cities.html" class="hover:text-white transition-colors">Canadian Cities</a>
+        <a href="corporate.html" class="text-rose-400 font-semibold border-b-2 border-rose-500 pb-1">Corporate & Groups</a>
+        <a href="club.html" class="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          The Guild (CUG)
+        </a>
+        <a href="partners.html" class="hover:text-white transition-colors">Local Partners</a>
+        <a href="manage-booking.html" class="hover:text-white transition-colors">Manage Booking</a>
+      </nav>
+
+      <!-- Protected Scarcity Anchor (#club-timer) & Hamburger Button -->
+      <div class="flex items-center gap-3">
+        <!-- Protected Scarcity Anchor Pill -->
+        <div class="flex items-center gap-2 bg-slate-900/90 border border-rose-500/40 rounded-full px-3.5 py-1.5 text-xs font-medium text-slate-200 shadow-inner">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+          </span>
+          <span class="hidden sm:inline text-slate-400">Rate Window:</span>
+          <span id="club-timer" class="font-mono font-bold text-rose-400 tracking-wider">14:59</span>
         </div>
 
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-            <a href="index.html">
-                <img src="LOGO.png" alt="Hotbeds.ca" class="h-10 md:h-12 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-2xl md:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
-            </a>
+        <!-- 44x44px Mobile Hamburger Toggle (☰ to ✕) -->
+        <button 
+          id="mobile-menu-btn"
+          type="button"
+          onclick="window.toggleMobileMenu()"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          class="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-200 hover:text-white hover:border-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-colors"
+        >
+          <span id="mobile-menu-icon" class="text-xl font-bold leading-none select-none">☰</span>
+        </button>
+      </div>
+    </div>
 
-            <nav class="hidden lg:flex items-center space-x-8">
-                <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Cities</a>
-                <a href="results.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Search Stays</a>
-                <a href="corporate.html" class="text-brand-red font-extrabold uppercase text-[11px] tracking-widest border-b-2 border-brand-red pb-1">Corporate</a>
-                <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">Partner Network</a>
-                <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold uppercase text-[11px] tracking-widest transition">My Booking</a>
-            </nav>
+    <!-- Mobile Navigation Drawer -->
+    <div 
+      id="mobile-menu-drawer" 
+      class="hidden md:hidden fixed inset-x-0 top-20 bottom-0 bg-slate-950/98 backdrop-blur-xl border-t border-slate-800 z-50 overflow-y-auto"
+    >
+      <div class="px-6 py-8 flex flex-col gap-4">
+        <a href="index.html" class="py-3 px-4 rounded-xl text-base font-semibold text-slate-200 hover:bg-slate-900 transition-colors">Search Stays</a>
+        <a href="cities.html" class="py-3 px-4 rounded-xl text-base font-semibold text-slate-200 hover:bg-slate-900 transition-colors">Canadian Cities</a>
+        <a href="corporate.html" class="py-3 px-4 rounded-xl text-base font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">Corporate & Group Blocks (5+ Rooms)</a>
+        <a href="club.html" class="py-3 px-4 rounded-xl text-base font-semibold text-amber-400 hover:bg-slate-900 transition-colors flex items-center justify-between">
+          <span>The Guild Portal</span>
+          <span class="text-xs uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/30">Member Gate</span>
+        </a>
+        <a href="partners.html" class="py-3 px-4 rounded-xl text-base font-semibold text-slate-200 hover:bg-slate-900 transition-colors">Canadian Local Partners</a>
+        <a href="manage-booking.html" class="py-3 px-4 rounded-xl text-base font-semibold text-slate-200 hover:bg-slate-900 transition-colors">Manage My Booking</a>
+        <a href="legal.html" class="py-3 px-4 rounded-xl text-sm text-slate-400 hover:bg-slate-900 transition-colors">Legal & Compliance Policies</a>
+      </div>
+    </div>
+  </header>
 
-            <a href="#group-rfp-form" class="bg-brand-red hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3 rounded-xl shadow-sm transition">
-                Request Block Quote &darr;
-            </a>
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow">
+    <!-- Hero Banner -->
+    <section id="rfp-hero-section" class="relative py-14 sm:py-20 border-b border-slate-800/80 overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-900/20 via-slate-950 to-slate-950 pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-5">
+            <span>B2B Wholesale Group Desk • 5+ Rooms</span>
+          </div>
+          <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-5">
+            Multi-Room Blocks Built for <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-400">Sports, Crews & Corporate Travel.</span>
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+            Skip retail OTA markups and fragmented receipts. Hotbeds Inc. secures contracted wholesale room blocks across Canada with single-folio CAD invoicing, itemized GST/HST breakdowns, and complimentary Guild keys for every member of your roster.
+          </p>
+          
+          <!-- Key Value Highlights -->
+          <div id="rfp-benefits-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="glass-card rounded-xl p-4">
+              <div class="text-rose-400 font-bold text-sm mb-1">01. Wholesale Rate Parity</div>
+              <p class="text-xs text-slate-400 leading-relaxed">Direct bedbank allocation for 5 to 150+ rooms without public surge pricing.</p>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+              <div class="text-amber-400 font-bold text-sm mb-1">02. Clean CAD Tax Folios</div>
+              <p class="text-xs text-slate-400 leading-relaxed">Consolidated Canadian GST/HST invoices ready for corporate accounting and ITC claims.</p>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+              <div class="text-emerald-400 font-bold text-sm mb-1">03. Complimentary Guild Access</div>
+              <p class="text-xs text-slate-400 leading-relaxed">Every guest in your room block unlocks local Canadian dining and transit perks.</p>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main class="flex-grow">
+    <!-- Corporate RFP Form & Confirmation Section -->
+    <section class="py-12 sm:py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- HERO & LIVE GROUP BLOCK SAVINGS CALCULATOR -->
-        <section class="bg-slate-900 text-white py-12 lg:py-16 border-b border-gray-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                    
-                    <!-- Left Copy -->
-                    <div class="lg:col-span-7 space-y-5">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/20 border border-brand-red/40 text-red-300 text-[10px] font-extrabold uppercase tracking-widest">
-                            <span>B2B Group Blocks • Consolidated Billing • Zero Agency Fees</span>
-                        </div>
-
-                        <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
-                            Streamlined Hotel Blocks for <span class="text-brand-red">Teams, Crews &amp; Corporate Stays.</span>
-                        </h1>
-
-                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
-                            Whether you are housing a project crew in Hamilton, booking 15 rooms for a sports tournament in Burlington, or coordinating a corporate conference in Calgary, our B2B desk locks in contracted group rates with a single itemized GST/HST invoice.
-                        </p>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
-                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <div class="text-brand-red font-black text-base mb-0.5">Consolidated Billing</div>
-                                <p class="text-[11px] text-gray-300 leading-relaxed">One clean master invoice with itemized HST/GST &amp; municipal fees for accounting.</p>
-                            </div>
-                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <div class="text-brand-red font-black text-base mb-0.5">Rooming List Flex</div>
-                                <p class="text-[11px] text-gray-300 leading-relaxed">Swap crew or roster names up to 24 hours prior to check-in at zero penalty.</p>
-                            </div>
-                            <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <div class="text-brand-red font-black text-base mb-0.5">$0 Management Fee</div>
-                                <p class="text-[11px] text-gray-300 leading-relaxed">We never charge booking or sourcing fees to your organization.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Interactive Group Block Estimator -->
-                    <div class="lg:col-span-5">
-                        <div class="bg-white text-brand-text rounded-2xl p-6 sm:p-8 shadow-2xl border border-gray-100 space-y-5">
-                            <div class="flex justify-between items-center border-b border-gray-100 pb-3">
-                                <div>
-                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Live Estimator</span>
-                                    <h2 class="text-lg font-black text-brand-text">Group Block Volume Calculator</h2>
-                                </div>
-                                <span class="bg-slate-900 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded">5+ Rooms</span>
-                            </div>
-
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold mb-1">
-                                        <span class="text-gray-500 uppercase">Rooms Needed Per Night:</span>
-                                        <span id="calc-rooms-val" class="text-brand-text font-black">10 Rooms</span>
-                                    </div>
-                                    <input type="range" id="calc-rooms-slider" min="5" max="50" value="10" class="w-full accent-brand-red">
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold mb-1">
-                                        <span class="text-gray-500 uppercase">Length of Stay:</span>
-                                        <span id="calc-nights-val" class="text-brand-text font-black">3 Nights</span>
-                                    </div>
-                                    <input type="range" id="calc-nights-slider" min="1" max="30" value="3" class="w-full accent-brand-red">
-                                </div>
-
-                                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-2 text-xs">
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 font-semibold">Total Room-Nights Volume:</span>
-                                        <span id="calc-total-rn" class="font-black text-brand-text">30 Room-Nights</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 font-semibold">Est. Retail OTA Cost ($210/nt avg):</span>
-                                        <span id="calc-retail-cost" class="font-bold text-gray-400 line-through">$6,300.00 CAD</span>
-                                    </div>
-                                    <div class="flex justify-between pt-2 border-t border-gray-200 items-baseline">
-                                        <span class="font-extrabold text-emerald-700 uppercase">Est. Corporate Desk Savings:</span>
-                                        <span id="calc-est-savings" class="text-xl font-black text-emerald-700">Save ~$1,260 CAD</span>
-                                    </div>
-                                </div>
-
-                                <a href="#group-rfp-form" class="block w-full text-center bg-brand-red hover:bg-red-700 text-white font-black py-3.5 rounded-xl uppercase tracking-widest text-xs shadow-md transition">
-                                    Lock In This Group Volume &darr;
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+        <!-- FORM CONTAINER -->
+        <div id="rfp-form-container" class="glass-card rounded-2xl p-6 sm:p-10 shadow-2xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-800">
+            <div>
+              <h2 class="font-display text-xl sm:text-2xl font-bold text-white">Submit a Group Block RFP</h2>
+              <p class="text-sm text-slate-400 mt-1">Minimum 5 rooms required for wholesale B2B allocation.</p>
             </div>
-        </section>
+            <div class="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg self-start sm:self-auto">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>Direct Canadian Desk Dispatch</span>
+            </div>
+          </div>
 
-        <!-- 4 CORE CORPORATE & GROUP VERTICALS -->
-        <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Tailored Logistics</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-brand-text tracking-tight">Built for High-Volume Travel Organizers</h2>
+          <form id="corporate-rfp-form" class="space-y-6" novalidate>
+            <!-- Alert Box for Validation Errors -->
+            <div id="rfp-error-banner" class="hidden p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 text-rose-200 text-sm"></div>
+
+            <!-- Row 1: Organization Name & Group Type -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="orgName" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Organization / Team Name <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="orgName" 
+                  name="orgName" 
+                  required
+                  placeholder="e.g., Hamilton Forge Youth FC / Apex Construction"
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label for="groupType" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Group Type <span class="text-rose-500">*</span>
+                </label>
+                <select 
+                  id="groupType" 
+                  name="groupType" 
+                  required
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                >
+                  <option value="" disabled selected>Select group category...</option>
+                  <option value="Sports">Sports Team / Tournament Delegation</option>
+                  <option value="Corporate">Corporate / Executive Business Travel</option>
+                  <option value="Crew">Production / Construction / Field Crew</option>
+                  <option value="Conference">Conference / Event Attendees</option>
+                </select>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
-                    <span class="text-2xl mb-3 block">🏗️</span>
-                    <h3 class="text-base font-black text-brand-text mb-1.5">Construction &amp; Project Crews</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Extended-stay weekly and monthly corporate rates with heavy-duty truck parking, early grab-and-go breakfast, and flexible crew roster swaps.
-                    </p>
-                </div>
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
-                    <span class="text-2xl mb-3 block">🏆</span>
-                    <h3 class="text-base font-black text-brand-text mb-1.5">Sports Teams &amp; Tournaments</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Double-Queen room blocks near Hamilton Stadium, Burlington arenas, and Calgary complexes with custom parent booking links and team meeting rooms.
-                    </p>
-                </div>
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
-                    <span class="text-2xl mb-3 block">💼</span>
-                    <h3 class="text-base font-black text-brand-text mb-1.5">Corporate &amp; Academic Delegations</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Executive King blocks near convention centers, universities, and financial districts with high-speed workspace access and Net-30 invoicing.
-                    </p>
-                </div>
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-soft">
-                    <span class="text-2xl mb-3 block">🥂</span>
-                    <h3 class="text-base font-black text-brand-text mb-1.5">Weddings &amp; VIP Event Blocks</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        Courtesy guest blocks at waterfront and mountain resort properties with private group promo codes so guests can book their own rooms seamlessly.
-                    </p>
-                </div>
+            <!-- Row 2: Contact Name, Email, Phone -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div>
+                <label for="contactName" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Contact Full Name <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="contactName" 
+                  name="contactName" 
+                  required
+                  placeholder="Coordinator or Travel Manager"
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label for="contactEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Corporate / Official Email <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="email" 
+                  id="contactEmail" 
+                  name="contactEmail" 
+                  required
+                  placeholder="name@organization.ca"
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label for="contactPhone" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Direct Phone Number <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="contactPhone" 
+                  name="contactPhone" 
+                  required
+                  placeholder="+1 (403) 555-0199"
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
             </div>
-        </section>
 
-        <!-- B2B GROUP BLOCK REQUEST FORM (SUPABASE READY) -->
-        <section id="group-rfp-form" class="py-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-            <div class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-soft-lg">
-                
-                <div id="corp-form-container">
-                    <div class="mb-6 pb-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Direct Desk Intake</span>
-                            <h2 class="text-2xl font-black text-brand-text">Request a Group or Corporate Rate Block</h2>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                            ⚡ Quotes Returned Within 2 Hours
-                        </span>
-                    </div>
+            <!-- Row 3: Target City, Check-In, Check-Out, Estimated Rooms (5+) -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+              <div class="sm:col-span-1">
+                <label for="targetCity" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Target City <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="targetCity" 
+                  name="targetCity" 
+                  list="canadian-cities-list"
+                  required
+                  placeholder="e.g., Calgary, AB"
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+                <datalist id="canadian-cities-list">
+                  <option value="Calgary, AB"></option>
+                  <option value="Edmonton, AB"></option>
+                  <option value="Banff, AB"></option>
+                  <option value="Toronto, ON"></option>
+                  <option value="Hamilton, ON"></option>
+                  <option value="Ottawa, ON"></option>
+                  <option value="Vancouver, BC"></option>
+                  <option value="Montreal, QC"></option>
+                  <option value="Winnipeg, MB"></option>
+                  <option value="Halifax, NS"></option>
+                </datalist>
+              </div>
 
-                    <form id="corporate-intake-form" class="space-y-5">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Company / Team / Organization Name *</label>
-                                <input type="text" id="corp-org" required placeholder="e.g. Apex Engineering or Hamilton FC" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Group Type *</label>
-                                <select id="corp-type" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
-                                    <option value="Corporate / Business Delegation">Corporate / Business Delegation</option>
-                                    <option value="Construction / Project Crew">Construction / Project Crew</option>
-                                    <option value="Sports Team / Tournament Block">Sports Team / Tournament Block</option>
-                                    <option value="Academic / University Group">Academic / University Group</option>
-                                    <option value="Wedding / Social Event Block">Wedding / Social Event Block</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Contact Full Name *</label>
-                                <input type="text" id="corp-contact" required placeholder="Your Name" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Work Email Address *</label>
-                                <input type="email" id="corp-email" required placeholder="you@company.com" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Direct Phone Number *</label>
-                                <input type="tel" id="corp-phone" required placeholder="(555) 000-0000" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Target City / Corridor *</label>
-                                <input type="text" id="corp-city" required placeholder="e.g. Hamilton, ON or Calgary, AB" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-sm font-semibold outline-none">
-                            </div>
-                        </div>
+              <div>
+                <label for="checkInDate" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Check-In Date <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="date" 
+                  id="checkInDate" 
+                  name="checkInDate" 
+                  required
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Check-In *</label>
-                                <input type="date" id="corp-checkin" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold outline-none focus:border-brand-red">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Check-Out *</label>
-                                <input type="date" id="corp-checkout" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold outline-none focus:border-brand-red">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Rooms Needed *</label>
-                                <input type="number" id="corp-rooms" min="5" value="10" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-bold outline-none focus:border-brand-red">
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Target Rate / Nt</label>
-                                <input type="text" id="corp-budget" placeholder="e.g. $155 CAD" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-semibold outline-none focus:border-brand-red">
-                            </div>
-                        </div>
+              <div>
+                <label for="checkOutDate" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Check-Out Date <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="date" 
+                  id="checkOutDate" 
+                  name="checkOutDate" 
+                  required
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
 
-                        <div>
-                            <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-1">Billing Preference &amp; Room Configuration Notes</label>
-                            <textarea id="corp-notes" rows="3" placeholder="e.g. Need 10 Two-Queen rooms, truck parking, and a single master invoice with itemized HST." class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium outline-none focus:border-brand-red"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-black py-4 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-md transition">
-                            Submit Group Block Request &rarr;
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Confirmation View -->
-                <div id="corp-success-container" class="hidden text-center py-8 space-y-4">
-                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto font-black text-2xl">✓</div>
-                    <h3 class="text-2xl font-black text-brand-text">Corporate Block Request Logged!</h3>
-                    <p class="text-xs sm:text-sm text-gray-600 max-w-lg mx-auto leading-relaxed">
-                        Your group request Reference <strong id="corp-ref-display" class="text-brand-text font-mono">CORP-9021</strong> has been assigned to our corporate desk. We will email your contracted hotel options and itemized rate sheet to <strong id="corp-email-display" class="text-brand-text"></strong> shortly.
-                    </p>
-                    <a href="index.html" class="inline-block bg-brand-text text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl">
-                        Return to Hotbeds.ca
-                    </a>
-                </div>
-
+              <div>
+                <label for="estimatedRooms" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                  Estimated Rooms (5+) <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="estimatedRooms" 
+                  name="estimatedRooms" 
+                  min="5" 
+                  max="500" 
+                  value="10"
+                  required
+                  class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white font-semibold focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                />
+              </div>
             </div>
-        </section>
 
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
-            <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
-            <div class="flex flex-wrap gap-4">
-                <a href="index.html" class="hover:text-brand-red font-bold">Home</a>
-                <a href="cities.html" class="hover:text-brand-red font-bold">Cities</a>
-                <a href="partners.html" class="hover:text-brand-red font-bold">Partners</a>
-                <a href="legal.html" class="hover:text-brand-red font-bold">Legal &amp; Alberta CPA</a>
+            <!-- Row 4: Room Configuration & Special Logistics -->
+            <div>
+              <label for="specialNotes" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                Room Configuration & Logistics Notes (Optional)
+              </label>
+              <textarea 
+                id="specialNotes" 
+                name="specialNotes" 
+                rows="3"
+                placeholder="Specify Double-Queen vs. Single-King split, motorcoach/bus parking requirements, proximity to venue/stadium, or target nightly CAD budget per room..."
+                class="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+              ></textarea>
             </div>
+
+            <!-- Submit Bar -->
+            <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-800">
+              <p class="text-xs text-slate-400">
+                All quotes are issued in <strong class="text-slate-200">Canadian Dollars (CAD)</strong> with full provincial tax &amp; GST/HST itemization.
+              </p>
+              <button 
+                type="submit"
+                class="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-display font-bold text-sm tracking-wide shadow-lg shadow-rose-600/30 transition-all cursor-pointer"
+              >
+                Request Wholesale Group Block →
+              </button>
+            </div>
+          </form>
         </div>
-    </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const roomsSlider = document.getElementById('calc-rooms-slider');
-            const nightsSlider = document.getElementById('calc-nights-slider');
-            const roomsVal = document.getElementById('calc-rooms-val');
-            const nightsVal = document.getElementById('calc-nights-val');
-            const totalRn = document.getElementById('calc-total-rn');
-            const retailCost = document.getElementById('calc-retail-cost');
-            const estSavings = document.getElementById('calc-est-savings');
-            const formRoomsInput = document.getElementById('corp-rooms');
+        <!-- CONFIRMATION STATE (Triggered on Submit & Saved to localStorage.latest_corporate_rfp) -->
+        <div id="rfp-confirmation-state" class="hidden glass-card rounded-2xl p-6 sm:p-10 shadow-2xl border border-emerald-500/40">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-2xl font-bold">
+                ✓
+              </div>
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Wholesale Desk Dispatched</span>
+                <h2 class="font-display text-2xl font-extrabold text-white">Corporate RFP Logged</h2>
+              </div>
+            </div>
+            <div class="bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-700 text-right">
+              <span class="block text-[10px] uppercase tracking-wider text-slate-400">RFP Reference ID</span>
+              <span id="conf-rfp-id" class="font-mono font-bold text-lg text-amber-400">RFP-000000</span>
+            </div>
+          </div>
 
-            function updateGroupCalculator() {
-                const r = parseInt(roomsSlider.value, 10);
-                const n = parseInt(nightsSlider.value, 10);
-                const rn = r * n;
-                const retail = rn * 210;
-                const savings = Math.round(retail * 0.20);
+          <p class="text-sm text-slate-300 leading-relaxed mb-6">
+            Your multi-room block inquiry has been registered with the <strong class="text-white">Hotbeds Inc. Wholesale Group Desk</strong>. We are pulling contracted B2B inventory for your dates and will dispatch a consolidated CAD proposal with itemized GST/HST breakdown to <strong id="conf-email" class="text-white underline"></strong>.
+          </p>
 
-                roomsVal.textContent = `${r} Rooms`;
-                nightsVal.textContent = `${n} ${n === 1 ? 'Night' : 'Nights'}`;
-                totalRn.textContent = `${rn} Room-Nights`;
-                retailCost.textContent = `$${retail.toLocaleString()}.00 CAD`;
-                estSavings.textContent = `Save ~$${savings.toLocaleString()} CAD`;
-                formRoomsInput.value = r;
-            }
+          <!-- Summary Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-900/90 rounded-xl p-5 border border-slate-800 mb-6 text-sm">
+            <div>
+              <span class="text-xs text-slate-400 block">Organization / Roster</span>
+              <span id="conf-org" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Group Classification</span>
+              <span id="conf-type" class="font-semibold text-rose-400"></span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Primary Contact</span>
+              <span id="conf-contact" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Destination Market</span>
+              <span id="conf-city" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Check-In → Check-Out</span>
+              <span id="conf-dates" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 block">Room Block Allocation</span>
+              <span id="conf-rooms" class="font-semibold text-emerald-400"></span>
+            </div>
+            <div class="sm:col-span-2 pt-2 border-t border-slate-800/80">
+              <span class="text-xs text-slate-400 block">Logistics & Room Split Notes</span>
+              <span id="conf-notes" class="text-slate-300 text-xs"></span>
+            </div>
+          </div>
 
-            roomsSlider.addEventListener('input', updateGroupCalculator);
-            nightsSlider.addEventListener('input', updateGroupCalculator);
+          <!-- Actions -->
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-4">
+            <button 
+              type="button" 
+              onclick="window.print()"
+              class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
+            >
+              🖨️ Print / Save RFP Dossier (PDF)
+            </button>
+            <div class="flex items-center gap-3">
+              <button 
+                type="button" 
+                onclick="window.resetCorporateRfpForm()"
+                class="px-5 py-2.5 rounded-xl border border-slate-700 hover:border-slate-600 text-slate-300 text-xs font-semibold transition-colors"
+              >
+                Submit Another Inquiry
+              </button>
+              <a 
+                href="index.html" 
+                class="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-colors"
+              >
+                Return to Search
+              </a>
+            </div>
+          </div>
+        </div>
 
-            // Default dates
-            const today = new Date();
-            const nextWk = new Date();
-            nextWk.setDate(today.getDate() + 3);
-            const fmt = (d) => d.toISOString().split('T')[0];
-            document.getElementById('corp-checkin').value = fmt(today);
-            document.getElementById('corp-checkout').value = fmt(nextWk);
+      </div>
+    </section>
+  </main>
 
-            // Form Submit -> Saves for Supabase `corporate_inquiries` table
-            document.getElementById('corporate-intake-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const ref = 'CORP-' + Math.floor(1000 + Math.random() * 9000);
-                const payload = {
-                    reference: ref,
-                    organization: document.getElementById('corp-org').value.trim(),
-                    group_type: document.getElementById('corp-type').value,
-                    contact_name: document.getElementById('corp-contact').value.trim(),
-                    email: document.getElementById('corp-email').value.trim(),
-                    phone: document.getElementById('corp-phone').value.trim(),
-                    city: document.getElementById('corp-city').value.trim(),
-                    checkin: document.getElementById('corp-checkin').value,
-                    checkout: document.getElementById('corp-checkout').value,
-                    rooms_needed: document.getElementById('corp-rooms').value,
-                    target_budget: document.getElementById('corp-budget').value.trim(),
-                    notes: document.getElementById('corp-notes').value.trim(),
-                    created_at: new Date().toISOString()
-                };
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-10 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-400">
+      <div class="flex items-center gap-3">
+        <span class="font-display font-bold text-white text-sm">Hotbeds Inc.</span>
+        <span>•</span>
+        <span>Alberta Incorporated Canadian Travel Platform</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-5">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="corporate.html" class="text-rose-400 font-medium">Corporate Blocks</a>
+        <a href="club.html" class="hover:text-white transition-colors">The Guild</a>
+        <a href="partners.html" class="hover:text-white transition-colors">Local Partners</a>
+        <a href="legal.html" class="hover:text-white transition-colors">Legal & Privacy</a>
+      </div>
+    </div>
+  </footer>
 
-                localStorage.setItem('latest_corporate_inquiry', JSON.stringify(payload));
-                document.getElementById('corp-ref-display').textContent = ref;
-                document.getElementById('corp-email-display').textContent = payload.email;
-                document.getElementById('corp-form-container').classList.add('hidden');
-                document.getElementById('corp-success-container').classList.remove('hidden');
-            });
-        });
-    </script>
+  <!-- CORE INTERACTION & STORAGE SCRIPTS -->
+  <script>
+    // 1. Mobile Hamburger Menu Toggle with Scroll Lock & ☰/✕ Swap
+    window.toggleMobileMenu = function () {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      const icon = document.getElementById('mobile-menu-icon');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (!drawer || !icon || !btn) return;
+
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        icon.textContent = '✕';
+        btn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden'; // Lock background scroll
+      } else {
+        drawer.classList.add('hidden');
+        icon.textContent = '☰';
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = ''; // Restore scroll
+      }
+    };
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) {
+        const drawer = document.getElementById('mobile-menu-drawer');
+        const icon = document.getElementById('mobile-menu-icon');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer && !drawer.classList.contains('hidden')) {
+          drawer.classList.add('hidden');
+          if (icon) icon.textContent = '☰';
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+
+    // 2. Protected Scarcity Anchor (#club-timer) Live Countdown
+    (function initClubTimer() {
+      const timerEl = document.getElementById('club-timer');
+      if (!timerEl) return;
+
+      let remainingSeconds = 14 * 60 + 59; // 14:59 default
+      const savedExpiry = sessionStorage.getItem('hotbeds_rate_timer_expiry');
+      const now = Math.floor(Date.now() / 1000);
+
+      if (savedExpiry && parseInt(savedExpiry, 10) > now) {
+        remainingSeconds = parseInt(savedExpiry, 10) - now;
+      } else {
+        sessionStorage.setItem('hotbeds_rate_timer_expiry', String(now + remainingSeconds));
+      }
+
+      function updateDisplay() {
+        const mins = Math.floor(remainingSeconds / 60);
+        const secs = remainingSeconds % 60;
+        timerEl.textContent =
+          String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+        } else {
+          remainingSeconds = 14 * 60 + 59;
+          sessionStorage.setItem(
+            'hotbeds_rate_timer_expiry',
+            String(Math.floor(Date.now() / 1000) + remainingSeconds)
+          );
+        }
+      }
+
+      updateDisplay();
+      setInterval(updateDisplay, 1000);
+    })();
+
+    // 3. Set Default Minimum Dates & Handle Corporate RFP Submission
+    (function initCorporateRfpForm() {
+      const checkInInput = document.getElementById('checkInDate');
+      const checkOutInput = document.getElementById('checkOutDate');
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+      const twoDaysOut = new Date(today);
+      twoDaysOut.setDate(today.getDate() + 3);
+
+      const formatIso = (d) => d.toISOString().split('T')[0];
+      if (checkInInput && !checkInInput.value) {
+        checkInInput.min = formatIso(today);
+        checkInInput.value = formatIso(tomorrow);
+      }
+      if (checkOutInput && !checkOutInput.value) {
+        checkOutInput.min = formatIso(tomorrow);
+        checkOutInput.value = formatIso(twoDaysOut);
+      }
+
+      const form = document.getElementById('corporate-rfp-form');
+      const errorBanner = document.getElementById('rfp-error-banner');
+      const formContainer = document.getElementById('rfp-form-container');
+      const confState = document.getElementById('rfp-confirmation-state');
+
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errorBanner.classList.add('hidden');
+        errorBanner.textContent = '';
+
+        const orgName = document.getElementById('orgName').value.trim();
+        const groupType = document.getElementById('groupType').value;
+        const contactName = document.getElementById('contactName').value.trim();
+        const contactEmail = document.getElementById('contactEmail').value.trim();
+        const contactPhone = document.getElementById('contactPhone').value.trim();
+        const targetCity = document.getElementById('targetCity').value.trim();
+        const checkInDate = document.getElementById('checkInDate').value;
+        const checkOutDate = document.getElementById('checkOutDate').value;
+        const estimatedRooms = parseInt(document.getElementById('estimatedRooms').value, 10);
+        const specialNotes = document.getElementById('specialNotes').value.trim();
+
+        if (!orgName || !groupType || !contactName || !contactEmail || !contactPhone || !targetCity || !checkInDate || !checkOutDate) {
+          errorBanner.textContent = 'Please complete all required fields (*) before dispatching your group block request.';
+          errorBanner.classList.remove('hidden');
+          return;
+        }
+
+        if (isNaN(estimatedRooms) || estimatedRooms < 5) {
+          errorBanner.textContent = 'Corporate & Group Wholesale RFP requires a minimum block of 5 rooms. For 1–4 rooms, please use standard search.';
+          errorBanner.classList.remove('hidden');
+          return;
+        }
+
+        if (new Date(checkOutDate) <= new Date(checkInDate)) {
+          errorBanner.textContent = 'Check-Out Date must be after the Check-In Date.';
+          errorBanner.classList.remove('hidden');
+          return;
+        }
+
+        const rfpReference = 'RFP-' + Math.floor(100000 + Math.random() * 900000);
+        const rfpPayload = {
+          rfpId: rfpReference,
+          organizationName: orgName,
+          groupType: groupType,
+          contactName: contactName,
+          contactEmail: contactEmail,
+          contactPhone: contactPhone,
+          targetCity: targetCity,
+          checkInDate: checkInDate,
+          checkOutDate: checkOutDate,
+          estimatedRooms: estimatedRooms,
+          specialNotes: specialNotes || 'Standard wholesale block allocation requested.',
+          currency: 'CAD',
+          submittedAt: new Date().toISOString()
+        };
+
+        // Save to localStorage as latest_corporate_rfp per checklist specification
+        localStorage.setItem('latest_corporate_rfp', JSON.stringify(rfpPayload));
+
+        // Populate confirmation UI
+        document.getElementById('conf-rfp-id').textContent = rfpPayload.rfpId;
+        document.getElementById('conf-email').textContent = rfpPayload.contactEmail;
+        document.getElementById('conf-org').textContent = rfpPayload.organizationName;
+        document.getElementById('conf-type').textContent = rfpPayload.groupType + ' Block';
+        document.getElementById('conf-contact').textContent = rfpPayload.contactName + ' (' + rfpPayload.contactPhone + ')';
+        document.getElementById('conf-city').textContent = rfpPayload.targetCity;
+        document.getElementById('conf-dates').textContent = rfpPayload.checkInDate + ' to ' + rfpPayload.checkOutDate;
+        document.getElementById('conf-rooms').textContent = rfpPayload.estimatedRooms + ' Rooms (Wholesale CAD Allocation)';
+        document.getElementById('conf-notes').textContent = rfpPayload.specialNotes;
+
+        formContainer.classList.add('hidden');
+        confState.classList.remove('hidden');
+        confState.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      window.resetCorporateRfpForm = function () {
+        form.reset();
+        document.getElementById('estimatedRooms').value = '10';
+        confState.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+      };
+    })();
+  </script>
 </body>
 </html>
