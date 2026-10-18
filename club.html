@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Beds Club — 1,000 Free Welcome Points & Live Member Flash Rates | Hotbeds.ca</title>
+    <title>Hot Beds Club — Automatic Canadian Travel Rewards & Welcome Points | Hotbeds.ca</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -31,7 +31,7 @@
             }
         }
 
-        // Global Mobile Menu Controller (Guaranteed 44x44px tap target & ☰ to ✕ swap)
+        // Global Mobile Menu Controller (Bulletproof 44x44px tap target & ☰ to ✕ icon swap)
         window.toggleMobileMenu = function(forceClose = false) {
             const menu = document.getElementById('mobile-menu');
             const openIcon = document.getElementById('menu-icon-open');
@@ -54,7 +54,7 @@
         };
     </script>
 
-    <!-- Optional Supabase Client Hook (Safe fallback to localStorage if not present) -->
+    <!-- Optional Supabase Client Hook (Safe fallback to localStorage) -->
     <script src="supabase-hotbeds.js" defer onerror="console.info('Hotbeds Club: Operating in standalone localStorage sync mode.')"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -65,20 +65,17 @@
             background-color: #f8fafc;
             overflow-x: hidden;
         }
-
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* High-Res Luxury Property Hero Background */
-        .hero-bg-layer {
-            background-image: url('https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=2000&q=80');
+        .club-hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=80');
             background-size: cover;
             background-position: center;
             filter: blur(2px);
             transform: scale(1.04);
         }
 
-        /* --- FOMO & LIVE RATE ANIMATIONS --- */
         @keyframes pulse-dot {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(230, 57, 70, 0); }
@@ -87,76 +84,22 @@
         .fomo-dot {
             animation: pulse-dot 2s infinite;
         }
-
-        @keyframes flash-price {
-            0% { color: #e63946; transform: scale(1.12); }
-            100% { color: #0f172a; transform: scale(1); }
-        }
-        .price-flash {
-            animation: flash-price 0.45s ease-out;
-        }
-
-        .progress-bar-inner {
-            transition: width 1s linear;
-        }
-
-        /* Tactile Range Sliders */
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            background: transparent;
-            cursor: pointer;
-        }
-        input[type="range"]::-webkit-slider-runnable-track {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 9999px;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            margin-top: -7px;
-            background-color: #e63946;
-            height: 22px;
-            width: 22px;
-            border-radius: 9999px;
-            border: 3px solid #ffffff;
-            box-shadow: 0 2px 10px rgba(230, 57, 70, 0.45);
-            transition: transform 0.15s ease, background-color 0.15s ease;
-        }
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.12);
-            background-color: #c92a37;
-        }
-        input[type="range"]::-moz-range-track {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 9999px;
-        }
-        input[type="range"]::-moz-range-thumb {
-            background-color: #e63946;
-            height: 22px;
-            width: 22px;
-            border-radius: 9999px;
-            border: 3px solid #ffffff;
-            box-shadow: 0 2px 10px rgba(230, 57, 70, 0.45);
-        }
     </style>
 </head>
 <body class="text-brand-text flex flex-col min-h-screen">
 
     <!-- ================================================================= -->
-    <!-- 1. STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)        -->
+    <!-- 1. STICKY UNIFIED HEADER & BULLETPROOF MOBILE MENU                -->
     <!-- ================================================================= -->
     <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm">
         
-        <!-- 1A. Top Utility Bar & Nationwide Region Selector -->
+        <!-- Top Utility Bar & Nationwide Region Selector -->
         <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
             <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
                 <a href="#member-pass-card" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
                     <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-                    <span id="top-bar-club-text" class="truncate">
-                        <strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points ($10 CAD Credit) &amp; 10x Points on Every Stay &rarr;
+                    <span class="truncate">
+                        <strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points &amp; Manage All Canadian Stays &rarr;
                     </span>
                 </a>
 
@@ -179,7 +122,7 @@
             </div>
         </div>
 
-        <!-- 1B. Main Navigation Bar -->
+        <!-- Main Navigation Bar (All 7 Required Routes) -->
         <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
             <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
                 
@@ -190,7 +133,7 @@
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation Links (All 7 Required Routes) -->
+                <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-6 xl:space-x-7">
                     <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
                     <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Search Stays</a>
@@ -201,7 +144,7 @@
                     <a href="legal.html" class="text-gray-500 hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Legal</a>
                 </nav>
                 
-                <!-- Right CTA: Untouchable #club-timer Pill + 44x44px Mobile Hamburger Button -->
+                <!-- Right CTA: Protected Header #club-timer Pill + 44x44px Mobile Hamburger Button -->
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <div class="hidden sm:flex items-center">
                         <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
@@ -209,20 +152,20 @@
                         </a>
                     </div>
                     
-                    <!-- PROTECTED SCARCITY ANCHOR: #club-timer is NEVER overwritten or hidden by localStorage -->
+                    <!-- PROTECTED HEADER PILL: #club-timer is NEVER overwritten by localStorage -->
                     <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
                         <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                         </div>
                         <div class="flex flex-col justify-center text-left">
-                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
-                            <span id="header-club-sub" class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
+                            <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
+                            <span class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
                                 Free • <span id="club-timer" class="text-red-400 font-mono">6d 23h 59m</span>
                             </span>
                         </div>
                     </a>
 
-                    <!-- Bulletproof 44x44px Mobile Hamburger Toggle Button with ☰ to ✕ Icon Swap -->
+                    <!-- Bulletproof 44x44px (w-11 h-11) Mobile Hamburger Toggle with ☰ to ✕ swap -->
                     <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red focus:outline-none transition shrink-0">
                         <span id="menu-icon-open" class="text-xl font-black leading-none pointer-events-none select-none">☰</span>
                         <span id="menu-icon-close" class="text-xl font-black leading-none pointer-events-none select-none hidden">✕</span>
@@ -230,7 +173,7 @@
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Navigation Drawer (All 7 Required Routes, Zero $25 Referral Program) -->
+            <!-- Mobile Dropdown Navigation Drawer (All 7 Required Routes) -->
             <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
                 <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
                     <span>Canadian Cities Directory</span>
@@ -263,15 +206,15 @@
             </div>
         </div>
 
-        <!-- 1C. Quick-Select Nationwide City Guide Pills Bar -->
+        <!-- Quick-Select Canadian City Guide Pills Bar -->
         <div class="bg-gray-50 border-t border-gray-100 py-2">
             <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
                 <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center">
                     <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline whitespace-nowrap">
-                        Popular Hubs:
+                        City Guides:
                     </span>
                     <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center">
-                        <!-- Dynamically populated by JS based on selected Province/Region -->
+                        <!-- Populated dynamically by JS -->
                     </div>
                 </div>
             </div>
@@ -279,174 +222,120 @@
     </header>
 
     <!-- ================================================================= -->
-    <!-- 2. HERO SECTION — TWO-COLUMN CONVERSION SPLIT                     -->
-    <!-- Left: Club Value Prop + Priority Guild Eligibility                -->
-    <!-- Right: State A (30-Sec Registration) / State B (Member Pass)      -->
+    <!-- 2. HERO SECTION & INSTANT CLUB PASS ACTIVATION                    -->
     <!-- ================================================================= -->
-    <section class="relative w-full py-10 lg:py-16 flex items-center justify-center overflow-hidden shrink-0">
+    <section class="relative w-full py-12 lg:py-16 flex items-center justify-center overflow-hidden shrink-0">
         <div class="absolute inset-0 z-0 overflow-hidden">
-            <div class="absolute inset-0 hero-bg-layer"></div>
+            <div class="absolute inset-0 club-hero-bg"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/85 to-slate-950/95 backdrop-blur-[2px]"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            <!-- LEFT COLUMN: Value Proposition & Dual-Program Clarity -->
+            <!-- Left Column: Clean Value Proposition -->
             <div class="lg:col-span-7 text-white space-y-6">
                 <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-[10px] sm:text-xs font-extrabold uppercase tracking-widest backdrop-blur-sm">
                     <span class="w-2 h-2 rounded-full bg-brand-red fomo-dot"></span>
-                    <span>Promotional $0.00 Open Enrollment • Window Closes in <span id="hero-promo-timer" class="text-red-400 font-mono">6d 23h 59m</span></span>
+                    <span>Promotional $0.00 Open Enrollment • Ends in <span class="text-red-400 font-mono">6d 23h 59m</span></span>
                 </div>
 
                 <h1 class="text-3xl sm:text-5xl xl:text-6xl font-black tracking-tighter leading-[1.06]">
-                    Automatic Canadian Hotel Rewards. <span class="text-brand-red">1,000 Points on Day One.</span>
+                    Hot Beds Club — <br><span class="text-brand-red">Simple, Automatic Canadian Travel Rewards.</span>
                 </h1>
 
                 <p class="text-gray-300 text-sm sm:text-base xl:text-lg font-medium leading-relaxed max-w-2xl">
-                    <strong>Hot Beds Club</strong> is our coast-to-coast loyalty program built for Canadian travelers. Every guest is <strong>automatically enrolled for free on their first reservation</strong>—or you can pre-activate your pass right now for <strong>$0.00</strong> during the open promotional window to claim <strong>1,000 Free Welcome Points ($10.00 CAD stay credit)</strong> and earn <strong>10 Points per $1 CAD spent</strong> on every room booking.
+                    Every guest who books a stay on Hotbeds.ca is automatically enrolled in the Hot Beds Club on their first reservation—or you can pre-activate your complimentary member profile right now during our open promotional window (<strong>$0.00 fee</strong>).
                 </p>
 
-                <!-- 4 Core Value Pillars -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+                <!-- 3 Executive Value Points -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                     <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Welcome Deposit</span>
-                            <span class="text-xs font-black text-emerald-400">$10.00 CAD Credit</span>
-                        </div>
-                        <h3 class="text-base font-black text-white">1,000 Free Welcome Points</h3>
-                        <p class="text-xs text-gray-300 mt-1">Credited instantly when you pre-enroll here or automatically upon your first Hotbeds.ca reservation.</p>
+                        <div class="text-brand-red text-xs font-black uppercase tracking-wider mb-1">+1,000 Pts</div>
+                        <h3 class="text-sm font-extrabold text-white">Instant Welcome Bonus</h3>
+                        <p class="text-[11px] text-gray-300 mt-1">New members receive 1,000 Welcome Points upon activation.</p>
                     </div>
 
                     <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Every Reservation</span>
-                            <span class="text-xs font-black text-white">10% Value Back</span>
-                        </div>
-                        <h3 class="text-base font-black text-white">10x Points Per $1 CAD Spent</h3>
-                        <p class="text-xs text-gray-300 mt-1">Earn uncapped points across every Canadian province with zero blackout dates.</p>
+                        <div class="text-emerald-400 text-xs font-black uppercase tracking-wider mb-1">Automatic</div>
+                        <h3 class="text-sm font-extrabold text-white">First-Stay Enrollment</h3>
+                        <p class="text-[11px] text-gray-300 mt-1">Book any room and your email is automatically registered for rewards.</p>
                     </div>
 
                     <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Front-Desk Flagging</span>
-                            <span class="text-xs font-black text-amber-400">VIP Priority</span>
-                        </div>
-                        <h3 class="text-base font-black text-white">Priority Room Upgrades</h3>
-                        <p class="text-xs text-gray-300 mt-1">Reservations are tagged with Hot Beds Club status for preferred floor placement and late checkout requests.</p>
+                        <div class="text-amber-400 text-xs font-black uppercase tracking-wider mb-1">Manage Stays</div>
+                        <h3 class="text-sm font-extrabold text-white">Receipts &amp; Vouchers</h3>
+                        <p class="text-[11px] text-gray-300 mt-1">Track all upcoming and past stays easily on manage-booking.html.</p>
                     </div>
-
-                    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Checkout Synergy</span>
-                            <span class="text-xs font-black text-emerald-400">-20% Corporate Rate</span>
-                        </div>
-                        <h3 class="text-base font-black text-white">The Guild 20% Off Eligibility</h3>
-                        <p class="text-xs text-gray-300 mt-1">Hot Beds Club members receive priority checkout eligibility when The Guild's promotional 20% off window is active.</p>
-                    </div>
-                </div>
-
-                <!-- Explicit Program Separation Callout: Hot Beds Club vs. The Guild -->
-                <div class="bg-slate-900/95 border border-slate-700 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="bg-brand-red text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded">Program Architecture</span>
-                            <span class="text-xs font-extrabold text-white">Hot Beds Club (Loyalty) vs. The Guild (Private CUG Network)</span>
-                        </div>
-                        <p class="text-[11px] sm:text-xs text-gray-300 leading-relaxed">
-                            <strong>Hot Beds Club</strong> is our free front-facing hotel points program. <strong>The Guild</strong> is our private Closed User Group (CUG) corporate fraternity ($300/yr standard fee). When The Guild's promotional free opt-in checkbox is active at <a href="checkout.html" class="underline text-white hover:text-brand-red font-bold">checkout.html</a>, Club members can check it to slash <strong>20% off their room rate</strong> and unlock hundreds of local city merchant discounts.
-                        </p>
-                    </div>
-                    <a href="portal-login.html" class="shrink-0 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-2.5 rounded-xl transition whitespace-nowrap">
-                        Guild Keyholder Login &rarr;
-                    </a>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: Interactive Instant Enrollment (State A) / Member Wallet Card (State B) -->
+            <!-- Right Column: State A (Sign-Up Form) / State B (Active Member Card) -->
             <div id="member-pass-card" class="lg:col-span-5 w-full max-w-md mx-auto lg:max-w-none">
                 
-                <!-- ========================================================= -->
-                <!-- STATE A: UNENROLLED VISITOR (30-SECOND REGISTRATION CARD) -->
-                <!-- ========================================================= -->
-                <div id="state-a-unenrolled" class="bg-white rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.5)] border border-gray-200 overflow-hidden">
+                <!-- State A: Unenrolled Sign-Up Form -->
+                <div id="state-a-form" class="bg-white rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.5)] border border-gray-200 overflow-hidden">
                     <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center border-b border-gray-800">
                         <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">30-Second Pre-Enrollment</span>
-                            <h2 class="text-lg font-black tracking-tight">Claim Your Free Club Pass</h2>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Member Registration</span>
+                            <h2 class="text-lg font-black tracking-tight">Activate Your Free Club Pass</h2>
                         </div>
                         <div class="text-right">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Open Window</span>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Fee</span>
                             <span class="text-sm font-black text-emerald-400 uppercase">$0.00 Free</span>
                         </div>
                     </div>
 
                     <div class="p-6 sm:p-7">
-                        <!-- Instant Welcome Credit Banner -->
                         <div class="bg-red-50 border border-red-200 rounded-2xl p-3.5 mb-5 flex items-center justify-between">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-brand-red text-white flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
-                                    1,000
+                                    +1K
                                 </div>
                                 <div>
-                                    <div class="text-xs font-black text-brand-text uppercase tracking-wider">1,000 Free Welcome Points</div>
-                                    <div class="text-[11px] font-semibold text-gray-600">Instant $10.00 CAD Stay Credit Deposited</div>
+                                    <div class="text-xs font-black text-brand-text uppercase tracking-wider">1,000 Welcome Points</div>
+                                    <div class="text-[11px] font-semibold text-gray-600">Deposited instantly upon activation</div>
                                 </div>
                             </div>
-                            <span class="text-[9px] font-black uppercase bg-white text-brand-red border border-red-200 px-2.5 py-1 rounded-full">Instant</span>
+                            <span class="text-[9px] font-black uppercase bg-white text-brand-red border border-red-200 px-2.5 py-1 rounded-full">Bonus</span>
                         </div>
 
-                        <form id="club-enrollment-form" class="space-y-4">
+                        <form id="club-signup-form" class="space-y-4">
                             <div>
-                                <label for="member-fullname" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
-                                <input type="text" id="member-fullname" required placeholder="e.g. Gordon Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                <label for="form-fullname" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
+                                <input type="text" id="form-fullname" required placeholder="e.g. Gordon Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
                             </div>
 
                             <div>
-                                <label for="member-email" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                                <input type="email" id="member-email" required placeholder="you@example.ca" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                <label for="form-email" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
+                                <input type="email" id="form-email" required placeholder="you@example.ca" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
                             </div>
 
                             <div>
-                                <label for="member-home-city" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Home City / Province</label>
-                                <select id="member-home-city" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white outline-none text-sm font-semibold text-brand-text transition">
-                                    <option value="Hamilton, ON" selected>Hamilton / Burlington, ON</option>
-                                    <option value="Toronto, ON">Toronto / GTA, ON</option>
-                                    <option value="Niagara Falls, ON">Niagara Region, ON</option>
-                                    <option value="Ottawa, ON">Ottawa / Eastern Ontario, ON</option>
-                                    <option value="Vancouver, BC">Vancouver / Lower Mainland, BC</option>
-                                    <option value="Victoria, BC">Victoria / Okanagan, BC</option>
-                                    <option value="Calgary, AB">Calgary / Banff, AB</option>
-                                    <option value="Edmonton, AB">Edmonton, AB</option>
-                                    <option value="Montreal, QC">Montreal / Quebec City, QC</option>
-                                    <option value="Winnipeg, MB">Winnipeg / Prairies (MB/SK)</option>
-                                    <option value="Halifax, NS">Halifax / Atlantic (NS/NB/NL)</option>
+                                <label for="form-region" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Preferred Canadian Region</label>
+                                <select id="form-region" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white outline-none text-sm font-semibold text-brand-text transition">
+                                    <option value="ON" selected>Ontario (ON)</option>
+                                    <option value="BC">British Columbia (BC)</option>
+                                    <option value="AB">Alberta (AB)</option>
+                                    <option value="QC">Quebec (QC)</option>
+                                    <option value="PR">Prairies (MB/SK)</option>
+                                    <option value="AT">Atlantic Canada (NS/NB/NL)</option>
                                 </select>
                             </div>
 
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-[11px] text-gray-600 leading-relaxed">
-                                <label class="flex items-start gap-2.5 cursor-pointer">
-                                    <input type="checkbox" id="member-terms" checked required class="mt-0.5 rounded text-brand-red focus:ring-brand-red">
-                                    <span>Activate my free <strong>Hot Beds Club</strong> pass ($0.00), deposit <strong>1,000 Welcome Points</strong>, and flag my profile for priority 20% Off Guild eligibility at checkout.</span>
-                                </label>
-                            </div>
-
                             <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-4 px-5 rounded-xl shadow-lg transform transition active:scale-[0.99] uppercase tracking-widest text-xs sm:text-sm flex items-center justify-center">
-                                <span>Activate My Free Club Pass + 1,000 Points &rarr;</span>
+                                <span>Activate My Free Club Pass (1,000 Welcome Pts) &rarr;</span>
                             </button>
                         </form>
 
                         <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 font-semibold">
                             <span>✓ No credit card required</span>
-                            <a href="portal-login.html" class="text-brand-text hover:text-brand-red font-bold underline">Guild Keyholder Login</a>
+                            <span>✓ Instant activation</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- ========================================================= -->
-                <!-- STATE B: ACTIVE MEMBER VIEW (DIGITAL MEMBER WALLET PASS)  -->
-                <!-- ========================================================= -->
-                <div id="state-b-active-member" class="hidden bg-white rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.5)] border border-gray-200 overflow-hidden">
-                    <!-- Digital Pass Header -->
+                <!-- State B: Active Member Wallet (Toggles on submit or if localStorage is true) -->
+                <div id="state-b-wallet" class="hidden bg-white rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.5)] border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white p-6 sm:p-7 relative overflow-hidden">
                         <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-brand-red/20 blur-2xl pointer-events-none"></div>
 
@@ -454,75 +343,56 @@
                             <div>
                                 <div class="inline-flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                    <span>Verified Club Pass</span>
+                                    <span>Active Member Pass</span>
                                 </div>
-                                <h2 class="text-xl font-black tracking-tight text-white">Hot Beds Club Member Pass</h2>
+                                <h2 class="text-xl font-black tracking-tight text-white">Hot Beds Club Member Card</h2>
                             </div>
                             <span class="bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg shadow">
-                                TIER 1 • INSIDER
+                                Verified
                             </span>
                         </div>
 
-                        <!-- Live Points Balance & CAD Credit Box -->
+                        <!-- Points Balance Box -->
                         <div class="bg-white/10 border border-white/15 rounded-2xl p-4 mb-5 backdrop-blur-sm relative z-10">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300 block mb-0.5">Live Points Balance</span>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300 block mb-0.5">Welcome Points Balance</span>
                                     <div class="flex items-baseline gap-1.5">
-                                        <span id="pass-points-balance" class="text-3xl sm:text-4xl font-black text-white tracking-tight">1,000</span>
+                                        <span id="wallet-points-val" class="text-3xl sm:text-4xl font-black text-white tracking-tight">1,000</span>
                                         <span class="text-xs font-extrabold text-brand-red uppercase">Pts</span>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300 block mb-0.5">Stay Credit Value</span>
-                                    <span id="pass-credit-value" class="text-xl sm:text-2xl font-black text-emerald-400">$10.00 CAD</span>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300 block mb-0.5">Status</span>
+                                    <span class="text-xs font-black text-emerald-400 uppercase">Active Member</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Member Credentials Strip -->
-                        <div class="grid grid-cols-3 gap-2 text-left relative z-10 pt-3 border-t border-white/10">
+                        <div class="grid grid-cols-2 gap-3 text-left relative z-10 pt-3 border-t border-white/10">
                             <div>
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Member</span>
-                                <span id="pass-member-name" class="text-xs font-extrabold text-white truncate block">Gordon Culp</span>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Registered Name</span>
+                                <span id="wallet-name-val" class="text-xs font-extrabold text-white truncate block">Gordon Culp</span>
                             </div>
                             <div>
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Home Hub</span>
-                                <span id="pass-member-city" class="text-xs font-extrabold text-white truncate block">Hamilton, ON</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Member ID</span>
-                                <span id="pass-member-id" class="text-xs font-mono font-black text-amber-300">HBC-84920</span>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</span>
+                                <span id="wallet-email-val" class="text-xs font-extrabold text-white truncate block">member@hotbeds.ca</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Wallet Actions & Links -->
-                    <div class="p-6 space-y-4">
-                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex items-center justify-between">
-                            <div>
-                                <div class="text-xs font-black text-emerald-900 uppercase tracking-wider">✓ Priority Guild Checkout Active</div>
-                                <div class="text-[11px] text-emerald-700 font-medium mt-0.5">Synced to <span id="pass-member-email" class="font-bold">member@hotbeds.ca</span> • Earning 10 Pts/$1 CAD</div>
-                            </div>
-                            <span class="text-[10px] font-black uppercase bg-white text-emerald-700 px-2.5 py-1 rounded border border-emerald-200 shrink-0">Active</span>
-                        </div>
+                    <div class="p-6 space-y-3.5">
+                        <a href="results.html" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition shadow-md flex items-center justify-center gap-1.5">
+                            <span>Search Canadian Stays (results.html)</span>
+                            <span>&rarr;</span>
+                        </a>
+                        <a href="manage-booking.html" class="w-full bg-slate-900 hover:bg-black text-white font-extrabold py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition flex items-center justify-center">
+                            <span>View My Booking (manage-booking.html)</span>
+                        </a>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a href="results.html" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition shadow-md flex items-center justify-center gap-1.5">
-                                <span>Browse Member Stays</span>
-                                <span>&rarr;</span>
-                            </a>
-                            <a href="manage-booking.html" class="w-full bg-slate-900 hover:bg-black text-white font-extrabold py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition flex items-center justify-center">
-                                <span>Manage Booking &amp; Pts</span>
-                            </a>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-2 border-t border-gray-100 text-[11px]">
-                            <a href="portal-login.html" class="font-extrabold text-brand-text hover:text-brand-red transition">
-                                Guild Keyholder Portal Login &rarr;
-                            </a>
-                            <button type="button" onclick="window.switchMemberProfile()" class="text-gray-400 hover:text-gray-700 font-bold underline">
-                                Update Details
+                        <div class="text-center pt-2">
+                            <button type="button" onclick="window.resetMemberForm()" class="text-xs text-gray-400 hover:text-gray-600 font-bold underline">
+                                Edit Registration Details
                             </button>
                         </div>
                     </div>
@@ -539,466 +409,126 @@
     <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 
         <!-- ============================================================= -->
-        <!-- 3. INTERACTIVE POINTS & STAY SAVINGS CALCULATOR               -->
+        <!-- 3. HOW HOT BEDS CLUB WORKS (SIMPLE 3-STEP STRIP)              -->
         <!-- ============================================================= -->
-        <section id="points-calculator" class="bg-white rounded-3xl border border-gray-200 shadow-soft-lg p-6 sm:p-10">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-8 pb-6 border-b border-gray-100 gap-4">
-                <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Interactive Rewards &amp; CUG Estimator</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Points &amp; Stay Savings Calculator</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-1">Slide your estimated annual hotel nights and average nightly rate to see your live Hot Beds Club points + optional Guild 20% corporate checkout savings.</p>
-                </div>
-
-                <!-- Quick Traveler Profile Presets -->
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="window.setCalculatorPreset(3, 175)" class="px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-text font-extrabold text-[11px] uppercase tracking-wider transition">
-                        Weekend (3 Nts • $175)
-                    </button>
-                    <button type="button" onclick="window.setCalculatorPreset(7, 210)" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-extrabold text-[11px] uppercase tracking-wider transition">
-                        Regular (7 Nts • $210)
-                    </button>
-                    <button type="button" onclick="window.setCalculatorPreset(15, 250)" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-brand-red border border-red-200 font-extrabold text-[11px] uppercase tracking-wider transition">
-                        Corporate (15 Nts • $250)
-                    </button>
-                </div>
+        <section id="how-it-works" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-soft">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Straightforward &amp; Transparent</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">How Hot Beds Club Works</h2>
+                <p class="text-gray-500 text-xs sm:text-sm font-medium mt-1">No complicated tiers, no hidden multipliers, and no expired points.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                <!-- Sliders Column -->
-                <div class="lg:col-span-6 space-y-7 bg-gray-50 rounded-2xl p-6 border border-gray-200/90">
-                    
-                    <!-- Slider 1: Estimated Annual Hotel Nights (1 to 30 nights) -->
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label for="slider-nights" class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Estimated Annual Hotel Nights (1 to 30)</label>
-                            <span class="bg-brand-red text-white font-black text-sm px-3.5 py-1 rounded-lg shadow-sm">
-                                <span id="display-nights">7</span> <span id="display-nights-unit">Nights</span>
-                            </span>
-                        </div>
-                        <input type="range" id="slider-nights" min="1" max="30" step="1" value="7" class="w-full my-2">
-                        <div class="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                            <span>1 Night</span>
-                            <span>5 Nights (Premier)</span>
-                            <span>15 Nights</span>
-                            <span>30 Nights</span>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Step 1 -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200/80">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center">01</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red bg-red-50 px-2.5 py-1 rounded-full">Coast-to-Coast</span>
                     </div>
-
-                    <!-- Slider 2: Average Nightly Rate ($150 to $350 CAD) -->
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label for="slider-rate" class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Average Nightly Rate ($150 to $350 CAD)</label>
-                            <span class="bg-slate-900 text-white font-black text-sm px-3.5 py-1 rounded-lg shadow-sm">
-                                $<span id="display-rate">210</span> CAD / nt
-                            </span>
-                        </div>
-                        <input type="range" id="slider-rate" min="150" max="350" step="5" value="210" class="w-full my-2">
-                        <div class="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                            <span>$150 CAD</span>
-                            <span>$200 CAD</span>
-                            <span>$275 CAD</span>
-                            <span>$350 CAD</span>
-                        </div>
-                    </div>
-
-                    <!-- Unlocked Tier Indicator -->
-                    <div class="bg-white border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div>
-                            <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block">Annual Spend: <span id="calc-annual-spend" class="text-brand-text">$1,470 CAD</span></span>
-                            <span id="calc-tier-status" class="text-sm font-black text-brand-text">Unlocks Tier 2: Premier Member (5+ Nights)</span>
-                        </div>
-                        <span id="calc-tier-pill" class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase px-3 py-1 rounded-full self-start sm:self-auto">
-                            1PM Late Check-Out
-                        </span>
-                    </div>
+                    <h3 class="text-lg font-black text-brand-text mb-2">Search Coast-to-Coast Inventory</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Browse verified 4.3+ rated hotels across 18 major Canadian cities with upfront CAD pricing compliant with the Alberta Consumer Protection Act.
+                    </p>
                 </div>
 
-                <!-- Live Calculated Outputs Column -->
-                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    <!-- Metric 1: Total Hot Beds Club Points Earned -->
-                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-5 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1">Total Hot Beds Club Points</span>
-                            <div id="output-total-points" class="text-3xl font-black text-brand-text tracking-tight">15,700 Pts</div>
-                        </div>
-                        <p class="text-[11px] text-gray-500 font-medium mt-3 pt-3 border-t border-gray-100">
-                            <code>1,000 Welcome Pts</code> + <span id="output-stay-points" class="font-bold text-brand-text">14,700</span> stay pts (<code>Nights &times; Rate &times; 10</code>).
-                        </p>
+                <!-- Step 2 -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200/80">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-xl bg-brand-red text-white font-black text-sm flex items-center justify-center">02</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Automatic</span>
                     </div>
+                    <h3 class="text-lg font-black text-brand-text mb-2">Automatic First-Stay Enrollment</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Book any room (or register on this page) and your email is automatically registered in the Hot Beds Club with 1,000 Welcome Points deposited to your profile.
+                    </p>
+                </div>
 
-                    <!-- Metric 2: Redeemable CAD Stay Credit Value -->
-                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-5 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Redeemable CAD Stay Credit</span>
-                            <div id="output-credit-cad" class="text-3xl font-black text-brand-red tracking-tight">$157.00 CAD</div>
-                        </div>
-                        <p class="text-[11px] text-gray-500 font-medium mt-3 pt-3 border-t border-gray-100">
-                            Direct CAD credit (<code>Points / 100</code>) redeemable toward any Canadian hotel stay.
-                        </p>
+                <!-- Step 3 -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200/80">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center">03</span>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">Manage Stays</span>
                     </div>
-
-                    <!-- Metric 3: Bonus 20% Corporate Rate Savings (The Guild Opt-In) -->
-                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-5 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 block mb-1">Bonus 20% Guild Rate Savings</span>
-                            <div id="output-guild-savings" class="text-3xl font-black text-emerald-600 tracking-tight">$294.00 CAD</div>
-                        </div>
-                        <p class="text-[11px] text-gray-500 font-medium mt-3 pt-3 border-t border-gray-100">
-                            20% corporate rate reduction when opting into <strong>The Guild</strong> box at <a href="checkout.html" class="underline font-bold text-brand-text">checkout.html</a>.
-                        </p>
-                    </div>
-
-                    <!-- Metric 4: Combined Total Annual Travel Value -->
-                    <div class="bg-slate-900 text-white rounded-2xl p-5 flex flex-col justify-between shadow-lg">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 block mb-1">Combined Total Annual Value</span>
-                            <div id="output-combined-value" class="text-3xl sm:text-4xl font-black text-white tracking-tight">$451.00 CAD</div>
-                        </div>
-                        <div class="mt-3 pt-3 border-t border-white/15 flex items-center justify-between">
-                            <span class="text-[10px] font-bold text-gray-300 uppercase">Club Credit + 20% CUG Cut</span>
-                            <a href="#live-member-drops" class="text-[10px] font-black text-brand-red uppercase hover:underline">View Live Drops &rarr;</a>
-                        </div>
-                    </div>
-
+                    <h3 class="text-lg font-black text-brand-text mb-2">Manage Stays &amp; Receipts Easily</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Use your email and booking reference anytime on <a href="manage-booking.html" class="underline font-bold text-brand-text">manage-booking.html</a> to access your official hotel voucher and itemized provincial tax receipts.
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- ============================================================= -->
-        <!-- 4. 3-TIER LOYALTY PROGRESSION MATRIX (EXECUTIVE CARDS)        -->
+        <!-- 4. FEATURED COAST-TO-COAST CANADIAN STAYS                     -->
         <!-- ============================================================= -->
-        <section id="loyalty-matrix" class="pt-4">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <section id="featured-stays">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b border-gray-200 pb-4 gap-4">
                 <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Clear Loyalty &amp; CUG Separation</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">3-Tier Loyalty Progression Matrix</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-1">Start automatically at Tier 1 on your first booking, progress by nights stayed, or unlock Tier 3 Executive &amp; Guild Keyholder privileges.</p>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Verified Inventory</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Featured Coast-to-Coast Stays</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-0.5">Top-rated Canadian properties with transparent provincial tax and fee disclosures.</p>
                 </div>
-                <a href="portal-login.html" class="text-xs font-extrabold text-brand-text hover:text-brand-red uppercase tracking-widest border border-gray-300 bg-white px-4 py-2.5 rounded-xl transition shrink-0">
-                    Existing Guild Keyholder Login &rarr;
+                <a href="results.html" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest shrink-0">
+                    View All Stays in Results &rarr;
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 4 Clean Standard Hotel Cards -->
+            <div id="featured-stays-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Populated dynamically by JS with province parameters -->
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 5. CLEAN FAQ SECTION (STRICTLY FACTUAL)                       -->
+        <!-- ============================================================= -->
+        <section id="club-faq" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-soft">
+            <div class="mb-6">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Clear Answers</span>
+                <h3 class="text-xl sm:text-2xl font-black text-brand-text uppercase tracking-tight">Frequently Asked Questions</h3>
+            </div>
+
+            <div class="divide-y divide-gray-200">
                 
-                <!-- Tier 1: Insider (Instant / First Stay) -->
-                <div class="bg-white rounded-3xl border-2 border-gray-200 p-7 shadow-soft flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-red-50 text-brand-red border border-red-200 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                                Tier 1 • Instant / First Stay
-                            </span>
-                            <span class="text-sm font-black text-emerald-600">$0.00 Free</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-brand-text tracking-tight mb-1">Insider</h3>
-                        <p class="text-xs text-gray-500 font-medium mb-6">
-                            Automatic free enrollment on your first Hotbeds.ca reservation—or pre-enroll free on this page during the 7-day open window.
-                        </p>
-
-                        <div class="bg-gray-50 rounded-2xl p-4 mb-6 border border-gray-200/70">
-                            <div class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Point Earning Rate</div>
-                            <div class="text-2xl font-black text-brand-text mt-0.5">10 Pts / $1 CAD</div>
-                            <div class="text-xs font-bold text-brand-red mt-0.5">+ 1,000 Free Welcome Points ($10 CAD)</div>
-                        </div>
-
-                        <ul class="space-y-3 text-xs text-gray-600 font-medium mb-8">
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-brand-red font-black">✓</span>
-                                <span><strong>1,000 Welcome Points</strong> ($10.00 CAD stay credit) deposited immediately.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-brand-red font-black">✓</span>
-                                <span><strong>10 Points per $1 CAD spent</strong> on eligible hotel room bookings across Canada.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-brand-red font-black">✓</span>
-                                <span><strong>Live Flash Rate Locks:</strong> Hold 15-second flash rate drops before prices reset.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-brand-red font-black">✓</span>
-                                <span><strong>Priority Checkout Eligibility</strong> when The Guild's promotional 20% off window is active.</span>
-                            </li>
-                        </ul>
+                <!-- FAQ 1 -->
+                <div class="py-4">
+                    <button type="button" onclick="window.toggleFaq(0)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
+                        <span>1. How do I join the Hot Beds Club?</span>
+                        <span id="faq-icon-0" class="text-brand-red font-black text-lg ml-4">&minus;</span>
+                    </button>
+                    <div id="faq-body-0" class="mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        You are automatically enrolled on your first reservation, or you can pre-activate your complimentary member profile for $0.00 right on this page while our promotional window is open.
                     </div>
-
-                    <a href="#member-pass-card" class="w-full block text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest py-3.5 px-5 rounded-xl transition shadow-sm">
-                        Activate Free Insider Pass &rarr;
-                    </a>
                 </div>
 
-                <!-- Tier 2: Premier (5+ Nights / Yr) -->
-                <div class="bg-white rounded-3xl border-2 border-slate-900 p-7 shadow-soft-lg flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                                Tier 2 • 5+ Nights / Yr
-                            </span>
-                            <span class="text-xs font-extrabold text-gray-500 uppercase">Auto-Unlocked</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-brand-text tracking-tight mb-1">Premier</h3>
-                        <p class="text-xs text-gray-500 font-medium mb-6">
-                            Automatically unlocked upon completing 5 hotel nights across any Canadian city within a 12-month period.
-                        </p>
-
-                        <div class="bg-gray-50 rounded-2xl p-4 mb-6 border border-gray-200">
-                            <div class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Accelerated Earning Rate</div>
-                            <div class="text-2xl font-black text-brand-text mt-0.5">12 Pts / $1 CAD</div>
-                            <div class="text-xs font-bold text-emerald-700 mt-0.5">+20% Bonus Points Multiplier on Stays</div>
-                        </div>
-
-                        <ul class="space-y-3 text-xs text-gray-600 font-medium mb-8">
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-emerald-600 font-black">✓</span>
-                                <span><strong>12 Points per $1 CAD spent</strong> on all coast-to-coast hotel reservations.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-emerald-600 font-black">✓</span>
-                                <span><strong>Complimentary Early Bag Drop</strong> &amp; priority front-desk check-in flagging.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-emerald-600 font-black">✓</span>
-                                <span><strong>1:00 PM Late Check-Out Requests</strong> automatically attached to your reservation folio.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-emerald-600 font-black">✓</span>
-                                <span>Priority room block assistance via our <a href="corporate.html" class="underline font-bold text-brand-text">Corporate Desk</a>.</span>
-                            </li>
-                        </ul>
+                <!-- FAQ 2 -->
+                <div class="py-4">
+                    <button type="button" onclick="window.toggleFaq(1)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
+                        <span>2. Are there any hidden fees or unexpected charges?</span>
+                        <span id="faq-icon-1" class="text-brand-red font-black text-lg ml-4">+</span>
+                    </button>
+                    <div id="faq-body-1" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        No. Hotbeds.ca displays upfront CAD pricing fully compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation). Ontario stays include 13% HST + $2.25/night Ontario Eco Fee; all other provinces carry $0.00 Eco Fees.
                     </div>
-
-                    <a href="results.html" class="w-full block text-center bg-slate-900 hover:bg-black text-white font-black text-xs uppercase tracking-widest py-3.5 px-5 rounded-xl transition">
-                        Browse Stays &amp; Earn Nights &rarr;
-                    </a>
                 </div>
 
-                <!-- Tier 3: Executive & Guild Keyholder -->
-                <div class="bg-slate-900 text-white rounded-3xl border-2 border-slate-800 p-7 shadow-soft-xl flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute -right-12 -bottom-12 w-44 h-44 rounded-full bg-brand-red/15 blur-2xl pointer-events-none"></div>
-
-                    <div class="relative z-10">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-                                Tier 3 • CUG Corporate Network
-                            </span>
-                            <span class="text-xs font-bold text-gray-300">$300/yr or Checkout Opt-In</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-white tracking-tight mb-1">Executive &amp; Guild Keyholder</h3>
-                        <p class="text-xs text-gray-300 font-medium mb-6">
-                            Our highest loyalty tier paired with full membership in <strong>The Guild</strong> private Closed User Group (CUG) partner network.
-                        </p>
-
-                        <div class="bg-white/10 rounded-2xl p-4 mb-6 border border-white/15">
-                            <div class="text-[10px] font-extrabold uppercase tracking-widest text-amber-300">Executive Rate &amp; CUG Access</div>
-                            <div class="text-2xl font-black text-white mt-0.5">15 Pts / $1 CAD</div>
-                            <div class="text-xs font-bold text-emerald-400 mt-0.5">+ Wholesale Corporate Rate (-20% Off)</div>
-                        </div>
-
-                        <ul class="space-y-3 text-xs text-gray-300 font-medium mb-8">
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-amber-400 font-black">★</span>
-                                <span><strong>15 Points per $1 CAD spent</strong> on every hotel booking across Canada.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-amber-400 font-black">★</span>
-                                <span><strong>Wholesale Corporate Rate Access (-20% off room subtotal)</strong> via The Guild CUG contract at checkout.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-amber-400 font-black">★</span>
-                                <span><strong>Hundreds of Local City Perks:</strong> Private dining, spa, lounge, and fleet discounts in every hub.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="text-amber-400 font-black">★</span>
-                                <span>Direct keyholder credential access via <a href="portal-login.html" class="underline text-white font-bold">portal-login.html</a>.</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="relative z-10 flex flex-col sm:flex-row gap-2.5">
-                        <a href="checkout.html?hotel=Sandman%20Hotel%20Hamilton&prov=ON&price=158" class="flex-1 text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl transition">
-                            Unlock at Checkout &rarr;
-                        </a>
-                        <a href="portal-login.html" class="text-center bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl transition">
-                            Keyholder Login
-                        </a>
+                <!-- FAQ 3 -->
+                <div class="py-4">
+                    <button type="button" onclick="window.toggleFaq(2)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
+                        <span>3. How do I view my reservation and welcome points?</span>
+                        <span id="faq-icon-2" class="text-brand-red font-black text-lg ml-4">+</span>
+                    </button>
+                    <div id="faq-body-2" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Visit <a href="manage-booking.html" class="underline font-bold text-brand-text">manage-booking.html</a> and enter your booking reference or registered email address to view upcoming stays, download receipts, and check your points balance.
                     </div>
                 </div>
 
             </div>
-        </section>
-
-        <!-- ============================================================= -->
-        <!-- 5. LIVE MEMBER FLASH RATE DROPS (WITH 15-SECOND FOMO TIMER)   -->
-        <!-- ============================================================= -->
-        <section id="live-member-drops" class="pt-6 border-t border-gray-200">
-            
-            <!-- Live Member Drops Header + Ticking 15-Second Member Flash Rate-Lock Timer -->
-            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 mb-8 border border-gray-800 shadow-soft-xl">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                    <div>
-                        <div class="inline-flex items-center gap-2 mb-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-brand-red fomo-dot"></span>
-                            <span class="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-red-400">Live Member Drops • Coast-to-Coast Showcase</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-black tracking-tight uppercase">Live Member Flash Rate Drops</h2>
-                        <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-2xl">
-                            Lock in any of these 4 verified coast-to-coast properties before the <strong>15-Second Member Flash Rate-Lock Timer</strong> resets. Every booking banks <strong>10 Points per $1 CAD</strong> + <strong>1,000 Welcome Points</strong> and passes the exact provincial tax code (`&amp;prov=ON|BC|AB`) to checkout.
-                        </p>
-                    </div>
-
-                    <!-- UNTOUCHABLE 15-SECOND MEMBER FLASH RATE-LOCK TIMER -->
-                    <div class="w-full lg:w-auto bg-white/10 border border-white/15 rounded-2xl p-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shrink-0">
-                        <div>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-300 block">15-Second Member Flash Rate-Lock Timer</span>
-                            <div class="flex items-center gap-2.5 mt-0.5">
-                                <span class="text-xs font-semibold text-gray-300">Rate Resets In:</span>
-                                <span id="flash-drop-timer" class="text-2xl sm:text-3xl font-black font-mono text-brand-red">00:15</span>
-                            </div>
-                            <div class="w-full sm:w-52 bg-gray-800 rounded-full h-1.5 mt-2 overflow-hidden">
-                                <div id="flash-drop-progress" class="progress-bar-inner bg-brand-red h-1.5 rounded-full" style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <button type="button" onclick="window.resetMemberFlashCycle()" class="text-[10px] font-extrabold uppercase tracking-widest bg-white/10 hover:bg-white/20 text-white px-3.5 py-2.5 rounded-xl border border-white/15 transition">
-                            Reset Cycle
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4-Card Coast-to-Coast Hotel Showcase -->
-            <!-- 1. Sandman Hotel Hamilton [ON] | 2. The Pearle Hotel & Spa Burlington [ON] | 3. Pan Pacific Vancouver Waterfront [BC] | 4. Hotel Arts Calgary [AB] -->
-            <div id="member-flash-cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Dynamically rendered & price-ticked by JavaScript -->
-            </div>
-
-            <!-- Explicit Provincial Tax & Ontario-Only Eco Fee Rule Callout -->
-            <div class="mt-6 bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-gray-600 shadow-soft">
-                <div class="flex items-start sm:items-center gap-3.5">
-                    <span class="w-9 h-9 rounded-xl bg-red-50 text-brand-red font-black flex items-center justify-center shrink-0 border border-red-200">§</span>
-                    <div>
-                        <strong class="text-brand-text uppercase tracking-wider text-[11px] block">Strict Provincial Tax &amp; Ontario-Only Eco Fee Disclosure:</strong>
-                        <span>Ontario (<code>&amp;prov=ON</code>) hotel bookings are subject to <strong>13% HST + the mandatory $2.25/night ($2.00 + tax) Ontario Eco Fee</strong> at checkout. Non-Ontario properties in British Columbia (<code>&amp;prov=BC</code>), Alberta (<code>&amp;prov=AB</code>), Quebec (<code>&amp;prov=QC</code>), the Prairies (<code>&amp;prov=PR</code>), and Atlantic Canada (<code>&amp;prov=AT</code>) carry <strong>$0.00 Eco Fees</strong>.</span>
-                    </div>
-                </div>
-                <a href="legal.html#ontario-eco" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase tracking-widest shrink-0">
-                    Full Tax Rules &rarr;
-                </a>
-            </div>
-        </section>
-
-        <!-- ============================================================= -->
-        <!-- 6. HOW AUTOMATIC ENROLLMENT WORKS (3-STEP STRIP + FAQ)        -->
-        <!-- ============================================================= -->
-        <section id="how-enrollment-works" class="pt-6 border-t border-gray-200 space-y-12">
-            
-            <!-- 3-Step Visual Strip -->
-            <div>
-                <div class="text-center max-w-2xl mx-auto mb-8">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Zero Hoops • Automatic Rewards</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">How Automatic Enrollment Works</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-1">Guests never have to jump through hoops to earn Canadian stay credits or unlock corporate rate reductions.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Step 1 -->
-                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-soft">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center">01</span>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red bg-red-50 px-2.5 py-1 rounded-full">Step 1 • Book Any Stay</span>
-                        </div>
-                        <h3 class="text-lg font-black text-brand-text mb-2">Choose Any Canadian Hotel</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">
-                            Lock in a live flash drop above or search coast-to-coast inventory on <a href="results.html" class="underline font-bold text-brand-text">results.html</a>. Your locked rate and exact province code route straight to checkout.
-                        </p>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-soft">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="w-10 h-10 rounded-xl bg-brand-red text-white font-black text-sm flex items-center justify-center">02</span>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Step 2 • Auto-Enrolled Free</span>
-                        </div>
-                        <h3 class="text-lg font-black text-brand-text mb-2">Claim 1,000 Pts + 10x Stay Points</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">
-                            Every guest is automatically enrolled in <strong>Hot Beds Club</strong> for free on their first reservation (or via instant pre-enrollment on this page) to bank <strong>1,000 Welcome Points ($10 CAD credit)</strong> and <strong>10 Pts per $1 CAD</strong>.
-                        </p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-soft">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-black text-sm flex items-center justify-center">03</span>
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full">Step 3 • Optional Guild Opt-In</span>
-                        </div>
-                        <h3 class="text-lg font-black text-brand-text mb-2">Check The Guild Box for 20% Off</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">
-                            When <strong>The Guild</strong> promotional window is active at <a href="checkout.html" class="underline font-bold text-brand-text">checkout.html</a>, check the optional free opt-in box to slash <strong>20% off your room rate</strong> and unlock local city perks.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interactive FAQ Accordion -->
-            <div class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-soft">
-                <div class="mb-6">
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Program Transparency &amp; Canadian Regulations</span>
-                    <h3 class="text-xl sm:text-2xl font-black text-brand-text uppercase tracking-tight">Frequently Asked Questions</h3>
-                </div>
-
-                <div class="divide-y divide-gray-200">
-                    <!-- FAQ Item 1 -->
-                    <div class="py-4">
-                        <button type="button" onclick="window.toggleClubFaq(0)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
-                            <span>1. How are "Hot Beds Club" and "The Guild" separated?</span>
-                            <span id="club-faq-icon-0" class="text-brand-red font-black text-lg ml-4">&minus;</span>
-                        </button>
-                        <div id="club-faq-body-0" class="mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                            <strong>Hot Beds Club</strong> (<code>club.html</code>) is our public-facing Canadian hotel loyalty program: every guest is automatically enrolled for $0.00 on their first booking (or by pre-enrolling on this page) to receive <strong>1,000 Free Welcome Points ($10.00 CAD credit)</strong> and earn <strong>10 Points per $1 CAD spent</strong>. <strong>The Guild</strong> is our private Closed User Group (CUG) corporate fraternity and partner network (standard $300/yr membership). When The Guild's promotional opt-in window is active at <a href="checkout.html" class="underline font-bold text-brand-text">checkout.html</a>, Hot Beds Club members receive priority eligibility to check the box for free—unlocking a <strong>20% corporate rate reduction</strong> plus local city merchant discounts. Existing Guild keyholders can log in anytime at <a href="portal-login.html" class="underline font-bold text-brand-text">portal-login.html</a>.
-                        </div>
-                    </div>
-
-                    <!-- FAQ Item 2 -->
-                    <div class="py-4">
-                        <button type="button" onclick="window.toggleClubFaq(1)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
-                            <span>2. How do I redeem my Hot Beds Club Points for CAD stay credits?</span>
-                            <span id="club-faq-icon-1" class="text-brand-red font-black text-lg ml-4">+</span>
-                        </button>
-                        <div id="club-faq-body-1" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                            Every 100 Hot Beds Club Points convert to <strong>$1.00 CAD</strong> in hotel stay credit (<code>Points / 100</code>). Your <strong>1,000 Free Welcome Points</strong> provide an immediate <strong>$10.00 CAD credit</strong>, and your ongoing 10 Points per $1 CAD earning rate gives you an uncapped 10% return toward future reservations on Hotbeds.ca.
-                        </div>
-                    </div>
-
-                    <!-- FAQ Item 3 -->
-                    <div class="py-4">
-                        <button type="button" onclick="window.toggleClubFaq(2)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
-                            <span>3. Why do Ontario (ON) hotels show a $2.25/night Eco Fee while BC &amp; AB hotels show $0.00?</span>
-                            <span id="club-faq-icon-2" class="text-brand-red font-black text-lg ml-4">+</span>
-                        </button>
-                        <div id="club-faq-body-2" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                            Hotbeds.ca strictly enforces province-specific tax and fee accuracy. Only Ontario (<code>&amp;prov=ON</code>) properties carry 13% HST plus the mandatory <strong>$2.25/night ($2.00 + tax) Ontario Eco Fee</strong> at checkout. Properties in British Columbia (<code>&amp;prov=BC</code>), Alberta (<code>&amp;prov=AB</code>), Quebec (<code>&amp;prov=QC</code>), the Prairies (<code>&amp;prov=PR</code>), and Atlantic Canada (<code>&amp;prov=AT</code>) carry <strong>$0.00 Eco Fees</strong>.
-                        </div>
-                    </div>
-
-                    <!-- FAQ Item 4 -->
-                    <div class="py-4">
-                        <button type="button" onclick="window.toggleClubFaq(3)" class="w-full flex justify-between items-center text-left font-extrabold text-sm sm:text-base text-brand-text hover:text-brand-red transition">
-                            <span>4. Where can I manage my booking, check my points, or request 5+ corporate rooms?</span>
-                            <span id="club-faq-icon-3" class="text-brand-red font-black text-lg ml-4">+</span>
-                        </button>
-                        <div id="club-faq-body-3" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                            You can view your active hotel reservations and live Hot Beds Club points balance anytime at <a href="manage-booking.html" class="underline font-bold text-brand-text">manage-booking.html</a>. For multi-room corporate blocks (5+ rooms), sports teams, or project crews, visit our <a href="corporate.html" class="underline font-bold text-brand-text">Corporate Desk (corporate.html)</a>.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </section>
 
     </main>
 
     <!-- ================================================================= -->
-    <!-- 7. 4-COLUMN ALBERTA CPA & PIPEDA COMPLIANT OTA FOOTER             -->
+    <!-- 7. STANDARD 4-COLUMN ALBERTA CPA & PIPEDA COMPLIANT FOOTER        -->
     <!-- ================================================================= -->
     <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1006,7 +536,7 @@
                 <div>
                     <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
                     <p class="text-xs text-gray-500 leading-relaxed mb-3">
-                        Canadian hotel reservation platform delivering live flash rates, automatic Hot Beds Club rewards, and curated local partner perks across every major Canadian city.
+                        Canadian hotel reservation platform delivering transparent CAD pricing, automatic Hot Beds Club rewards, and verified city stays across Canada.
                     </p>
                     <a href="manage-booking.html" class="text-xs font-extrabold text-brand-red hover:underline">Manage Existing Booking &rarr;</a>
                 </div>
@@ -1026,8 +556,8 @@
                     <ul class="space-y-2 text-xs text-gray-500 font-medium">
                         <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (1,000 Free Points)</a></li>
                         <li><a href="corporate.html" class="hover:text-brand-red">Corporate &amp; Group Desk (5+ Rooms)</a></li>
-                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Local Partner Network</a></li>
-                        <li><a href="portal-login.html" class="hover:text-brand-red">Private Member Portal Login</a></li>
+                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Partner Network</a></li>
+                        <li><a href="manage-booking.html" class="hover:text-brand-red">Manage Booking &amp; Points</a></li>
                     </ul>
                 </div>
                 <div>
@@ -1051,38 +581,30 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- MASTER FRONTEND ENGINE FOR CLUB.HTML                              -->
+    <!-- JAVASCRIPT ENGINE FOR CLUB.HTML                                   -->
     <!-- ================================================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- 1. DEFAULT CHECK-IN / CHECK-OUT DATES FOR CHECKOUT ROUTING ---
-            const todayDate = new Date();
-            const tomorrowDate = new Date();
-            tomorrowDate.setDate(todayDate.getDate() + 1);
-            const formatDateStr = (d) => d.toISOString().split('T')[0];
-            const checkinStr = formatDateStr(todayDate);
-            const checkoutStr = formatDateStr(tomorrowDate);
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+            const formatDate = (d) => d.toISOString().split('T')[0];
+            const checkinDate = formatDate(today);
+            const checkoutDate = formatDate(tomorrow);
 
-            // --- 2. NATIONWIDE CITY GUIDE PILLS & REGION SELECTOR ---
+            // --- 2. NATIONWIDE CITY GUIDE PILLS ---
             const NATIONWIDE_CITIES = [
                 { slug: 'Toronto', label: 'Toronto, ON', prov: 'ON' },
                 { slug: 'Hamilton', label: 'Hamilton, ON', prov: 'ON' },
-                { slug: 'Burlington', label: 'Burlington & Oakville, ON', prov: 'ON' },
+                { slug: 'Burlington', label: 'Burlington, ON', prov: 'ON' },
                 { slug: 'Niagara-Falls', label: 'Niagara Falls, ON', prov: 'ON' },
-                { slug: 'Ottawa', label: 'Ottawa, ON', prov: 'ON' },
-                { slug: 'Mississauga', label: 'Mississauga, ON', prov: 'ON' },
                 { slug: 'Vancouver', label: 'Vancouver, BC', prov: 'BC' },
                 { slug: 'Victoria', label: 'Victoria, BC', prov: 'BC' },
-                { slug: 'Whistler', label: 'Whistler, BC', prov: 'BC' },
-                { slug: 'Kelowna', label: 'Kelowna, BC', prov: 'BC' },
                 { slug: 'Calgary', label: 'Calgary, AB', prov: 'AB' },
-                { slug: 'Banff', label: 'Banff & Canmore, AB', prov: 'AB' },
-                { slug: 'Edmonton', label: 'Edmonton, AB', prov: 'AB' },
+                { slug: 'Banff', label: 'Banff, AB', prov: 'AB' },
                 { slug: 'Montreal', label: 'Montreal, QC', prov: 'QC' },
-                { slug: 'Quebec-City', label: 'Quebec City, QC', prov: 'QC' },
-                { slug: 'Winnipeg', label: 'Winnipeg, MB', prov: 'PR' },
-                { slug: 'Saskatoon', label: 'Saskatoon & Regina, SK', prov: 'PR' },
                 { slug: 'Halifax', label: 'Halifax, NS', prov: 'AT' }
             ];
 
@@ -1090,301 +612,178 @@
             let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
             regionSelect.value = activeRegion;
 
-            function renderCityPills(region) {
-                const pillsContainer = document.getElementById('city-pills-container');
-                if (!pillsContainer) return;
-                pillsContainer.innerHTML = '';
+            function renderCityGuidePills(region) {
+                const container = document.getElementById('city-pills-container');
+                if (!container) return;
+                container.innerHTML = '';
 
-                const prioritized = region === 'ALL'
-                    ? NATIONWIDE_CITIES.slice(0, 8)
-                    : [
-                        ...NATIONWIDE_CITIES.filter(c => c.prov === region),
-                        ...NATIONWIDE_CITIES.filter(c => c.prov !== region)
-                      ].slice(0, 8);
+                const filtered = region === 'ALL'
+                    ? NATIONWIDE_CITIES
+                    : NATIONWIDE_CITIES.filter(c => c.prov === region);
 
-                prioritized.forEach(cityObj => {
+                filtered.forEach(city => {
                     const a = document.createElement('a');
-                    a.href = `city.html?city=${encodeURIComponent(cityObj.slug)}`;
+                    a.href = `city.html?city=${encodeURIComponent(city.slug)}`;
                     a.className = 'px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
-                    a.textContent = cityObj.label;
-                    pillsContainer.appendChild(a);
+                    a.textContent = city.label;
+                    container.appendChild(a);
                 });
             }
 
-            renderCityPills(activeRegion);
+            renderCityGuidePills(activeRegion);
 
             regionSelect.addEventListener('change', (e) => {
                 activeRegion = e.target.value;
                 localStorage.setItem('hotbeds_region', activeRegion);
-                renderCityPills(activeRegion);
-                renderMemberFlashCards(false);
+                renderCityGuidePills(activeRegion);
+                renderFeaturedStaysGrid();
             });
 
-            // --- 3. PROTECTED #club-timer ENGINE (NEVER OVERWRITTEN BY LOCALSTORAGE) ---
-            const clubTimerElement = document.getElementById('club-timer');
-            const heroPromoTimerElement = document.getElementById('hero-promo-timer');
+            // --- 3. PROTECTED #club-timer (NEVER OVERWRITTEN BY LOCALSTORAGE) ---
+            const clubTimerEl = document.getElementById('club-timer');
             let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + (59 * 60) + 59;
 
-            function tickProtectedClubTimer() {
+            function tickClubTimer() {
                 if (clubTimeLeft <= 0) return;
                 clubTimeLeft--;
                 const days = Math.floor(clubTimeLeft / (24 * 3600));
                 const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
                 const mins = Math.floor((clubTimeLeft % 3600) / 60);
-                const formatted = `${days}d ${hours}h ${mins}m`;
-                if (clubTimerElement) clubTimerElement.textContent = formatted;
-                if (heroPromoTimerElement) heroPromoTimerElement.textContent = formatted;
+                if (clubTimerEl) {
+                    clubTimerEl.textContent = `${days}d ${hours}h ${mins}m`;
+                }
             }
-            setInterval(tickProtectedClubTimer, 1000);
+            setInterval(tickClubTimer, 1000);
 
-            // --- 4. STATE A (UNENROLLED) <-> STATE B (ACTIVE MEMBER WALLET) CONTROLLER ---
-            const stateAUnenrolled = document.getElementById('state-a-unenrolled');
-            const stateBActiveMember = document.getElementById('state-b-active-member');
-            const enrollmentForm = document.getElementById('club-enrollment-form');
+            // --- 4. STATE A <-> STATE B MEMBER WALLET STATE MACHINE ---
+            const stateAForm = document.getElementById('state-a-form');
+            const stateBWallet = document.getElementById('state-b-wallet');
+            const clubSignupForm = document.getElementById('club-signup-form');
 
-            function renderMemberWalletState() {
+            function syncMemberState() {
                 const isMember = localStorage.getItem('hotbeds_club_member') === 'true';
 
                 if (!isMember) {
-                    stateAUnenrolled.classList.remove('hidden');
-                    stateBActiveMember.classList.add('hidden');
+                    stateAForm.classList.remove('hidden');
+                    stateBWallet.classList.add('hidden');
                     return;
                 }
 
                 const fullName = localStorage.getItem('hotbeds_club_name') || 'Gordon Culp';
                 const email = localStorage.getItem('hotbeds_club_email') || 'member@hotbeds.ca';
-                const homeCity = localStorage.getItem('hotbeds_club_city') || 'Hamilton, ON';
-                const rawBalance = localStorage.getItem('hotbeds_points_balance') || '1,000';
-                const numericPoints = parseInt(String(rawBalance).replace(/,/g, ''), 10) || 1000;
-                const creditCad = (numericPoints / 100).toFixed(2);
 
-                let memberId = localStorage.getItem('hotbeds_club_id');
-                if (!memberId) {
-                    memberId = 'HBC-' + Math.floor(10000 + Math.random() * 90000);
-                    localStorage.setItem('hotbeds_club_id', memberId);
-                }
+                document.getElementById('wallet-name-val').textContent = fullName;
+                document.getElementById('wallet-email-val').textContent = email;
+                document.getElementById('wallet-points-val').textContent = '1,000';
 
-                // Update State B Digital Pass DOM
-                document.getElementById('pass-points-balance').textContent = numericPoints.toLocaleString();
-                document.getElementById('pass-credit-value').textContent = `$${creditCad} CAD`;
-                document.getElementById('pass-member-name').textContent = fullName;
-                document.getElementById('pass-member-email').textContent = email;
-                document.getElementById('pass-member-city').textContent = homeCity;
-                document.getElementById('pass-member-id').textContent = memberId;
-
-                // Update Header Avatar Initial ONLY (Never overwrite #header-club-sub or #club-timer)
                 const avatarBadge = document.getElementById('user-avatar-badge');
                 if (avatarBadge && fullName.length > 0) {
                     avatarBadge.textContent = fullName.charAt(0).toUpperCase() + '.';
                 }
 
-                stateAUnenrolled.classList.add('hidden');
-                stateBActiveMember.classList.remove('hidden');
+                stateAForm.classList.add('hidden');
+                stateBWallet.classList.remove('hidden');
             }
 
-            // Initialize State on Load
-            renderMemberWalletState();
+            syncMemberState();
 
-            // Handle Form Submission & Required Shared localStorage Keys + Optional Supabase Upsert
-            enrollmentForm.addEventListener('submit', async (e) => {
+            clubSignupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const fullName = document.getElementById('member-fullname').value.trim();
-                const email = document.getElementById('member-email').value.trim();
-                const homeCity = document.getElementById('member-home-city').value;
+                const fullName = document.getElementById('form-fullname').value.trim();
+                const email = document.getElementById('form-email').value.trim();
+                const region = document.getElementById('form-region').value;
 
                 if (!fullName || !email) return;
 
-                const memberId = localStorage.getItem('hotbeds_club_id') || ('HBC-' + Math.floor(10000 + Math.random() * 90000));
-
-                // Save exact required shared localStorage keys
+                // Save required shared localStorage keys
                 localStorage.setItem('hotbeds_club_member', 'true');
                 localStorage.setItem('hotbeds_club_name', fullName);
                 localStorage.setItem('hotbeds_club_email', email);
                 localStorage.setItem('hotbeds_points_balance', '1,000');
-                localStorage.setItem('hotbeds_club_city', homeCity);
-                localStorage.setItem('hotbeds_club_id', memberId);
+                localStorage.setItem('hotbeds_region', region);
 
-                // Upsert into Supabase members_directory if window.hotbedsDb is present
+                // Optional Supabase sync if window.hotbedsDb is present
                 try {
-                    if (window.hotbedsDb) {
-                        if (typeof window.hotbedsDb.from === 'function') {
-                            await window.hotbedsDb.from('members_directory').upsert([
-                                {
-                                    full_name: fullName,
-                                    email: email,
-                                    home_city: homeCity,
-                                    points_balance: 1000,
-                                    member_id: memberId,
-                                    tier: 'Insider',
-                                    updated_at: new Date().toISOString()
-                                }
-                            ], { onConflict: 'email' });
-                        } else if (typeof window.hotbedsDb.upsertMember === 'function') {
-                            await window.hotbedsDb.upsertMember({
+                    if (window.hotbedsDb && typeof window.hotbedsDb.from === 'function') {
+                        await window.hotbedsDb.from('members_directory').upsert([
+                            {
                                 full_name: fullName,
                                 email: email,
-                                home_city: homeCity,
+                                home_region: region,
                                 points_balance: 1000,
-                                member_id: memberId
-                            });
-                        }
+                                enrolled_at: new Date().toISOString()
+                            }
+                        ], { onConflict: 'email' });
                     }
                 } catch (err) {
-                    console.warn('Supabase members_directory upsert skipped (offline/local mode):', err);
+                    console.info('Supabase sync skipped (offline mode).', err);
                 }
 
-                renderMemberWalletState();
+                syncMemberState();
             });
 
-            window.switchMemberProfile = function() {
-                document.getElementById('member-fullname').value = localStorage.getItem('hotbeds_club_name') || '';
-                document.getElementById('member-email').value = localStorage.getItem('hotbeds_club_email') || '';
-                stateBActiveMember.classList.add('hidden');
-                stateAUnenrolled.classList.remove('hidden');
+            window.resetMemberForm = function() {
+                document.getElementById('form-fullname').value = localStorage.getItem('hotbeds_club_name') || '';
+                document.getElementById('form-email').value = localStorage.getItem('hotbeds_club_email') || '';
+                stateBWallet.classList.add('hidden');
+                stateAForm.classList.remove('hidden');
             };
 
-            // --- 5. INTERACTIVE POINTS & STAY SAVINGS CALCULATOR ENGINE ---
-            const sliderNights = document.getElementById('slider-nights');
-            const sliderRate = document.getElementById('slider-rate');
-            const displayNights = document.getElementById('display-nights');
-            const displayNightsUnit = document.getElementById('display-nights-unit');
-            const displayRate = document.getElementById('display-rate');
-            const calcAnnualSpend = document.getElementById('calc-annual-spend');
-            const calcTierStatus = document.getElementById('calc-tier-status');
-            const calcTierPill = document.getElementById('calc-tier-pill');
-
-            const outputTotalPoints = document.getElementById('output-total-points');
-            const outputStayPoints = document.getElementById('output-stay-points');
-            const outputCreditCad = document.getElementById('output-credit-cad');
-            const outputGuildSavings = document.getElementById('output-guild-savings');
-            const outputCombinedValue = document.getElementById('output-combined-value');
-
-            function recalculateSavings() {
-                const nights = parseInt(sliderNights.value, 10) || 1;
-                const rate = parseInt(sliderRate.value, 10) || 150;
-
-                displayNights.textContent = nights;
-                displayNightsUnit.textContent = nights === 1 ? 'Night' : 'Nights';
-                displayRate.textContent = rate;
-
-                const annualRoomSpend = nights * rate;
-                const stayPointsEarned = annualRoomSpend * 10;
-                const totalClubPoints = 1000 + stayPointsEarned; // 1,000 Welcome Pts + (Nights * Rate * 10)
-                const redeemableCadCredit = totalClubPoints / 100; // Points / 100
-                const bonusGuild20Savings = annualRoomSpend * 0.20; // 20% Corporate Rate Savings
-                const combinedTotalValue = redeemableCadCredit + bonusGuild20Savings;
-
-                calcAnnualSpend.textContent = `$${annualRoomSpend.toLocaleString()} CAD`;
-                outputTotalPoints.textContent = `${totalClubPoints.toLocaleString()} Pts`;
-                outputStayPoints.textContent = stayPointsEarned.toLocaleString();
-                outputCreditCad.textContent = `$${redeemableCadCredit.toFixed(2)} CAD`;
-                outputGuildSavings.textContent = `$${bonusGuild20Savings.toFixed(2)} CAD`;
-                outputCombinedValue.textContent = `$${combinedTotalValue.toFixed(2)} CAD`;
-
-                if (nights >= 12) {
-                    calcTierStatus.textContent = 'Unlocks Tier 3 Candidate: Executive Status';
-                    calcTierPill.textContent = '15x Pts + Guild Perks';
-                    calcTierPill.className = 'bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-black uppercase px-3 py-1 rounded-full self-start sm:self-auto';
-                } else if (nights >= 5) {
-                    calcTierStatus.textContent = 'Unlocks Tier 2: Premier Member (5+ Nights)';
-                    calcTierPill.textContent = 'Early Bag Drop + 1PM Checkout';
-                    calcTierPill.className = 'bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase px-3 py-1 rounded-full self-start sm:self-auto';
-                } else {
-                    calcTierStatus.textContent = 'Tier 1: Insider Status (Instant on First Stay)';
-                    calcTierPill.textContent = '1,000 Welcome Pts + 10x Pts';
-                    calcTierPill.className = 'bg-red-50 text-brand-red border border-red-200 text-[10px] font-black uppercase px-3 py-1 rounded-full self-start sm:self-auto';
-                }
-            }
-
-            sliderNights.addEventListener('input', recalculateSavings);
-            sliderRate.addEventListener('input', recalculateSavings);
-
-            window.setCalculatorPreset = function(nights, rate) {
-                sliderNights.value = nights;
-                sliderRate.value = rate;
-                recalculateSavings();
-            };
-
-            recalculateSavings();
-
-            // --- 6. LIVE MEMBER FLASH RATE DROPS (4 COAST-TO-COAST CARDS + 15-SEC FOMO TIMER) ---
-            const memberFlashDrops = [
+            // --- 5. FEATURED CANADIAN STAYS & PROVINCIAL TAX DISCLOSURES ---
+            const featuredStaysCatalog = [
                 {
-                    id: 'sandman-hamilton',
                     name: 'Sandman Hotel Hamilton',
                     location: 'Hamilton, ON',
                     prov: 'ON',
                     rating: '4.5',
-                    basePrice: 158,
-                    currentPrice: 158,
-                    tickAmount: 2,
-                    badge: 'QEW & Downtown Hub',
-                    taxDisclosure: '13% HST + mandatory $2.25/night ($2.00 + tax) Ontario Eco Fee apply at checkout.',
-                    ecoPill: 'ON Eco Fee: $2.25/nt',
-                    ecoPillStyle: 'bg-amber-50 text-amber-800 border-amber-200',
+                    price: 158,
+                    badge: 'QEW Corridor Hub',
+                    taxInfo: '+13% HST & $2.25/nt ON Eco Fee at checkout',
                     image: 'sandman.png.jpg',
-                    fallbackImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+                    fallback: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    id: 'pearle-burlington',
                     name: 'The Pearle Hotel & Spa Burlington',
                     location: 'Burlington, ON',
                     prov: 'ON',
                     rating: '4.8',
-                    basePrice: 285,
-                    currentPrice: 285,
-                    tickAmount: 4,
-                    badge: 'Waterfront Luxury & Spa',
-                    taxDisclosure: '13% HST + mandatory $2.25/night ($2.00 + tax) Ontario Eco Fee apply at checkout.',
-                    ecoPill: 'ON Eco Fee: $2.25/nt',
-                    ecoPillStyle: 'bg-amber-50 text-amber-800 border-amber-200',
+                    price: 285,
+                    badge: 'Waterfront Luxury',
+                    taxInfo: '+13% HST & $2.25/nt ON Eco Fee at checkout',
                     image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80'
+                    fallback: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    id: 'pan-pacific-vancouver',
                     name: 'Pan Pacific Vancouver Waterfront',
                     location: 'Vancouver, BC',
                     prov: 'BC',
                     rating: '4.8',
-                    basePrice: 275,
-                    currentPrice: 275,
-                    tickAmount: 4,
+                    price: 275,
                     badge: 'Harbourfront 5-Star',
-                    taxDisclosure: 'BC provincial taxes apply at checkout • $0.00 Eco Fees (Non-Ontario property).',
-                    ecoPill: '$0.00 Eco Fee (BC)',
-                    ecoPillStyle: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    taxInfo: 'No Eco Fee • Provincial tax at checkout',
                     image: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
+                    fallback: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
                 },
                 {
-                    id: 'hotel-arts-calgary',
                     name: 'Hotel Arts Calgary',
                     location: 'Calgary, AB',
                     prov: 'AB',
                     rating: '4.6',
-                    basePrice: 215,
-                    currentPrice: 215,
-                    tickAmount: 3,
-                    badge: 'Downtown Calgary Core',
-                    taxDisclosure: 'AB 5% GST + Tourism Levy apply at checkout • $0.00 Eco Fees (Non-Ontario property).',
-                    ecoPill: '$0.00 Eco Fee (AB)',
-                    ecoPillStyle: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    price: 215,
+                    badge: 'Downtown Beltline',
+                    taxInfo: 'No Eco Fee • Provincial tax at checkout',
                     image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
+                    fallback: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
                 }
             ];
 
-            const flashCardsContainer = document.getElementById('member-flash-cards-container');
-            const flashDropTimerEl = document.getElementById('flash-drop-timer');
-            const flashDropProgressEl = document.getElementById('flash-drop-progress');
+            function renderFeaturedStaysGrid() {
+                const grid = document.getElementById('featured-stays-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
 
-            function renderMemberFlashCards(animatePrice = false) {
-                if (!flashCardsContainer) return;
-                flashCardsContainer.innerHTML = '';
-
-                const sortedDrops = [...memberFlashDrops].sort((a, b) => {
+                const sorted = [...featuredStaysCatalog].sort((a, b) => {
                     if (activeRegion !== 'ALL') {
                         if (a.prov === activeRegion && b.prov !== activeRegion) return -1;
                         if (a.prov !== activeRegion && b.prov === activeRegion) return 1;
@@ -1392,130 +791,55 @@
                     return 0;
                 });
 
-                sortedDrops.forEach(hotel => {
-                    const stayPoints = hotel.currentPrice * 10;
-                    const firstStayTotalPoints = stayPoints + 1000;
-                    const guild20Rate = Math.round(hotel.currentPrice * 0.80);
-                    const checkoutHref = `checkout.html?hotel=${encodeURIComponent(hotel.name)}&prov=${hotel.prov}&price=${hotel.currentPrice}&checkin=${checkinStr}&checkout=${checkoutStr}`;
+                sorted.forEach(hotel => {
+                    const checkoutUrl = `checkout.html?hotel=${encodeURIComponent(hotel.name)}&prov=${hotel.prov}&price=${hotel.price}&checkin=${checkinDate}&checkout=${checkoutDate}`;
 
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft hover:shadow-soft-xl transition-all duration-300 flex flex-col justify-between group';
-
                     card.innerHTML = `
                         <div>
                             <div class="relative h-48 overflow-hidden bg-gray-900">
-                                <img src="${hotel.image}" onerror="this.onerror=null; this.src='${hotel.fallbackImage}';" alt="${hotel.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
+                                <img src="${hotel.image}" onerror="this.onerror=null; this.src='${hotel.fallback}';" alt="${hotel.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent"></div>
                                 <span class="absolute top-3 left-3 bg-slate-900/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">
                                     ${hotel.badge}
                                 </span>
                                 <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-1 rounded shadow">
                                     ★ ${hotel.rating}
                                 </span>
-                                <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center gap-1">
-                                    <span class="bg-brand-red text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded shadow">
-                                        +${stayPoints.toLocaleString()} Pts
-                                    </span>
-                                    <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border ${hotel.ecoPillStyle}">
-                                        ${hotel.ecoPill}
-                                    </span>
-                                </div>
                             </div>
 
                             <div class="p-5">
-                                <div class="flex justify-between items-center text-[10px] font-extrabold uppercase tracking-wider text-brand-red mb-1">
-                                    <span>${hotel.location}</span>
-                                    <span>&amp;prov=${hotel.prov}</span>
-                                </div>
+                                <div class="text-[10px] font-extrabold uppercase tracking-wider text-brand-red mb-1">${hotel.location}</div>
                                 <h3 class="text-base font-black text-brand-text leading-snug mb-3">${hotel.name}</h3>
 
-                                <!-- Public Flash Rate & Guild 20% Off Preview -->
-                                <div class="bg-gray-50 rounded-xl p-3 border border-gray-200/80 mb-3 space-y-1.5">
-                                    <div class="flex justify-between items-baseline">
-                                        <span class="text-[10px] font-bold uppercase text-gray-500">Live Public Rate</span>
-                                        <span class="text-xl font-black text-brand-text ${animatePrice ? 'price-flash' : ''}">$${hotel.currentPrice} <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
-                                    </div>
-                                    <div class="flex justify-between items-baseline pt-1 border-t border-gray-200/70">
-                                        <span class="text-[10px] font-extrabold uppercase text-emerald-700">Guild 20% Off Checkout</span>
-                                        <span class="text-sm font-black text-emerald-600">$${guild20Rate} CAD/nt</span>
-                                    </div>
+                                <div class="bg-gray-50 rounded-xl p-3 border border-gray-200/80 mb-3 flex justify-between items-baseline">
+                                    <span class="text-[10px] font-bold uppercase text-gray-500">Nightly Rate</span>
+                                    <span class="text-xl font-black text-brand-text">$${hotel.price} <span class="text-[10px] font-normal text-gray-500">CAD/nt</span></span>
                                 </div>
 
-                                <!-- Points Earned + Provincial Tax & Eco Fee Note -->
-                                <div class="space-y-1.5 text-[11px]">
-                                    <p class="text-brand-text font-bold">
-                                        ★ Earn <span class="text-brand-red">${stayPoints.toLocaleString()} Stay Pts</span> (+1,000 Welcome Pts = ${firstStayTotalPoints.toLocaleString()} Pts).
-                                    </p>
-                                    <p class="text-[10px] text-gray-500 font-medium leading-relaxed">
-                                        ${hotel.taxDisclosure}
-                                    </p>
-                                </div>
+                                <p class="text-[11px] text-gray-500 font-medium">
+                                    ✓ <strong>${hotel.taxInfo}</strong>
+                                </p>
                             </div>
                         </div>
 
                         <div class="px-5 pb-5 pt-1">
-                            <a href="${checkoutHref}" onclick="window.cacheLockedFlashStay('${hotel.name.replace(/'/g, "\\'")}', '${hotel.prov}', ${hotel.currentPrice})" class="w-full block text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl transition shadow-sm">
-                                Lock Rate &amp; Earn Points &rarr;
+                            <a href="${checkoutUrl}" class="w-full block text-center bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl transition shadow-sm">
+                                Book Now &rarr;
                             </a>
                         </div>
                     `;
-                    flashCardsContainer.appendChild(card);
+                    grid.appendChild(card);
                 });
             }
 
-            window.cacheLockedFlashStay = function(name, prov, price) {
-                localStorage.setItem('locked_hotel_name', name);
-                localStorage.setItem('locked_hotel_province', prov);
-                localStorage.setItem('locked_hotel_price', Number(price).toFixed(2));
-            };
+            renderFeaturedStaysGrid();
 
-            // 15-Second Ticking Member Flash Rate-Lock Timer Engine
-            const FLASH_CYCLE_DURATION = 15;
-            const FLASH_TICK_INTERVAL = 3;
-            let flashTimeLeft = FLASH_CYCLE_DURATION;
-
-            function updateFlashTimerUI() {
-                const secStr = flashTimeLeft < 10 ? `0${flashTimeLeft}` : flashTimeLeft;
-                if (flashDropTimerEl) flashDropTimerEl.textContent = `00:${secStr}`;
-                if (flashDropProgressEl) flashDropProgressEl.style.width = `${(flashTimeLeft / FLASH_CYCLE_DURATION) * 100}%`;
-            }
-
-            setInterval(() => {
-                flashTimeLeft--;
-
-                if (flashTimeLeft > 0 && flashTimeLeft % FLASH_TICK_INTERVAL === 0) {
-                    memberFlashDrops.forEach(h => {
-                        h.currentPrice += h.tickAmount;
-                    });
-                    renderMemberFlashCards(true);
-                }
-
-                if (flashTimeLeft <= 0) {
-                    memberFlashDrops.forEach(h => {
-                        h.currentPrice = h.basePrice;
-                    });
-                    flashTimeLeft = FLASH_CYCLE_DURATION;
-                    renderMemberFlashCards(true);
-                }
-
-                updateFlashTimerUI();
-            }, 1000);
-
-            window.resetMemberFlashCycle = function() {
-                memberFlashDrops.forEach(h => {
-                    h.currentPrice = h.basePrice;
-                });
-                flashTimeLeft = FLASH_CYCLE_DURATION;
-                updateFlashTimerUI();
-                renderMemberFlashCards(true);
-            };
-
-            renderMemberFlashCards(false);
-
-            // --- 7. FAQ ACCORDION CONTROLLER ---
-            window.toggleClubFaq = function(idx) {
-                const body = document.getElementById(`club-faq-body-${idx}`);
-                const icon = document.getElementById(`club-faq-icon-${idx}`);
+            // --- 6. FAQ ACCORDION CONTROLLER ---
+            window.toggleFaq = function(idx) {
+                const body = document.getElementById(`faq-body-${idx}`);
+                const icon = document.getElementById(`faq-icon-${idx}`);
                 if (!body || !icon) return;
 
                 const isHidden = body.classList.contains('hidden');
