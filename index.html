@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotbeds.ca — Premium Canadian Stays & Live Flash Hotel Deals</title>
+    <title>Corporate & Group Hotel Blocks (5+ Rooms) | Hotbeds.ca Wholesale Desk</title>
+    <meta name="description" content="Request wholesale CAD group hotel blocks (5+ rooms) across Canada for sports teams, construction crews, corporate travel, and conferences. Consolidated GST/HST invoicing and complimentary local Guild Keys.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,670 +12,981 @@
                 extend: {
                     colors: {
                         brand: {
-                            red: '#e63946',
-                            redDark: '#c92a37',
-                            light: '#f8fafc',
-                            white: '#ffffff',
-                            text: '#0f172a',
-                            muted: '#64748b'
+                            red: '#D91B24',
+                            redDark: '#B8141C',
+                            light: '#F8FAFC',
+                            white: '#FFFFFF',
+                            text: '#0F172A',
+                            muted: '#64748B'
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
                     },
                     boxShadow: {
-                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
-                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)',
+                        'soft': '0 4px 20px rgba(15, 23, 42, 0.05)',
+                        'soft-lg': '0 10px 30px rgba(15, 23, 42, 0.08)',
+                        'soft-xl': '0 20px 40px rgba(15, 23, 42, 0.12)',
                     }
                 }
             }
-        }
+        };
 
-        // Global Mobile Menu Controller (Guaranteed to work immediately on tap)
+        // Global Mobile Menu Controller (Guaranteed iOS & Android reliability)
         window.toggleMobileMenu = function(forceClose = false) {
-            const menu = document.getElementById('mobile-menu');
-            const openIcon = document.getElementById('menu-icon-open');
-            const closeIcon = document.getElementById('menu-icon-close');
+            const drawer = document.getElementById('mobile-menu-drawer');
             const btn = document.getElementById('mobile-menu-btn');
-            if (!menu) return;
+            const iconSpan = document.getElementById('mobile-menu-icon');
+            if (!drawer || !btn) return;
 
-            const isHidden = menu.classList.contains('hidden');
-            if (forceClose || !isHidden) {
-                menu.classList.add('hidden');
-                if (openIcon) openIcon.classList.remove('hidden');
-                if (closeIcon) closeIcon.classList.add('hidden');
-                if (btn) btn.setAttribute('aria-expanded', 'false');
+            const isHidden = drawer.classList.contains('hidden');
+            const shouldClose = forceClose === true || !isHidden;
+
+            if (shouldClose) {
+                drawer.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+                if (iconSpan) iconSpan.textContent = '☰';
+                document.body.style.overflow = '';
             } else {
-                menu.classList.remove('hidden');
-                if (openIcon) openIcon.classList.add('hidden');
-                if (closeIcon) closeIcon.classList.remove('hidden');
-                if (btn) btn.setAttribute('aria-expanded', 'true');
+                drawer.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                if (iconSpan) iconSpan.textContent = '✕';
+                document.body.style.overflow = 'hidden';
             }
         };
     </script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #ffffff;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
             overflow-x: hidden;
         }
-        
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* High-Res Luxury Property Hero Background */
-        .hero-bg-layer {
-            background-image: url('https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-position: center;
-            filter: blur(2px);
-            transform: scale(1.04);
+        /* Seamless Logo Blending on Pure White Header */
+        .logo-blend {
+            mix-blend-mode: multiply;
         }
 
-        /* --- FOMO WIDGET ANIMATIONS --- */
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(230, 57, 70, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        /* Custom Range Slider Styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
         }
-        .fomo-dot {
-            animation: pulse-dot 2s infinite;
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #E2E8F0;
+            height: 8px;
+            border-radius: 9999px;
+        }
+        input[type="range"]::-moz-range-track {
+            background: #E2E8F0;
+            height: 8px;
+            border-radius: 9999px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #D91B24;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+            transition: transform 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.12);
+        }
+        input[type="range"]::-moz-range-thumb {
+            background-color: #D91B24;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
         }
 
-        @keyframes flash-price {
-            0% { color: #e63946; transform: scale(1.12); }
-            100% { color: #0f172a; transform: scale(1); }
-        }
-        .price-flash {
-            animation: flash-price 0.45s ease-out;
-        }
-
-        .progress-bar-inner {
-            transition: width 1s linear;
+        /* Printable 1-Page RFP Dossier Rules */
+        @media print {
+            body {
+                background-color: #FFFFFF !important;
+                color: #000000 !important;
+            }
+            header,
+            footer,
+            .no-print,
+            #hero-section,
+            #calculator-section,
+            #segments-section,
+            #workflow-section,
+            #comparison-section,
+            #faq-section,
+            #rfp-form-container,
+            #guild-perks-callout {
+                display: none !important;
+            }
+            #rfp-intake-section {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #rfp-confirmation-state {
+                display: block !important;
+                box-shadow: none !important;
+                border: 2px solid #0F172A !important;
+                padding: 24px !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .print-only-header {
+                display: flex !important;
+            }
         }
     </style>
 </head>
-<body class="text-brand-text flex flex-col min-h-screen">
+<body class="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] antialiased selection:bg-[#D91B24] selection:text-white">
 
     <!-- ================================================================= -->
-    <!-- STICKY UNIFIED HEADER (ZERO MOBILE BLEEDING OR OVERLAP)           -->
+    <!-- 1. CANONICAL HOTBEDS.CA PURE-WHITE STICKY HEADER (NO TIMERS)      -->
     <!-- ================================================================= -->
-    <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm">
-        
-        <!-- 1. Top Utility Bar & Nationwide Region Selector -->
-        <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
-            <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
-                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
-                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
-                    <span id="top-bar-club-text" class="truncate">
-                        <strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points &amp; Private Flash Rates &rarr;
-                    </span>
-                </a>
-
-                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                    <div class="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/15">
-                        <span class="text-brand-red text-[10px]">📍</span>
-                        <label for="region-select" class="sr-only">Select Region</label>
-                        <select id="region-select" class="bg-transparent text-white font-bold text-[10px] sm:text-[11px] focus:outline-none cursor-pointer pr-1">
-                            <option value="ALL" class="text-slate-900 font-bold">All Canada</option>
-                            <option value="ON" class="text-slate-900 font-bold" selected>Ontario (ON)</option>
-                            <option value="BC" class="text-slate-900 font-bold">British Columbia (BC)</option>
-                            <option value="AB" class="text-slate-900 font-bold">Alberta (AB)</option>
-                            <option value="QC" class="text-slate-900 font-bold">Quebec (QC)</option>
-                            <option value="PR" class="text-slate-900 font-bold">Prairies (MB/SK)</option>
-                            <option value="AT" class="text-slate-900 font-bold">Atlantic (NS/NB/NL)</option>
-                        </select>
-                    </div>
-                    <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. Main Navigation Bar -->
-        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
-            <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
+    <header class="sticky top-0 w-full z-50 bg-white border-b border-slate-200 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative bg-white">
+            <div class="flex justify-between items-center h-16 sm:h-20">
                 
-                <!-- Brand Logo -->
+                <!-- Brand Logo with Multiply Blend & Crimson Fallback -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="index.html" class="flex items-center">
-                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-2xl sm:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+                    <a href="index.html" class="flex items-center gap-2.5 group focus:outline-none">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain logo-blend" onerror="this.onerror=null; this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden'); document.getElementById('logo-fallback').classList.add('flex');">
+                        <div id="logo-fallback" class="hidden items-center gap-2">
+                            <span class="w-9 h-9 rounded-xl bg-[#D91B24] text-white font-black text-xl flex items-center justify-center shadow-sm">H</span>
+                            <span class="font-black text-2xl tracking-tighter text-slate-900 uppercase">Hot<span class="text-[#D91B24]">beds</span><span class="text-xs font-bold text-slate-400 lowercase">.ca</span></span>
+                        </div>
                     </a>
                 </div>
-                
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-7">
-                    <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
-                    <a href="#featured-stays" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Featured Stays</a>
-                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate Desk</a>
-                    <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partner Network</a>
-                    <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">My Booking</a>
-                </nav>
-                
-                <!-- Right CTA: Hot Beds Club Live Countdown Pill + Mobile Menu Button -->
-                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                    <div class="hidden sm:flex items-center">
-                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
-                            G.
-                        </a>
-                    </div>
-                    
-                    <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-text hover:bg-black text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-gray-800 transition-all">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-brand-red rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                        </div>
-                        <div class="flex flex-col justify-center text-left">
-                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
-                            <span id="header-club-sub" class="text-[8px] sm:text-[9px] font-bold text-gray-300 uppercase tracking-wider mt-0.5">
-                                Free • <span id="club-timer" class="text-red-400 font-mono">6d 23h</span>
-                            </span>
-                        </div>
-                    </a>
 
-                    <!-- High-Target Mobile Hamburger Toggle Button -->
-                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red focus:outline-none transition shrink-0">
-                        <svg id="menu-icon-open" class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                        <svg id="menu-icon-close" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <!-- Primary Desktop Navigation (Canonical 5-Item Structure) -->
+                <nav class="hidden lg:flex items-center space-x-8" aria-label="Primary Navigation">
+                    <a href="cities.html" class="text-slate-700 hover:text-[#D91B24] font-bold transition-colors uppercase text-xs tracking-widest">Cities</a>
+                    <a href="corporate.html" aria-current="page" class="text-[#D91B24] font-black transition-colors uppercase text-xs tracking-widest border-b-2 border-[#D91B24] pb-1">Corporate</a>
+                    <a href="club.html" class="text-slate-700 hover:text-[#D91B24] font-bold transition-colors uppercase text-xs tracking-widest">Members</a>
+                    <a href="partners.html" class="text-slate-700 hover:text-[#D91B24] font-bold transition-colors uppercase text-xs tracking-widest">Partners</a>
+                    <a href="manage-booking.html" class="bg-slate-900 hover:bg-[#D91B24] text-white font-extrabold px-5 py-2.5 rounded-xl transition-colors uppercase text-xs tracking-widest shadow-sm">
+                        Sign In / Manage
+                    </a>
+                </nav>
+
+                <!-- Mobile Actions & 44x44px Touch Hamburger Button -->
+                <div class="flex items-center gap-2 lg:hidden">
+                    <a href="#rfp-intake-section" class="bg-[#D91B24] hover:bg-[#B8141C] text-white font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-2.5 rounded-xl shadow-sm transition">
+                        5+ Room RFP
+                    </a>
+                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mobile-menu-drawer" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-900 hover:text-[#D91B24] focus:outline-none focus:ring-2 focus:ring-[#D91B24]/30 transition select-none">
+                        <span id="mobile-menu-icon" class="text-xl font-black leading-none pointer-events-none">☰</span>
                     </button>
                 </div>
+
             </div>
 
-            <!-- Mobile Dropdown Navigation Drawer -->
-            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
-                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Canadian Cities Directory</span>
-                    <span class="text-gray-400">&rarr;</span>
+            <!-- Mobile Navigation Drawer (Positioned Cleanly Below Header) -->
+            <div id="mobile-menu-drawer" class="hidden lg:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-xl z-50 flex flex-col divide-y divide-slate-100">
+                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-6 py-4 text-slate-900 font-extrabold hover:bg-slate-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Cities</span>
+                    <span class="text-slate-400 font-bold">&rarr;</span>
                 </a>
-                <a href="#featured-stays" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Featured Flash Stays</span>
-                    <span class="text-gray-400">&rarr;</span>
+                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-6 py-4 bg-red-50/60 text-[#D91B24] font-black hover:bg-red-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Corporate &amp; Group Blocks (Active)</span>
+                    <span class="text-[#D91B24] font-bold">●</span>
                 </a>
-                <a href="#cities-section" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Browse by Province &amp; US Preview</span>
-                    <span class="text-gray-400">&rarr;</span>
+                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-6 py-4 text-slate-900 font-extrabold hover:bg-slate-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Members</span>
+                    <span class="text-slate-400 font-bold">&rarr;</span>
                 </a>
-                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Corporate &amp; Group Blocks (5+ Rooms)</span>
-                    <span class="text-gray-400">&rarr;</span>
+                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-6 py-4 text-slate-900 font-extrabold hover:bg-slate-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Partners</span>
+                    <span class="text-emerald-600 font-black text-[10px] uppercase">Zero-Fee Network</span>
                 </a>
-                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Zero-Fee Partner Network</span>
-                    <span class="text-emerald-600 font-black text-[10px]">$0 Listing</span>
-                </a>
-                <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>Manage My Booking &amp; Points</span>
-                    <span class="text-gray-400">&rarr;</span>
-                </a>
-                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-xs flex justify-between items-center">
-                    <span>★ Hot Beds Club (1,000 Free Welcome Pts)</span>
-                    <span class="text-brand-red">&rarr;</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- 3. Quick-Select Nationwide City Pills Bar -->
-        <div class="bg-gray-50 border-t border-gray-100 py-2">
-            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-                <div class="flex gap-2 overflow-x-auto hide-scrollbar items-center">
-                    <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline whitespace-nowrap">
-                        Popular Hubs:
-                    </span>
-                    <div id="city-pills-container" class="flex gap-1.5 sm:gap-2 items-center">
-                        <!-- Dynamically populated by JS based on selected Province/Region -->
-                    </div>
+                <div class="p-4 bg-slate-50 flex flex-col gap-2.5">
+                    <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="w-full bg-slate-900 hover:bg-black text-white font-extrabold py-3.5 px-5 rounded-xl uppercase tracking-widest text-xs text-center shadow-sm transition">
+                        Sign In / Manage Booking
+                    </a>
+                    <a href="#rfp-intake-section" onclick="window.toggleMobileMenu(true)" class="w-full bg-[#D91B24] hover:bg-[#B8141C] text-white font-extrabold py-3.5 px-5 rounded-xl uppercase tracking-widest text-xs text-center shadow-sm transition">
+                        Submit 5+ Room Group RFP &rarr;
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- ================================================================= -->
-    <!-- HERO SECTION                                                      -->
-    <!-- Mobile Order: 1. Rate Scarcity -> 2. Title -> 3. Booking Engine   -->
-    <!-- Desktop Order: Left (Title + Booking) | Right (Rate Scarcity)     -->
+    <!-- MAIN EXECUTIVE LIGHT WORKSPACE                                    -->
     <!-- ================================================================= -->
-    <section class="relative w-full py-6 lg:py-14 flex items-center justify-center overflow-hidden shrink-0">
-        <div class="absolute inset-0 z-0 overflow-hidden">
-            <div class="absolute inset-0 hero-bg-layer"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/85 backdrop-blur-[1px]"></div>
-        </div>
+    <main class="flex-grow">
 
-        <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
-            
-            <!-- LEFT COLUMN ON DESKTOP (Title + Search) | Order 3 on Mobile, Order 1 on Desktop -->
-            <div class="w-full lg:w-7/12 flex flex-col order-3 lg:order-1">
-                
-                <!-- Desktop Headline -->
-                <div class="hidden lg:block mb-7">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest mb-3 backdrop-blur-sm">
-                        <span class="text-brand-red">●</span> Coast-to-Coast Canadian Hotel Inventory • 4.3+ Verified Rating
+        <!-- ============================================================= -->
+        <!-- 2. HERO SECTION & INTERACTIVE GROUP BLOCK SAVINGS CALCULATOR  -->
+        <!-- ============================================================= -->
+        <section id="hero-section" class="pt-8 pb-14 lg:py-16 border-b border-slate-200 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F8FAFC] no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                    
+                    <!-- Left Column: Executive B2B Value Proposition & Segment Selector Pills -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200 text-[#D91B24] text-[11px] font-extrabold uppercase tracking-widest">
+                            <span>🇨🇦 Coast-to-Coast Canadian Group Desk</span>
+                            <span class="text-red-300">•</span>
+                            <span>5 to 500+ Rooms</span>
+                        </div>
+
+                        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.08]">
+                            Wholesale Canadian Hotel Blocks. <span class="text-[#D91B24]">Built for Teams, Crews &amp; Corporate Travel.</span>
+                        </h1>
+
+                        <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl font-medium">
+                            Skip fragmented retail bookings and rigid hotel sales contracts. Source vetted 4.3+ rated properties across Canada with consolidated GST/HST invoicing, flexible roster swaps, and <strong class="text-slate-900">~15% Estimated Average Wholesale Savings (Not Guaranteed — Subject to Date &amp; Market Availability)</strong>.
+                        </p>
+
+                        <!-- Interactive Segment Selector Pills -->
+                        <div class="pt-2">
+                            <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-3">
+                                Select Your Group Profile to Pre-Configure Your RFP:
+                            </p>
+                            <div class="flex flex-wrap gap-2.5" id="hero-segment-pills">
+                                <button type="button" data-segment="Sports" class="segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-[#D91B24] text-white border-[#D91B24] shadow-sm">
+                                    <span>🏒</span>
+                                    <span>Sports Teams</span>
+                                </button>
+                                <button type="button" data-segment="Crew" class="segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-white text-slate-700 border-slate-200 hover:border-[#D91B24] hover:text-[#D91B24]">
+                                    <span>🏗️</span>
+                                    <span>Construction &amp; Field Crews</span>
+                                </button>
+                                <button type="button" data-segment="Corporate" class="segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-white text-slate-700 border-slate-200 hover:border-[#D91B24] hover:text-[#D91B24]">
+                                    <span>💼</span>
+                                    <span>Corporate Travel</span>
+                                </button>
+                                <button type="button" data-segment="Conference" class="segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-white text-slate-700 border-slate-200 hover:border-[#D91B24] hover:text-[#D91B24]">
+                                    <span>🎤</span>
+                                    <span>Conferences</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Core B2B Trust Metrics -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft">
+                                <div class="text-xs font-extrabold uppercase tracking-wider text-[#D91B24] mb-1">~15% Avg. Wholesale</div>
+                                <div class="text-sm font-black text-slate-900">Market-Indexed Rates</div>
+                                <p class="text-xs text-slate-500 mt-1">Estimated average savings vs. standard retail BAR (subject to date availability).</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft">
+                                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-1">CRA ITC-Ready</div>
+                                <div class="text-sm font-black text-slate-900">Single Master Invoice</div>
+                                <p class="text-xs text-slate-500 mt-1">Itemized Canadian GST/HST/MAT folio for clean Input Tax Credit reconciliation.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft">
+                                <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-700 mb-1">Complimentary Perks</div>
+                                <div class="text-sm font-black text-slate-900">Local Guild Keys Included</div>
+                                <p class="text-xs text-slate-500 mt-1">Every room receives local dining, coffee, and merchant privileges at $0 cost.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h1 class="text-4xl xl:text-5xl font-black text-white tracking-tighter mb-3 leading-[1.08]">
-                        Premium stays. <br><span class="text-brand-red">Unbeatable live rates.</span>
-                    </h1>
-                    <p class="text-gray-300 font-medium text-base xl:text-lg max-w-xl">
-                        Search verified hotels across every major Canadian city or lock in the live ticking flash deal before the rate resets.
-                    </p>
-                </div>
-                
-                <!-- Smart OTA Booking Search Engine -->
-                <div class="bg-white rounded-2xl shadow-2xl p-5 sm:p-6 border border-gray-100">
-                    <form id="booking-search" action="results.html" method="GET" class="flex flex-col gap-4">
-                        
-                        <!-- Destination Input with Custom Nationwide Autocomplete Popover -->
-                        <div class="relative" id="destination-wrapper">
-                            <div class="flex justify-between items-center mb-1">
-                                <label for="search-city" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Destination or City</label>
-                                <button type="button" id="search-geo-hint" class="text-[10px] font-bold text-brand-red hover:underline">
-                                    Use My Regional Hub
-                                </button>
-                            </div>
-                            <div class="relative">
-                                <input type="text" id="search-city" name="destination" autocomplete="off" required placeholder="Where are you heading? (e.g. Hamilton, Toronto, Vancouver)" class="w-full p-3.5 sm:p-4 pl-10 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
-                                <svg class="w-4 h-4 text-brand-red absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            </div>
 
-                            <!-- Custom OTA Autocomplete Dropdown -->
-                            <div id="custom-autocomplete" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white border border-gray-200 rounded-xl shadow-soft-xl z-50 max-h-64 overflow-y-auto divide-y divide-gray-100">
-                                <!-- Populated dynamically by JS -->
-                            </div>
-                        </div>
-
-                        <!-- Auto-Default Check-In / Check-Out + Night Counter -->
-                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                            <div>
-                                <label for="check-in" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Check-in</label>
-                                <input type="date" id="check-in" name="checkin" required class="w-full p-3 sm:p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <label for="check-out" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Check-out</label>
-                                    <span id="night-count-badge" class="text-[9px] font-extrabold uppercase bg-red-50 text-brand-red px-2 py-0.5 rounded-full">1 Night</span>
+                    <!-- Right Column: Interactive Group Block Savings Calculator (~15% Recalibrated) -->
+                    <div id="calculator-section" class="lg:col-span-5">
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-soft-xl p-6 sm:p-8 relative overflow-hidden">
+                            <div class="flex justify-between items-start gap-3 mb-6 pb-4 border-b border-slate-100">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Interactive Block Estimator</span>
+                                    <h2 class="text-xl font-black text-slate-900 tracking-tight">Group Block Savings Calculator</h2>
                                 </div>
-                                <input type="date" id="check-out" name="checkout" required class="w-full p-3 sm:p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white text-xs sm:text-sm font-semibold text-brand-text outline-none">
+                                <span class="bg-slate-100 text-slate-700 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg border border-slate-200 shrink-0">
+                                    $220 CAD Baseline
+                                </span>
                             </div>
-                        </div>
 
-                        <!-- Occupancy Selector & Search Availability CTA -->
-                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end">
-                            <div class="w-full sm:w-5/12">
-                                <label for="guests" class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider block mb-1">Rooms &amp; Guests</label>
-                                <select id="guests" name="guests" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-xs sm:text-sm font-semibold text-brand-text outline-none focus:border-brand-red">
-                                    <option value="1">1 Adult (1 Room)</option>
-                                    <option value="2" selected>2 Adults (1 Room)</option>
-                                    <option value="3">3 Adults (1 Room)</option>
-                                    <option value="4">4+ Guests / Group</option>
-                                </select>
-                            </div>
-                            <div class="w-full sm:w-7/12">
-                                <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white p-3.5 sm:p-4 rounded-xl font-black text-xs sm:text-sm transition-colors uppercase tracking-widest shadow-md flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                    <span>Search Availability</span>
-                                </button>
-                            </div>
-                        </div>
+                            <!-- Sliders -->
+                            <div class="space-y-6 mb-6">
+                                <!-- Rooms Slider -->
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <label for="calc-rooms-slider" class="text-xs font-extrabold uppercase tracking-wider text-slate-600">Estimated Rooms Blocked</label>
+                                        <span class="text-lg font-black text-slate-900"><span id="calc-rooms-val">12</span> Rooms</span>
+                                    </div>
+                                    <input type="range" id="calc-rooms-slider" min="5" max="150" value="12" class="w-full" aria-label="Estimated Rooms Blocked">
+                                    <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-1">
+                                        <span>5 Rooms (Min)</span>
+                                        <span>50 Rooms</span>
+                                        <span>100 Rooms</span>
+                                        <span>150 Rooms</span>
+                                    </div>
+                                </div>
 
-                    </form>
+                                <!-- Nights Slider -->
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <label for="calc-nights-slider" class="text-xs font-extrabold uppercase tracking-wider text-slate-600">Length of Stay (Nights)</label>
+                                        <span class="text-lg font-black text-slate-900"><span id="calc-nights-val">3</span> Nights</span>
+                                    </div>
+                                    <input type="range" id="calc-nights-slider" min="1" max="30" value="3" class="w-full" aria-label="Length of Stay in Nights">
+                                    <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-1">
+                                        <span>1 Night</span>
+                                        <span>7 Nights</span>
+                                        <span>14 Nights</span>
+                                        <span>30 Nights</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Output Readout Card -->
+                            <div class="bg-slate-900 text-white rounded-2xl p-5 mb-4 space-y-4">
+                                <div class="flex justify-between items-center border-b border-slate-800 pb-3 text-xs">
+                                    <span class="text-slate-400 font-semibold">Total Room-Nights Volume</span>
+                                    <span class="font-black text-white text-sm"><span id="calc-total-room-nights">36</span> Room-Nights</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-slate-800 pb-3 text-xs">
+                                    <span class="text-slate-400 font-semibold">Est. Standard Retail Spend ($220/nt)</span>
+                                    <span class="font-bold text-slate-300 line-through">$<span id="calc-retail-spend">7,920</span> CAD</span>
+                                </div>
+                                <div class="flex justify-between items-end pt-1">
+                                    <div>
+                                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-red-400 block">Est. Avg. Wholesale Savings (~15%)</span>
+                                        <span class="text-[11px] text-slate-300 font-medium">Subject to Date &amp; Market Availability</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl sm:text-3xl font-black text-white tracking-tight" id="calc-savings-output">~$1,188 CAD</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mandatory Explicit Transparency Note -->
+                            <div class="bg-amber-50/90 border border-amber-200/80 rounded-xl p-3.5 mb-5">
+                                <p class="text-[11px] leading-relaxed text-amber-950 font-medium">
+                                    <strong class="font-extrabold uppercase tracking-wider text-[10px] text-amber-900 block mb-0.5">Rate Transparency Disclosure:</strong>
+                                    Savings reflect an estimated ~15% historical wholesale average compared to standard retail rates and are not guaranteed. Final group pricing varies based on city demand, seasonal compression, and hotel capacity.
+                                </p>
+                            </div>
+
+                            <button type="button" onclick="syncCalculatorToForm()" class="w-full bg-[#D91B24] hover:bg-[#B8141C] text-white font-black py-4 px-5 rounded-xl uppercase tracking-widest text-xs shadow-md transition flex items-center justify-center gap-2">
+                                <span>Apply <span id="calc-btn-rooms">12</span> Rooms to My RFP Proposal</span>
+                                <span>&darr;</span>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </section>
 
-            <!-- RIGHT COLUMN ON DESKTOP (1. FOMO Scarcity Widget + 2. Mobile Title) | Order 1 on Mobile, Order 2 on Desktop -->
-            <div class="w-full lg:w-5/12 max-w-md mx-auto lg:mx-0 order-1 lg:order-2 flex flex-col">
-                
-                <!-- LIVE RATE SCARCITY FOMO WIDGET (THE BUSINESS ANCHOR) -->
-                <div id="hotbeds-widget" class="relative w-full bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] overflow-hidden border border-gray-200">
-                    
-                    <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center">
-                        <div class="font-black text-base sm:text-lg tracking-tight">Hotbeds<span class="text-brand-red">.ca</span> <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Live Feed</span></div>
-                        <div class="flex items-center space-x-1.5 text-[10px] font-semibold text-gray-200">
-                            <span class="h-2 w-2 bg-red-500 rounded-full fomo-dot inline-block"></span>
-                            <span id="widget-viewers">4 others viewing now</span>
-                        </div>
+        <!-- ============================================================= -->
+        <!-- 3. TAILORED B2B PLAYBOOKS BY GROUP SEGMENT                    -->
+        <!-- ============================================================= -->
+        <section id="segments-section" class="py-14 border-b border-slate-200 bg-white no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Specialized Canadian Group Logistics</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Engineered for High-Coordination Stays</h2>
+                        <p class="text-slate-500 text-sm mt-1">Click any card below to pre-select its configuration in the RFP intake form.</p>
                     </div>
-
-                    <div class="relative h-36 bg-gray-900">
-                        <img id="hotel-image" src="sandman.png.jpg" alt="Featured Property" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent"></div>
-                        
-                        <div class="absolute bottom-3 left-4 right-4 text-white">
-                            <div class="flex items-center space-x-1 mb-0.5 text-yellow-400 text-xs">
-                                <span>★</span><span>★</span><span>★</span><span>★</span>
-                                <span id="widget-rating-tag" class="text-[10px] text-gray-200 font-bold ml-1">(4.5 Verified)</span>
-                            </div>
-                            <h2 id="hotel-name" class="text-lg sm:text-xl font-black leading-tight truncate">Sandman Hotel Hamilton</h2>
-                            <p id="hotel-location" class="text-xs text-gray-300 font-medium">Hamilton, ON</p>
-                        </div>
-                        <div class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black px-2.5 py-1 rounded shadow uppercase tracking-wider">
-                            Live Flash Rate
-                        </div>
+                    <div class="text-xs font-bold text-slate-500 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
+                        Need only 1–4 rooms? <a href="index.html" class="text-[#D91B24] font-extrabold underline hover:text-[#B8141C]">Use Instant Retail Search &rarr;</a>
                     </div>
+                </div>
 
-                    <div class="p-5">
-                        <div class="flex justify-between items-end mb-3">
-                            <div>
-                                <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mb-0.5">Current Live Rate</p>
-                                <div class="flex items-start">
-                                    <span class="text-lg font-bold text-gray-900 mt-1">$</span>
-                                    <span id="current-price" class="text-4xl font-black text-gray-900 transition-colors">158</span>
-                                    <span class="text-xs font-bold text-gray-400 mt-4 ml-1">CAD / nt</span>
-                                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Segment 1: Sports Teams -->
+                    <div onclick="selectGroupSegment('Sports', 'Double-Queen Heavy (Teams / Crews)')" class="cursor-pointer group bg-[#F8FAFC] hover:bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#D91B24] shadow-soft hover:shadow-soft-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="w-11 h-11 rounded-xl bg-red-50 text-[#D91B24] flex items-center justify-center text-xl font-black border border-red-100">🏒</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-slate-200/80 text-slate-700 px-2.5 py-1 rounded-full">Double-Queen Heavy</span>
                             </div>
-                            <div class="text-right">
-                                <p class="text-[10px] font-extrabold text-brand-red uppercase tracking-wider mb-0.5">Rate resets in</p>
-                                <div class="text-2xl font-black text-brand-red font-mono" id="time-left">00:15</div>
-                            </div>
-                        </div>
-
-                        <div class="w-full bg-gray-100 rounded-full h-1.5 mb-3.5 overflow-hidden shadow-inner">
-                            <div id="progress-bar" class="progress-bar-inner bg-brand-red h-1.5 rounded-full" style="width: 100%"></div>
-                        </div>
-
-                        <div class="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5 mb-3.5">
-                            <p class="text-[9px] leading-tight text-gray-600 font-bold text-center uppercase tracking-widest">
-                                ✓ Upfront CAD Pricing • Extra 20% Off Option at Checkout
+                            <h3 class="text-lg font-black text-slate-900 mb-2 group-hover:text-[#D91B24] transition-colors">Sports Teams &amp; Tournaments</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Built for travelling hockey, soccer, basketball, and collegiate athletics. We prioritize high double-queen inventory, motorcoach parking, early team breakfast windows, and proximity to Canadian arenas.
                             </p>
                         </div>
-
-                        <button type="button" onclick="lockPrice()" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-3.5 px-4 rounded-xl shadow-md transform transition active:scale-95 flex justify-center items-center group uppercase tracking-widest text-xs">
-                            <span>Lock In This Rate Now</span>
-                            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
-
-                    <!-- Success Overlay (Routes Locked Hotel & Province Directly to Checkout) -->
-                    <div id="success-overlay" class="absolute inset-0 bg-white/95 backdrop-blur z-50 hidden flex-col justify-center items-center p-6 text-center">
-                        <button type="button" onclick="unlockPrice()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-xs font-bold uppercase">&times; Close</button>
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <div class="pt-3 border-t border-slate-200/80 flex justify-between items-center text-xs font-extrabold text-[#D91B24]">
+                            <span>Configure Team Block</span>
+                            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
                         </div>
-                        <h3 class="text-xl font-black text-brand-text mb-1 tracking-tight">Flash Rate Locked!</h3>
-                        <p class="text-gray-500 mb-4 font-medium text-xs">You held <span id="locked-hotel" class="font-bold text-brand-text"></span> before the timer reset.</p>
-                        
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 w-full mb-5 space-y-2">
-                            <div class="flex justify-between text-xs border-b border-gray-200 pb-2">
-                                <span class="text-gray-500 font-bold uppercase tracking-wider text-[10px]">Locked Nightly Rate</span>
-                                <span class="font-black text-brand-text">CAD $<span id="locked-price"></span></span>
+                    </div>
+
+                    <!-- Segment 2: Construction & Field Crews -->
+                    <div onclick="selectGroupSegment('Crew', 'Double-Queen Heavy (Teams / Crews)')" class="cursor-pointer group bg-[#F8FAFC] hover:bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#D91B24] shadow-soft hover:shadow-soft-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl font-black border border-amber-100">🏗️</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-slate-200/80 text-slate-700 px-2.5 py-1 rounded-full">Oversized Rig Parking</span>
                             </div>
-                            <div class="flex justify-between text-[10px] text-emerald-700 font-extrabold uppercase tracking-wider">
-                                <span>20% Off Guild Option</span>
-                                <span>Available at Checkout</span>
-                            </div>
+                            <h3 class="text-lg font-black text-slate-900 mb-2 group-hover:text-[#D91B24] transition-colors">Construction &amp; Field Crews</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Ideal for infrastructure, energy, utility, and civil engineering rotations. Flexible shift-change check-ins, heavy-duty truck and trailer parking, highway corridor access, and zero-fee roster swaps.
+                            </p>
                         </div>
+                        <div class="pt-3 border-t border-slate-200/80 flex justify-between items-center text-xs font-extrabold text-[#D91B24]">
+                            <span>Configure Crew Block</span>
+                            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                        </div>
+                    </div>
 
-                        <a id="fomo-checkout-link" href="checkout.html" class="block w-full bg-brand-text hover:bg-black text-white font-black py-3.5 px-6 rounded-xl transition uppercase tracking-widest text-xs shadow-md">
-                            Proceed to Secure Checkout &rarr;
-                        </a>
+                    <!-- Segment 3: Corporate Travel -->
+                    <div onclick="selectGroupSegment('Corporate', 'Single-King Heavy (Executives)')" class="cursor-pointer group bg-[#F8FAFC] hover:bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#D91B24] shadow-soft hover:shadow-soft-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl font-black border border-blue-100">💼</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-slate-200/80 text-slate-700 px-2.5 py-1 rounded-full">Single-King Executive</span>
+                            </div>
+                            <h3 class="text-lg font-black text-slate-900 mb-2 group-hover:text-[#D91B24] transition-colors">Corporate &amp; Executive Travel</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Designed for consulting engagements, regional training, and board summits. Single-King executive rooms, high-speed workspace amenities, and a single consolidated CRA GST/HST master invoice.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-200/80 flex justify-between items-center text-xs font-extrabold text-[#D91B24]">
+                            <span>Configure Corporate Block</span>
+                            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Segment 4: Conferences -->
+                    <div onclick="selectGroupSegment('Conference', 'Balanced 50/50 Split')" class="cursor-pointer group bg-[#F8FAFC] hover:bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#D91B24] shadow-soft hover:shadow-soft-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl font-black border border-emerald-100">🎤</span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-slate-200/80 text-slate-700 px-2.5 py-1 rounded-full">Multi-Property Overflow</span>
+                            </div>
+                            <h3 class="text-lg font-black text-slate-900 mb-2 group-hover:text-[#D91B24] transition-colors">Conferences &amp; Delegations</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Coordinate 25 to 500+ rooms near major Canadian convention centres, universities, and gala venues. Custom attendee rooming lists, VIP suite upgrades, and local city Guild Keys for delegates.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-200/80 flex justify-between items-center text-xs font-extrabold text-[#D91B24]">
+                            <span>Configure Conference Block</span>
+                            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Mobile Title (Positioned strictly between Scarcity Widget and Booking Form on Mobile) -->
-                <div class="block lg:hidden mt-5 mb-1 text-center w-full">
-                    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight mb-1.5">
-                        Premium stays. <span class="text-brand-red">Unbeatable live rates.</span>
-                    </h1>
-                    <p class="text-gray-200 font-medium text-xs px-2">
-                        Lock in the live flash deal above or search any Canadian city below.
-                    </p>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ================================================================= -->
-    <!-- HOT BEDS CLUB AUTOMATIC ENROLLMENT & TRIAL BANNER                 -->
-    <!-- ================================================================= -->
-    <section class="bg-slate-900 text-white border-b border-gray-800 py-4 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center shrink-0 shadow">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                </div>
-                <div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-white">Hot Beds Club — Automatic Points on Your First Stay</span>
-                        <span class="bg-brand-red text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">1,000 Welcome Pts</span>
-                    </div>
-                    <p class="text-xs text-gray-300 mt-0.5">
-                        Every guest is automatically enrolled in the Hot Beds Club on their first reservation—plus you can unlock an instant 20% off discount at checkout.
-                    </p>
-                </div>
-            </div>
-            <a href="club.html" class="w-full sm:w-auto text-center bg-white hover:bg-gray-100 text-brand-text font-extrabold text-xs uppercase tracking-widest px-5 py-3 rounded-xl shrink-0 transition">
-                Claim 1,000 Free Points &rarr;
-            </a>
-        </div>
-    </section>
-
-    <!-- ================================================================= -->
-    <!-- MAIN CONTENT WORKSPACE                                            -->
-    <!-- ================================================================= -->
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-        
-        <!-- 1. FEATURED STAYS ACROSS CANADA -->
-        <section id="featured-stays">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b border-gray-200 pb-4 gap-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red">Verified 4.3+ Network</span>
-                        <span class="text-gray-300">•</span>
-                        <span id="stays-region-badge" class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Coast-to-Coast Inventory</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Featured Stays Right Now</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-0.5">Top-rated Canadian hotels with live rate locks and instant checkout savings.</p>
-                </div>
-
-                <!-- Interactive Stay-Type Filter Tabs -->
-                <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full md:w-auto pb-1">
-                    <button type="button" data-filter="all" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-extrabold bg-brand-text text-white transition whitespace-nowrap">All Featured</button>
-                    <button type="button" data-filter="regional" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">📍 My Province</button>
-                    <button type="button" data-filter="luxury" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Luxury &amp; Spa</button>
-                    <button type="button" data-filter="business" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Business Hubs</button>
-                    <button type="button" data-filter="under185" class="stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap">Under $185</button>
-                </div>
-            </div>
-
-            <!-- 4-Column Hotel Cards Grid -->
-            <div id="api-results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Populated dynamically by JS -->
             </div>
         </section>
 
         <!-- ============================================================= -->
-        <!-- 2. NATIONWIDE CITIES DIRECTORY + PROVINCE TABS + US PREVIEW   -->
+        <!-- 4. CORPORATE RFP INTAKE FORM & PRINTABLE CONFIRMATION DOSSIER -->
         <!-- ============================================================= -->
-        <section id="cities-section" class="pt-4 border-t border-gray-200">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 gap-4">
-                <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Coast-to-Coast Directory</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-brand-text uppercase tracking-tight">Explore Major Cities by Province</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm font-medium mt-0.5">Select any province below to explore city guides, neighborhood amenities, and top hotels.</p>
+        <section id="rfp-intake-section" class="py-14 lg:py-20 bg-[#F8FAFC] border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    
+                    <!-- Left 8 Columns: Corporate RFP Form OR Confirmation State -->
+                    <div class="lg:col-span-8">
+                        
+                        <!-- FORM CONTAINER -->
+                        <div id="rfp-form-container" class="bg-white rounded-3xl border border-slate-200 shadow-soft-xl p-6 sm:p-10">
+                            <div class="border-b border-slate-200 pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Direct Wholesale Desk Intake</span>
+                                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Request a 5+ Room Group Block Proposal</h2>
+                                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                                        No upfront credit card required to request quotes. Receive a custom CAD wholesale proposal comparing up to 3 vetted properties.
+                                    </p>
+                                </div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-right shrink-0">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Wholesale Target</span>
+                                    <span class="text-sm font-black text-slate-900">~15% Avg. Savings*</span>
+                                </div>
+                            </div>
+
+                            <!-- Validation Alert Banner -->
+                            <div id="rfp-error-banner" class="hidden mb-6 bg-red-50 border border-red-200 text-red-900 rounded-2xl p-4 text-xs font-semibold">
+                                <p id="rfp-error-text">Please verify all required fields and ensure your request is for at least 5 rooms.</p>
+                            </div>
+
+                            <form id="corporate-rfp-form" class="space-y-6" novalidate>
+                                
+                                <!-- Row 1: Organization Name & Group Classification -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                    <div>
+                                        <label for="orgName" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Organization / Team Name <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="text" id="orgName" name="orgName" required placeholder="e.g. Hamilton Forge Youth Athletics / Apex Civil Ltd." class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                    <div>
+                                        <label for="groupType" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Group Classification <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <select id="groupType" name="groupType" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                            <option value="Sports">Sports (Teams, Tournaments &amp; Officials)</option>
+                                            <option value="Corporate">Corporate (Executive Travel &amp; Training)</option>
+                                            <option value="Crew">Crew (Construction, Field &amp; Infrastructure)</option>
+                                            <option value="Conference">Conference (Delegations, Summits &amp; Events)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2: Primary Contact Name, Official Email, Direct Phone -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                                    <div>
+                                        <label for="contactName" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Primary Contact Name <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="text" id="contactName" name="contactName" required placeholder="Full Name" class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                    <div>
+                                        <label for="contactEmail" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Official Email <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="email" id="contactEmail" name="contactEmail" required placeholder="name@organization.ca" class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                    <div>
+                                        <label for="contactPhone" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Direct Phone <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="tel" id="contactPhone" name="contactPhone" required placeholder="(905) 555-0199" class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                </div>
+
+                                <!-- Row 3: Target Canadian City & Dates -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                                    <div>
+                                        <label for="targetCity" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Target Canadian City <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="text" id="targetCity" name="targetCity" list="canadian-cities-datalist" required placeholder="Select or type city..." class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                        <datalist id="canadian-cities-datalist">
+                                            <option value="Hamilton, ON"></option>
+                                            <option value="Mississauga, ON"></option>
+                                            <option value="Oakville, ON"></option>
+                                            <option value="Burlington, ON"></option>
+                                            <option value="Toronto, ON"></option>
+                                            <option value="Niagara Falls, ON"></option>
+                                            <option value="Ottawa, ON"></option>
+                                            <option value="Calgary, AB"></option>
+                                            <option value="Edmonton, AB"></option>
+                                            <option value="Banff, AB"></option>
+                                            <option value="Vancouver, BC"></option>
+                                            <option value="Montreal, QC"></option>
+                                            <option value="Winnipeg, MB"></option>
+                                            <option value="Halifax, NS"></option>
+                                        </datalist>
+                                    </div>
+                                    <div>
+                                        <label for="checkInDate" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Check-In Date <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="date" id="checkInDate" name="checkInDate" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <label for="checkOutDate" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700">
+                                                Check-Out Date <span class="text-[#D91B24]">*</span>
+                                            </label>
+                                            <span id="rfp-nights-pill" class="text-[10px] font-extrabold uppercase bg-red-50 text-[#D91B24] px-2 py-0.5 rounded-full">3 Nights</span>
+                                        </div>
+                                        <input type="date" id="checkOutDate" name="checkOutDate" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                    </div>
+                                </div>
+
+                                <!-- Row 4: Estimated Rooms (5-500), Preferred Room Split, Target Nightly Rate (CAD) -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                                    <div>
+                                        <label for="estimatedRooms" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Estimated Rooms (5–500) <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <input type="number" id="estimatedRooms" name="estimatedRooms" min="5" max="500" value="10" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-black text-slate-900 transition">
+                                        <p class="text-[10px] text-slate-500 mt-1.5 font-medium">
+                                            Min. 5 rooms required. Need 1–4 rooms? <a href="index.html" class="text-[#D91B24] font-bold underline">Book on index.html</a>.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <label for="roomSplit" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Preferred Room Split <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <select id="roomSplit" name="roomSplit" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                            <option value="Double-Queen Heavy (Teams / Crews)">Double-Queen Heavy (Teams / Crews)</option>
+                                            <option value="Single-King Heavy (Executives)">Single-King Heavy (Executives)</option>
+                                            <option value="Balanced 50/50 Split">Balanced 50/50 Split</option>
+                                            <option value="Flexible / Best Available">Flexible / Best Available</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="targetBudgetCad" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Target Nightly Rate / Room (CAD) <span class="text-[#D91B24]">*</span>
+                                        </label>
+                                        <select id="targetBudgetCad" name="targetBudgetCad" required class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-semibold text-slate-900 transition">
+                                            <option value="Economy (<$160 CAD)">Economy (&lt;$160 CAD)</option>
+                                            <option value="Mid-Scale ($160–$220 CAD)" selected>Mid-Scale ($160–$220 CAD)</option>
+                                            <option value="Upscale ($220–$300 CAD)">Upscale ($220–$300 CAD)</option>
+                                            <option value="Flexible / Quote Best Available">Flexible / Quote Best Available</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Row 5: Logistics & Special Notes -->
+                                <div>
+                                    <label for="specialNotes" class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+                                        Logistics, Billing &amp; Special Requirements (Optional)
+                                    </label>
+                                    <textarea id="specialNotes" name="specialNotes" rows="3" placeholder="e.g. Motorcoach or oversized crew truck parking needed, early 6:00 AM team breakfast, proximity to FirstOntario Centre / airport corridor, or single consolidated GST/HST master invoice instructions..." class="w-full p-3.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#D91B24] focus:bg-white focus:ring-2 focus:ring-[#D91B24]/20 outline-none text-sm font-medium text-slate-900 transition"></textarea>
+                                </div>
+
+                                <!-- Live Form Summary Strip & Submit Button -->
+                                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                    <div class="text-xs text-slate-600 space-y-0.5">
+                                        <div class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px]">
+                                            Live RFP Volume Summary: <span id="form-live-summary" class="text-[#D91B24]">10 Rooms × 3 Nights = 30 Room-Nights</span>
+                                        </div>
+                                        <p class="text-[11px] text-slate-500">
+                                            Est. Avg. Wholesale Target (~15% Non-Guaranteed): <strong id="form-live-savings" class="text-slate-800">~$990 CAD</strong> vs. standard retail BAR.
+                                        </p>
+                                    </div>
+                                    <button type="submit" class="w-full sm:w-auto bg-[#D91B24] hover:bg-[#B8141C] text-white font-black py-4 px-8 rounded-xl uppercase tracking-widest text-xs shadow-md transition shrink-0">
+                                        Submit Corporate RFP &rarr;
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <!-- ================================================= -->
+                        <!-- CONFIRMATION STATE & PRINTABLE 1-PAGE DOSSIER     -->
+                        <!-- ================================================= -->
+                        <div id="rfp-confirmation-state" class="hidden bg-white rounded-3xl border-2 border-slate-900 shadow-soft-xl p-6 sm:p-10">
+                            
+                            <!-- Print-Only Header -->
+                            <div class="hidden print-only-header justify-between items-center border-b-2 border-slate-900 pb-4 mb-6">
+                                <div>
+                                    <div class="text-2xl font-black uppercase tracking-tighter">Hotbeds.ca — Corporate &amp; Group Desk</div>
+                                    <div class="text-xs text-slate-600 font-semibold">Hotbeds Inc. • Alberta-Incorporated Canadian Hotel Platform • www.hotbeds.ca</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs font-bold uppercase text-slate-500">Official RFP Dossier</div>
+                                    <div id="print-timestamp" class="text-xs font-mono font-bold text-slate-900"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6 mb-6">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xl shrink-0">
+                                        ✓
+                                    </div>
+                                    <div>
+                                        <span class="inline-block bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full mb-1">
+                                            RFP Inquiry Logged — Custom CAD Wholesale Proposal Pending
+                                        </span>
+                                        <h3 class="text-2xl font-black text-slate-900 tracking-tight">
+                                            Reference ID: <span id="conf-rfp-id" class="text-[#D91B24] font-mono">RFP-000000</span>
+                                        </h3>
+                                        <p class="text-xs text-slate-500 mt-0.5">
+                                            Your group block specifications have been logged for wholesale desk review. Final contracted rates are confirmed upon hotel inventory verification.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Structured Dossier Summary Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg-slate-50 rounded-2xl p-5 border border-slate-200 mb-6 text-xs">
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Organization / Team</span>
+                                    <span id="conf-org" class="font-black text-slate-900 text-sm"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Group Classification</span>
+                                    <span id="conf-type" class="font-bold text-slate-800"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Primary Contact</span>
+                                    <span id="conf-contact" class="font-bold text-slate-800"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Destination Hub</span>
+                                    <span id="conf-city" class="font-black text-[#D91B24] text-sm"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Check-In &rarr; Check-Out</span>
+                                    <span id="conf-dates" class="font-bold text-slate-800"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Block Volume</span>
+                                    <span id="conf-volume" class="font-black text-slate-900"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Preferred Room Split</span>
+                                    <span id="conf-split" class="font-bold text-slate-800"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Target Nightly Rate (CAD)</span>
+                                    <span id="conf-budget" class="font-bold text-slate-800"></span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Est. Avg. Wholesale Savings (~15%)*</span>
+                                    <span id="conf-savings" class="font-black text-emerald-700 text-sm"></span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border border-slate-200 rounded-xl p-4 mb-6 text-xs">
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-1">Logistics &amp; Special Notes Submitted:</span>
+                                <p id="conf-notes" class="text-slate-700 font-medium"></p>
+                            </div>
+
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-[11px] text-amber-950 leading-relaxed">
+                                <strong>Important Wholesale Proposal Notice:</strong> This document is an RFP inquiry record and not a confirmed reservation or rate lock. Estimated ~15% wholesale savings are based on historical averages and are not guaranteed. Our Canadian Corporate Desk will verify live property availability, blackout/compression dates, and send your custom CAD option sheet to <strong id="conf-email-inline"></strong>.
+                            </div>
+
+                            <!-- Action Buttons (Hidden in Print) -->
+                            <div class="flex flex-wrap items-center justify-between gap-3 no-print">
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" onclick="window.print()" class="bg-slate-900 hover:bg-black text-white font-extrabold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl transition flex items-center gap-2 shadow-sm">
+                                        <span>🖨️ Print 1-Page RFP Dossier</span>
+                                    </button>
+                                    <button type="button" onclick="resetRfpForm()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl transition">
+                                        Submit Another Group Request
+                                    </button>
+                                </div>
+                                <a href="manage-booking.html" class="text-xs font-extrabold text-[#D91B24] hover:underline uppercase tracking-wider">
+                                    Go to Manage Bookings &rarr;
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right 4 Columns: Canadian Guild Key Perks & Desk SLA Sidebar -->
+                    <div id="guild-perks-callout" class="lg:col-span-4 space-y-6 no-print">
+                        
+                        <!-- Complimentary Local Canadian Guild Keys Card -->
+                        <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 border border-slate-800 shadow-soft-lg">
+                            <span class="inline-block bg-[#D91B24] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-3">
+                                Included at $0 Extra Cost
+                            </span>
+                            <h3 class="text-xl font-black tracking-tight mb-2">Complimentary Local Guild Keys for Every Room</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-5">
+                                Every room in your contracted Hotbeds corporate block receives digital <strong>Guild Keys</strong> unlocking perks at vetted local restaurants, coffee roasters, gyms, and workspaces in your destination city.
+                            </p>
+                            <ul class="space-y-3 text-xs text-slate-200 font-medium border-t border-slate-800 pt-4">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-[#D91B24] font-black">✓</span>
+                                    <span><strong>Team &amp; Crew Dining Perks:</strong> Priority group seating &amp; 15%–20% off at participating local partner restaurants.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-[#D91B24] font-black">✓</span>
+                                    <span><strong>Consolidated GST/HST Folio:</strong> Clean CRA-compliant master invoice separating room tax, MAT, and GST/HST for Input Tax Credits (ITCs).</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="text-[#D91B24] font-black">✓</span>
+                                    <span><strong>Flexible Roster Swaps:</strong> Update crew or player rooming lists up to 24–48 hours prior to arrival without change fees.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Peak / High-Occupancy Date Advisory Card -->
+                        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft">
+                            <h4 class="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">
+                                How Peak &amp; High-Demand Dates Work
+                            </h4>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Unlike static coupon codes that fail during blackouts, our desk sources directly from multiple Canadian hotel brands simultaneously. When your dates overlap a major tournament, concert, or convention:
+                            </p>
+                            <div class="space-y-2.5 text-xs text-slate-700 font-medium">
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                                    <strong class="text-slate-900 block">1. Standard Shoulder Nights:</strong>
+                                    Historically achieve ~15% average wholesale savings below retail Best Available Rates.
+                                </div>
+                                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                                    <strong class="text-slate-900 block">2. High-Occupancy / Compression Nights:</strong>
+                                    When primary downtown hotels reach 90%+ capacity, we source adjacent transit-corridor properties (e.g., Burlington/Oakville for Hamilton/Toronto, or Canmore for Banff) to protect your budget.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-                <a href="cities.html" class="text-xs font-extrabold text-brand-red hover:underline uppercase tracking-widest shrink-0">
-                    Open Full Cities Directory &rarr;
-                </a>
             </div>
+        </section>
 
-            <!-- Interactive Province & US Coming Soon Tabs -->
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-3 mb-6 border-b border-gray-100">
-                <button type="button" data-prov="ALL" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-text text-white shadow-sm transition whitespace-nowrap">
-                    🇨🇦 All Major Canadian Cities
-                </button>
-                <button type="button" data-prov="ON" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    Ontario (ON)
-                </button>
-                <button type="button" data-prov="BC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    British Columbia (BC)
-                </button>
-                <button type="button" data-prov="AB" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    Alberta (AB)
-                </button>
-                <button type="button" data-prov="QC" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    Quebec (QC)
-                </button>
-                <button type="button" data-prov="PR" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    Prairies (MB / SK)
-                </button>
-                <button type="button" data-prov="AT" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap">
-                    Atlantic (NS / NL)
-                </button>
-                <button type="button" data-prov="US" class="prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-50 text-brand-red border border-red-200 hover:bg-red-100 transition whitespace-nowrap flex items-center gap-1.5">
-                    <span>🇺🇸 United States</span>
-                    <span class="bg-brand-red text-white text-[9px] px-1.5 py-0.5 rounded uppercase">Coming Soon</span>
-                </button>
-            </div>
+        <!-- ============================================================= -->
+        <!-- 5. 4-STEP WHOLESALE GROUP PROCUREMENT WORKFLOW                -->
+        <!-- ============================================================= -->
+        <section id="workflow-section" class="py-14 bg-white border-b border-slate-200 no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Streamlined Canadian B2B Procurement</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">From RFP Intake to Master Invoice in 4 Steps</h2>
+                </div>
 
-            <!-- Canadian Cities Bento Grid -->
-            <div id="cities-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- Dynamically populated by JS -->
-            </div>
-
-            <!-- United States (Coming Soon) Expansion Showcase (Shown when US Tab is clicked) -->
-            <div id="us-coming-soon-panel" class="hidden bg-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-gray-800 shadow-soft-xl space-y-8">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-gray-800 pb-6">
-                    <div>
-                        <span class="inline-block bg-brand-red text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-2">
-                            🇺🇸 Cross-Border Expansion • Launching Soon
-                        </span>
-                        <h3 class="text-2xl sm:text-3xl font-black tracking-tight">United States Hotel Network Coming Soon</h3>
-                        <p class="text-xs sm:text-sm text-gray-300 mt-1 max-w-2xl">
-                            We are finalizing contracted rate blocks across top U.S. leisure and corporate destinations for Canadian travelers. Enter your email to get early access and a 20% launch rebate.
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200 relative">
+                        <span class="text-xs font-black uppercase tracking-widest text-[#D91B24] bg-red-50 border border-red-200 px-2.5 py-1 rounded-lg inline-block mb-3">Step 01</span>
+                        <h3 class="text-base font-black text-slate-900 mb-2">Log Your 5+ Room RFP</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Submit your destination city, check-in/out window, preferred room split (Double-Queen vs. Single-King), and target CAD nightly budget.
                         </p>
                     </div>
+                    <div class="bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200 relative">
+                        <span class="text-xs font-black uppercase tracking-widest text-[#D91B24] bg-red-50 border border-red-200 px-2.5 py-1 rounded-lg inline-block mb-3">Step 02</span>
+                        <h3 class="text-base font-black text-slate-900 mb-2">Multi-Hotel Wholesale Bid</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Our desk audits live inventory across vetted 4.3+ rated Canadian properties, negotiating net group rates targeting ~15% average wholesale savings.
+                        </p>
+                    </div>
+                    <div class="bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200 relative">
+                        <span class="text-xs font-black uppercase tracking-widest text-[#D91B24] bg-red-50 border border-red-200 px-2.5 py-1 rounded-lg inline-block mb-3">Step 03</span>
+                        <h3 class="text-base font-black text-slate-900 mb-2">Compare Curated CAD Options</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Receive a clear, all-in CAD comparison sheet detailing room splits, parking logistics, attrition terms, and full provincial tax disclosures.
+                        </p>
+                    </div>
+                    <div class="bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200 relative">
+                        <span class="text-xs font-black uppercase tracking-widest text-[#D91B24] bg-red-50 border border-red-200 px-2.5 py-1 rounded-lg inline-block mb-3">Step 04</span>
+                        <h3 class="text-base font-black text-slate-900 mb-2">Single Invoice + Guild Keys</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Upload your rooming roster, swap names as needed before arrival, and receive one consolidated CRA GST/HST invoice plus digital local Guild Keys.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <form id="us-waitlist-form" class="w-full lg:w-96 flex flex-col sm:flex-row gap-2">
-                        <input type="email" id="us-waitlist-email" required placeholder="Enter email for US launch alert" class="flex-grow bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-xs font-semibold text-white focus:outline-none focus:border-brand-red">
-                        <button type="submit" id="us-waitlist-btn" class="bg-brand-red hover:bg-brand-redDark text-white font-black text-xs uppercase tracking-widest px-5 py-3 rounded-xl shrink-0 transition">
-                            Notify Me
+        <!-- ============================================================= -->
+        <!-- 6. B2B COMPARISON MATRIX (~15% AVG WHOLESALE CALIBRATED)      -->
+        <!-- ============================================================= -->
+        <section id="comparison-section" class="py-14 bg-[#F8FAFC] border-b border-slate-200 no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-8">
+                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Procurement Benchmark</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Why Canadian Organizations Switch to Hotbeds Corporate</h2>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[720px]">
+                            <thead>
+                                <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider">
+                                    <th class="py-4 px-6 font-extrabold w-1/4">Capability &amp; Terms</th>
+                                    <th class="py-4 px-6 font-black bg-[#D91B24] text-white w-1/4">Hotbeds.ca Corporate Desk</th>
+                                    <th class="py-4 px-6 font-bold text-slate-300 w-1/4">Standard Retail OTAs</th>
+                                    <th class="py-4 px-6 font-bold text-slate-300 w-1/4">Cold-Calling Individual Hotels</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-xs sm:text-sm">
+                                <tr>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900">Wholesale Rate Structure</td>
+                                    <td class="py-4 px-6 font-black text-[#D91B24] bg-red-50/40">
+                                        ~15% Est. Avg. Wholesale Savings (Not Guaranteed — Market Indexed)
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Public Retail BAR (Surge algorithm pricing after 3+ rooms)</td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Varies wildly by property sales manager</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900">Canadian Tax &amp; ITC Accounting</td>
+                                    <td class="py-4 px-6 font-bold text-slate-900 bg-red-50/40">
+                                        ✓ Single Consolidated CAD Invoice with itemized GST/HST/MAT for CRA ITCs
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Fragmented individual receipts; often foreign-domiciled invoices</td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Separate folio reconciliation required per property</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900">Roster Name Swaps</td>
+                                    <td class="py-4 px-6 font-bold text-slate-900 bg-red-50/40">
+                                        ✓ Flexible $0 crew &amp; player name swaps prior to check-in
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Often requires cancelling &amp; rebooking at higher current rates</td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Manual email chains with front desk supervisors</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900">Peak / High-Occupancy Dates</td>
+                                    <td class="py-4 px-6 font-bold text-slate-900 bg-red-50/40">
+                                        ✓ Multi-property cross-shopping &amp; adjacent corridor overflow protection
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Displays sold-out banners or extreme dynamic markups</td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">Single property declines quote if compressed</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-6 font-extrabold text-slate-900">Local Merchant Perks</td>
+                                    <td class="py-4 px-6 font-bold text-emerald-700 bg-red-50/40">
+                                        ✓ Complimentary Local Canadian Guild Keys included for every guest
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">None</td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">None</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- 7. CORPORATE & GROUP BLOCK FAQ ACCORDION                      -->
+        <!-- ============================================================= -->
+        <section id="faq-section" class="py-14 bg-white no-print">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D91B24] block mb-1">Transparent Procurement Terms</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Corporate &amp; Group Block FAQs</h2>
+                </div>
+
+                <div class="space-y-3" id="faq-accordion">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border border-slate-200 rounded-2xl bg-[#F8FAFC] overflow-hidden">
+                        <button type="button" onclick="toggleFaq(0)" class="w-full px-6 py-4 text-left flex justify-between items-center gap-4 focus:outline-none">
+                            <span class="text-sm font-black text-slate-900">1. Is the ~15% average wholesale discount guaranteed on every date and property?</span>
+                            <span id="faq-icon-0" class="text-[#D91B24] font-black text-lg transition-transform">−</span>
                         </button>
-                    </form>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
-                        <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=600&q=80" alt="New York City" class="w-full h-full object-cover opacity-55">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
-                        <div class="absolute bottom-3 left-4">
-                            <span class="text-[10px] font-bold uppercase text-gray-300">Midtown &amp; SoHo</span>
-                            <h4 class="text-lg font-black text-white">New York City, NY</h4>
+                        <div id="faq-panel-0" class="px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+                            No. In full compliance with the Alberta Consumer Protection Act and our commitment to transparent B2B procurement, <strong>~15% represents our historical estimated average wholesale savings</strong> compared to standard retail Best Available Rates (BAR)—it is never a blanket guarantee. On standard corporate and shoulder dates, blocks frequently achieve 12%–18% savings. On peak compression nights (such as major city-wide tournaments, concerts, or summer resort weekends in Banff or Niagara Falls), discounts may be narrower, or our desk will present adjacent corridor properties to keep your group within your target CAD nightly budget.
                         </div>
                     </div>
-                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
-                        <img src="https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?auto=format&fit=crop&w=600&q=80" alt="Miami" class="w-full h-full object-cover opacity-55">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
-                        <div class="absolute bottom-3 left-4">
-                            <span class="text-[10px] font-bold uppercase text-gray-300">South Beach &amp; Brickell</span>
-                            <h4 class="text-lg font-black text-white">Miami, FL</h4>
+
+                    <!-- FAQ 2 -->
+                    <div class="border border-slate-200 rounded-2xl bg-[#F8FAFC] overflow-hidden">
+                        <button type="button" onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left flex justify-between items-center gap-4 focus:outline-none">
+                            <span class="text-sm font-black text-slate-900">2. How does consolidated GST/HST invoicing work for Canadian Input Tax Credits (ITCs)?</span>
+                            <span id="faq-icon-1" class="text-[#D91B24] font-black text-lg transition-transform">+</span>
+                        </button>
+                        <div id="faq-panel-1" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+                            Instead of chasing dozens of paper folios from individual crew members or executives, Hotbeds Inc. issues a single consolidated Canadian master invoice in CAD. Every invoice clearly itemizes net room charges, applicable Municipal Accommodation Tax (MAT) or destination marketing fees, and provincial/federal GST, HST, or QST so your accounting team can seamlessly claim eligible CRA Input Tax Credits (ITCs).
                         </div>
                     </div>
-                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
-                        <img src="https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=600&q=80" alt="Las Vegas" class="w-full h-full object-cover opacity-55">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
-                        <div class="absolute bottom-3 left-4">
-                            <span class="text-[10px] font-bold uppercase text-gray-300">The Strip &amp; Convention Hub</span>
-                            <h4 class="text-lg font-black text-white">Las Vegas, NV</h4>
+
+                    <!-- FAQ 3 -->
+                    <div class="border border-slate-200 rounded-2xl bg-[#F8FAFC] overflow-hidden">
+                        <button type="button" onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left flex justify-between items-center gap-4 focus:outline-none">
+                            <span class="text-sm font-black text-slate-900">3. Can we swap player, crew, or attendee names after locking in our block?</span>
+                            <span id="faq-icon-2" class="text-[#D91B24] font-black text-lg transition-transform">+</span>
+                        </button>
+                        <div id="faq-panel-2" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+                            Yes. Construction rotations and tournament rosters change constantly. Once your group block is contracted, you can submit and update your rooming list with $0 name-swap fees right up to 24–48 hours before check-in (depending on the specific property agreement).
                         </div>
                     </div>
-                    <div class="relative h-44 rounded-2xl overflow-hidden border border-white/10">
-                        <img src="https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=600&q=80" alt="Chicago" class="w-full h-full object-cover opacity-55">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Coming Soon</span>
-                        <div class="absolute bottom-3 left-4">
-                            <span class="text-[10px] font-bold uppercase text-gray-300">The Loop &amp; Magnificent Mile</span>
-                            <h4 class="text-lg font-black text-white">Chicago, IL</h4>
+
+                    <!-- FAQ 4 -->
+                    <div class="border border-slate-200 rounded-2xl bg-[#F8FAFC] overflow-hidden">
+                        <button type="button" onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left flex justify-between items-center gap-4 focus:outline-none">
+                            <span class="text-sm font-black text-slate-900">4. What are the complimentary local Canadian Guild Keys included with our block?</span>
+                            <span id="faq-icon-3" class="text-[#D91B24] font-black text-lg transition-transform">+</span>
+                        </button>
+                        <div id="faq-panel-3" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+                            Hotbeds partners with independent Canadian restaurants, cafes, fitness facilities, and workspaces across our active cities on a zero-upfront-fee basis. Every guest registered in your 5+ room block receives complimentary digital Guild Keys granting exclusive dining discounts, team meal perks, and local merchant privileges during their stay.
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- ============================================================= -->
-        <!-- 3. CORPORATE DESK & ZERO-FEE PARTNER NETWORK MODULES          -->
-        <!-- ============================================================= -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
-            
-            <!-- Corporate & Group Desk Card -->
-            <div id="corporate-section" class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between border border-gray-800 shadow-soft">
-                <div>
-                    <span class="inline-block bg-white/10 border border-white/15 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full text-gray-200 mb-3">
-                        Corporate &amp; Group Desk (5+ Rooms)
-                    </span>
-                    <h3 class="text-xl sm:text-2xl font-black tracking-tight mb-2">Team Travel, Project Crews &amp; Consolidated Billing</h3>
-                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-                        Coordinating hotel blocks for a sports tournament, construction crew, university delegation, or corporate conference? Lock in contracted multi-room rates and single-invoice billing across Canada.
-                    </p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="corporate.html" class="bg-brand-red hover:bg-brand-redDark text-white text-xs font-extrabold uppercase tracking-widest px-5 py-3.5 rounded-xl text-center transition">
-                        Request Group Room Block &rarr;
-                    </a>
-                    <button type="button" onclick="fillCorporateSearch()" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-widest px-5 py-3.5 rounded-xl border border-white/15 text-center transition">
-                        Quick Search 4+ Guests
-                    </button>
-                </div>
-            </div>
+                    <!-- FAQ 5 -->
+                    <div class="border border-slate-200 rounded-2xl bg-[#F8FAFC] overflow-hidden">
+                        <button type="button" onclick="toggleFaq(4)" class="w-full px-6 py-4 text-left flex justify-between items-center gap-4 focus:outline-none">
+                            <span class="text-sm font-black text-slate-900">5. Why isn't there a countdown timer on the Corporate RFP page?</span>
+                            <span id="faq-icon-4" class="text-[#D91B24] font-black text-lg transition-transform">+</span>
+                        </button>
+                        <div id="faq-panel-4" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+                            Multi-room group blocks require custom inventory verification across room types (such as Double-Queen ratios for sports teams or extended-stay blocks for field crews) and custom attrition terms. We never display artificial timers on unquoted group inquiries; once our desk delivers your custom CAD proposal, your option sheet will state the exact date and time your wholesale block hold expires.
+                        </div>
+                    </div>
 
-            <!-- Zero-Fee Local Business & Hotel Partner Card (Replaces $25 Referral Card) -->
-            <div class="bg-white border-2 border-gray-200 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-soft">
-                <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
-                            B2B Merchant &amp; Hotel Network
-                        </span>
-                        <span class="text-xs font-black text-emerald-700">$0.00 Upfront Fees</span>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black text-brand-text tracking-tight mb-2">Own a Local Business or Hotel? Get Free Exposure.</h3>
-                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
-                        We never charge local restaurants, spas, workspaces, live venues, or hotels upfront listing or subscription fees. Feature your business to incoming travelers in your city for free—we only succeed when we bring paying customers through your door.
-                    </p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="partners.html" class="bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-widest px-6 py-3.5 rounded-xl text-center transition">
-                        Apply for Free Partner Placement &rarr;
-                    </a>
-                    <a href="cities.html" class="bg-gray-100 hover:bg-gray-200 text-brand-text font-bold text-xs uppercase tracking-widest px-5 py-3.5 rounded-xl text-center transition">
-                        View Active Cities
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. 4-PILLAR OTA TRUST & GUARANTEE BAR -->
-        <section class="bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="flex items-start gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center font-black shrink-0">✓</div>
-                    <div>
-                        <h4 class="text-sm font-extrabold text-brand-text">Curated 4.3+ Rated Stays</h4>
-                        <p class="text-xs text-gray-500 mt-0.5">Every featured Canadian property is vetted for guest satisfaction and comfort.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-slate-200 text-brand-text flex items-center justify-center font-black shrink-0">⏱</div>
-                    <div>
-                        <h4 class="text-sm font-extrabold text-brand-text">Live Rate Lock Protection</h4>
-                        <p class="text-xs text-gray-500 mt-0.5">Hold live flash rates on high-demand nights before prices tick up.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black shrink-0">%</div>
-                    <div>
-                        <h4 class="text-sm font-extrabold text-brand-text">20% Off Checkout Option</h4>
-                        <p class="text-xs text-gray-500 mt-0.5">Unlock an instant 20% discount + local city perks right at checkout.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black shrink-0">★</div>
-                    <div>
-                        <h4 class="text-sm font-extrabold text-brand-text">Alberta CPA Protected</h4>
-                        <p class="text-xs text-gray-500 mt-0.5">Full tax &amp; fee transparency compliant with the Alberta Consumer Protection Act.</p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -682,52 +994,55 @@
     </main>
 
     <!-- ================================================================= -->
-    <!-- 4-COLUMN ALBERTA CPA COMPLIANT OTA FOOTER                         -->
+    <!-- 8. ALBERTA CPA COMPLIANT OTA FOOTER                               -->
     <!-- ================================================================= -->
-    <footer class="bg-white border-t border-gray-200 pt-12 pb-8 mt-auto">
+    <footer class="bg-white border-t border-slate-200 pt-12 pb-8 mt-auto no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
                 <div>
-                    <img src="LOGO.png" alt="Hotbeds" class="h-8 mb-3 object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-extrabold text-xl text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span>.ca</span>'">
-                    <p class="text-xs text-gray-500 leading-relaxed mb-3">
-                        Canadian hotel reservation platform delivering live flash rates, automatic Hot Beds Club rewards, and curated local partner perks across every major Canadian city.
+                    <a href="index.html" class="inline-block mb-3">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-8 w-auto object-contain logo-blend" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-xl text-slate-900 uppercase\'>Hot<span class=\'text-[#D91B24]\'>beds</span>.ca</span>'">
+                    </a>
+                    <p class="text-xs text-slate-500 leading-relaxed mb-3">
+                        Canadian hotel reservation platform delivering live flash rates, corporate &amp; group wholesale blocks (5+ rooms), and zero-fee local partner perks across Canada.
                     </p>
-                    <a href="manage-booking.html" class="text-xs font-extrabold text-brand-red hover:underline">Manage Existing Booking &rarr;</a>
+                    <a href="manage-booking.html" class="text-xs font-extrabold text-[#D91B24] hover:underline">Sign In / Manage Booking &rarr;</a>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Major Canadian Hubs</h5>
-                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="city.html?city=Hamilton" class="hover:text-brand-red">Hamilton &amp; Burlington, ON</a></li>
-                        <li><a href="city.html?city=Toronto" class="hover:text-brand-red">Downtown Toronto, ON</a></li>
-                        <li><a href="city.html?city=Vancouver" class="hover:text-brand-red">Vancouver &amp; Whistler, BC</a></li>
-                        <li><a href="city.html?city=Calgary" class="hover:text-brand-red">Calgary &amp; Banff, AB</a></li>
-                        <li><a href="city.html?city=Montreal" class="hover:text-brand-red">Montreal &amp; Quebec City, QC</a></li>
-                        <li><a href="cities.html" class="text-brand-text font-bold hover:text-brand-red">View All Canadian Cities &rarr;</a></li>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-slate-900 mb-3">Major Canadian Group Hubs</h5>
+                    <ul class="space-y-2 text-xs text-slate-500 font-medium">
+                        <li><a href="city.html?city=Hamilton" class="hover:text-[#D91B24]">Hamilton, Burlington &amp; Oakville, ON</a></li>
+                        <li><a href="city.html?city=Toronto" class="hover:text-[#D91B24]">Toronto &amp; Mississauga, ON</a></li>
+                        <li><a href="city.html?city=Calgary" class="hover:text-[#D91B24]">Calgary, Edmonton &amp; Banff, AB</a></li>
+                        <li><a href="city.html?city=Vancouver" class="hover:text-[#D91B24]">Vancouver, BC</a></li>
+                        <li><a href="city.html?city=Montreal" class="hover:text-[#D91B24]">Montreal &amp; Ottawa</a></li>
+                        <li><a href="cities.html" class="text-slate-900 font-bold hover:text-[#D91B24]">Browse All Canadian Cities &rarr;</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Programs &amp; B2B</h5>
-                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="club.html" class="text-brand-red font-bold hover:underline">Hot Beds Club (1,000 Free Points)</a></li>
-                        <li><a href="corporate.html" class="hover:text-brand-red">Corporate &amp; Group Desk (5+ Rooms)</a></li>
-                        <li><a href="partners.html" class="hover:text-brand-red">Zero-Fee Local Partner Network</a></li>
-                        <li><a href="portal-login.html" class="hover:text-brand-red">Private Member Portal Login</a></li>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-slate-900 mb-3">Platform Navigation</h5>
+                    <ul class="space-y-2 text-xs text-slate-500 font-medium">
+                        <li><a href="cities.html" class="hover:text-[#D91B24]">Cities Directory</a></li>
+                        <li><a href="corporate.html" class="text-[#D91B24] font-bold hover:underline">Corporate &amp; Group Desk (5+ Rooms)</a></li>
+                        <li><a href="club.html" class="hover:text-[#D91B24]">Members (Hot Beds Club)</a></li>
+                        <li><a href="partners.html" class="hover:text-[#D91B24]">Partners ($0 Listing Network)</a></li>
+                        <li><a href="manage-booking.html" class="hover:text-[#D91B24]">Sign In / Manage</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-brand-text mb-3">Legal &amp; Privacy</h5>
-                    <ul class="space-y-2 text-xs text-gray-500 font-medium">
-                        <li><a href="legal.html#privacy" class="hover:text-brand-red">Privacy &amp; Cookie Policy (PIPEDA)</a></li>
-                        <li><a href="legal.html#terms" class="hover:text-brand-red">Reservation Terms &amp; Conditions</a></li>
-                        <li><a href="legal.html#alberta-cpa" class="hover:text-brand-red">Alberta CPA Internet Sales Rules</a></li>
-                        <li><a href="legal.html#ontario-eco" class="hover:text-brand-red">Provincial Tax &amp; Eco Fee Disclosure</a></li>
+                    <h5 class="text-xs font-extrabold uppercase tracking-widest text-slate-900 mb-3">Legal &amp; Compliance</h5>
+                    <ul class="space-y-2 text-xs text-slate-500 font-medium">
+                        <li><a href="legal.html#privacy" class="hover:text-[#D91B24]">Privacy &amp; Cookie Policy (PIPEDA)</a></li>
+                        <li><a href="legal.html#terms" class="hover:text-[#D91B24]">Group &amp; Retail Reservation Terms</a></li>
+                        <li><a href="legal.html#alberta-cpa" class="hover:text-[#D91B24]">Alberta CPA Internet Sales Rules</a></li>
+                        <li><a href="legal.html#ontario-eco" class="hover:text-[#D91B24]">Provincial GST/HST &amp; MAT Disclosure</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+            <div class="border-t border-slate-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-slate-400 font-medium">
                 <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
-                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
+                <p class="bg-slate-50 border border-slate-200 px-3 py-1 rounded text-slate-500 font-semibold text-center">
                     Compliant with the Alberta Consumer Protection Act (Internet Sales Contract Regulation)
                 </p>
             </div>
@@ -735,617 +1050,311 @@
     </footer>
 
     <!-- ================================================================= -->
-    <!-- MASTER FRONTEND ENGINE: NATIONWIDE CATALOG, PROVINCE TABS & FOMO  -->
+    <!-- PRODUCTION JAVASCRIPT ENGINE (NO COUNTDOWN TIMERS)                -->
     <!-- ================================================================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            // --- 1. SESSION CHECK FOR ACTIVE CLUB / GUILD MEMBERS ---
-            if (localStorage.getItem('hotbeds_club_member') === 'true' || localStorage.getItem('guild_member_active') === 'true') {
-                const memberName = localStorage.getItem('hotbeds_club_name') || localStorage.getItem('guild_member_name') || 'Member';
-                const pts = localStorage.getItem('hotbeds_points_balance') || '1,000';
-                document.getElementById('user-avatar-badge').textContent = memberName.charAt(0).toUpperCase() + '.';
-                document.getElementById('header-club-title').textContent = 'Hot Beds Club';
-                document.getElementById('header-club-sub').innerHTML = `<span class="text-green-400">✓ ${pts} Pts Active</span>`;
+            
+            // 1. Explicit DOMContentLoaded Mobile Menu Listener (Redundant backup to inline onclick)
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Handled cleanly if inline onclick didn't already toggle
+                });
             }
 
-            // --- 2. AUTO-DEFAULT DATES & NIGHT COUNTER ---
-            const checkinInput = document.getElementById('check-in');
-            const checkoutInput = document.getElementById('check-out');
-            const nightBadge = document.getElementById('night-count-badge');
-            const destInput = document.getElementById('search-city');
+            // Close mobile drawer on Escape key or desktop resize
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') window.toggleMobileMenu(true);
+            });
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) window.toggleMobileMenu(true);
+            });
 
-            const todayDate = new Date();
-            const tomorrowDate = new Date();
-            tomorrowDate.setDate(todayDate.getDate() + 1);
+            // 2. Interactive Group Block Savings Calculator (~15% Wholesale Formula)
+            const BASELINE_RATE_CAD = 220;
+            const WHOLESALE_DISCOUNT_AVG = 0.15; // Strictly 15% non-guaranteed historical average
 
-            const formatDateStr = (d) => d.toISOString().split('T')[0];
-            checkinInput.min = formatDateStr(todayDate);
-            checkoutInput.min = formatDateStr(tomorrowDate);
-            checkinInput.value = formatDateStr(todayDate);
-            checkoutInput.value = formatDateStr(tomorrowDate);
+            const roomsSlider = document.getElementById('calc-rooms-slider');
+            const nightsSlider = document.getElementById('calc-nights-slider');
+            const roomsValEl = document.getElementById('calc-rooms-val');
+            const nightsValEl = document.getElementById('calc-nights-val');
+            const totalRoomNightsEl = document.getElementById('calc-total-room-nights');
+            const retailSpendEl = document.getElementById('calc-retail-spend');
+            const savingsOutputEl = document.getElementById('calc-savings-output');
+            const calcBtnRoomsEl = document.getElementById('calc-btn-rooms');
 
-            function updateNightCount() {
-                if (checkinInput.value && checkoutInput.value) {
-                    const d1 = new Date(checkinInput.value);
-                    const d2 = new Date(checkoutInput.value);
-                    let diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
-                    if (diff <= 0) {
-                        const nextD = new Date(d1);
-                        nextD.setDate(nextD.getDate() + 1);
-                        checkoutInput.value = formatDateStr(nextD);
-                        diff = 1;
+            function updateCalculator() {
+                const rooms = parseInt(roomsSlider.value, 10) || 12;
+                const nights = parseInt(nightsSlider.value, 10) || 3;
+                const totalRoomNights = rooms * nights;
+                const retailSpend = totalRoomNights * BASELINE_RATE_CAD;
+                const estimatedSavings = Math.round(totalRoomNights * BASELINE_RATE_CAD * WHOLESALE_DISCOUNT_AVG);
+
+                roomsValEl.textContent = rooms;
+                nightsValEl.textContent = nights;
+                totalRoomNightsEl.textContent = totalRoomNights.toLocaleString('en-CA');
+                retailSpendEl.textContent = retailSpend.toLocaleString('en-CA');
+                savingsOutputEl.textContent = `~$${estimatedSavings.toLocaleString('en-CA')} CAD`;
+                calcBtnRoomsEl.textContent = rooms;
+            }
+
+            roomsSlider.addEventListener('input', updateCalculator);
+            nightsSlider.addEventListener('input', updateCalculator);
+            updateCalculator(); // Default state: 12 Rooms × 3 Nights = 36 Room-Nights -> ~$1,188 CAD
+
+            // 3. Date Initialization & Dynamic Check-Out Minimum Enforcement
+            const checkInInput = document.getElementById('checkInDate');
+            const checkOutInput = document.getElementById('checkOutDate');
+            const rfpNightsPill = document.getElementById('rfp-nights-pill');
+            const estimatedRoomsInput = document.getElementById('estimatedRooms');
+            const formLiveSummary = document.getElementById('form-live-summary');
+            const formLiveSavings = document.getElementById('form-live-savings');
+
+            const formatIsoDate = (dateObj) => {
+                const y = dateObj.getFullYear();
+                const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const d = String(dateObj.getDate()).padStart(2, '0');
+                return `${y}-${m}-${d}`;
+            };
+
+            const today = new Date();
+            const defaultCheckIn = new Date(today);
+            defaultCheckIn.setDate(today.getDate() + 14); // Default 2 weeks out for group blocks
+            const defaultCheckOut = new Date(defaultCheckIn);
+            defaultCheckOut.setDate(defaultCheckIn.getDate() + 3); // Default 3 nights
+
+            const minTomorrow = new Date(today);
+            minTomorrow.setDate(today.getDate() + 1);
+
+            checkInInput.min = formatIsoDate(today);
+            checkInInput.value = formatIsoDate(defaultCheckIn);
+
+            const minAfterDefaultCheckIn = new Date(defaultCheckIn);
+            minAfterDefaultCheckIn.setDate(defaultCheckIn.getDate() + 1);
+            checkOutInput.min = formatIsoDate(minAfterDefaultCheckIn);
+            checkOutInput.value = formatIsoDate(defaultCheckOut);
+
+            function getCalculatedNights() {
+                if (!checkInInput.value || !checkOutInput.value) return 1;
+                const d1 = new Date(checkInInput.value + 'T00:00:00');
+                const d2 = new Date(checkOutInput.value + 'T00:00:00');
+                let diff = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+                return diff > 0 ? diff : 1;
+            }
+
+            function syncDatesAndSummary() {
+                if (checkInInput.value) {
+                    const inDate = new Date(checkInInput.value + 'T00:00:00');
+                    const minOutDate = new Date(inDate);
+                    minOutDate.setDate(inDate.getDate() + 1);
+                    const minOutStr = formatIsoDate(minOutDate);
+                    checkOutInput.min = minOutStr;
+
+                    if (!checkOutInput.value || checkOutInput.value <= checkInInput.value) {
+                        const autoOut = new Date(inDate);
+                        autoOut.setDate(inDate.getDate() + 1);
+                        checkOutInput.value = formatIsoDate(autoOut);
                     }
-                    nightBadge.textContent = `${diff} ${diff === 1 ? 'Night' : 'Nights'}`;
-                }
-            }
-            checkinInput.addEventListener('change', updateNightCount);
-            checkoutInput.addEventListener('change', updateNightCount);
-
-            // --- 3. NATIONWIDE CANADIAN CITIES & HOTEL INVENTORY ---
-            const NATIONWIDE_CITIES = [
-                { slug: 'Toronto', label: 'Toronto, ON', prov: 'ON', count: '64 Verified Stays', fromPrice: 219, sub: 'Downtown Financial Core & Waterfront', img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Hamilton', label: 'Hamilton, ON', prov: 'ON', count: '18 Verified Stays', fromPrice: 158, sub: 'QEW Corridor, Downtown & Mountain', img: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Burlington', label: 'Burlington & Oakville, ON', prov: 'ON', count: '17 Verified Stays', fromPrice: 169, sub: 'Lakefront Luxury & Corporate Park', img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Niagara-Falls', label: 'Niagara Falls, ON', prov: 'ON', count: '29 Verified Stays', fromPrice: 175, sub: 'Fallsview Boulevard & Casino District', img: 'https://images.unsplash.com/photo-1533094602577-198d3beab8ea?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Ottawa', label: 'Ottawa, ON', prov: 'ON', count: '27 Verified Stays', fromPrice: 185, sub: 'Parliament Hill & ByWard Market', img: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Mississauga', label: 'Mississauga, ON', prov: 'ON', count: '24 Verified Stays', fromPrice: 168, sub: 'YYZ Airport & Square One Centre', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Vancouver', label: 'Vancouver, BC', prov: 'BC', count: '52 Verified Stays', fromPrice: 235, sub: 'Coal Harbour, Yaletown & Waterfront', img: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Victoria', label: 'Victoria, BC', prov: 'BC', count: '21 Verified Stays', fromPrice: 199, sub: 'Inner Harbour & Historic Core', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Whistler', label: 'Whistler, BC', prov: 'BC', count: '19 Verified Stays', fromPrice: 269, sub: 'Whistler Village & Alpine Resorts', img: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Kelowna', label: 'Kelowna, BC', prov: 'BC', count: '16 Verified Stays', fromPrice: 182, sub: 'Okanagan Lakefront & Wine Country', img: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Calgary', label: 'Calgary, AB', prov: 'AB', count: '42 Verified Stays', fromPrice: 169, sub: 'Downtown Beltline & Stampede Park', img: 'https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Banff', label: 'Banff & Canmore, AB', prov: 'AB', count: '34 Verified Stays', fromPrice: 245, sub: 'National Park & Mountain Hot Springs', img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Edmonton', label: 'Edmonton, AB', prov: 'AB', count: '35 Verified Stays', fromPrice: 159, sub: 'ICE District & Downtown Jasper Ave', img: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Montreal', label: 'Montreal, QC', prov: 'QC', count: '48 Verified Stays', fromPrice: 195, sub: 'Old Montreal, Downtown & Plateau', img: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Quebec-City', label: 'Quebec City, QC', prov: 'QC', count: '22 Verified Stays', fromPrice: 189, sub: 'Old Quebec & Parliament Hill', img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Winnipeg', label: 'Winnipeg, MB', prov: 'PR', count: '19 Verified Stays', fromPrice: 154, sub: 'The Forks, Exchange District & Arena', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Saskatoon', label: 'Saskatoon & Regina, SK', prov: 'PR', count: '15 Verified Stays', fromPrice: 149, sub: 'South Saskatchewan Riverfront & Core', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80' },
-                { slug: 'Halifax', label: 'Halifax, NS', prov: 'AT', count: '23 Verified Stays', fromPrice: 189, sub: 'Halifax Harbourwalk & Citadel', img: 'https://images.unsplash.com/photo-1507992781348-310259076fe0?auto=format&fit=crop&w=700&q=80' }
-            ];
-
-            const allStaysInventory = [
-                {
-                    id: 'sandman-hamilton',
-                    name: 'Sandman Hotel Hamilton',
-                    location: 'Hamilton, ON',
-                    region: 'ON',
-                    category: ['business', 'under185'],
-                    rating: '4.5',
-                    basePrice: 158,
-                    tickAmount: 2,
-                    viewers: 4,
-                    badge: 'Popular Transit Hub',
-                    amenities: ['Indoor Pool', 'Chop Steakhouse', 'Free Wi-Fi'],
-                    image: 'sandman.png.jpg',
-                    fallbackImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'pearle-burlington',
-                    name: 'The Pearle Hotel & Spa',
-                    location: 'Burlington, ON',
-                    region: 'ON',
-                    category: ['luxury'],
-                    rating: '4.8',
-                    basePrice: 285,
-                    tickAmount: 4,
-                    viewers: 6,
-                    badge: 'Waterfront Luxury',
-                    amenities: ['Full Spa', 'Lakeview', 'Fine Dining'],
-                    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'sheraton-hamilton',
-                    name: 'Sheraton Hamilton Hotel',
-                    location: 'Hamilton, ON',
-                    region: 'ON',
-                    category: ['business'],
-                    rating: '4.4',
-                    basePrice: 195,
-                    tickAmount: 3,
-                    viewers: 3,
-                    badge: 'Downtown Core',
-                    amenities: ['Club Lounge', 'Indoor Pool', 'Convention Link'],
-                    image: 'sheraton.png.jpg',
-                    fallbackImage: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'royal-york-toronto',
-                    name: 'Fairmont Royal York',
-                    location: 'Toronto, ON',
-                    region: 'ON',
-                    category: ['luxury', 'business'],
-                    rating: '4.7',
-                    basePrice: 299,
-                    tickAmount: 5,
-                    viewers: 8,
-                    badge: 'Iconic Landmark',
-                    amenities: ['Union Station', 'Skylight Pool', '3 Restaurants'],
-                    image: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1542314831-c6a4d14cdce8?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'pan-pacific-vancouver',
-                    name: 'Pan Pacific Vancouver Waterfront',
-                    location: 'Vancouver, BC',
-                    region: 'BC',
-                    category: ['luxury', 'business'],
-                    rating: '4.8',
-                    basePrice: 275,
-                    tickAmount: 4,
-                    viewers: 7,
-                    badge: 'Harbourfront 5-Star',
-                    amenities: ['Ocean View Pool', 'Spa', 'Canada Place'],
-                    image: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'hotel-arts-calgary',
-                    name: 'Hotel Arts Calgary',
-                    location: 'Calgary, AB',
-                    region: 'AB',
-                    category: ['luxury', 'business'],
-                    rating: '4.6',
-                    basePrice: 215,
-                    tickAmount: 3,
-                    viewers: 5,
-                    badge: 'Downtown Calgary',
-                    amenities: ['Heated Pool', 'Boutique Suites', 'Dining'],
-                    image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'banff-rimrock',
-                    name: 'Rimrock Resort Hotel Banff',
-                    location: 'Banff, AB',
-                    region: 'AB',
-                    category: ['luxury'],
-                    rating: '4.9',
-                    basePrice: 325,
-                    tickAmount: 5,
-                    viewers: 9,
-                    badge: 'Rockies Resort',
-                    amenities: ['Mountain Views', 'Alpine Spa', 'Fine Dining'],
-                    image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'mount-stephen-montreal',
-                    name: 'Le Mount Stephen Montreal',
-                    location: 'Montreal, QC',
-                    region: 'QC',
-                    category: ['luxury', 'business'],
-                    rating: '4.7',
-                    basePrice: 235,
-                    tickAmount: 3,
-                    viewers: 5,
-                    badge: 'Golden Square Mile',
-                    amenities: ['Boutique Luxury', 'Bar George', 'Spa'],
-                    image: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'fort-garry-winnipeg',
-                    name: 'The Fort Garry Hotel & Spa',
-                    location: 'Winnipeg, MB',
-                    region: 'PR',
-                    category: ['business', 'under185'],
-                    rating: '4.6',
-                    basePrice: 169,
-                    tickAmount: 2,
-                    viewers: 4,
-                    badge: 'Historic Landmark',
-                    amenities: ['Ten Spa', 'Downtown Core', 'Free Wi-Fi'],
-                    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'
-                },
-                {
-                    id: 'halifax-waterfront-hotel',
-                    name: 'Muir Autograph Collection Halifax',
-                    location: 'Halifax, NS',
-                    region: 'AT',
-                    category: ['luxury', 'business'],
-                    rating: '4.8',
-                    basePrice: 245,
-                    tickAmount: 4,
-                    viewers: 5,
-                    badge: 'Atlantic Waterfront',
-                    amenities: ['Harbour Views', 'Wellness Spa', 'Fine Dining'],
-                    image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80',
-                    fallbackImage: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80'
-                }
-            ];
-
-            let activeRegion = localStorage.getItem('hotbeds_region') || 'ON';
-            let activeStayFilter = 'all';
-            let activeProvinceTab = 'ALL';
-
-            // --- 4. CUSTOM OTA DESTINATION AUTOCOMPLETE POPOVER ---
-            const autocompleteBox = document.getElementById('custom-autocomplete');
-
-            function renderAutocompleteList(query = '') {
-                autocompleteBox.innerHTML = '';
-                const sorted = [...NATIONWIDE_CITIES].sort((a, b) => (a.prov === activeRegion ? -1 : 1));
-                const filtered = sorted.filter(item =>
-                    item.label.toLowerCase().includes(query.toLowerCase()) ||
-                    item.sub.toLowerCase().includes(query.toLowerCase())
-                );
-
-                if (filtered.length === 0) {
-                    autocompleteBox.classList.add('hidden');
-                    return;
                 }
 
-                filtered.slice(0, 7).forEach(item => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'w-full px-4 py-2.5 text-left hover:bg-red-50 flex items-center justify-between transition';
-                    btn.innerHTML = `
-                        <div>
-                            <div class="text-xs font-extrabold text-brand-text">${item.label}</div>
-                            <div class="text-[10px] text-gray-400 font-medium">${item.sub} • ${item.count}</div>
-                        </div>
-                        <span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-gray-100 text-gray-600">${item.prov}</span>
-                    `;
-                    btn.addEventListener('click', () => {
-                        destInput.value = item.label;
-                        autocompleteBox.classList.add('hidden');
-                    });
-                    autocompleteBox.appendChild(btn);
-                });
-                autocompleteBox.classList.remove('hidden');
+                const nights = getCalculatedNights();
+                rfpNightsPill.textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+
+                const rooms = Math.max(5, Math.min(500, parseInt(estimatedRoomsInput.value, 10) || 10));
+                const totalRN = rooms * nights;
+                const estSavings = Math.round(totalRN * BASELINE_RATE_CAD * WHOLESALE_DISCOUNT_AVG);
+
+                formLiveSummary.textContent = `${rooms} Rooms × ${nights} ${nights === 1 ? 'Night' : 'Nights'} = ${totalRN} Room-Nights`;
+                formLiveSavings.textContent = `~$${estSavings.toLocaleString('en-CA')} CAD`;
             }
 
-            destInput.addEventListener('focus', () => renderAutocompleteList(destInput.value));
-            destInput.addEventListener('input', () => renderAutocompleteList(destInput.value));
-            document.addEventListener('click', (e) => {
-                if (!document.getElementById('destination-wrapper').contains(e.target)) {
-                    autocompleteBox.classList.add('hidden');
+            checkInInput.addEventListener('change', syncDatesAndSummary);
+            checkOutInput.addEventListener('change', syncDatesAndSummary);
+            estimatedRoomsInput.addEventListener('input', syncDatesAndSummary);
+            syncDatesAndSummary();
+
+            // Sync Calculator button to RFP Form
+            window.syncCalculatorToForm = function() {
+                const calcRooms = parseInt(roomsSlider.value, 10) || 12;
+                const calcNights = parseInt(nightsSlider.value, 10) || 3;
+
+                estimatedRoomsInput.value = calcRooms;
+                if (checkInInput.value) {
+                    const inDate = new Date(checkInInput.value + 'T00:00:00');
+                    const outDate = new Date(inDate);
+                    outDate.setDate(inDate.getDate() + calcNights);
+                    checkOutInput.value = formatIsoDate(outDate);
                 }
-            });
+                syncDatesAndSummary();
+                document.getElementById('rfp-intake-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('orgName').focus();
+            };
 
-            // --- 5. RENDER FUNCTIONS (CITY PILLS, FEATURED STAYS & PROVINCE TABS) ---
-            function renderGeoPills(region) {
-                const pillsContainer = document.getElementById('city-pills-container');
-                pillsContainer.innerHTML = '';
+            // 4. Interactive Segment Selector Pills
+            const segmentPills = document.querySelectorAll('.segment-pill');
+            const groupTypeSelect = document.getElementById('groupType');
+            const roomSplitSelect = document.getElementById('roomSplit');
 
-                const prioritized = region === 'ALL'
-                    ? NATIONWIDE_CITIES.slice(0, 8)
-                    : [
-                        ...NATIONWIDE_CITIES.filter(c => c.prov === region),
-                        ...NATIONWIDE_CITIES.filter(c => c.prov !== region)
-                      ].slice(0, 8);
-
-                prioritized.forEach(cityObj => {
-                    const a = document.createElement('a');
-                    a.href = `city.html?city=${encodeURIComponent(cityObj.slug)}`;
-                    a.className = 'px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-brand-red hover:border-brand-red hover:bg-red-50 transition-all whitespace-nowrap shadow-sm';
-                    a.textContent = cityObj.label;
-                    a.addEventListener('click', (e) => {
-                        // Sets search bar value and allows smooth navigation to city guide
-                        destInput.value = cityObj.label;
-                    });
-                    pillsContainer.appendChild(a);
-                });
-            }
-
-            function renderFeaturedStays(region, filterType = 'all') {
-                const container = document.getElementById('api-results-container');
-                container.innerHTML = '';
-
-                let sorted = [...allStaysInventory].sort((a, b) => {
-                    if (region !== 'ALL') {
-                        if (a.region === region && b.region !== region) return -1;
-                        if (a.region !== region && b.region === region) return 1;
-                    }
-                    return 0;
-                });
-
-                if (filterType === 'regional' && region !== 'ALL') {
-                    sorted = sorted.filter(h => h.region === region);
-                }
-                if (filterType === 'luxury') sorted = sorted.filter(h => h.category.includes('luxury'));
-                if (filterType === 'business') sorted = sorted.filter(h => h.category.includes('business'));
-                if (filterType === 'under185') sorted = sorted.filter(h => h.basePrice <= 185);
-
-                sorted.slice(0, 4).forEach(hotel => {
-                    const checkin = checkinInput.value;
-                    const checkout = checkoutInput.value;
-                    const amenityHtml = hotel.amenities.map(a => `<span class="text-[9px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 px-2 py-0.5 rounded">${a}</span>`).join('');
-
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl border border-gray-200/90 overflow-hidden shadow-soft hover:shadow-soft-xl transition-all duration-300 flex flex-col group';
-
-                    card.innerHTML = `
-                        <div class="relative h-48 overflow-hidden bg-gray-100">
-                            <a href="hotel.html?id=${encodeURIComponent(hotel.id)}&checkin=${checkin}&checkout=${checkout}">
-                                <img src="${hotel.image}" onerror="this.onerror=null; this.src='${hotel.fallbackImage}';" alt="${hotel.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </a>
-                            <span class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">
-                                ${hotel.badge}
-                            </span>
-                            <span class="absolute top-3 right-3 bg-white/95 text-brand-text text-xs font-black px-2 py-1 rounded shadow">
-                                ★ ${hotel.rating}
-                            </span>
-                        </div>
-                        <div class="p-5 flex-grow flex flex-col justify-between">
-                            <div>
-                                <div class="text-xs font-bold text-brand-red uppercase tracking-wider mb-0.5">${hotel.location}</div>
-                                <h3 class="text-lg font-extrabold text-brand-text leading-snug mb-2">
-                                    <a href="hotel.html?id=${encodeURIComponent(hotel.id)}&checkin=${checkin}&checkout=${checkout}" class="hover:text-brand-red transition">${hotel.name}</a>
-                                </h3>
-                                <div class="flex flex-wrap gap-1.5 mb-3">${amenityHtml}</div>
-                            </div>
-                            <div class="pt-4 border-t border-gray-100 mt-2 flex justify-between items-end">
-                                <div>
-                                    <span class="text-[10px] font-bold text-gray-400 uppercase block">Nightly Rate</span>
-                                    <span class="text-2xl font-black text-brand-text">$${hotel.basePrice} <span class="text-[10px] font-normal text-gray-500">CAD</span></span>
-                                </div>
-                                <a href="checkout.html?hotel=${encodeURIComponent(hotel.name)}&prov=${hotel.region}&price=${hotel.basePrice}&checkin=${checkin}&checkout=${checkout}" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl transition shadow-sm">
-                                    Book Now
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            }
-
-            function renderCitiesGrid(provCode) {
-                const container = document.getElementById('cities-grid-container');
-                const usPanel = document.getElementById('us-coming-soon-panel');
-
-                if (provCode === 'US') {
-                    container.classList.add('hidden');
-                    usPanel.classList.remove('hidden');
-                    return;
-                }
-
-                usPanel.classList.add('hidden');
-                container.classList.remove('hidden');
-                container.innerHTML = '';
-
-                let list = provCode === 'ALL'
-                    ? NATIONWIDE_CITIES.slice(0, 8)
-                    : NATIONWIDE_CITIES.filter(c => c.prov === provCode);
-
-                list.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'group relative h-60 rounded-2xl overflow-hidden shadow-soft border border-gray-200 flex flex-col justify-end';
-                    card.innerHTML = `
-                        <img src="${item.img}" alt="${item.label}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/45 to-transparent"></div>
-                        <div class="absolute top-3 left-3 bg-slate-900/85 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
-                            ${item.count}
-                        </div>
-                        <div class="absolute top-3 right-3 bg-white/95 text-brand-text text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow">
-                            From $${item.fromPrice}/nt
-                        </div>
-                        <div class="relative z-10 p-4 text-white">
-                            <p class="text-[10px] font-semibold text-gray-300 truncate">${item.sub}</p>
-                            <h3 class="text-xl font-black tracking-tight mb-2.5">${item.label}</h3>
-                            <div class="flex items-center gap-2">
-                                <a href="city.html?city=${encodeURIComponent(item.slug)}" class="bg-white/95 hover:bg-white text-brand-text font-extrabold text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
-                                    City Guide
-                                </a>
-                                <a href="results.html?destination=${encodeURIComponent(item.label)}&checkin=${checkinInput.value}&checkout=${checkoutInput.value}&guests=2" class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
-                                    Search Stays &rarr;
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            }
-
-            // --- 6. REGION & PROVINCE TAB CONTROLLERS ---
-            const regionSelect = document.getElementById('region-select');
-
-            function setGeoPredisposition(regionCode) {
-                activeRegion = regionCode;
-                localStorage.setItem('hotbeds_region', activeRegion);
-                regionSelect.value = activeRegion;
-
-                const defaultHubMap = {
-                    ON: 'Hamilton, ON',
-                    BC: 'Vancouver, BC',
-                    AB: 'Calgary, AB',
-                    QC: 'Montreal, QC',
-                    PR: 'Winnipeg, MB',
-                    AT: 'Halifax, NS',
-                    ALL: 'Toronto, ON'
-                };
-                destInput.placeholder = `e.g. ${defaultHubMap[activeRegion] || 'Hamilton, ON'}`;
-
-                renderGeoPills(activeRegion);
-                renderFeaturedStays(activeRegion, activeStayFilter);
-                renderCitiesGrid(activeProvinceTab);
-            }
-
-            setGeoPredisposition(activeRegion);
-
-            regionSelect.addEventListener('change', (e) => {
-                setGeoPredisposition(e.target.value);
-                startCycle(0);
-            });
-
-            document.getElementById('search-geo-hint').addEventListener('click', () => {
-                const defaultHubMap = {
-                    ON: 'Hamilton, ON',
-                    BC: 'Vancouver, BC',
-                    AB: 'Calgary, AB',
-                    QC: 'Montreal, QC',
-                    PR: 'Winnipeg, MB',
-                    AT: 'Halifax, NS',
-                    ALL: 'Hamilton, ON'
-                };
-                destInput.value = defaultHubMap[activeRegion] || 'Hamilton, ON';
-            });
-
-            // Stay Filter Tabs
-            document.querySelectorAll('.stay-filter-tab').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.stay-filter-tab').forEach(b => {
-                        b.className = 'stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition whitespace-nowrap';
-                    });
-                    e.currentTarget.className = 'stay-filter-tab px-3.5 py-2 rounded-xl text-xs font-extrabold bg-brand-text text-white transition whitespace-nowrap';
-                    activeStayFilter = e.currentTarget.getAttribute('data-filter');
-                    renderFeaturedStays(activeRegion, activeStayFilter);
-                });
-            });
-
-            // Province Directory Tabs
-            document.querySelectorAll('.prov-tab').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    const prov = e.currentTarget.getAttribute('data-prov');
-                    activeProvinceTab = prov;
-
-                    document.querySelectorAll('.prov-tab').forEach(t => {
-                        if (t.getAttribute('data-prov') === 'US') {
-                            t.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-red-50 text-brand-red border border-red-200 hover:bg-red-100 transition whitespace-nowrap flex items-center gap-1.5';
-                        } else {
-                            t.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition whitespace-nowrap';
-                        }
-                    });
-
-                    if (prov !== 'US') {
-                        e.currentTarget.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-text text-white shadow-sm transition whitespace-nowrap';
+            window.selectGroupSegment = function(segmentValue, recommendedSplit = null) {
+                // Highlight active pill
+                segmentPills.forEach(pill => {
+                    const isMatch = pill.getAttribute('data-segment') === segmentValue;
+                    if (isMatch) {
+                        pill.className = 'segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-[#D91B24] text-white border-[#D91B24] shadow-sm';
                     } else {
-                        e.currentTarget.className = 'prov-tab px-4 py-2.5 rounded-xl text-xs font-extrabold bg-brand-red text-white shadow-sm transition whitespace-nowrap flex items-center gap-1.5';
+                        pill.className = 'segment-pill px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-2 bg-white text-slate-700 border-slate-200 hover:border-[#D91B24] hover:text-[#D91B24]';
                     }
+                });
 
-                    renderCitiesGrid(prov);
+                // Update dropdowns
+                if (groupTypeSelect) groupTypeSelect.value = segmentValue;
+                if (recommendedSplit && roomSplitSelect) {
+                    roomSplitSelect.value = recommendedSplit;
+                } else if (roomSplitSelect) {
+                    const splitMap = {
+                        'Sports': 'Double-Queen Heavy (Teams / Crews)',
+                        'Crew': 'Double-Queen Heavy (Teams / Crews)',
+                        'Corporate': 'Single-King Heavy (Executives)',
+                        'Conference': 'Balanced 50/50 Split'
+                    };
+                    if (splitMap[segmentValue]) roomSplitSelect.value = splitMap[segmentValue];
+                }
+
+                // Smooth scroll to RFP intake section
+                const intakeSection = document.getElementById('rfp-intake-section');
+                if (intakeSection) {
+                    intakeSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            segmentPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    const seg = pill.getAttribute('data-segment');
+                    window.selectGroupSegment(seg);
                 });
             });
 
-            // US Waitlist Form
-            document.getElementById('us-waitlist-form').addEventListener('submit', (e) => {
+            // 5. Corporate RFP Form Submission, Validation & LocalStorage Persistence
+            const rfpForm = document.getElementById('corporate-rfp-form');
+            const errorBanner = document.getElementById('rfp-error-banner');
+            const errorText = document.getElementById('rfp-error-text');
+            const formContainer = document.getElementById('rfp-form-container');
+            const confirmationState = document.getElementById('rfp-confirmation-state');
+
+            rfpForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('us-waitlist-btn');
-                btn.textContent = '✓ Subscribed!';
-                btn.classList.replace('bg-brand-red', 'bg-emerald-600');
+                errorBanner.classList.add('hidden');
+
+                const orgName = document.getElementById('orgName').value.trim();
+                const groupType = document.getElementById('groupType').value;
+                const contactName = document.getElementById('contactName').value.trim();
+                const contactEmail = document.getElementById('contactEmail').value.trim();
+                const contactPhone = document.getElementById('contactPhone').value.trim();
+                const targetCity = document.getElementById('targetCity').value.trim();
+                const checkInDate = checkInInput.value;
+                const checkOutDate = checkOutInput.value;
+                const estimatedRooms = parseInt(estimatedRoomsInput.value, 10);
+                const roomSplit = document.getElementById('roomSplit').value;
+                const targetBudgetCad = document.getElementById('targetBudgetCad').value;
+                const specialNotes = document.getElementById('specialNotes').value.trim() || 'None specified — standard consolidated CAD invoice and local Guild Keys requested.';
+
+                if (!orgName || !contactName || !contactEmail || !contactPhone || !targetCity || !checkInDate || !checkOutDate) {
+                    errorText.textContent = 'Please complete all required organization, contact, destination, and date fields.';
+                    errorBanner.classList.remove('hidden');
+                    return;
+                }
+
+                if (isNaN(estimatedRooms) || estimatedRooms < 5 || estimatedRooms > 500) {
+                    errorText.innerHTML = 'Corporate &amp; Group Blocks require between 5 and 500 rooms. For 1–4 rooms, please use <a href="index.html" class="underline font-black">instant retail booking on index.html</a>.';
+                    errorBanner.classList.remove('hidden');
+                    return;
+                }
+
+                if (checkOutDate <= checkInDate) {
+                    errorText.textContent = 'Check-Out Date must be at least 1 day after Check-In Date.';
+                    errorBanner.classList.remove('hidden');
+                    return;
+                }
+
+                const nights = getCalculatedNights();
+                const totalRoomNights = estimatedRooms * nights;
+                const estSavingsCad = Math.round(totalRoomNights * BASELINE_RATE_CAD * WHOLESALE_DISCOUNT_AVG);
+                const rfpId = 'RFP-' + Math.floor(100000 + Math.random() * 900000);
+                const submittedAt = new Date().toISOString();
+
+                const rfpPayload = {
+                    rfpId,
+                    submittedAt,
+                    status: 'RFP Inquiry Logged — Custom CAD Wholesale Proposal Pending',
+                    orgName,
+                    groupType,
+                    contactName,
+                    contactEmail,
+                    contactPhone,
+                    targetCity,
+                    checkInDate,
+                    checkOutDate,
+                    nights,
+                    estimatedRooms,
+                    totalRoomNights,
+                    roomSplit,
+                    targetBudgetCad,
+                    estimatedWholesaleDiscountAvg: '~15% Non-Guaranteed Average',
+                    estimatedSavingsCad: `~$${estSavingsCad.toLocaleString('en-CA')} CAD`,
+                    specialNotes
+                };
+
+                // Save complete payload to localStorage
+                try {
+                    localStorage.setItem('latest_corporate_rfp', JSON.stringify(rfpPayload));
+                } catch (err) {
+                    console.warn('localStorage unavailable:', err);
+                }
+
+                // Populate Printable Confirmation Dossier
+                document.getElementById('conf-rfp-id').textContent = rfpId;
+                document.getElementById('conf-org').textContent = orgName;
+                document.getElementById('conf-type').textContent = groupType;
+                document.getElementById('conf-contact').textContent = `${contactName} (${contactPhone})`;
+                document.getElementById('conf-city').textContent = targetCity;
+                document.getElementById('conf-dates').textContent = `${checkInDate} to ${checkOutDate} (${nights} ${nights === 1 ? 'Night' : 'Nights'})`;
+                document.getElementById('conf-volume').textContent = `${estimatedRooms} Rooms (${totalRoomNights} Room-Nights)`;
+                document.getElementById('conf-split').textContent = roomSplit;
+                document.getElementById('conf-budget').textContent = targetBudgetCad;
+                document.getElementById('conf-savings').textContent = `~$${estSavingsCad.toLocaleString('en-CA')} CAD (Subject to Availability)`;
+                document.getElementById('conf-notes').textContent = specialNotes;
+                document.getElementById('conf-email-inline').textContent = contactEmail;
+                document.getElementById('print-timestamp').textContent = `Logged: ${new Date().toLocaleDateString('en-CA')} • ${rfpId}`;
+
+                // Transition UI to Confirmation State
+                formContainer.classList.add('hidden');
+                confirmationState.classList.remove('hidden');
+                confirmationState.scrollIntoView({ behavior: 'smooth' });
             });
 
-            // --- 7. LIVE FOMO SCARCITY WIDGET ENGINE ---
-            const CYCLE_DURATION = 15;
-            const TICK_INTERVAL = 3;
-            let currentCycleIndex = 0;
-            let currentPrice = 0;
-            let timeLeft = 0;
-            let mainInterval = null;
-            let activeWidgetHotel = null;
-
-            const elHotelName = document.getElementById('hotel-name');
-            const elHotelLocation = document.getElementById('hotel-location');
-            const elHotelImage = document.getElementById('hotel-image');
-            const elCurrentPrice = document.getElementById('current-price');
-            const elTimeLeft = document.getElementById('time-left');
-            const elProgressBar = document.getElementById('progress-bar');
-            const elSuccessOverlay = document.getElementById('success-overlay');
-
-            function getRegionalCycleList() {
-                if (activeRegion === 'ALL') return allStaysInventory;
-                const regional = allStaysInventory.filter(h => h.region === activeRegion);
-                const others = allStaysInventory.filter(h => h.region !== activeRegion);
-                return [...regional, ...others];
-            }
-
-            window.startCycle = function(index) {
-                const cycleList = getRegionalCycleList();
-                const hotel = cycleList[index % cycleList.length];
-                activeWidgetHotel = hotel;
-
-                currentPrice = hotel.basePrice;
-                timeLeft = CYCLE_DURATION;
-
-                elHotelName.textContent = hotel.name;
-                elHotelLocation.textContent = hotel.location;
-                document.getElementById('widget-viewers').textContent = `${hotel.viewers} others viewing now`;
-                document.getElementById('widget-rating-tag').textContent = `(${hotel.rating} Verified)`;
-                elHotelImage.src = hotel.image;
-                elHotelImage.onerror = () => { elHotelImage.src = hotel.fallbackImage; };
-
-                updatePriceDisplay();
-                updateTimerDisplay();
-
-                if (mainInterval) clearInterval(mainInterval);
-
-                mainInterval = setInterval(() => {
-                    timeLeft--;
-                    updateTimerDisplay();
-
-                    if (timeLeft > 0 && timeLeft % TICK_INTERVAL === 0) {
-                        currentPrice += hotel.tickAmount;
-                        updatePriceDisplay(true);
-                    }
-
-                    if (timeLeft <= 0) {
-                        clearInterval(mainInterval);
-                        currentCycleIndex = (currentCycleIndex + 1) % cycleList.length;
-                        startCycle(currentCycleIndex);
-                    }
-                }, 1000);
+            window.resetRfpForm = function() {
+                confirmationState.classList.add('hidden');
+                formContainer.classList.remove('hidden');
+                document.getElementById('rfp-intake-section').scrollIntoView({ behavior: 'smooth' });
             };
 
-            function updateTimerDisplay() {
-                const secondsStr = timeLeft < 10 ? `0${timeLeft}` : timeLeft;
-                elTimeLeft.textContent = `00:${secondsStr}`;
-                elProgressBar.style.width = `${(timeLeft / CYCLE_DURATION) * 100}%`;
-            }
+            // 6. FAQ Accordion Controller
+            window.toggleFaq = function(index) {
+                const panel = document.getElementById(`faq-panel-${index}`);
+                const icon = document.getElementById(`faq-icon-${index}`);
+                if (!panel || !icon) return;
 
-            function updatePriceDisplay(flash = false) {
-                elCurrentPrice.textContent = currentPrice;
-                if (flash) {
-                    elCurrentPrice.classList.remove('price-flash');
-                    void elCurrentPrice.offsetWidth;
-                    elCurrentPrice.classList.add('price-flash');
+                const isHidden = panel.classList.contains('hidden');
+                if (isHidden) {
+                    panel.classList.remove('hidden');
+                    icon.textContent = '−';
+                } else {
+                    panel.classList.add('hidden');
+                    icon.textContent = '+';
                 }
-            }
-
-            window.lockPrice = function() {
-                if (mainInterval) clearInterval(mainInterval);
-
-                document.getElementById('locked-hotel').textContent = activeWidgetHotel.name;
-                document.getElementById('locked-price').textContent = currentPrice.toFixed(2);
-
-                localStorage.setItem('locked_hotel_name', activeWidgetHotel.name);
-                localStorage.setItem('locked_hotel_price', currentPrice.toFixed(2));
-                localStorage.setItem('locked_hotel_province', activeWidgetHotel.region);
-
-                document.getElementById('fomo-checkout-link').href = `checkout.html?hotel=${encodeURIComponent(activeWidgetHotel.name)}&prov=${activeWidgetHotel.region}&price=${currentPrice.toFixed(2)}&checkin=${checkinInput.value}&checkout=${checkoutInput.value}`;
-
-                elSuccessOverlay.classList.remove('hidden');
-                elSuccessOverlay.classList.add('flex');
             };
-
-            window.unlockPrice = function() {
-                elSuccessOverlay.classList.add('hidden');
-                elSuccessOverlay.classList.remove('flex');
-                startCycle(currentCycleIndex);
-            };
-
-            startCycle(0);
-
-            // --- 8. CORPORATE QUICK-FILL HELPER ---
-            window.fillCorporateSearch = function() {
-                document.getElementById('guests').value = '4';
-                destInput.value = activeRegion === 'AB' ? 'Calgary, AB' : (activeRegion === 'BC' ? 'Vancouver, BC' : 'Toronto, ON');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                destInput.focus();
-            };
-
-            // --- 9. HEADER 7-DAY CLUB COUNTDOWN TIMER ---
-            const clubTimerElement = document.getElementById('club-timer');
-            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + 3540;
-            setInterval(() => {
-                if (!clubTimerElement || clubTimeLeft <= 0) return;
-                clubTimeLeft--;
-                const days = Math.floor(clubTimeLeft / (24 * 3600));
-                const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
-                const mins = Math.floor((clubTimeLeft % 3600) / 60);
-                clubTimerElement.innerText = `${days}d ${hours}h ${mins}m`;
-            }, 1000);
         });
     </script>
 </body>
