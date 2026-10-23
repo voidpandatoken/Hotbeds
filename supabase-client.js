@@ -4,7 +4,7 @@
 <script>
   // 1. Initialize with your Project URL and new Publishable Key
   const SUPABASE_URL = 'https://bickbvwnkuvmnqgopfve.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_REPLACE_WITH_YOUR_KEY';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QVEXdZjEih8_39RGK7jVSw_jlhLWQOT';
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
