@@ -55,6 +55,7 @@
     </script>
 
     <!-- Optional Supabase Client Hook (Safe fallback to localStorage) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-hotbeds.js" defer onerror="console.info('Hotbeds Club: Operating in standalone localStorage sync mode.')"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -148,7 +149,7 @@
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <div class="hidden sm:flex items-center">
                         <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="View My Booking & Points">
-                            G.
+                            J.
                         </a>
                     </div>
                     
@@ -299,30 +300,58 @@
                             <span class="text-[9px] font-black uppercase bg-white text-brand-red border border-red-200 px-2.5 py-1 rounded-full">Bonus</span>
                         </div>
 
-                        <form id="club-signup-form" class="space-y-4">
+                        <form id="club-signup-form" class="space-y-3.5">
+                            <!-- Full Name -->
                             <div>
-                                <label for="form-fullname" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
-                                <input type="text" id="form-fullname" required placeholder="e.g. Gordon Culp" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                <label for="form-fullname" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Full Legal Name</label>
+                                <input type="text" id="form-fullname" required placeholder="e.g. John Doe" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
                             </div>
 
-                            <div>
-                                <label for="form-email" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                                <input type="email" id="form-email" required placeholder="you@example.ca" class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                            <!-- Email & Phone (2-Column Grid) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label for="form-email" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
+                                    <input type="email" id="form-email" required placeholder="you@example.ca" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                </div>
+                                <div>
+                                    <label for="form-phone" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Mobile Phone Number</label>
+                                    <input type="tel" id="form-phone" required placeholder="+1 (905) 555-0123" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                </div>
                             </div>
 
+                            <!-- Home Address -->
                             <div>
-                                <label for="form-region" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Preferred Canadian Region</label>
-                                <select id="form-region" required class="w-full p-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white outline-none text-sm font-semibold text-brand-text transition">
-                                    <option value="ON" selected>Ontario (ON)</option>
-                                    <option value="BC">British Columbia (BC)</option>
-                                    <option value="AB">Alberta (AB)</option>
-                                    <option value="QC">Quebec (QC)</option>
-                                    <option value="PR">Prairies (MB/SK)</option>
-                                    <option value="AT">Atlantic Canada (NS/NB/NL)</option>
-                                </select>
+                                <label for="form-address" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Home Street Address</label>
+                                <input type="text" id="form-address" required placeholder="e.g. 128 King Street West, Unit 4B" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
                             </div>
 
-                            <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-4 px-5 rounded-xl shadow-lg transform transition active:scale-[0.99] uppercase tracking-widest text-xs sm:text-sm flex items-center justify-center">
+                            <!-- City & Province/Region (2-Column Grid) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label for="form-city" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">City</label>
+                                    <input type="text" id="form-city" required placeholder="e.g. Hamilton" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                </div>
+                                <div>
+                                    <label for="form-region" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Province / Territory</label>
+                                    <select id="form-region" required class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white outline-none text-sm font-semibold text-brand-text transition">
+                                        <option value="ON" selected>Ontario (ON)</option>
+                                        <option value="BC">British Columbia (BC)</option>
+                                        <option value="AB">Alberta (AB)</option>
+                                        <option value="QC">Quebec (QC)</option>
+                                        <option value="PR">Prairies (MB/SK)</option>
+                                        <option value="AT">Atlantic Canada (NS/NB/NL)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- How Did You Hear About Us / Referral -->
+                            <div>
+                                <label for="form-referral" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">How Did You Hear About Us? (Or Referral Name)</label>
+                                <input type="text" id="form-referral" placeholder="e.g. Google Search, Instagram, Friend's Name" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-4 px-5 rounded-xl shadow-lg transform transition active:scale-[0.99] uppercase tracking-widest text-xs sm:text-sm flex items-center justify-center mt-2">
                                 <span>Activate My Free Club Pass (1,000 Welcome Pts) &rarr;</span>
                             </button>
                         </form>
@@ -372,7 +401,7 @@
                         <div class="grid grid-cols-2 gap-3 text-left relative z-10 pt-3 border-t border-white/10">
                             <div>
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Registered Name</span>
-                                <span id="wallet-name-val" class="text-xs font-extrabold text-white truncate block">Gordon Culp</span>
+                                <span id="wallet-name-val" class="text-xs font-extrabold text-white truncate block">John Doe</span>
                             </div>
                             <div>
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</span>
@@ -586,6 +615,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- 0. OPTIONAL DIRECT SUPABASE INITIALIZATION ---
+            const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+            const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_YOUR_KEY_HERE';
+            let directSupabaseClient = null;
+            if (window.supabase && SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
+                directSupabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+            }
+
             // --- 1. DEFAULT CHECK-IN / CHECK-OUT DATES FOR CHECKOUT ROUTING ---
             const today = new Date();
             const tomorrow = new Date();
@@ -669,7 +706,7 @@
                     return;
                 }
 
-                const fullName = localStorage.getItem('hotbeds_club_name') || 'Gordon Culp';
+                const fullName = localStorage.getItem('hotbeds_club_name') || 'John Doe';
                 const email = localStorage.getItem('hotbeds_club_email') || 'member@hotbeds.ca';
 
                 document.getElementById('wallet-name-val').textContent = fullName;
@@ -692,32 +729,49 @@
 
                 const fullName = document.getElementById('form-fullname').value.trim();
                 const email = document.getElementById('form-email').value.trim();
+                const phone = document.getElementById('form-phone').value.trim();
+                const address = document.getElementById('form-address').value.trim();
+                const city = document.getElementById('form-city').value.trim();
                 const region = document.getElementById('form-region').value;
+                const referral = document.getElementById('form-referral').value.trim();
 
-                if (!fullName || !email) return;
+                if (!fullName || !email || !phone || !address || !city) return;
 
-                // Save required shared localStorage keys
+                // 1. Save all profile fields to localStorage
                 localStorage.setItem('hotbeds_club_member', 'true');
                 localStorage.setItem('hotbeds_club_name', fullName);
                 localStorage.setItem('hotbeds_club_email', email);
-                localStorage.setItem('hotbeds_points_balance', '1,000');
+                localStorage.setItem('hotbeds_club_phone', phone);
+                localStorage.setItem('hotbeds_club_address', address);
+                localStorage.setItem('hotbeds_club_city', city);
                 localStorage.setItem('hotbeds_region', region);
+                localStorage.setItem('hotbeds_club_referral', referral);
+                localStorage.setItem('hotbeds_points_balance', '1,000');
 
-                // Optional Supabase sync if window.hotbedsDb is present
+                // 2. Direct write to Supabase member_leads
                 try {
-                    if (window.hotbedsDb && typeof window.hotbedsDb.from === 'function') {
-                        await window.hotbedsDb.from('members_directory').upsert([
-                            {
-                                full_name: fullName,
-                                email: email,
-                                home_region: region,
-                                points_balance: 1000,
-                                enrolled_at: new Date().toISOString()
+                    const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
+                    if (client && typeof client.from === 'function') {
+                        await client.from('member_leads').insert([{
+                            full_name: fullName,
+                            email: email.toLowerCase(),
+                            phone: phone,
+                            brand_source: 'Hotbeds',
+                            signup_funnel: 'hotbeds_club',
+                            city_interest: city,
+                            used_20pct_guild_discount: false,
+                            sms_verified: false,
+                            metadata: {
+                                address: address,
+                                province: region,
+                                referral_source: referral || 'Direct',
+                                points_awarded: 1000,
+                                registered_at: new Date().toISOString()
                             }
-                        ], { onConflict: 'email' });
+                        }]);
                     }
                 } catch (err) {
-                    console.info('Supabase sync skipped (offline mode).', err);
+                    console.info('Supabase sync fallback (operating in localStorage mode):', err);
                 }
 
                 syncMemberState();
@@ -726,6 +780,12 @@
             window.resetMemberForm = function() {
                 document.getElementById('form-fullname').value = localStorage.getItem('hotbeds_club_name') || '';
                 document.getElementById('form-email').value = localStorage.getItem('hotbeds_club_email') || '';
+                document.getElementById('form-phone').value = localStorage.getItem('hotbeds_club_phone') || '';
+                document.getElementById('form-address').value = localStorage.getItem('hotbeds_club_address') || '';
+                document.getElementById('form-city').value = localStorage.getItem('hotbeds_club_city') || '';
+                document.getElementById('form-region').value = localStorage.getItem('hotbeds_region') || 'ON';
+                document.getElementById('form-referral').value = localStorage.getItem('hotbeds_club_referral') || '';
+
                 stateBWallet.classList.add('hidden');
                 stateAForm.classList.remove('hidden');
             };
