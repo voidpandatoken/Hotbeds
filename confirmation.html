@@ -1,914 +1,835 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Official Booking Confirmation & Tax Voucher | Hotbeds.ca</title>
-  <meta name="description" content="Official CAD hotel booking confirmation, itemized tax receipt, and curated local Canadian partner perks." />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Supabase JS v2 CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
-          },
-          colors: {
-            brand: {
-              red: '#DC2626',
-              dark: '#0F172A',
-              slate: '#1E293B'
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotbeds.ca — Reservation Confirmed & Official Voucher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS v2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#e63946',
+                            redDark: '#c92a37',
+                            light: '#f8fafc',
+                            white: '#ffffff',
+                            text: '#0f172a',
+                            muted: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.09)',
+                        'soft-xl': '0 20px 40px rgba(0, 0, 0, 0.14)',
+                    }
+                }
             }
-          }
+        };
+
+        // Global Bulletproof Mobile Menu Controller (44x44px tap button with ☰ to ✕ swap)
+        window.toggleMobileMenu = function(forceClose = false) {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu) return;
+
+            const isHidden = menu.classList.contains('hidden');
+            if (forceClose || !isHidden) {
+                menu.classList.add('hidden');
+                if (icon) icon.textContent = '☰';
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('hidden');
+                if (icon) icon.textContent = '✕';
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
         }
-      }
-    };
-  </script>
-
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #F8FAFC;
-      color: #0F172A;
-    }
-    .font-display {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    /* Official Tax Voucher Print Stylesheet */
-    @media print {
-      body {
-        background: #FFFFFF !important;
-        color: #000000 !important;
-      }
-      .no-print {
-        display: none !important;
-      }
-      .print-only {
-        display: block !important;
-      }
-      .voucher-card {
-        box-shadow: none !important;
-        border: 1px solid #CBD5E1 !important;
-        margin: 0 !important;
-        padding: 16px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-      }
-      a {
-        text-decoration: none !important;
-        color: #000000 !important;
-      }
-    }
-  </style>
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @media print {
+            .no-print { display: none !important; }
+            body { padding-top: 0 !important; background-color: #ffffff !important; }
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
+<body class="text-brand-text flex flex-col min-h-screen">
 
-  <!-- ===================================================================== -->
-  <!-- STICKY HEADER                                                         -->
-  <!-- ===================================================================== -->
-  <header class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-      
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
-        <img src="LOGO.png" alt="Hotbeds.ca Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');" />
-        <div id="logo-fallback" class="hidden flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-red-600 text-white font-display font-extrabold text-lg">H</span>
-        </div>
-        <div>
-          <span class="font-display font-extrabold text-xl tracking-tight text-slate-900">Hotbeds<span class="text-red-600">.ca</span></span>
-          <span class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500">Canadian Direct Stays</span>
-        </div>
-      </a>
-
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-700">
-        <a href="index.html" class="hover:text-red-600 transition">Search Stays</a>
-        <a href="cities.html" class="hover:text-red-600 transition">Cities</a>
-        <a href="corporate.html" class="hover:text-red-600 transition">5+ Rooms Corporate</a>
-        <a href="partners.html" class="hover:text-red-600 transition">Local Partners</a>
-        <a href="manage-booking.html" class="hover:text-red-600 transition">Manage Booking</a>
-      </nav>
-
-      <!-- Right Controls: Perk Window Timer & Mobile Hamburger -->
-      <div class="flex items-center gap-3">
-        <div class="hidden sm:flex items-center gap-2 bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Local Perks Window:</span>
-          <span id="perk-timer" class="font-mono font-bold text-amber-400">14:59</span>
-        </div>
-
-        <a href="manage-booking.html" class="hidden lg:inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-100 hover:bg-slate-200 text-slate-800 transition">
-          Lookup Voucher
-        </a>
-
-        <!-- 44x44px Mobile Menu Button -->
-        <button
-          id="mobile-menu-btn"
-          type="button"
-          onclick="window.toggleMobileMenu()"
-          aria-label="Toggle Menu"
-          aria-expanded="false"
-          class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg border border-slate-200 text-slate-800 hover:bg-slate-100 focus:outline-none font-bold text-xl"
-        >
-          <span id="mobile-menu-icon">☰</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu-drawer" class="hidden md:hidden fixed inset-x-0 top-20 bottom-0 bg-white z-50 border-t border-slate-200 overflow-y-auto">
-      <div class="p-6 space-y-4">
-        <div class="flex items-center justify-between bg-slate-900 text-white px-4 py-3 rounded-xl text-xs font-semibold">
-          <span>Active Local Partner Perk Window</span>
-          <span id="perk-timer-mobile" class="font-mono font-bold text-amber-400 text-sm">14:59</span>
-        </div>
-        <nav class="flex flex-col space-y-2 text-base font-semibold text-slate-800">
-          <a href="index.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Search Stays</a>
-          <a href="cities.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Canadian Cities</a>
-          <a href="corporate.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Group & Corporate (5+ Rooms)</a>
-          <a href="partners.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Local Partner Network</a>
-          <a href="manage-booking.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Manage / Cancel Booking</a>
-          <a href="legal.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Legal & Compliance</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <!-- ===================================================================== -->
-  <!-- MAIN CONTENT CONTAINER                                                -->
-  <!-- ===================================================================== -->
-  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
-
-    <!-- Top Status Banner & Quick Actions -->
-    <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-emerald-950 text-white p-6 rounded-2xl shadow-md no-print">
-      <div class="flex items-start sm:items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 text-2xl font-bold shrink-0">
-          ✓
-        </div>
-        <div>
-          <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-emerald-300">Reservation Confirmed & Settled in CAD</span>
-          <h1 class="font-display text-xl sm:text-2xl font-extrabold text-white mt-0.5">
-            Your Official Hotel Voucher is Ready
-          </h1>
-          <p class="text-xs sm:text-sm text-emerald-100/90 mt-1">
-            A copy of this confirmation has been sent to <span id="banner-guest-email" class="font-semibold underline">guest@hotbeds.ca</span>.
-          </p>
-        </div>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 shrink-0">
-        <button
-          type="button"
-          onclick="window.print()"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs uppercase tracking-wider shadow-sm transition"
-        >
-          <span>🖨️ Print / Save Official Tax Voucher</span>
-        </button>
-        <a
-          href="manage-booking.html"
-          id="manage-booking-top-link"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 text-white border border-emerald-600/50 font-bold text-xs uppercase tracking-wider transition"
-        >
-          <span>Manage Booking</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- OFFICIAL CAD TAX VOUCHER & RECEIPT (PRINT-READY)                      -->
-    <!-- ===================================================================== -->
-    <section class="voucher-card bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-      
-      <!-- Voucher Header -->
-      <div class="p-6 sm:p-8 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-slate-50/70">
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-display font-extrabold text-lg text-slate-900">HOTBEDS INC.</span>
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-              PAID • CONFIRMED
-            </span>
-          </div>
-          <p class="text-xs text-slate-500 mt-1">
-            Official Canadian Hospitality Reservation Voucher & Itemized Tax Receipt (CAD)
-          </p>
-        </div>
-
-        <div class="sm:text-right">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Booking Reference</span>
-          <span id="voucher-booking-ref" class="font-mono text-2xl font-extrabold text-slate-900 tracking-tight">HB-849201</span>
-          <span id="voucher-timestamp" class="block text-[11px] text-slate-500 mt-0.5">Issued: Oct 24, 2026</span>
-        </div>
-      </div>
-
-      <!-- Property & Guest Logistics Grid -->
-      <div class="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-slate-200">
+    <!-- ================================================================= -->
+    <!-- STICKY UNIFIED HEADER (FROM INDEX.HTML + RED HOT BEDS CLUB PILL)  -->
+    <!-- ================================================================= -->
+    <header class="sticky top-0 w-full z-50 flex flex-col bg-white border-b border-gray-200 shadow-sm no-print">
         
-        <!-- Property Details -->
-        <div class="md:col-span-2 space-y-3">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-red-600 block">Confirmed Property</span>
-          <h2 id="voucher-hotel-name" class="font-display text-2xl font-extrabold text-slate-900">
-            Sandman Hotel Hamilton
-          </h2>
-          <p id="voucher-hotel-location" class="text-sm font-medium text-slate-600">
-            Hamilton, ON, Canada
-          </p>
-          <div class="pt-2 flex flex-wrap gap-2">
-            <span id="voucher-room-type" class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-              Standard King Room
-            </span>
-            <span id="voucher-rooms-count" class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-              1 Room
-            </span>
-            <span id="voucher-nights-count" class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-              2 Nights
-            </span>
-          </div>
+        <!-- 1. Top Utility Bar & Nationwide Region Selector -->
+        <div class="bg-slate-900 text-white py-1.5 px-3 sm:px-6">
+            <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 text-[10px] sm:text-[11px]">
+                <a href="club.html" class="flex items-center gap-1.5 font-medium text-gray-200 hover:text-white transition min-w-0">
+                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse shrink-0"></span>
+                    <span id="top-bar-club-text" class="truncate">
+                        <strong>HOT BEDS CLUB:</strong> Claim 1,000 Free Welcome Points &amp; Private Flash Rates &rarr;
+                    </span>
+                </a>
+
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/15">
+                        <span class="text-brand-red text-[10px]">📍</span>
+                        <label for="region-select" class="sr-only">Select Region</label>
+                        <select id="region-select" class="bg-transparent text-white font-bold text-[10px] sm:text-[11px] focus:outline-none cursor-pointer pr-1">
+                            <option value="ALL" class="text-slate-900 font-bold">All Canada</option>
+                            <option value="ON" class="text-slate-900 font-bold" selected>Ontario (ON)</option>
+                            <option value="BC" class="text-slate-900 font-bold">British Columbia (BC)</option>
+                            <option value="AB" class="text-slate-900 font-bold">Alberta (AB)</option>
+                            <option value="QC" class="text-slate-900 font-bold">Quebec (QC)</option>
+                            <option value="PR" class="text-slate-900 font-bold">Prairies (MB/SK)</option>
+                            <option value="AT" class="text-slate-900 font-bold">Atlantic (NS/NB/NL)</option>
+                        </select>
+                    </div>
+                    <span class="font-bold text-gray-300 hidden md:inline">CAD $</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Registered Guest Info -->
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Primary Registered Guest</span>
-          <p id="voucher-guest-name" class="font-bold text-slate-900 text-base">Verified Guest</p>
-          <p id="voucher-guest-email" class="text-xs text-slate-600 break-all">guest@hotbeds.ca</p>
-          <p id="voucher-guest-phone" class="text-xs text-slate-600">+1 (905) 555-0199</p>
-          <div class="pt-2 border-t border-slate-200 text-[11px] text-slate-500">
-            Present government-issued photo ID and this voucher reference at front-desk check-in.
-          </div>
+        <!-- 2. Main Navigation Bar -->
+        <div class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 relative bg-white">
+            <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
+                
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="LOGO.png" alt="Hotbeds.ca" class="h-9 sm:h-12 md:h-14 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<span class=\'font-black text-2xl sm:text-3xl tracking-tighter text-brand-text uppercase\'>Hot<span class=\'text-brand-red\'>beds</span><span class=\'text-xs font-bold text-gray-400\'>.ca</span></span>'">
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation Links (Matches Index + Manage Booking) -->
+                <nav class="hidden lg:flex items-center space-x-7">
+                    <a href="cities.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Cities</a>
+                    <a href="results.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Featured Stays</a>
+                    <a href="corporate.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Corporate Desk</a>
+                    <a href="partners.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Partner Network</a>
+                    <a href="manage-booking.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Manage Booking</a>
+                    <a href="legal.html" class="text-brand-text hover:text-brand-red font-bold transition-colors uppercase text-[11px] tracking-widest">Legal</a>
+                </nav>
+                
+                <!-- Right CTA: Red Hot Beds Club Live Countdown Pill + 44x44px Mobile Menu Button -->
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="hidden sm:flex items-center">
+                        <a href="manage-booking.html" id="user-avatar-badge" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text font-black text-xs shadow-sm transition" title="Manage Booking & Points">
+                            G.
+                        </a>
+                    </div>
+                    
+                    <!-- RED HOT BEDS CLUB PILL (Never Overwrites Live #club-timer) -->
+                    <a href="club.html" id="header-club-btn" class="group flex items-center gap-2 bg-brand-red hover:bg-brand-redDark text-white p-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-red-700 transition-all">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <div class="flex flex-col justify-center text-left">
+                            <span id="header-club-title" class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-white leading-none">Hot Beds Club</span>
+                            <span id="header-club-sub" class="text-[8px] sm:text-[9px] font-bold text-white/90 uppercase tracking-wider mt-0.5">
+                                <span id="club-timer" class="text-white font-mono">Free • 6d 23h 59m</span>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- 44x44px Mobile Hamburger Toggle Button (☰ to ✕) -->
+                    <button type="button" id="mobile-menu-btn" onclick="window.toggleMobileMenu()" aria-label="Toggle Navigation Menu" aria-expanded="false" class="lg:hidden w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 flex items-center justify-center text-brand-text hover:text-brand-red text-lg font-black focus:outline-none transition shrink-0">
+                        <span id="mobile-menu-icon">☰</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Navigation Drawer -->
+            <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b-2 border-gray-200 shadow-2xl z-50 flex flex-col divide-y divide-gray-100">
+                <a href="cities.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Canadian Cities Directory</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="results.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Featured Flash Stays</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="corporate.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Corporate &amp; Group Blocks (5+ Rooms)</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="partners.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Zero-Fee Partner Network</span>
+                    <span class="text-emerald-600 font-black text-[10px]">$0 Listing</span>
+                </a>
+                <a href="manage-booking.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Manage Booking &amp; Points</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="legal.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-3.5 text-brand-text font-extrabold hover:bg-gray-50 uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>Legal &amp; Privacy</span>
+                    <span class="text-gray-400">&rarr;</span>
+                </a>
+                <a href="club.html" onclick="window.toggleMobileMenu(true)" class="px-5 py-4 bg-brand-red hover:bg-brand-redDark text-white font-black uppercase tracking-widest text-xs flex justify-between items-center">
+                    <span>★ Hot Beds Club (1,000 Free Welcome Pts)</span>
+                    <span class="text-white">&rarr;</span>
+                </a>
+            </div>
         </div>
-      </div>
+    </header>
 
-      <!-- Check-In / Check-Out Bar -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 bg-slate-50/40 border-b border-slate-200">
-        <div class="p-4 sm:px-6">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Check-In</span>
-          <span id="voucher-checkin" class="font-bold text-slate-900 text-sm sm:text-base mt-0.5 block">2026-11-12</span>
-          <span class="text-[11px] text-slate-500">From 3:00 PM Local</span>
-        </div>
-        <div class="p-4 sm:px-6">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Check-Out</span>
-          <span id="voucher-checkout" class="font-bold text-slate-900 text-sm sm:text-base mt-0.5 block">2026-11-14</span>
-          <span class="text-[11px] text-slate-500">Until 11:00 AM Local</span>
-        </div>
-        <div class="p-4 sm:px-6">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Province Code</span>
-          <span id="voucher-province-code" class="font-bold text-slate-900 text-sm sm:text-base mt-0.5 block">ON</span>
-          <span id="voucher-tax-jurisdiction" class="text-[11px] text-slate-500">ON Tax Jurisdiction</span>
-        </div>
-        <div class="p-4 sm:px-6">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Settlement Currency</span>
-          <span class="font-bold text-emerald-700 text-sm sm:text-base mt-0.5 block">$ CAD (All-In)</span>
-          <span class="text-[11px] text-slate-500">Stripe Verified</span>
-        </div>
-      </div>
-
-      <!-- Itemized CAD Tax & Financial Breakdown -->
-      <div class="p-6 sm:p-8">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-          Itemized CAD Charge & Statutory Tax Summary
-        </h3>
-
-        <div class="space-y-2.5 text-sm">
-          <!-- Room Subtotal -->
-          <div class="flex items-center justify-between text-slate-800">
-            <span id="voucher-room-calc-label">Room Subtotal (2 Nights × 1 Room @ $195.00 CAD)</span>
-            <span id="voucher-room-subtotal" class="font-mono font-semibold">$390.00 CAD</span>
-          </div>
-
-          <!-- Mandatory Ontario Eco Fee Row (Strictly visible ONLY when prov === 'ON') -->
-          <div id="row-ontario-eco-fee" class="flex items-center justify-between text-slate-700">
-            <span>
-              Mandatory Ontario Eco Fee
-              <span class="text-xs text-slate-500">($2.25 CAD / night incl. tax)</span>
-            </span>
-            <span id="voucher-eco-fee" class="font-mono font-medium">$4.50 CAD</span>
-          </div>
-
-          <!-- Provincial & Federal Taxes -->
-          <div class="flex items-center justify-between text-slate-700">
-            <span id="voucher-tax-label">Ontario HST (13%) & Municipal MAT</span>
-            <span id="voucher-tax-amount" class="font-mono font-medium">$50.70 CAD</span>
-          </div>
-
-          <!-- Divider -->
-          <div class="border-t border-slate-200 my-3 pt-3 flex items-center justify-between text-base sm:text-lg font-extrabold text-slate-900">
-            <span>Total Charged & Settled (CAD)</span>
-            <span id="voucher-total-cad" class="font-mono text-xl text-slate-900">$445.20 CAD</span>
-          </div>
+    <!-- ================================================================= -->
+    <!-- MAIN CONFIRMATION CONTAINER                                       -->
+    <!-- ================================================================= -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Top Utility Action Bar (Print Voucher & Return Home) -->
+        <div class="flex flex-wrap justify-between items-center gap-3 no-print">
+            <a href="index.html" class="text-xs font-extrabold text-gray-500 hover:text-brand-red uppercase tracking-wider transition">
+                &larr; Return to Hotbeds.ca Home
+            </a>
+            <div class="flex items-center gap-2.5">
+                <button type="button" onclick="window.print()" class="bg-white hover:bg-gray-100 border border-gray-200 text-brand-text font-extrabold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition">
+                    🖨️ Print Voucher
+                </button>
+                <a href="manage-booking.html" class="bg-brand-text hover:bg-black text-white font-extrabold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm transition">
+                    Manage Booking
+                </a>
+            </div>
         </div>
 
-        <!-- Cancellation & Statutory Disclosure Box -->
-        <div class="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1.5 leading-relaxed">
-          <p class="font-bold text-slate-800">
-            Statutory Consumer Protection & Cancellation Disclosure:
-          </p>
-          <p id="voucher-cancellation-policy">
-            Free cancellation up to 48 hours prior to check-in date (3:00 PM local property time). Modifications or cancellations requested inside the 48-hour arrival window are subject to a 1-night room and tax charge.
-          </p>
-          <p>
-            Issued in compliance with the <strong>Alberta Consumer Protection Act (Internet Sales Contract Regulation)</strong>, provincial consumer statutes (ON, BC, QC), and <strong>PIPEDA</strong> data privacy regulations. Hotbeds Inc. (Alberta Corporate Entity) • Federal CRA GST/HST Registration: <span class="font-mono">Pending / RT0001</span>.
-          </p>
+        <!-- 1. OFFICIAL VOUCHER & ITEMIZED RECEIPT CARD -->
+        <div class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-soft-lg">
+            
+            <!-- Top Confirmed Banner -->
+            <div class="bg-slate-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0 shadow">
+                        ✓
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-green-400 block">Reservation Confirmed &amp; Guaranteed</span>
+                        <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Your Stay is Locked In!</h1>
+                        <p class="text-xs text-gray-300 mt-0.5 break-all sm:break-normal">
+                            Confirmation &amp; receipt sent to <strong id="conf-guest-email" class="text-white">you@email.com</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 border border-white/15 rounded-2xl px-4 py-3 text-left sm:text-right shrink-0 w-full sm:w-auto flex sm:block justify-between items-center">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-300 block">Booking Reference</span>
+                    <span id="conf-booking-ref" class="font-mono font-black text-xl text-white tracking-wider">HB-849201</span>
+                </div>
+            </div>
+
+            <!-- Property & Stay Logistics -->
+            <div class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left (7 Cols): Hotel Details & Check-In Instructions -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="flex flex-wrap justify-between items-start gap-2">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block mb-1">Verified Property Voucher</span>
+                            <h2 id="conf-hotel-name" class="text-2xl font-black text-brand-text">Sandman Hotel Hamilton</h2>
+                            <p id="conf-room-name" class="text-sm font-bold text-gray-500 mt-0.5">Standard King Room</p>
+                        </div>
+                        <span id="conf-prov-badge" class="text-[11px] font-extrabold text-brand-text bg-gray-100 border border-gray-200 px-3 py-1 rounded-lg">
+                            Ontario (ON)
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100 text-xs">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-In</span>
+                            <span id="conf-checkin" class="font-extrabold text-brand-text text-sm break-words">Today</span>
+                            <span class="text-[10px] text-gray-500 block">From 3:00 PM</span>
+                        </div>
+                        <div class="border-l border-gray-200 pl-3">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Check-Out</span>
+                            <span id="conf-checkout" class="font-extrabold text-brand-text text-sm break-words">Tomorrow</span>
+                            <span class="text-[10px] text-gray-500 block">Until 11:00 AM</span>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 border-t sm:border-t-0 sm:border-l border-gray-200 pt-2 sm:pt-0 sm:pl-3">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Duration &amp; Guests</span>
+                            <span id="conf-nights-guests" class="font-extrabold text-brand-red text-sm block">1 Night • 2 Guests</span>
+                            <span id="conf-guest-name" class="text-[10px] text-gray-500 block truncate">Primary Guest</span>
+                        </div>
+                    </div>
+
+                    <!-- Email Drip & Private Portal Access Notice -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-start gap-3.5">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-sm shrink-0 mt-0.5">★</div>
+                        <div class="text-xs text-emerald-950 space-y-1">
+                            <div class="font-extrabold uppercase tracking-wider text-emerald-800">
+                                +<span id="conf-points-earned">3,000</span> Hot Beds Club Points Credited &amp; Member Perks Dispatched
+                            </div>
+                            <p id="conf-membership-copy" class="leading-relaxed text-emerald-900">
+                                Because you completed a verified reservation, you are automatically enrolled in the <strong>Hot Beds Club</strong> (1,000 Welcome Points + 10 pts/$1 spent), and we have sent your confirmation receipt along with your <strong>private member login credentials</strong> and local partner discounts to your email inbox.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Front Desk Check-In Checklist -->
+                    <div class="text-xs text-gray-500 space-y-1.5 pt-2 border-t border-gray-100">
+                        <div class="font-extrabold text-brand-text uppercase tracking-wider text-[11px]">Front Desk Check-In Instructions</div>
+                        <p>• Present a valid government-issued photo ID and your booking reference (<strong id="conf-ref-inline" class="text-brand-text">HB-849201</strong>) at the front desk.</p>
+                        <p>• Issued in compliance with the <strong>Alberta Consumer Protection Act (Internet Sales Contract Regulation)</strong> and <strong>PIPEDA / Alberta PIPA</strong> privacy rules.</p>
+                    </div>
+                </div>
+
+                <!-- Right (5 Cols): Itemized Official Receipt (Room, Member Discount, Provincial Tax & Ontario-Only Eco Fee) -->
+                <div class="lg:col-span-5 bg-gray-50 rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-4">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-gray-200 pb-3">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-brand-text">Official Payment Receipt</span>
+                        <span id="conf-pay-method" class="text-[10px] font-black uppercase bg-white border border-gray-200 px-2.5 py-1 rounded text-gray-700">Paid • CARD</span>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs">
+                        <div class="flex flex-wrap justify-between items-center gap-2 text-gray-600">
+                            <span>Room Subtotal (<span id="conf-receipt-nights">1 Night</span>):</span>
+                            <span id="conf-room-subtotal" class="font-bold text-brand-text">$250.00 CAD</span>
+                        </div>
+
+                        <div id="conf-discount-row" class="hidden flex-wrap justify-between items-center gap-2 text-emerald-700 font-bold">
+                            <span>Member Promotional Savings (20% Off):</span>
+                            <span id="conf-discount-val">-$50.00 CAD</span>
+                        </div>
+
+                        <div id="conf-net-subtotal-row" class="hidden flex-wrap justify-between items-center gap-2 text-brand-text font-extrabold border-t border-dashed border-gray-200 pt-1.5">
+                            <span>Discounted Room Subtotal:</span>
+                            <span id="conf-net-subtotal">$200.00 CAD</span>
+                        </div>
+
+                        <div class="flex flex-wrap justify-between items-center gap-2 text-gray-600">
+                            <span id="conf-tax-label">Combined Taxes (ON 13% HST):</span>
+                            <span id="conf-hst-val" class="font-semibold text-brand-text">$26.00 CAD</span>
+                        </div>
+
+                        <div id="conf-ecofee-row" class="flex flex-wrap justify-between items-center gap-2 text-gray-600">
+                            <span>Ontario Eco Fee ($2.25 / night):</span>
+                            <span id="conf-ecofee-val" class="font-semibold text-brand-text">$2.25 CAD</span>
+                        </div>
+
+                        <div class="flex flex-wrap justify-between items-center gap-2 text-gray-500 pt-2 border-t border-gray-200 font-semibold">
+                            <span id="conf-combined-tax-label">Total Taxes &amp; Eco Fees:</span>
+                            <span id="conf-combined-taxes">$28.25 CAD</span>
+                        </div>
+
+                        <div class="flex flex-wrap justify-between items-baseline gap-2 border-t-2 border-gray-300 pt-3 mt-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-brand-text">Total Paid (CAD)</span>
+                            <span id="conf-total-paid" class="text-2xl font-black text-emerald-700">$228.25 CAD</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ===================================================================== -->
-    <!-- PERSONALIZED GUEST AMENITY & KEYWORD CONCIERGE ENGINE (SUPABASE RPC)  -->
-    <!-- ===================================================================== -->
-    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 no-print">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-widest text-red-600 block">
-            100% Canadian Independent Partner Network
-          </span>
-          <h2 class="font-display text-2xl font-extrabold text-slate-900 mt-1">
-            Tonight in <span id="concierge-city-heading">Hamilton</span> — Curated Local Perks
-          </h2>
-          <p class="text-sm text-slate-600 mt-1">
-            Tell us what you need during your stay at <strong id="concierge-hotel-label" class="text-slate-900">Sandman Hotel Hamilton</strong> (e.g., <em>"suit dry cleaning"</em>, <em>"heavy gym weights & cold plunge"</em>, <em>"airport limo"</em>, or <em>"steak dinner"</em>) to unlock instant 10% off local partner codes.
-          </p>
+        <!-- 2. COMPLIMENTARY TRIP ENHANCEMENTS & SUPABASE KEYWORD-MATCHED PARTNER PERKS -->
+        <section class="no-print space-y-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-red block">Included With Your Stay</span>
+                    <h2 class="text-xl font-black text-brand-text tracking-tight">Enhance Your Trip &amp; Claim Partner Perks</h2>
+                    <p class="text-xs text-gray-500">Check your confirmation email or customize your local partner perks near <strong id="concierge-hotel-label" class="text-brand-text">Sandman Hotel Hamilton</strong> below:</p>
+                </div>
+
+                <!-- Category Filter Pills -->
+                <div class="flex flex-wrap gap-1.5" id="category-filter-bar">
+                    <button type="button" onclick="filterAffiliatesByCategory('ALL')" data-cat="ALL" class="cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-900 text-white transition">All Perks</button>
+                    <button type="button" onclick="filterAffiliatesByCategory('dining')" data-cat="dining" class="cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-white border border-gray-200 text-brand-text hover:border-brand-red transition">Dining</button>
+                    <button type="button" onclick="filterAffiliatesByCategory('workspace')" data-cat="workspace" class="cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-white border border-gray-200 text-brand-text hover:border-brand-red transition">Dry Cleaning &amp; Valet</button>
+                    <button type="button" onclick="filterAffiliatesByCategory('fitness')" data-cat="fitness" class="cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-white border border-gray-200 text-brand-text hover:border-brand-red transition">Gym &amp; Recovery</button>
+                    <button type="button" onclick="filterAffiliatesByCategory('mobility')" data-cat="mobility" class="cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-white border border-gray-200 text-brand-text hover:border-brand-red transition">Mobility &amp; Fleet</button>
+                </div>
+            </div>
+
+            <!-- Live Guest Note Input (Triggers Supabase RPC get_tailored_hotel_affiliates & guest_amenity_requests) -->
+            <form id="guest-amenity-form" onsubmit="handleGuestAmenitySubmit(event)" class="bg-white rounded-2xl border border-gray-200 p-4 shadow-soft space-y-2.5">
+                <label for="guest-amenity-note" class="block text-[11px] font-extrabold uppercase tracking-wider text-brand-text">
+                    Looking for something specific during your stay? (e.g. "dry cleaning", "dinner", "gym", "airport transfer")
+                </label>
+                <div class="flex flex-col sm:flex-row gap-2.5">
+                    <input
+                        type="text"
+                        id="guest-amenity-note"
+                        oninput="handleLiveNoteTyping(this.value)"
+                        placeholder="Type a note to match nearby 10% off partner coupons and send them to your inbox..."
+                        class="flex-grow px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white text-xs text-brand-text focus:outline-none focus:border-brand-red"
+                    />
+                    <button
+                        type="submit"
+                        class="bg-brand-red hover:bg-brand-redDark text-white font-extrabold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl shadow-sm transition shrink-0"
+                    >
+                        Send Perks to Inbox
+                    </button>
+                </div>
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-500">
+                    <span id="match-status-indicator">Showing included partner perks near your hotel.</span>
+                    <span id="amenity-save-feedback" class="hidden font-extrabold text-emerald-700">✓ Request saved &amp; sent to your email inbox!</span>
+                </div>
+            </form>
+
+            <!-- 3-Card Partner Grid (Preserves Original Default Cards & Hydrates Live Matches) -->
+            <div id="affiliate-partners-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Dining Perk</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">Local Dining &amp; Culinary Savings</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">Exclusive partner discounts for participating local restaurants, cafes, and delivery kitchens near your hotel.</p>
+                    </div>
+                    <span class="text-[11px] font-extrabold text-emerald-700 uppercase">✓ Sent to Your Email Inbox</span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-blue-50 text-blue-700 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Mobility &amp; Fleet</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">Preferred Car Rental &amp; Airport Transfer</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">Unlock corporate fleet pricing on rental vehicles and airport shuttles for your stay dates.</p>
+                    </div>
+                    <span class="text-[11px] font-extrabold text-emerald-700 uppercase">✓ Sent to Your Email Inbox</span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-emerald-50 text-emerald-700 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">Hot Beds Club</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">Manage Booking &amp; Points Balance</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">View your credited Hot Beds Club points, download receipts, or modify your stay details anytime.</p>
+                    </div>
+                    <a href="manage-booking.html" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase">Go to Manage Booking &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- 4-COLUMN ALBERTA CPA COMPLIANT OTA FOOTER                         -->
+    <!-- ================================================================= -->
+    <footer class="bg-white border-t border-gray-200 pt-10 pb-8 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 font-medium">
+                <p>&copy; 2026 Hotbeds Inc. All rights reserved. Registered in Alberta, Canada.</p>
+                <p class="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-gray-500 font-semibold text-center">
+                    Compliant with the <strong>Alberta Consumer Protection Act (Internet Sales Contract Regulation)</strong> &amp; <strong>PIPEDA / Alberta PIPA</strong>
+                </p>
+            </div>
         </div>
+    </footer>
 
-        <!-- Category Filter Pills -->
-        <div class="flex flex-wrap gap-1.5" id="category-filter-bar">
-          <button type="button" onclick="filterAffiliatesByCategory('ALL')" data-cat="ALL" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white transition">All Perks</button>
-          <button type="button" onclick="filterAffiliatesByCategory('workspace')" data-cat="workspace" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Valet & Dry Cleaning</button>
-          <button type="button" onclick="filterAffiliatesByCategory('dining')" data-cat="dining" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Indie Dining</button>
-          <button type="button" onclick="filterAffiliatesByCategory('fitness')" data-cat="fitness" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Gym & Recovery</button>
-          <button type="button" onclick="filterAffiliatesByCategory('mobility')" data-cat="mobility" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Airport Limo & Transit</button>
-        </div>
-      </div>
+    <!-- ================================================================= -->
+    <!-- LIVE TIMER, REGION SYNC, VOUCHER HYDRATION & SUPABASE MATCHING    -->
+    <!-- ================================================================= -->
+    <script>
+        // Supabase Client Initialization
+        const SUPABASE_URL = window.HOTBEDS_SUPABASE_URL || localStorage.getItem('HOTBEDS_SUPABASE_URL') || '';
+        const SUPABASE_ANON_KEY = window.HOTBEDS_SUPABASE_ANON_KEY || localStorage.getItem('HOTBEDS_SUPABASE_ANON_KEY') || '';
+        let directSupabaseClient = null;
+        if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
+            try {
+                directSupabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } catch (err) {
+                console.warn('Supabase client init warning:', err);
+            }
+        }
 
-      <!-- Guest Note Keyword Input Box -->
-      <form id="guest-amenity-form" onsubmit="handleGuestAmenitySubmit(event)" class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 space-y-3">
-        <label for="guest-amenity-note" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
-          Personalize Your Stay Note (Live Keyword Matcher + Instant Coupon Dispatch)
-        </label>
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input
-            type="text"
-            id="guest-amenity-note"
-            oninput="handleLiveNoteTyping(this.value)"
-            placeholder="Type what you need (e.g., 'Need a suit pressed before 9am and a real barbell gym nearby')..."
-            class="flex-grow px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 bg-white"
-          />
-          <button
-            type="submit"
-            id="submit-amenity-btn"
-            class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider shrink-0 shadow-sm transition"
-          >
-            Match & Email My Perks
-          </button>
-        </div>
-        <div class="flex items-center justify-between text-[11px] text-slate-500">
-          <span id="match-status-indicator">Showing top curated independent partners near your hotel.</span>
-          <span id="amenity-save-feedback" class="hidden font-semibold text-emerald-700">✓ Saved & queued for email dispatch!</span>
-        </div>
-      </form>
+        // Helper: Converts hotel name to slug (e.g. "Sandman Hotel Hamilton" -> "sandman-hotel-hamilton")
+        function toHotelSlug(name) {
+            return (name || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+        }
 
-      <!-- 3-Card Dynamic Partner Marketplace Grid -->
-      <div id="affiliate-partners-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Populated dynamically via Supabase RPC or local city fallback -->
-      </div>
+        // Live Supabase Query: Pulls hotel-assigned & keyword-matched affiliates
+        async function fetchLiveSupabaseAffiliates(city, hotelName, category = 'ALL', noteText = '') {
+            const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
+            if (!client || typeof client.rpc !== 'function') return null;
 
-      <!-- Partner CTA & Zero-Liability Notice -->
-      <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-500">
-        <p>
-          <strong>Third-Party Independent Merchant Disclaimer:</strong> Local dining, dry cleaning, fitness, and limo partners are 100% independent Canadian third-party operators. Hotbeds Inc. assumes zero liability for third-party merchant fulfillment.
-        </p>
-        <a href="partners.html" class="font-bold text-red-600 hover:text-red-700 shrink-0">
-          Own a Local Canadian Business? Join for $0 →
-        </a>
-      </div>
-    </section>
+            const hotelSlug = toHotelSlug(hotelName);
 
-  </main>
+            try {
+                const { data, error } = await client.rpc('get_tailored_hotel_affiliates', {
+                    p_city: city,
+                    p_hotel_slug: hotelSlug,
+                    p_category: category,
+                    p_guest_note: noteText
+                });
 
-  <!-- ===================================================================== -->
-  <!-- GLOBAL FOOTER                                                         -->
-  <!-- ===================================================================== -->
-  <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs">
-      <div>
-        <span class="font-display font-extrabold text-white text-base">Hotbeds<span class="text-red-500">.ca</span></span>
-        <p class="mt-1 text-slate-400">
-          © 2026 Hotbeds Inc. All prices in Canadian Dollars ($ CAD).
-        </p>
-      </div>
-      <div class="flex flex-wrap gap-5 font-semibold text-slate-300">
-        <a href="index.html" class="hover:text-white">Home</a>
-        <a href="cities.html" class="hover:text-white">Cities</a>
-        <a href="corporate.html" class="hover:text-white">5+ Rooms RFP</a>
-        <a href="partners.html" class="hover:text-white">Partner Intake</a>
-        <a href="manage-booking.html" class="hover:text-white">Manage Booking</a>
-        <a href="legal.html" class="hover:text-white">Legal & Privacy (PIPEDA)</a>
-      </div>
-    </div>
-  </footer>
+                if (error || !data || data.length === 0) return null;
+                return data;
+            } catch (err) {
+                return null;
+            }
+        }
 
-  <!-- ===================================================================== -->
-  <!-- APPLICATION LOGIC: VOUCHER HYDRATION, SUPABASE RPC & WEBHOOK TRIGGERS -->
-  <!-- ===================================================================== -->
-  <script>
-    // -------------------------------------------------------------------------
-    // 1. SUPABASE CONFIGURATION & CLIENT INITIALIZATION
-    // -------------------------------------------------------------------------
-    const SUPABASE_URL = window.HOTBEDS_SUPABASE_URL || localStorage.getItem('HOTBEDS_SUPABASE_URL') || '';
-    const SUPABASE_ANON_KEY = window.HOTBEDS_SUPABASE_ANON_KEY || localStorage.getItem('HOTBEDS_SUPABASE_ANON_KEY') || '';
+        // Local Fallback Partner Definitions (Matches SQL Seed Data)
+        const SEEDED_AFFILIATE_PARTNERS = [
+            {
+                business_name: 'Crown Valet Dry Cleaning & Pressing',
+                city: 'Hamilton',
+                neighborhood_zone: 'Downtown Core',
+                assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', '*'],
+                category: 'workspace',
+                trigger_keywords: ['dry cleaning', 'dry clean', 'laundry', 'suit', 'press', 'iron', 'wash', 'shirt', 'clean'],
+                badge_label: 'Hotel Valet • 10% Off',
+                offer_headline: 'Downtown Hamilton Same-Day Dry Cleaning & Suit Pressing',
+                offer_description: 'Need a suit pressed or laundry handled? We pick up directly from the Sandman & Sheraton front desk with 10% off for Hotbeds guests.',
+                coupon_code: 'HAM-CORE-CLEAN10',
+                discount_pct: 10,
+                priority_rank: 10
+            },
+            {
+                business_name: 'King William Culinary & Chef Kitchens',
+                city: 'Hamilton',
+                neighborhood_zone: 'Downtown Core',
+                assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', 'homewood-suites-by-hilton', '*'],
+                category: 'dining',
+                trigger_keywords: ['food', 'eat', 'dining', 'restaurant', 'dinner', 'lunch', 'breakfast', 'coffee', 'steak', 'drinks', 'bar', 'kitchen'],
+                badge_label: 'Curated Dining • 10% Off',
+                offer_headline: 'King William District Dining & Late-Night Kitchens',
+                offer_description: 'Skip overpriced room service. Show your Hotbeds code at participating Downtown Hamilton restaurants and private kitchens for 10% off your bill.',
+                coupon_code: 'HAM-CORE-DINE10',
+                discount_pct: 10,
+                priority_rank: 9
+            },
+            {
+                business_name: 'Steel City Strength & Cold Plunge Club',
+                city: 'Hamilton',
+                neighborhood_zone: 'Downtown Core',
+                assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', '*'],
+                category: 'fitness',
+                trigger_keywords: ['gym', 'workout', 'fitness', 'weights', 'barbell', 'run', 'sauna', 'cold plunge', 'recovery', 'exercise', 'lift'],
+                badge_label: 'Fitness & Recovery • 10% Off',
+                offer_headline: 'Downtown Hamilton Full-Facility Gym & Recovery Pass',
+                offer_description: 'Need more than a hotel treadmill? Unlock 10% off day and week passes for heavy free weights, squat racks, sauna, and cold plunge 4 mins away.',
+                coupon_code: 'HAM-CORE-FIT10',
+                discount_pct: 10,
+                priority_rank: 8
+            },
+            {
+                business_name: 'Preferred Executive Car & Airport Transfer',
+                city: 'Hamilton',
+                neighborhood_zone: 'Airport & Downtown Corridor',
+                assigned_hotel_slugs: ['*'],
+                category: 'mobility',
+                trigger_keywords: ['car', 'rental', 'airport', 'shuttle', 'limo', 'transfer', 'taxi', 'ride', 'fleet'],
+                badge_label: 'Mobility & Fleet • 10% Off',
+                offer_headline: 'Preferred Car Rental & Airport Transfer',
+                offer_description: 'Unlock preferred fleet pricing on rental vehicles and direct airport shuttles for your stay dates.',
+                coupon_code: 'HAM-CORE-FLEET10',
+                discount_pct: 10,
+                priority_rank: 7
+            }
+        ];
 
-    let directSupabaseClient = null;
-    if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY) {
-      try {
-        directSupabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      } catch (err) {
-        console.warn('Supabase client init fallback:', err);
-      }
-    }
+        let currentBookingContext = {
+            ref: 'HB-849201',
+            hotel: 'Sandman Hotel Hamilton',
+            city: 'Hamilton',
+            email: 'you@email.com',
+            fullName: 'Verified Guest'
+        };
+        let selectedAffiliateCategory = 'ALL';
+        let currentlyMatchedPartners = [];
 
-    // -------------------------------------------------------------------------
-    // 2. MOBILE MENU DRAWER WITH BACKGROUND SCROLL LOCK
-    // -------------------------------------------------------------------------
-    window.toggleMobileMenu = function () {
-      const drawer = document.getElementById('mobile-menu-drawer');
-      const icon = document.getElementById('mobile-menu-icon');
-      const btn = document.getElementById('mobile-menu-btn');
-      if (!drawer) return;
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
 
-      const isHidden = drawer.classList.contains('hidden');
-      if (isHidden) {
-        drawer.classList.remove('hidden');
-        if (icon) icon.textContent = '✕';
-        if (btn) btn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
-      } else {
-        drawer.classList.add('hidden');
-        if (icon) icon.textContent = '☰';
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
-    };
+        async function updatePartnerPerksGrid(noteText = '') {
+            const cleanNote = (noteText || '').trim();
+            const statusEl = document.getElementById('match-status-indicator');
+            const gridEl = document.getElementById('affiliate-partners-grid');
+            if (!gridEl) return;
 
-    // -------------------------------------------------------------------------
-    // 3. LOCAL PERK WINDOW TIMER (14:59)
-    // -------------------------------------------------------------------------
-    function startPerkWindowTimer() {
-      let remainingSeconds = 14 * 60 + 59;
-      const storedTimer = sessionStorage.getItem('hotbeds_perk_timer_sec');
-      if (storedTimer && !isNaN(parseInt(storedTimer, 10)) && parseInt(storedTimer, 10) > 0) {
-        remainingSeconds = parseInt(storedTimer, 10);
-      }
+            let results = await fetchLiveSupabaseAffiliates(
+                currentBookingContext.city,
+                currentBookingContext.hotel,
+                selectedAffiliateCategory,
+                cleanNote
+            );
 
-      const desktopEl = document.getElementById('perk-timer');
-      const mobileEl = document.getElementById('perk-timer-mobile');
+            // If Supabase isn't connected yet and user hasn't filtered or typed a keyword, keep the default 3-card layout
+            if (!results && selectedAffiliateCategory === 'ALL' && !cleanNote) {
+                return;
+            }
 
-      setInterval(() => {
-        if (remainingSeconds > 0) remainingSeconds--;
-        sessionStorage.setItem('hotbeds_perk_timer_sec', String(remainingSeconds));
-        const mins = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
-        const secs = String(remainingSeconds % 60).padStart(2, '0');
-        const formatted = `${mins}:${secs}`;
-        if (desktopEl) desktopEl.textContent = formatted;
-        if (mobileEl) mobileEl.textContent = formatted;
-      }, 1000);
-    }
+            if (!results || results.length === 0) {
+                const hotelSlug = toHotelSlug(currentBookingContext.hotel);
+                const lowerNote = cleanNote.toLowerCase();
+                results = SEEDED_AFFILIATE_PARTNERS
+                    .map(p => {
+                        let score = p.priority_rank || 1;
+                        if (p.assigned_hotel_slugs.includes(hotelSlug)) score += 50;
+                        if (lowerNote && p.trigger_keywords.some(kw => lowerNote.includes(kw.toLowerCase()))) {
+                            score += 100;
+                        }
+                        return { ...p, match_score: score };
+                    })
+                    .filter(p => selectedAffiliateCategory === 'ALL' || p.category.toLowerCase() === selectedAffiliateCategory.toLowerCase())
+                    .sort((a, b) => b.match_score - a.match_score)
+                    .slice(0, 3);
+            }
 
-    // -------------------------------------------------------------------------
-    // 4. HELPER: HOTEL NAME TO SLUG & SUPABASE RPC AFFILIATE MATCHER
-    // -------------------------------------------------------------------------
-    function toHotelSlug(name) {
-      return (name || '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-    }
+            currentlyMatchedPartners = results;
 
-    async function fetchLiveSupabaseAffiliates(city, hotelName, category = 'ALL', noteText = '') {
-      const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
-      if (!client || typeof client.rpc !== 'function') return null;
+            if (statusEl) {
+                statusEl.textContent = cleanNote
+                    ? `Matched ${results.length} partner perk(s) near ${currentBookingContext.hotel} for "${cleanNote}".`
+                    : `Showing ${results.length} partner perk(s) near ${currentBookingContext.hotel}.`;
+            }
 
-      const hotelSlug = toHotelSlug(hotelName);
+            gridEl.innerHTML = results.map(p => `
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-soft flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block bg-red-50 text-brand-red text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">${escapeHtml(p.badge_label || 'Partner Perk • 10% Off')}</span>
+                        <h3 class="text-base font-black text-brand-text mb-1">${escapeHtml(p.business_name)}</h3>
+                        <p class="text-[11px] font-bold text-gray-700 mb-1">${escapeHtml(p.offer_headline)}</p>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">${escapeHtml(p.offer_description)}</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+                        <span class="font-mono text-[11px] font-black text-brand-text bg-gray-100 px-2.5 py-1 rounded">${escapeHtml(p.coupon_code)}</span>
+                        <button type="button" onclick="claimPartnerCoupon('${escapeHtml(p.coupon_code)}', '${escapeHtml(p.business_name)}')" class="text-[11px] font-extrabold text-brand-red hover:underline uppercase">
+                            Claim &amp; Email Code &rarr;
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-      try {
-        const { data, error } = await client.rpc('get_tailored_hotel_affiliates', {
-          p_city: city,
-          p_hotel_slug: hotelSlug,
-          p_category: category,
-          p_guest_note: noteText
+        window.filterAffiliatesByCategory = function(category) {
+            selectedAffiliateCategory = category;
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                if (btn.getAttribute('data-cat') === category) {
+                    btn.className = 'cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-900 text-white transition';
+                } else {
+                    btn.className = 'cat-pill px-3 py-1.5 rounded-xl text-[11px] font-extrabold bg-white border border-gray-200 text-brand-text hover:border-brand-red transition';
+                }
+            });
+            const noteInput = document.getElementById('guest-amenity-note');
+            updatePartnerPerksGrid(noteInput ? noteInput.value : '');
+        };
+
+        let noteTypingDebounce = null;
+        window.handleLiveNoteTyping = function(val) {
+            clearTimeout(noteTypingDebounce);
+            noteTypingDebounce = setTimeout(() => {
+                updatePartnerPerksGrid(val);
+            }, 200);
+        };
+
+        async function saveGuestAmenityRequest(rawNote, claimedCode = null) {
+            const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
+            const payload = {
+                booking_ref: currentBookingContext.ref,
+                guest_name: currentBookingContext.fullName,
+                guest_email: currentBookingContext.email,
+                hotel_name: currentBookingContext.hotel,
+                hotel_slug: toHotelSlug(currentBookingContext.hotel),
+                city: currentBookingContext.city,
+                raw_note: rawNote || '',
+                claimed_coupon_code: claimedCode,
+                matched_partner_names: currentlyMatchedPartners.map(p => p.business_name),
+                matched_coupon_codes: currentlyMatchedPartners.map(p => p.coupon_code),
+                email_dispatched: false
+            };
+
+            localStorage.setItem('latest_guest_amenity_request', JSON.stringify(payload));
+
+            if (client && typeof client.from === 'function') {
+                try {
+                    await client.from('guest_amenity_requests').insert([payload]);
+                } catch (err) {
+                    console.warn('Supabase guest_amenity_requests insert fallback:', err);
+                }
+            }
+        }
+
+        window.handleGuestAmenitySubmit = async function(event) {
+            event.preventDefault();
+            const noteInput = document.getElementById('guest-amenity-note');
+            const feedback = document.getElementById('amenity-save-feedback');
+            const noteText = noteInput ? noteInput.value.trim() : '';
+
+            await updatePartnerPerksGrid(noteText);
+            await saveGuestAmenityRequest(noteText, null);
+
+            if (feedback) {
+                feedback.textContent = '✓ Request saved & sent to your email inbox!';
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 4000);
+            }
+        };
+
+        window.claimPartnerCoupon = async function(couponCode, businessName) {
+            try {
+                await navigator.clipboard.writeText(couponCode);
+            } catch (e) {}
+
+            const noteInput = document.getElementById('guest-amenity-note');
+            const noteText = noteInput ? noteInput.value.trim() : `Claimed ${businessName}`;
+            await saveGuestAmenityRequest(noteText, couponCode);
+
+            const feedback = document.getElementById('amenity-save-feedback');
+            if (feedback) {
+                feedback.textContent = `✓ Code ${couponCode} copied & dispatched to ${currentBookingContext.email}!`;
+                feedback.classList.remove('hidden');
+                setTimeout(() => feedback.classList.add('hidden'), 4000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Live Header 7-Day Club Countdown Timer (NEVER overwritten by localStorage)
+            const clubTimerElement = document.getElementById('club-timer');
+            let clubTimeLeft = (6 * 24 * 3600) + (23 * 3600) + (59 * 60) + 59;
+            function updateClubHeaderTimer() {
+                if (!clubTimerElement || clubTimeLeft <= 0) return;
+                const days = Math.floor(clubTimeLeft / (24 * 3600));
+                const hours = Math.floor((clubTimeLeft % (24 * 3600)) / 3600);
+                const mins = Math.floor((clubTimeLeft % 3600) / 60);
+                clubTimerElement.innerText = `Free • ${days}d ${hours}h ${mins}m`;
+                clubTimeLeft--;
+            }
+            updateClubHeaderTimer();
+            setInterval(updateClubHeaderTimer, 1000);
+
+            // 2. Sync Header Avatar Initial & Region Dropdown
+            const memberName = localStorage.getItem('hotbeds_club_name') || '';
+            if (memberName) {
+                const avatarEl = document.getElementById('user-avatar-badge');
+                if (avatarEl) avatarEl.textContent = memberName.charAt(0).toUpperCase() + '.';
+            }
+
+            const regionSelect = document.getElementById('region-select');
+            const savedRegion = localStorage.getItem('hotbeds_region') || 'ON';
+            if (regionSelect) {
+                regionSelect.value = savedRegion;
+                regionSelect.addEventListener('change', (e) => {
+                    localStorage.setItem('hotbeds_region', e.target.value);
+                });
+            }
+
+            // 3. Hydrate Confirmation Voucher & Provincial Tax / Ontario-Only Eco Fee Math
+            const urlParams = new URLSearchParams(window.location.search);
+            const savedPayloadRaw = localStorage.getItem('latest_booking_payload');
+            let data = null;
+
+            if (savedPayloadRaw) {
+                try { data = JSON.parse(savedPayloadRaw); } catch (e) { data = null; }
+            }
+
+            const PROVINCE_TAX_MAP = {
+                'ON': { name: 'Ontario (ON)', rate: 0.13, label: '13% HST', hasEcoFee: true },
+                'BC': { name: 'British Columbia (BC)', rate: 0.13, label: '13% GST/PST', hasEcoFee: false },
+                'AB': { name: 'Alberta (AB)', rate: 0.05, label: '5% GST', hasEcoFee: false },
+                'QC': { name: 'Quebec (QC)', rate: 0.15, label: '15% GST/QST', hasEcoFee: false },
+                'PR': { name: 'Prairies (MB/SK)', rate: 0.12, label: '12% GST/PST', hasEcoFee: false },
+                'AT': { name: 'Atlantic Canada (AT)', rate: 0.15, label: '15% HST', hasEcoFee: false }
+            };
+
+            const ref = (data && data.booking_ref) || urlParams.get('ref') || 'HB-849201';
+            const hotel = (data && data.hotel_name) || urlParams.get('hotel') || localStorage.getItem('locked_hotel_name') || 'Sandman Hotel Hamilton';
+            const city = (data && data.city) || urlParams.get('city') || localStorage.getItem('locked_hotel_city') || 'Hamilton';
+            const room = ((data && data.room_name) || 'Standard King Room').replace(/Corporate\s+/i, '');
+            const provCode = ((data && data.province) || urlParams.get('prov') || localStorage.getItem('locked_hotel_province') || 'ON').toUpperCase();
+            const provConfig = PROVINCE_TAX_MAP[provCode] || PROVINCE_TAX_MAP['ON'];
+
+            const email = (data && data.email) || localStorage.getItem('hotbeds_club_email') || 'you@email.com';
+            const fullName = (data && (data.full_name || `${data.first_name || ''} ${data.last_name || ''}`.trim())) || localStorage.getItem('hotbeds_club_name') || 'Verified Guest';
+            const checkin = (data && data.checkin) || 'Today';
+            const checkout = (data && data.checkout) || 'Tomorrow';
+            const nights = parseInt((data && data.nights) || '1', 10) || 1;
+            const guests = (data && data.guests) || 2;
+
+            const roomSubtotal = parseFloat((data && data.room_subtotal_cad) || localStorage.getItem('locked_hotel_price') || '250.00');
+            const memberDripEnrolled = data ? Boolean(data.member_drip_enrolled || data.guild_member_enrolled) : (localStorage.getItem('guild_member_active') === 'true');
+            const discount = memberDripEnrolled ? parseFloat((data && data.discount_cad) || (roomSubtotal * 0.20).toFixed(2)) : 0.00;
+            const netRoom = parseFloat((data && data.net_room_cad) || (roomSubtotal - discount).toFixed(2));
+
+            const hst = parseFloat((data && data.hst_gst_cad) || (netRoom * provConfig.rate).toFixed(2));
+            const ecoFee = provConfig.hasEcoFee ? parseFloat((data && data.eco_fee_cad) || (2.25 * nights).toFixed(2)) : 0.00;
+            const combinedTax = (hst + ecoFee).toFixed(2);
+            const totalPaid = (data && data.total_paid_cad) || (netRoom + hst + ecoFee).toFixed(2);
+
+            const welcomePoints = (data && data.welcome_points) || 1000;
+            const stayPoints = (data && data.points_earned) || Math.round(netRoom * 10);
+            const totalCreditedPoints = welcomePoints + stayPoints;
+            const method = (data && data.payment_method) ? data.payment_method.toUpperCase() : 'CARD';
+
+            currentBookingContext = { ref, hotel, city, email, fullName };
+
+            document.getElementById('conf-booking-ref').textContent = ref;
+            document.getElementById('conf-ref-inline').textContent = ref;
+            document.getElementById('conf-guest-email').textContent = email;
+            document.getElementById('conf-hotel-name').textContent = hotel;
+            document.getElementById('conf-room-name').textContent = room;
+            document.getElementById('conf-prov-badge').textContent = `${provConfig.name} • ${provConfig.label}`;
+            document.getElementById('conf-checkin').textContent = checkin;
+            document.getElementById('conf-checkout').textContent = checkout;
+            document.getElementById('conf-nights-guests').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'} • ${guests} ${parseInt(guests, 10) === 1 ? 'Guest' : 'Guests'}`;
+            document.getElementById('conf-guest-name').textContent = `Guest: ${fullName}`;
+            document.getElementById('conf-points-earned').textContent = totalCreditedPoints.toLocaleString();
+            document.getElementById('conf-pay-method').textContent = `Paid • ${method}`;
+
+            const conciergeHotelLabel = document.getElementById('concierge-hotel-label');
+            if (conciergeHotelLabel) conciergeHotelLabel.textContent = hotel;
+
+            const membershipCopy = document.getElementById('conf-membership-copy');
+            if (memberDripEnrolled && discount > 0) {
+                membershipCopy.innerHTML = `You are automatically enrolled in the <strong>Hot Beds Club</strong> (1,000 Welcome Points + ${stayPoints.toLocaleString()} stay points), and your <strong>20% promotional savings (-$${discount.toFixed(2)} CAD)</strong> has been applied. Your private member login credentials and local partner discounts have been sent to <strong>${email}</strong>.`;
+            } else {
+                membershipCopy.innerHTML = `You are automatically enrolled in the <strong>Hot Beds Club</strong> on your first reservation (1,000 Welcome Points + ${stayPoints.toLocaleString()} stay points). Your official receipt and local partner perks have been sent to <strong>${email}</strong>.`;
+            }
+
+            document.getElementById('conf-receipt-nights').textContent = `${nights} ${nights === 1 ? 'Night' : 'Nights'}`;
+            document.getElementById('conf-room-subtotal').textContent = `$${roomSubtotal.toFixed(2)} CAD`;
+
+            const discRow = document.getElementById('conf-discount-row');
+            const netSubRow = document.getElementById('conf-net-subtotal-row');
+            if (memberDripEnrolled && discount > 0) {
+                discRow.classList.replace('hidden', 'flex');
+                netSubRow.classList.replace('hidden', 'flex');
+                document.getElementById('conf-discount-val').textContent = `-$${discount.toFixed(2)} CAD`;
+                document.getElementById('conf-net-subtotal').textContent = `$${netRoom.toFixed(2)} CAD`;
+            }
+
+            document.getElementById('conf-tax-label').textContent = `Combined Taxes (${provCode} ${provConfig.label}):`;
+            document.getElementById('conf-hst-val').textContent = `$${hst.toFixed(2)} CAD`;
+
+            const ecoRow = document.getElementById('conf-ecofee-row');
+            const combinedTaxLabel = document.getElementById('conf-combined-tax-label');
+            if (provConfig.hasEcoFee) {
+                ecoRow.classList.remove('hidden');
+                ecoRow.classList.add('flex');
+                document.getElementById('conf-ecofee-val').textContent = `$${ecoFee.toFixed(2)} CAD`;
+                combinedTaxLabel.textContent = 'Total Taxes & Ontario Eco Fees:';
+            } else {
+                ecoRow.classList.add('hidden');
+                ecoRow.classList.remove('flex');
+                combinedTaxLabel.textContent = `Total Provincial Taxes (${provConfig.label}):`;
+            }
+
+            document.getElementById('conf-combined-taxes').textContent = `$${combinedTax} CAD`;
+            document.getElementById('conf-total-paid').textContent = `$${parseFloat(totalPaid).toFixed(2)} CAD`;
+
+            // 4. Query Live Supabase Affiliates on Load (Falls back to default 3 cards if Supabase isn't live yet)
+            updatePartnerPerksGrid('');
         });
-        if (error || !data || data.length === 0) return null;
-        return data;
-      } catch (e) {
-        console.warn('Supabase RPC fallback used:', e);
-        return null;
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // 5. CURATED CANADIAN INDEPENDENT FALLBACK CATALOG (IF OFFLINE / SEEDED)
-    // -------------------------------------------------------------------------
-    const LOCAL_AFFILIATE_CATALOG = [
-      {
-        business_name: 'Crown Valet Dry Cleaning & Pressing',
-        city: 'Hamilton',
-        neighborhood_zone: 'Downtown Core',
-        assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', '*'],
-        category: 'workspace',
-        trigger_keywords: ['dry cleaning', 'dry clean', 'laundry', 'suit', 'press', 'iron', 'wash', 'shirt', 'clean'],
-        badge_label: 'Hotel Valet • 10% Off',
-        offer_headline: 'Downtown Hamilton Same-Day Dry Cleaning & Suit Pressing',
-        offer_description: 'Need a suit pressed or laundry handled? We pick up directly from the Sandman & Sheraton front desk with 10% off for Hotbeds guests.',
-        coupon_code: 'HAM-CORE-CLEAN10',
-        discount_pct: 10,
-        priority_rank: 10
-      },
-      {
-        business_name: 'King William Culinary & Chef Kitchens',
-        city: 'Hamilton',
-        neighborhood_zone: 'Downtown Core',
-        assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', 'homewood-suites-by-hilton', '*'],
-        category: 'dining',
-        trigger_keywords: ['food', 'eat', 'dining', 'restaurant', 'dinner', 'lunch', 'breakfast', 'coffee', 'steak', 'drinks', 'bar', 'kitchen'],
-        badge_label: 'Curated Dining • 10% Off',
-        offer_headline: 'King William District Dining & Late-Night Kitchens',
-        offer_description: 'Skip overpriced room service. Show your Hotbeds code at participating Downtown Hamilton restaurants and private kitchens for 10% off your bill.',
-        coupon_code: 'HAM-CORE-DINE10',
-        discount_pct: 10,
-        priority_rank: 9
-      },
-      {
-        business_name: 'Steel City Strength & Cold Plunge Club',
-        city: 'Hamilton',
-        neighborhood_zone: 'Downtown Core',
-        assigned_hotel_slugs: ['sandman-hotel-hamilton', 'the-sheraton-hamilton-core', '*'],
-        category: 'fitness',
-        trigger_keywords: ['gym', 'workout', 'fitness', 'weights', 'barbell', 'run', 'sauna', 'cold plunge', 'recovery', 'exercise', 'lift'],
-        badge_label: 'Fitness & Recovery • 10% Off',
-        offer_headline: 'Downtown Hamilton Full-Facility Gym & Recovery Pass',
-        offer_description: 'Need more than a hotel treadmill? Unlock 10% off day and week passes for heavy free weights, squat racks, sauna, and cold plunge 4 mins away.',
-        coupon_code: 'HAM-CORE-FIT10',
-        discount_pct: 10,
-        priority_rank: 8
-      },
-      {
-        business_name: 'Golden Horseshoe Executive Airport Limo',
-        city: 'Hamilton',
-        neighborhood_zone: 'YHM / YYZ Corridor',
-        assigned_hotel_slugs: ['*'],
-        category: 'mobility',
-        trigger_keywords: ['limo', 'airport', 'taxi', 'shuttle', 'ride', 'car', 'transfer', 'transport', 'uber', 'flight'],
-        badge_label: 'Canadian Independent Fleet • 10% Off',
-        offer_headline: 'Direct Flat-Rate Hotel-to-Airport Town Car Transfer',
-        offer_description: '100% Canadian independent chauffeur fleet serving Hamilton (YHM) and Pearson (YYZ) with guaranteed morning pickup.',
-        coupon_code: 'HAM-LIMO-VIP10',
-        discount_pct: 10,
-        priority_rank: 7
-      }
-    ];
-
-    function matchLocalCatalogFallback(city, hotelName, category = 'ALL', noteText = '') {
-      const hotelSlug = toHotelSlug(hotelName);
-      const cleanNote = (noteText || '').trim().toLowerCase();
-      const targetCity = (city || 'Hamilton').trim();
-
-      return LOCAL_AFFILIATE_CATALOG
-        .map(item => {
-          let score = item.priority_rank || 1;
-          if (item.assigned_hotel_slugs.includes(hotelSlug)) score += 50;
-          if (cleanNote && item.trigger_keywords.some(kw => cleanNote.includes(kw.toLowerCase()))) {
-            score += 100;
-          }
-          const displayCity = item.city.toLowerCase() === targetCity.toLowerCase() ? item.city : targetCity;
-          return {
-            ...item,
-            city: displayCity,
-            offer_headline: item.offer_headline.replace(/Hamilton/gi, displayCity),
-            offer_description: item.offer_description.replace(/Hamilton/gi, displayCity),
-            coupon_code: item.coupon_code.replace(/^HAM/, displayCity.slice(0, 3).toUpperCase()),
-            match_score: score
-          };
-        })
-        .filter(item => category === 'ALL' || item.category.toLowerCase() === category.toLowerCase())
-        .sort((a, b) => b.match_score - a.match_score)
-        .slice(0, 3);
-    }
-
-    // -------------------------------------------------------------------------
-    // 6. VOUCHER STATE & CAD TAX ENGINE HYDRATION
-    // -------------------------------------------------------------------------
-    let activeBooking = null;
-    let activeCategory = 'ALL';
-    let currentDisplayedPartners = [];
-
-    function loadBookingPayload() {
-      const params = new URLSearchParams(window.location.search);
-      let stored = null;
-      try {
-        stored = JSON.parse(localStorage.getItem('latest_booking_payload') || 'null');
-      } catch (e) {
-        stored = null;
-      }
-
-      const city = params.get('city') || (stored && (stored.city || stored.cityName)) || 'Hamilton';
-      const prov = (params.get('prov') || (stored && (stored.prov || stored.province)) || 'ON').toUpperCase();
-      const hotelName = params.get('hotel') || (stored && stored.hotelName) || 'Sandman Hotel Hamilton';
-      const roomType = params.get('roomType') || (stored && stored.roomType) || 'Standard King Room';
-      const checkIn = params.get('checkIn') || (stored && stored.checkIn) || '2026-11-12';
-      const checkOut = params.get('checkOut') || (stored && stored.checkOut) || '2026-11-14';
-      const nights = Math.max(1, parseInt(params.get('nights') || (stored && stored.nights) || '2', 10));
-      const roomsCount = Math.max(1, parseInt(params.get('rooms') || (stored && stored.roomsCount) || '1', 10));
-
-      const guestName = params.get('guestName') || (stored && stored.guestName) || 'Verified Guest';
-      const guestEmail = params.get('guestEmail') || (stored && stored.guestEmail) || 'guest@hotbeds.ca';
-      const guestPhone = params.get('guestPhone') || (stored && stored.guestPhone) || '+1 (905) 555-0199';
-
-      // Booking Reference (HB-XXXXXX)
-      const bookingRef = params.get('ref') || (stored && (stored.bookingRef || stored.booking_reference)) || ('HB-' + Math.floor(100000 + Math.random() * 900000));
-
-      // Confirmed Nightly Rate & Room Subtotal (CAD)
-      const nightlyRateCad = parseFloat(params.get('rate') || (stored && stored.ratePerNight) || '195.00');
-      const roomSubtotal = +(nightlyRateCad * nights * roomsCount).toFixed(2);
-
-      // STRICT ONTARIO ECO FEE LOGIC:
-      // $2.25/night ($2.00 + tax) ONLY when prov === 'ON'. $0.00 and hidden for AB, BC, QC, etc.
-      const isOntario = (prov === 'ON');
-      const ecoFeeCad = isOntario ? +(2.25 * nights * roomsCount).toFixed(2) : 0.00;
-
-      // Provincial & Federal Tax Rates
-      const taxRatesByProvince = {
-        ON: { rate: 0.13, label: 'Ontario HST (13%) & Municipal MAT' },
-        AB: { rate: 0.09, label: 'Alberta GST (5%) + Tourism Levy (4%)' },
-        BC: { rate: 0.15, label: 'BC GST (5%) + PST/MRDT (10%)' },
-        QC: { rate: 0.18475, label: 'Quebec GST/QST + Lodging Tax' }
-      };
-      const provTaxInfo = taxRatesByProvince[prov] || { rate: 0.13, label: `Provincial & Federal Tax (${prov})` };
-      const taxCad = (stored && typeof stored.taxCad === 'number') ? stored.taxCad : +(roomSubtotal * provTaxInfo.rate).toFixed(2);
-      const totalCad = (stored && typeof stored.totalCad === 'number') ? stored.totalCad : +(roomSubtotal + ecoFeeCad + taxCad).toFixed(2);
-
-      activeBooking = {
-        bookingRef,
-        hotelName,
-        hotelSlug: toHotelSlug(hotelName),
-        city,
-        prov,
-        roomType,
-        checkIn,
-        checkOut,
-        nights,
-        roomsCount,
-        guestName,
-        guestEmail,
-        guestPhone,
-        nightlyRateCad,
-        roomSubtotal,
-        isOntario,
-        ecoFeeCad,
-        taxLabel: provTaxInfo.label,
-        taxCad,
-        totalCad
-      };
-
-      renderVoucherUI(activeBooking);
-    }
-
-    function renderVoucherUI(b) {
-      const setTxt = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      };
-
-      setTxt('banner-guest-email', b.guestEmail);
-      setTxt('voucher-booking-ref', b.bookingRef);
-      setTxt('voucher-timestamp', `Issued: ${new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}`);
-      setTxt('voucher-hotel-name', b.hotelName);
-      setTxt('voucher-hotel-location', `${b.city}, ${b.prov}, Canada`);
-      setTxt('voucher-room-type', b.roomType);
-      setTxt('voucher-rooms-count', `${b.roomsCount} ${b.roomsCount > 1 ? 'Rooms' : 'Room'}`);
-      setTxt('voucher-nights-count', `${b.nights} ${b.nights > 1 ? 'Nights' : 'Night'}`);
-      setTxt('voucher-guest-name', b.guestName);
-      setTxt('voucher-guest-email', b.guestEmail);
-      setTxt('voucher-guest-phone', b.guestPhone);
-      setTxt('voucher-checkin', b.checkIn);
-      setTxt('voucher-checkout', b.checkOut);
-      setTxt('voucher-province-code', b.prov);
-      setTxt('voucher-tax-jurisdiction', `${b.prov} Tax Jurisdiction`);
-
-      // Room Subtotal Breakdown
-      setTxt('voucher-room-calc-label', `Room Subtotal (${b.nights} Night${b.nights > 1 ? 's' : ''} × ${b.roomsCount} Room${b.roomsCount > 1 ? 's' : ''} @ $${b.nightlyRateCad.toFixed(2)} CAD)`);
-      setTxt('voucher-room-subtotal', `$${b.roomSubtotal.toFixed(2)} CAD`);
-
-      // Strictly hide Ontario Eco Fee row for non-Ontario provinces
-      const ecoRow = document.getElementById('row-ontario-eco-fee');
-      if (b.isOntario) {
-        if (ecoRow) ecoRow.classList.remove('hidden');
-        setTxt('voucher-eco-fee', `$${b.ecoFeeCad.toFixed(2)} CAD`);
-      } else {
-        if (ecoRow) ecoRow.classList.add('hidden');
-      }
-
-      setTxt('voucher-tax-label', b.taxLabel);
-      setTxt('voucher-tax-amount', `$${b.taxCad.toFixed(2)} CAD`);
-      setTxt('voucher-total-cad', `$${b.totalCad.toFixed(2)} CAD`);
-
-      // Concierge headings
-      setTxt('concierge-city-heading', b.city);
-      setTxt('concierge-hotel-label', b.hotelName);
-    }
-
-    // -------------------------------------------------------------------------
-    // 7. RENDER 3-CARD PARTNER MARKETPLACE & KEYWORD MATCHING
-    // -------------------------------------------------------------------------
-    async function refreshAffiliateCards(noteText = '') {
-      if (!activeBooking) return;
-
-      const statusEl = document.getElementById('match-status-indicator');
-      let partners = await fetchLiveSupabaseAffiliates(
-        activeBooking.city,
-        activeBooking.hotelName,
-        activeCategory,
-        noteText
-      );
-
-      let sourceLabel = 'Live Supabase Directory';
-      if (!partners || partners.length === 0) {
-        partners = matchLocalCatalogFallback(
-          activeBooking.city,
-          activeBooking.hotelName,
-          activeCategory,
-          noteText
-        );
-        sourceLabel = 'Curated Local Partner Directory';
-      }
-
-      currentDisplayedPartners = partners;
-
-      if (statusEl) {
-        statusEl.textContent = noteText.trim()
-          ? `Matched ${partners.length} local partner(s) in ${activeBooking.city} for "${noteText.trim()}" (${sourceLabel}).`
-          : `Showing top ${partners.length} curated independent partners near ${activeBooking.hotelName}.`;
-      }
-
-      const grid = document.getElementById('affiliate-partners-grid');
-      if (!grid) return;
-
-      grid.innerHTML = partners.map(p => `
-        <article class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:shadow-md transition p-5 space-y-4">
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between gap-2">
-              <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-50 text-red-700 border border-red-200">
-                ${escapeHtml(p.badge_label || 'Curated Partner • 10% Off')}
-              </span>
-              <span class="text-[11px] font-semibold text-slate-400">
-                ${escapeHtml(p.neighborhood_zone || activeBooking.city)}
-              </span>
-            </div>
-            <h3 class="font-display font-extrabold text-base text-slate-900">
-              ${escapeHtml(p.business_name)}
-            </h3>
-            <p class="text-xs font-bold text-slate-700">
-              ${escapeHtml(p.offer_headline)}
-            </p>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              ${escapeHtml(p.offer_description)}
-            </p>
-          </div>
-
-          <div class="pt-3 border-t border-slate-200/80 space-y-2">
-            <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-slate-200">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Promo Code</span>
-              <span class="font-mono text-xs font-extrabold text-slate-900">${escapeHtml(p.coupon_code)}</span>
-            </div>
-            <button
-              type="button"
-              onclick="claimPartnerCoupon('${escapeHtml(p.coupon_code)}', '${escapeHtml(p.business_name)}')"
-              class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-red-600 text-white font-bold text-xs uppercase tracking-wider transition"
-            >
-              Claim ${p.discount_pct || 10}% Off Code
-            </button>
-          </div>
-        </article>
-      `).join('');
-    }
-
-    function filterAffiliatesByCategory(category) {
-      activeCategory = category;
-      document.querySelectorAll('.cat-pill').forEach(btn => {
-        if (btn.getAttribute('data-cat') === category) {
-          btn.className = 'cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white transition';
-        } else {
-          btn.className = 'cat-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
-        }
-      });
-      const noteInput = document.getElementById('guest-amenity-note');
-      refreshAffiliateCards(noteInput ? noteInput.value : '');
-    }
-
-    let typingTimer = null;
-    function handleLiveNoteTyping(val) {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => {
-        refreshAffiliateCards(val);
-      }, 200);
-    }
-
-    // -------------------------------------------------------------------------
-    // 8. SAVE AMENITY REQUEST & CLAIMED COUPON TO SUPABASE (WEBHOOK TRIGGER)
-    // -------------------------------------------------------------------------
-    async function logAmenityRequestToSupabase(rawNote, claimedCode = null, claimedBusiness = null) {
-      if (!activeBooking) return;
-
-      const matchedNames = currentDisplayedPartners.map(p => p.business_name);
-      const matchedCodes = currentDisplayedPartners.map(p => p.coupon_code);
-
-      const payload = {
-        booking_ref: activeBooking.bookingRef,
-        guest_name: activeBooking.guestName,
-        guest_email: activeBooking.guestEmail,
-        hotel_name: activeBooking.hotelName,
-        hotel_slug: activeBooking.hotelSlug,
-        city: activeBooking.city,
-        raw_note: rawNote || (claimedBusiness ? `Claimed coupon for ${claimedBusiness}` : ''),
-        claimed_coupon_code: claimedCode,
-        matched_partner_names: matchedNames,
-        matched_coupon_codes: matchedCodes,
-        email_dispatched: false
-      };
-
-      localStorage.setItem('latest_guest_amenity_request', JSON.stringify(payload));
-
-      const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
-      if (client && typeof client.from === 'function') {
-        try {
-          await client.from('guest_amenity_requests').insert([payload]);
-        } catch (err) {
-          console.warn('Supabase guest_amenity_requests insert fallback:', err);
-        }
-      }
-    }
-
-    async function handleGuestAmenitySubmit(event) {
-      event.preventDefault();
-      const noteInput = document.getElementById('guest-amenity-note');
-      const feedback = document.getElementById('amenity-save-feedback');
-      const noteText = noteInput ? noteInput.value.trim() : '';
-
-      await refreshAffiliateCards(noteText);
-      await logAmenityRequestToSupabase(noteText, null, null);
-
-      if (feedback) {
-        feedback.classList.remove('hidden');
-        setTimeout(() => feedback.classList.add('hidden'), 4500);
-      }
-    }
-
-    async function claimPartnerCoupon(couponCode, businessName) {
-      try {
-        await navigator.clipboard.writeText(couponCode);
-      } catch (e) {
-        // Clipboard fallback
-      }
-
-      const noteInput = document.getElementById('guest-amenity-note');
-      const noteText = noteInput ? noteInput.value.trim() : '';
-      await logAmenityRequestToSupabase(noteText, couponCode, businessName);
-
-      const feedback = document.getElementById('amenity-save-feedback');
-      if (feedback) {
-        feedback.textContent = `✓ Code ${couponCode} copied & queued for email dispatch!`;
-        feedback.classList.remove('hidden');
-        setTimeout(() => feedback.classList.add('hidden'), 4500);
-      }
-    }
-
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    // -------------------------------------------------------------------------
-    // 9. INITIALIZE ON DOM READY
-    // -------------------------------------------------------------------------
-    document.addEventListener('DOMContentLoaded', () => {
-      startPerkWindowTimer();
-      loadBookingPayload();
-      refreshAffiliateCards('');
-    });
-  </script>
+    </script>
 </body>
 </html>
