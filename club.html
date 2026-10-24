@@ -265,7 +265,7 @@
                     <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
                         <div class="text-amber-400 text-xs font-black uppercase tracking-wider mb-1">Manage Stays</div>
                         <h3 class="text-sm font-extrabold text-white">Receipts &amp; Vouchers</h3>
-                        <p class="text-[11px] text-gray-300 mt-1">Track all upcoming and past stays easily on manage-booking.html.</p>
+                        <p class="text-[11px] text-gray-300 mt-1">Track all upcoming and past stays easily in your My Booking portal.</p>
                     </div>
                 </div>
             </div>
@@ -311,7 +311,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label for="form-email" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                                    <input type="email" id="form-email" required placeholder="you@example.ca" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
+                                    <input type="email" id="form-email" required placeholder="e.g. john.doe@email.com" class="w-full p-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-red/20 outline-none text-sm font-semibold text-brand-text transition">
                                 </div>
                                 <div>
                                     <label for="form-phone" class="block text-[10px] font-extrabold text-gray-500 uppercase tracking-wider mb-1">Mobile Phone Number</label>
@@ -405,18 +405,18 @@
                             </div>
                             <div>
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400 block">Email Address</span>
-                                <span id="wallet-email-val" class="text-xs font-extrabold text-white truncate block">member@hotbeds.ca</span>
+                                <span id="wallet-email-val" class="text-xs font-extrabold text-white truncate block">john.doe@email.com</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="p-6 space-y-3.5">
                         <a href="results.html" class="w-full bg-brand-red hover:bg-brand-redDark text-white font-black py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition shadow-md flex items-center justify-center gap-1.5">
-                            <span>Search Canadian Stays (results.html)</span>
+                            <span>Search Canadian Stays</span>
                             <span>&rarr;</span>
                         </a>
                         <a href="manage-booking.html" class="w-full bg-slate-900 hover:bg-black text-white font-extrabold py-3.5 px-4 rounded-xl text-center uppercase tracking-widest text-xs transition flex items-center justify-center">
-                            <span>View My Booking (manage-booking.html)</span>
+                            <span>Manage My Booking</span>
                         </a>
 
                         <div class="text-center pt-2">
@@ -480,7 +480,7 @@
                     </div>
                     <h3 class="text-lg font-black text-brand-text mb-2">Manage Stays &amp; Receipts Easily</h3>
                     <p class="text-xs text-gray-600 leading-relaxed">
-                        Use your email and booking reference anytime on <a href="manage-booking.html" class="underline font-bold text-brand-text">manage-booking.html</a> to access your official hotel voucher and itemized provincial tax receipts.
+                        Use your email and booking reference anytime on our <a href="manage-booking.html" class="underline font-bold text-brand-text">Manage My Booking</a> portal to access your official hotel voucher and itemized provincial tax receipts.
                     </p>
                 </div>
             </div>
@@ -547,7 +547,7 @@
                         <span id="faq-icon-2" class="text-brand-red font-black text-lg ml-4">+</span>
                     </button>
                     <div id="faq-body-2" class="hidden mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                        Visit <a href="manage-booking.html" class="underline font-bold text-brand-text">manage-booking.html</a> and enter your booking reference or registered email address to view upcoming stays, download receipts, and check your points balance.
+                        Visit our <a href="manage-booking.html" class="underline font-bold text-brand-text">Manage My Booking</a> portal and enter your booking reference or registered email address to view upcoming stays, download receipts, and check your points balance.
                     </div>
                 </div>
 
@@ -707,7 +707,7 @@
                 }
 
                 const fullName = localStorage.getItem('hotbeds_club_name') || 'John Doe';
-                const email = localStorage.getItem('hotbeds_club_email') || 'member@hotbeds.ca';
+                const email = localStorage.getItem('hotbeds_club_email') || 'john.doe@email.com';
 
                 document.getElementById('wallet-name-val').textContent = fullName;
                 document.getElementById('wallet-email-val').textContent = email;
