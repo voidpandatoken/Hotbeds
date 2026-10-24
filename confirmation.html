@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Official Booking Confirmation & Tax Voucher | Hotbeds.ca</title>
-  <meta name="description" content="Official CAD hotel booking confirmation, itemized tax receipt, Guild member key, and curated local Canadian partner perks." />
+  <meta name="description" content="Official CAD hotel booking confirmation, itemized tax receipt, and curated local Canadian partner perks." />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -29,8 +29,7 @@
             brand: {
               red: '#DC2626',
               dark: '#0F172A',
-              slate: '#1E293B',
-              gold: '#D97706'
+              slate: '#1E293B'
             }
           }
         }
@@ -78,7 +77,7 @@
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
 
   <!-- ===================================================================== -->
-  <!-- STICKY HEADER (Zero Fixed Body Padding Offsets + Protected Timer)     -->
+  <!-- STICKY HEADER                                                         -->
   <!-- ===================================================================== -->
   <header class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
@@ -100,17 +99,16 @@
         <a href="index.html" class="hover:text-red-600 transition">Search Stays</a>
         <a href="cities.html" class="hover:text-red-600 transition">Cities</a>
         <a href="corporate.html" class="hover:text-red-600 transition">5+ Rooms Corporate</a>
-        <a href="club.html" class="hover:text-red-600 transition">The Guild</a>
         <a href="partners.html" class="hover:text-red-600 transition">Local Partners</a>
         <a href="manage-booking.html" class="hover:text-red-600 transition">Manage Booking</a>
       </nav>
 
-      <!-- Right Controls: Protected #club-timer Pill & Mobile Hamburger -->
+      <!-- Right Controls: Perk Window Timer & Mobile Hamburger -->
       <div class="flex items-center gap-3">
         <div class="hidden sm:flex items-center gap-2 bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-sm">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Perk Window:</span>
-          <span id="club-timer" class="font-mono font-bold text-amber-400">14:59</span>
+          <span>Local Perks Window:</span>
+          <span id="perk-timer" class="font-mono font-bold text-amber-400">14:59</span>
         </div>
 
         <a href="manage-booking.html" class="hidden lg:inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-100 hover:bg-slate-200 text-slate-800 transition">
@@ -135,14 +133,13 @@
     <div id="mobile-menu-drawer" class="hidden md:hidden fixed inset-x-0 top-20 bottom-0 bg-white z-50 border-t border-slate-200 overflow-y-auto">
       <div class="p-6 space-y-4">
         <div class="flex items-center justify-between bg-slate-900 text-white px-4 py-3 rounded-xl text-xs font-semibold">
-          <span>Active Post-Booking Perk Window</span>
-          <span id="club-timer-mobile" class="font-mono font-bold text-amber-400 text-sm">14:59</span>
+          <span>Active Local Partner Perk Window</span>
+          <span id="perk-timer-mobile" class="font-mono font-bold text-amber-400 text-sm">14:59</span>
         </div>
         <nav class="flex flex-col space-y-2 text-base font-semibold text-slate-800">
           <a href="index.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Search Stays</a>
           <a href="cities.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Canadian Cities</a>
           <a href="corporate.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Group & Corporate (5+ Rooms)</a>
-          <a href="club.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">The Guild Portal</a>
           <a href="partners.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Local Partner Network</a>
           <a href="manage-booking.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Manage / Cancel Booking</a>
           <a href="legal.html" class="py-2.5 px-3 rounded-lg hover:bg-slate-100">Legal & Compliance</a>
@@ -168,7 +165,7 @@
             Your Official Hotel Voucher is Ready
           </h1>
           <p class="text-xs sm:text-sm text-emerald-100/90 mt-1">
-            A copy has been dispatched to <span id="banner-guest-email" class="font-semibold underline">guest@hotbeds.ca</span>.
+            A copy of this confirmation has been sent to <span id="banner-guest-email" class="font-semibold underline">guest@hotbeds.ca</span>.
           </p>
         </div>
       </div>
@@ -203,9 +200,6 @@
             <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
               PAID • CONFIRMED
             </span>
-            <span id="voucher-rate-tier-badge" class="hidden text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
-              GUILD CORPORATE RATE APPLIED
-            </span>
           </div>
           <p class="text-xs text-slate-500 mt-1">
             Official Canadian Hospitality Reservation Voucher & Itemized Tax Receipt (CAD)
@@ -229,11 +223,11 @@
             Sandman Hotel Hamilton
           </h2>
           <p id="voucher-hotel-location" class="text-sm font-medium text-slate-600">
-            Downtown Core • Hamilton, ON, Canada
+            Hamilton, ON, Canada
           </p>
           <div class="pt-2 flex flex-wrap gap-2">
             <span id="voucher-room-type" class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-              Executive King Suite
+              Standard King Room
             </span>
             <span id="voucher-rooms-count" class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
               1 Room
@@ -247,7 +241,7 @@
         <!-- Registered Guest Info -->
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2">
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Primary Registered Guest</span>
-          <p id="voucher-guest-name" class="font-bold text-slate-900 text-base">Gordon Culp</p>
+          <p id="voucher-guest-name" class="font-bold text-slate-900 text-base">Verified Guest</p>
           <p id="voucher-guest-email" class="text-xs text-slate-600 break-all">guest@hotbeds.ca</p>
           <p id="voucher-guest-phone" class="text-xs text-slate-600">+1 (905) 555-0199</p>
           <div class="pt-2 border-t border-slate-200 text-[11px] text-slate-500">
@@ -271,7 +265,7 @@
         <div class="p-4 sm:px-6">
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Province Code</span>
           <span id="voucher-province-code" class="font-bold text-slate-900 text-sm sm:text-base mt-0.5 block">ON</span>
-          <span id="voucher-tax-jurisdiction" class="text-[11px] text-slate-500">Ontario Tax Jurisdiction</span>
+          <span id="voucher-tax-jurisdiction" class="text-[11px] text-slate-500">ON Tax Jurisdiction</span>
         </div>
         <div class="p-4 sm:px-6">
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Settlement Currency</span>
@@ -287,22 +281,10 @@
         </h3>
 
         <div class="space-y-2.5 text-sm">
-          <!-- Standard Public Retail Rate Comparison (shown when Guild Corporate / CUG rate is active) -->
-          <div id="row-public-rate" class="hidden flex items-center justify-between text-slate-500">
-            <span>Published Retail Room Rate</span>
-            <span id="voucher-public-rate" class="line-through font-mono">$0.00 CAD</span>
-          </div>
-
           <!-- Room Subtotal -->
           <div class="flex items-center justify-between text-slate-800">
-            <span id="voucher-room-calc-label">Room Subtotal (2 Nights × $195.00 CAD)</span>
+            <span id="voucher-room-calc-label">Room Subtotal (2 Nights × 1 Room @ $195.00 CAD)</span>
             <span id="voucher-room-subtotal" class="font-mono font-semibold">$390.00 CAD</span>
-          </div>
-
-          <!-- Guild Opt-In / Automatic Corporate Rate Discount Row -->
-          <div id="row-guild-discount" class="hidden flex items-center justify-between text-emerald-700 font-medium">
-            <span id="voucher-guild-discount-label">The Guild CUG / Corporate Rate Savings</span>
-            <span id="voucher-guild-discount-amount" class="font-mono">-$0.00 CAD</span>
           </div>
 
           <!-- Mandatory Ontario Eco Fee Row (Strictly visible ONLY when prov === 'ON') -->
@@ -338,52 +320,6 @@
           <p>
             Issued in compliance with the <strong>Alberta Consumer Protection Act (Internet Sales Contract Regulation)</strong>, provincial consumer statutes (ON, BC, QC), and <strong>PIPEDA</strong> data privacy regulations. Hotbeds Inc. (Alberta Corporate Entity) • Federal CRA GST/HST Registration: <span class="font-mono">Pending / RT0001</span>.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
-    <!-- THE GUILD KEY DISPATCH CARD (PAGE-07)                                 -->
-    <!-- ===================================================================== -->
-    <section id="guild-dispatch-section" class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 text-white rounded-2xl p-6 sm:p-8 shadow-lg border border-amber-500/30 no-print">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div class="space-y-2 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
-            <span>🔑 Active Founding Member Access Key</span>
-          </div>
-          <h2 class="font-display text-2xl font-extrabold text-white">
-            Welcome to The Guild Executive Network
-          </h2>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            Your reservation includes active closed-user-group (CUG) membership in <strong>The Guild</strong>. Present your personal access key below at participating independent local businesses or inside The Guild Portal to unlock verified member privileges.
-          </p>
-        </div>
-
-        <!-- Key Box & Actions -->
-        <div class="bg-slate-950/90 border border-slate-700 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center justify-between gap-4 shrink-0 min-w-[270px]">
-          <div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block">Your Active Guild Key</span>
-            <span id="guild-member-key-display" class="font-mono text-2xl font-extrabold text-amber-400 tracking-wider block mt-0.5">
-              GH-894210
-            </span>
-          </div>
-          <div class="flex items-center gap-2">
-            <button
-              type="button"
-              onclick="copyGuildKey()"
-              id="copy-guild-key-btn"
-              class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-600 transition"
-            >
-              Copy Key
-            </button>
-            <a
-              href="club.html"
-              id="activate-guild-portal-link"
-              class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold uppercase tracking-wider transition"
-            >
-              Open Guild Portal →
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -443,7 +379,7 @@
         </div>
       </form>
 
-      <!-- 3-Card Dynamic Partner Marketplace Grid (PAGE-08) -->
+      <!-- 3-Card Dynamic Partner Marketplace Grid -->
       <div id="affiliate-partners-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Populated dynamically via Supabase RPC or local city fallback -->
       </div>
@@ -469,13 +405,13 @@
       <div>
         <span class="font-display font-extrabold text-white text-base">Hotbeds<span class="text-red-500">.ca</span></span>
         <p class="mt-1 text-slate-400">
-          © 2026 Hotbeds Inc. & The Guild. All prices in Canadian Dollars ($ CAD).
+          © 2026 Hotbeds Inc. All prices in Canadian Dollars ($ CAD).
         </p>
       </div>
       <div class="flex flex-wrap gap-5 font-semibold text-slate-300">
         <a href="index.html" class="hover:text-white">Home</a>
+        <a href="cities.html" class="hover:text-white">Cities</a>
         <a href="corporate.html" class="hover:text-white">5+ Rooms RFP</a>
-        <a href="club.html" class="hover:text-white">The Guild</a>
         <a href="partners.html" class="hover:text-white">Partner Intake</a>
         <a href="manage-booking.html" class="hover:text-white">Manage Booking</a>
         <a href="legal.html" class="hover:text-white">Legal & Privacy (PIPEDA)</a>
@@ -503,7 +439,7 @@
     }
 
     // -------------------------------------------------------------------------
-    // 2. MOBILE MENU DRAWER WITH BACKGROUND SCROLL LOCK (PAGE-20)
+    // 2. MOBILE MENU DRAWER WITH BACKGROUND SCROLL LOCK
     // -------------------------------------------------------------------------
     window.toggleMobileMenu = function () {
       const drawer = document.getElementById('mobile-menu-drawer');
@@ -526,17 +462,17 @@
     };
 
     // -------------------------------------------------------------------------
-    // 3. PROTECTED 14:59 SCARCITY / PERK TIMER
+    // 3. LOCAL PERK WINDOW TIMER (14:59)
     // -------------------------------------------------------------------------
-    function startProtectedPerkTimer() {
+    function startPerkWindowTimer() {
       let remainingSeconds = 14 * 60 + 59;
       const storedTimer = sessionStorage.getItem('hotbeds_perk_timer_sec');
       if (storedTimer && !isNaN(parseInt(storedTimer, 10)) && parseInt(storedTimer, 10) > 0) {
         remainingSeconds = parseInt(storedTimer, 10);
       }
 
-      const desktopEl = document.getElementById('club-timer');
-      const mobileEl = document.getElementById('club-timer-mobile');
+      const desktopEl = document.getElementById('perk-timer');
+      const mobileEl = document.getElementById('perk-timer-mobile');
 
       setInterval(() => {
         if (remainingSeconds > 0) remainingSeconds--;
@@ -654,7 +590,6 @@
           if (cleanNote && item.trigger_keywords.some(kw => cleanNote.includes(kw.toLowerCase()))) {
             score += 100;
           }
-          // Adapt city label dynamically if user booked another city
           const displayCity = item.city.toLowerCase() === targetCity.toLowerCase() ? item.city : targetCity;
           return {
             ...item,
@@ -671,7 +606,7 @@
     }
 
     // -------------------------------------------------------------------------
-    // 6. VOUCHER STATE & TAX ENGINE HYDRATION (PAGE-06 & PAGE-07)
+    // 6. VOUCHER STATE & CAD TAX ENGINE HYDRATION
     // -------------------------------------------------------------------------
     let activeBooking = null;
     let activeCategory = 'ALL';
@@ -689,42 +624,31 @@
       const city = params.get('city') || (stored && (stored.city || stored.cityName)) || 'Hamilton';
       const prov = (params.get('prov') || (stored && (stored.prov || stored.province)) || 'ON').toUpperCase();
       const hotelName = params.get('hotel') || (stored && stored.hotelName) || 'Sandman Hotel Hamilton';
-      const roomType = (stored && stored.roomType) || 'Executive King Room';
+      const roomType = params.get('roomType') || (stored && stored.roomType) || 'Standard King Room';
       const checkIn = params.get('checkIn') || (stored && stored.checkIn) || '2026-11-12';
       const checkOut = params.get('checkOut') || (stored && stored.checkOut) || '2026-11-14';
       const nights = Math.max(1, parseInt(params.get('nights') || (stored && stored.nights) || '2', 10));
       const roomsCount = Math.max(1, parseInt(params.get('rooms') || (stored && stored.roomsCount) || '1', 10));
 
-      const guestName = (stored && stored.guestName) || 'Gordon Culp';
-      const guestEmail = (stored && stored.guestEmail) || 'guest@hotbeds.ca';
-      const guestPhone = (stored && stored.guestPhone) || '+1 (905) 555-0199';
+      const guestName = params.get('guestName') || (stored && stored.guestName) || 'Verified Guest';
+      const guestEmail = params.get('guestEmail') || (stored && stored.guestEmail) || 'guest@hotbeds.ca';
+      const guestPhone = params.get('guestPhone') || (stored && stored.guestPhone) || '+1 (905) 555-0199';
 
       // Booking Reference (HB-XXXXXX)
       const bookingRef = params.get('ref') || (stored && (stored.bookingRef || stored.booking_reference)) || ('HB-' + Math.floor(100000 + Math.random() * 900000));
 
-      // Hybrid RateHawk / Guild Corporate Rate Conversion Logic:
-      // If public rate >= $175 and net profit >= $25, or guest opted into The Guild
-      const publicRatePerNight = parseFloat((stored && stored.publicRatePerNight) || '245.00');
-      const netCostPerNight = parseFloat((stored && stored.netCostPerNight) || '140.00');
-      const guildCorporateRatePerNight = parseFloat((stored && stored.ratePerNight) || '195.00');
+      // Confirmed Nightly Rate & Room Subtotal (CAD)
+      const nightlyRateCad = parseFloat(params.get('rate') || (stored && stored.ratePerNight) || '195.00');
+      const roomSubtotal = +(nightlyRateCad * nights * roomsCount).toFixed(2);
 
-      const autoCorporateEligible = (publicRatePerNight >= 175) && ((guildCorporateRatePerNight - netCostPerNight) >= 25);
-      const guildOptIn = (stored && typeof stored.guildOptIn === 'boolean') ? stored.guildOptIn : true;
-      const guildRateActive = guildOptIn || autoCorporateEligible;
-
-      const appliedNightlyRate = guildRateActive ? guildCorporateRatePerNight : publicRatePerNight;
-      const roomSubtotal = appliedNightlyRate * nights * roomsCount;
-      const publicSubtotal = publicRatePerNight * nights * roomsCount;
-      const guildSavings = Math.max(0, publicSubtotal - roomSubtotal);
-
-      // STRICT ONTARIO ECO FEE LOGIC (PAGE-01 / PAGE-06):
+      // STRICT ONTARIO ECO FEE LOGIC:
       // $2.25/night ($2.00 + tax) ONLY when prov === 'ON'. $0.00 and hidden for AB, BC, QC, etc.
       const isOntario = (prov === 'ON');
-      const ecoFeeCad = isOntario ? (2.25 * nights * roomsCount) : 0.00;
+      const ecoFeeCad = isOntario ? +(2.25 * nights * roomsCount).toFixed(2) : 0.00;
 
-      // Provincial Tax Rates
+      // Provincial & Federal Tax Rates
       const taxRatesByProvince = {
-        ON: { rate: 0.13, label: 'Ontario HST (13%)' },
+        ON: { rate: 0.13, label: 'Ontario HST (13%) & Municipal MAT' },
         AB: { rate: 0.09, label: 'Alberta GST (5%) + Tourism Levy (4%)' },
         BC: { rate: 0.15, label: 'BC GST (5%) + PST/MRDT (10%)' },
         QC: { rate: 0.18475, label: 'Quebec GST/QST + Lodging Tax' }
@@ -732,13 +656,6 @@
       const provTaxInfo = taxRatesByProvince[prov] || { rate: 0.13, label: `Provincial & Federal Tax (${prov})` };
       const taxCad = (stored && typeof stored.taxCad === 'number') ? stored.taxCad : +(roomSubtotal * provTaxInfo.rate).toFixed(2);
       const totalCad = (stored && typeof stored.totalCad === 'number') ? stored.totalCad : +(roomSubtotal + ecoFeeCad + taxCad).toFixed(2);
-
-      // Active Guild Key (GH-XXXXXX)
-      let guildKey = (stored && (stored.guildKey || stored.memberId)) || localStorage.getItem('hotbeds_active_guild_key');
-      if (!guildKey) {
-        guildKey = 'GH-' + Math.floor(100000 + Math.random() * 900000);
-        localStorage.setItem('hotbeds_active_guild_key', guildKey);
-      }
 
       activeBooking = {
         bookingRef,
@@ -754,18 +671,13 @@
         guestName,
         guestEmail,
         guestPhone,
-        publicRatePerNight,
-        appliedNightlyRate,
+        nightlyRateCad,
         roomSubtotal,
-        guildSavings,
-        guildRateActive,
-        guildOptIn,
         isOntario,
         ecoFeeCad,
         taxLabel: provTaxInfo.label,
         taxCad,
-        totalCad,
-        guildKey
+        totalCad
       };
 
       renderVoucherUI(activeBooking);
@@ -793,21 +705,9 @@
       setTxt('voucher-province-code', b.prov);
       setTxt('voucher-tax-jurisdiction', `${b.prov} Tax Jurisdiction`);
 
-      // Room & Guild Corporate Rate Breakdown
-      setTxt('voucher-room-calc-label', `Room Subtotal (${b.nights} Night${b.nights > 1 ? 's' : ''} × ${b.roomsCount} Room${b.roomsCount > 1 ? 's' : ''} @ $${b.appliedNightlyRate.toFixed(2)} CAD)`);
+      // Room Subtotal Breakdown
+      setTxt('voucher-room-calc-label', `Room Subtotal (${b.nights} Night${b.nights > 1 ? 's' : ''} × ${b.roomsCount} Room${b.roomsCount > 1 ? 's' : ''} @ $${b.nightlyRateCad.toFixed(2)} CAD)`);
       setTxt('voucher-room-subtotal', `$${b.roomSubtotal.toFixed(2)} CAD`);
-
-      const rateBadge = document.getElementById('voucher-rate-tier-badge');
-      const rowPublic = document.getElementById('row-public-rate');
-      const rowDiscount = document.getElementById('row-guild-discount');
-
-      if (b.guildRateActive && b.guildSavings > 0) {
-        if (rateBadge) rateBadge.classList.remove('hidden');
-        if (rowPublic) rowPublic.classList.remove('hidden');
-        if (rowDiscount) rowDiscount.classList.remove('hidden');
-        setTxt('voucher-public-rate', `$${(b.publicRatePerNight * b.nights * b.roomsCount).toFixed(2)} CAD`);
-        setTxt('voucher-guild-discount-amount', `-$${b.guildSavings.toFixed(2)} CAD`);
-      }
 
       // Strictly hide Ontario Eco Fee row for non-Ontario provinces
       const ecoRow = document.getElementById('row-ontario-eco-fee');
@@ -821,17 +721,6 @@
       setTxt('voucher-tax-label', b.taxLabel);
       setTxt('voucher-tax-amount', `$${b.taxCad.toFixed(2)} CAD`);
       setTxt('voucher-total-cad', `$${b.totalCad.toFixed(2)} CAD`);
-
-      // Guild Key Dispatch Card
-      const guildSection = document.getElementById('guild-dispatch-section');
-      if (b.guildOptIn || b.guildRateActive) {
-        if (guildSection) guildSection.classList.remove('hidden');
-        setTxt('guild-member-key-display', b.guildKey);
-        const portalLink = document.getElementById('activate-guild-portal-link');
-        if (portalLink) portalLink.href = `club.html?key=${encodeURIComponent(b.guildKey)}`;
-      } else if (guildSection) {
-        guildSection.classList.add('hidden');
-      }
 
       // Concierge headings
       setTxt('concierge-city-heading', b.city);
@@ -957,7 +846,6 @@
         email_dispatched: false
       };
 
-      // Save locally for immediate audit verification
       localStorage.setItem('latest_guest_amenity_request', JSON.stringify(payload));
 
       const client = directSupabaseClient || window.hotbedsDb || window.supabaseClient;
@@ -1004,17 +892,6 @@
       }
     }
 
-    function copyGuildKey() {
-      if (!activeBooking) return;
-      const btn = document.getElementById('copy-guild-key-btn');
-      navigator.clipboard.writeText(activeBooking.guildKey).catch(() => {});
-      if (btn) {
-        const orig = btn.textContent;
-        btn.textContent = '✓ Copied!';
-        setTimeout(() => { btn.textContent = orig; }, 2000);
-      }
-    }
-
     function escapeHtml(str) {
       return String(str || '')
         .replace(/&/g, '&amp;')
@@ -1028,7 +905,7 @@
     // 9. INITIALIZE ON DOM READY
     // -------------------------------------------------------------------------
     document.addEventListener('DOMContentLoaded', () => {
-      startProtectedPerkTimer();
+      startPerkWindowTimer();
       loadBookingPayload();
       refreshAffiliateCards('');
     });
